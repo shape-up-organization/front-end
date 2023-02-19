@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo ""
+echo "🚨 TESTING APP..."
+exec >/dev/tty 2>&1 #if you dont use this line, probably the lint log will loop
+npm run test

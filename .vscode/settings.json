@@ -49,5 +49,6 @@
     ".vscode",
     ".prettierrc*"
   ],
-  "cSpell.userWords": ["airbnb", "commitlint", "esnext"]
+  "cSpell.userWords": ["airbnb", "commitlint", "esnext"],
+  "cSpell.words": ["latin"]
 }

@@ -3,7 +3,7 @@ import createEmotionServer from '@emotion/server/create-instance'
 
 import { createEmotionCache } from '@utils/styles/createEmotionCache'
 
-import { theme, outfit } from '@styles/theme'
+import { theme, ubuntu } from '@styles/theme'
 
 interface MyDocumentProps extends DocumentInitialProps {
   emotionStyleTags?: JSX.Element[]
@@ -12,7 +12,7 @@ interface MyDocumentProps extends DocumentInitialProps {
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="pt-BR" className={outfit.className}>
+      <Html lang="pt-BR" className={ubuntu.className}>
         <Head>
           <meta name="theme-color" content={theme.light.palette.primary.main} />
           <meta name="emotion-insertion-point" content="" />

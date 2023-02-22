@@ -8,12 +8,8 @@ export const outfit = Outfit({
   fallback: ['Helvetica', 'Arial', 'sans-serif'],
 })
 
-export const theme = createTheme({
+const base = createTheme({
   palette: {
-    background: {
-      default: '#F1F1F1',
-      paper: '#FAFAFA',
-    },
     error: {
       main: '#ED145B',
     },
@@ -25,3 +21,28 @@ export const theme = createTheme({
     fontFamily: outfit.style.fontFamily,
   },
 })
+
+const light = createTheme({
+  ...base,
+  palette: {
+    background: {
+      default: '#F1F1F1',
+      paper: '#FAFAFA',
+    },
+  },
+})
+
+const dark = createTheme({
+  ...base,
+  palette: {
+    background: {
+      default: '#2b2b2b',
+      paper: '#222222',
+    },
+  },
+})
+
+export const theme = {
+  light,
+  dark,
+}

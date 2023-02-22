@@ -1,7 +1,7 @@
-import { Outfit } from '@next/font/google'
+import { Ubuntu } from '@next/font/google'
 import { createTheme } from '@mui/material/styles'
 
-export const outfit = Outfit({
+export const ubuntu = Ubuntu({
   display: 'swap',
   fallback: ['Helvetica', 'Arial', 'sans-serif'],
   preload: true,
@@ -17,9 +17,12 @@ const base = createTheme({
     primary: {
       main: '#23C7A8',
     },
+    secondary: {
+      main: '#00FCA8',
+    },
   },
   typography: {
-    fontFamily: outfit.style.fontFamily,
+    fontFamily: ubuntu.style.fontFamily,
   },
 })
 
@@ -37,7 +40,7 @@ const dark = createTheme({
   ...base,
   palette: {
     background: {
-      default: '#2b2b2b',
+      default: '#2B2B2B',
       paper: '#222222',
     },
   },

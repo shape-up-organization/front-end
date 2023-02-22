@@ -2,10 +2,11 @@ import { Outfit } from '@next/font/google'
 import { createTheme } from '@mui/material/styles'
 
 export const outfit = Outfit({
-  weight: ['300', '400', '500', '700'],
-  subsets: ['latin'],
   display: 'swap',
   fallback: ['Helvetica', 'Arial', 'sans-serif'],
+  preload: true,
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '700'],
 })
 
 const base = createTheme({

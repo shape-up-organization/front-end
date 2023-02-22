@@ -13,7 +13,6 @@ export default function Home() {
       <Head>
         <title>ShapeUp</title>
         <meta name="Index Page" content="ShapeUp landing page" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
         <Typography variant="h6">{process.env.NEXT_PUBLIC_TEST_ENV}</Typography>

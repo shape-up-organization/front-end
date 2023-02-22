@@ -1,7 +1,13 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Document, { Html, Head, Main, NextScript, DocumentInitialProps } from 'next/document'
 import createEmotionServer from '@emotion/server/create-instance'
-import { theme, outfit } from '@styles/theme'
+
 import { createEmotionCache } from '@utils/styles/createEmotionCache'
+
+import { theme, outfit } from '@styles/theme'
+
+interface MyDocumentProps extends DocumentInitialProps {
+  emotionStyleTags?: JSX.Element[]
+}
 
 export default class MyDocument extends Document {
   render() {
@@ -10,7 +16,7 @@ export default class MyDocument extends Document {
         <Head>
           <meta name="theme-color" content={theme.light.palette.primary.main} />
           <meta name="emotion-insertion-point" content="" />
-          {(this.props as any).emotionStyleTags}
+          {(this.props as MyDocumentProps).emotionStyleTags}
         </Head>
         <body>
           <Main />

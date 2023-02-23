@@ -1,5 +1,5 @@
 import { Ubuntu } from '@next/font/google'
-import { createTheme } from '@mui/material/styles'
+import { createTheme, ThemeOptions } from '@mui/material/styles'
 
 export const ubuntu = Ubuntu({
   display: 'swap',
@@ -9,7 +9,7 @@ export const ubuntu = Ubuntu({
   weight: ['300', '400', '500', '700'],
 })
 
-const base = createTheme({
+const base: ThemeOptions = {
   palette: {
     error: {
       main: '#ED145B',
@@ -24,11 +24,12 @@ const base = createTheme({
   typography: {
     fontFamily: ubuntu.style.fontFamily,
   },
-})
+}
 
 const light = createTheme({
   ...base,
   palette: {
+    ...base.palette,
     background: {
       default: '#F1F1F1',
       paper: '#FAFAFA',
@@ -39,6 +40,7 @@ const light = createTheme({
 const dark = createTheme({
   ...base,
   palette: {
+    ...base.palette,
     background: {
       default: '#2B2B2B',
       paper: '#222222',

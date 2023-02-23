@@ -1,9 +1,14 @@
 import { useContext } from 'react'
 import Head from 'next/head'
 
-import { Switch, Typography } from '@mui/material'
+import { Switch, Typography, useTheme } from '@mui/material'
 
 import { ThemeContext, type ThemeContextType } from '@contexts'
+import { styled } from '@mui/material/styles'
+
+const StyledSwitch = styled(Switch)(({ theme = useTheme() }) => ({
+  backgroundColor: theme.palette.primary.main,
+}))
 
 export default function Home() {
   const { isDark, setIsDark } = useContext(ThemeContext) as ThemeContextType
@@ -16,7 +21,7 @@ export default function Home() {
       </Head>
       <main>
         <Typography variant="h6">{process.env.NEXT_PUBLIC_TEST_ENV}</Typography>
-        <Switch checked={isDark} onChange={() => setIsDark(!isDark)} />
+        <StyledSwitch checked={isDark} onChange={() => setIsDark(!isDark)} color="error" />
       </main>
     </>
   )

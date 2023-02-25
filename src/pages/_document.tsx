@@ -1,16 +1,22 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Document, { Html, Head, Main, NextScript, DocumentInitialProps } from 'next/document'
 import createEmotionServer from '@emotion/server/create-instance'
-import { theme, outfit } from '@styles/theme'
+
 import { createEmotionCache } from '@utils/styles/createEmotionCache'
+
+import { theme, ubuntu } from '@styles/theme'
+
+interface MyDocumentProps extends DocumentInitialProps {
+  emotionStyleTags?: JSX.Element[]
+}
 
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="pt-BR" className={outfit.className}>
+      <Html lang="pt-BR" className={ubuntu.className}>
         <Head>
-          <meta name="theme-color" content={theme.palette.primary.main} />
+          <meta name="theme-color" content={theme.light.palette.primary.main} />
           <meta name="emotion-insertion-point" content="" />
-          {(this.props as any).emotionStyleTags}
+          {(this.props as MyDocumentProps).emotionStyleTags}
         </Head>
         <body>
           <Main />

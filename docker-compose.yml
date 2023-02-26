@@ -12,3 +12,10 @@ services:
     restart: always
     ports:
       - 3000:3000
+    networks:
+      - next_network
+
+networks:
+  next_network:
+    external: false
+    name: 'next_network'

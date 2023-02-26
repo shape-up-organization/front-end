@@ -1,4 +1,4 @@
-import { Ubuntu } from '@next/font/google'
+import { Ubuntu } from 'next/font/google'
 import { createTheme, ThemeOptions } from '@mui/material/styles'
 
 export const ubuntu = Ubuntu({

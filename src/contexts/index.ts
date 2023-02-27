@@ -1,1 +1,1 @@
-export { ThemeContext, type ThemeContextType } from './ThemeContext'
+export { ThemeModeContext } from './ThemeModeContext'

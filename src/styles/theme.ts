@@ -1,16 +1,17 @@
 import { Ubuntu } from 'next/font/google'
-import { createTheme, ThemeOptions } from '@mui/material/styles'
+import { ThemeOptions } from '@mui/material/styles'
+import { PaletteMode } from '@mui/material'
 
-export const ubuntu = Ubuntu({
+export const fontPrimary = Ubuntu({
   display: 'swap',
   fallback: ['Helvetica', 'Arial', 'sans-serif'],
-  preload: true,
   subsets: ['latin'],
   weight: ['300', '400', '500', '700'],
 })
 
 const base: ThemeOptions = {
   palette: {
+    mode: 'light',
     error: {
       main: '#ED145B',
     },
@@ -22,33 +23,36 @@ const base: ThemeOptions = {
     },
   },
   typography: {
-    fontFamily: ubuntu.style.fontFamily,
+    fontFamily: fontPrimary.style.fontFamily,
   },
 }
 
-const light = createTheme({
+const light: ThemeOptions = {
   ...base,
   palette: {
     ...base.palette,
+    mode: 'light',
     background: {
       default: '#F1F1F1',
       paper: '#FAFAFA',
     },
   },
-})
+}
 
-const dark = createTheme({
+const dark: ThemeOptions = {
   ...base,
   palette: {
     ...base.palette,
+    mode: 'dark',
     background: {
       default: '#2B2B2B',
       paper: '#222222',
     },
   },
+}
+
+const getDesignTokens = (mode: PaletteMode) => ({
+  ...(mode === 'light' ? light : dark),
 })
 
-export const theme = {
-  light,
-  dark,
-}
+export { getDesignTokens }

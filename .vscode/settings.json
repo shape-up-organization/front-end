@@ -8,7 +8,11 @@
     "source.fixAll": true
   }, // ESLINT
   "eslint.format.enable": true,
-  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
   "eslint.codeActionsOnSave.mode": "problems",
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"], // LANGUAGE FORMATTERS
   "javascipt.preferences.importModuleSpecifier": "non-relative",
@@ -50,5 +54,7 @@
     ".prettierrc*"
   ],
   "cSpell.userWords": ["airbnb", "commitlint", "esnext"],
-  "cSpell.words": ["latin"]
+  "cSpell.words": ["latin"],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }

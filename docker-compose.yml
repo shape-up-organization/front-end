@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  next-app:
+    container_name: next-app
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_DOCKER: ${NEXT_PUBLIC_DOCKER}
+        NEXT_PUBLIC_LOCAL: ${NEXT_PUBLIC_LOCAL}
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - next_network
+
+networks:
+  next_network:
+    external: false
+    name: 'next_network'

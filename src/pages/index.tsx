@@ -20,7 +20,8 @@ export default function Home() {
         <meta name="Index Page" content="ShapeUp landing page" />
       </Head>
       <main>
-        <Typography variant="h6">{process.env.NEXT_PUBLIC_TEST_ENV}</Typography>
+        <Typography variant="h6">{process.env.NEXT_PUBLIC_DOCKER}</Typography>
+        <Typography variant="h6">{process.env.NEXT_PUBLIC_LOCAL}</Typography>
         <StyledSwitch checked={isDark} onChange={() => setIsDark(!isDark)} color="error" />
       </main>
     </>

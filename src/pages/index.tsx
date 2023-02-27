@@ -3,7 +3,7 @@ import Head from 'next/head'
 
 import { Switch, Typography, useTheme } from '@mui/material'
 
-import { ThemeContext, type ThemeContextType } from '@contexts'
+import { ThemeModeContext } from '@contexts'
 import { styled } from '@mui/material/styles'
 
 const StyledSwitch = styled(Switch)(({ theme = useTheme() }) => ({
@@ -11,7 +11,8 @@ const StyledSwitch = styled(Switch)(({ theme = useTheme() }) => ({
 }))
 
 export default function Home() {
-  const { isDark, setIsDark } = useContext(ThemeContext) as ThemeContextType
+  const theme = useTheme()
+  const colorMode = useContext(ThemeModeContext)
 
   return (
     <>
@@ -22,7 +23,11 @@ export default function Home() {
       <main>
         <Typography variant="h6">{process.env.NEXT_PUBLIC_DOCKER}</Typography>
         <Typography variant="h6">{process.env.NEXT_PUBLIC_LOCAL}</Typography>
-        <StyledSwitch checked={isDark} onChange={() => setIsDark(!isDark)} color="error" />
+        <StyledSwitch
+          checked={theme.palette.mode === 'dark'}
+          onChange={colorMode.toggleColorMode}
+          color="error"
+        />
       </main>
     </>
   )

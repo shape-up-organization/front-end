@@ -1,6 +1,6 @@
 import { AppProps } from 'next/app'
 import { EmotionCache } from '@emotion/react'
 
-export interface MyAppProps extends AppProps {
+export type MyAppProps = AppProps & {
   emotionCache?: EmotionCache
 }

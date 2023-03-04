@@ -5,6 +5,7 @@ import { Switch, Typography, useTheme } from '@mui/material'
 
 import { ThemeModeContext } from '@contexts'
 import { styled } from '@mui/material/styles'
+import { Header } from '@/components/Header'
 
 const StyledSwitch = styled(Switch)(({ theme = useTheme() }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -28,6 +29,7 @@ export default function Home() {
           onChange={colorMode.toggleColorMode}
           color="error"
         />
+        <Header />
       </main>
     </>
   )

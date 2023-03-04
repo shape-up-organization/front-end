@@ -1,13 +1,9 @@
-import Document, { Html, Head, Main, NextScript, DocumentInitialProps } from 'next/document'
+import Document, { Html, Head, Main, NextScript } from 'next/document'
 import createEmotionServer from '@emotion/server/create-instance'
 
 import { createEmotionCache } from '@styles/createEmotionCache'
 
 import { fontPrimary } from '@styles/theme'
-
-interface MyDocumentProps extends DocumentInitialProps {
-  emotionStyleTags?: JSX.Element[]
-}
 
 export default class MyDocument extends Document {
   render() {
@@ -15,7 +11,7 @@ export default class MyDocument extends Document {
       <Html lang="pt-BR" className={fontPrimary.className}>
         <Head>
           <meta name="emotion-insertion-point" content="" />
-          {(this.props as MyDocumentProps).emotionStyleTags}
+          {this.props.emotionStyleTags}
         </Head>
         <body>
           <Main />
@@ -34,7 +30,7 @@ MyDocument.getInitialProps = async ctx => {
 
   ctx.renderPage = () =>
     originalRenderPage({
-      enhanceApp: (App: any) =>
+      enhanceApp: App =>
         function EnhanceApp(props) {
           return <App emotionCache={cache} {...props} />
         },

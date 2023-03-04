@@ -3,12 +3,11 @@ import Head from 'next/head'
 import { CacheProvider } from '@emotion/react'
 import { createEmotionCache } from '@styles/createEmotionCache'
 
-import { MyAppProps } from './MyAppProps'
 import { ThemeWrapper } from '@utils/wrappers/ThemeWrapper'
 
 const clientSideEmotionCache = createEmotionCache()
 
-export default function MyApp(props: MyAppProps) {
+export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 
   return (

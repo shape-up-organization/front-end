@@ -3,12 +3,10 @@ import createCache from '@emotion/cache'
 const isBrowser = typeof document !== 'undefined'
 
 export const createEmotionCache = () => {
-  let insertionPoint: HTMLMetaElement | undefined
+  let insertionPoint
 
   if (isBrowser) {
-    const emotionInsertionPoint = document.querySelector<HTMLMetaElement>(
-      'meta[name="emotion-insertion-point"]'
-    )
+    const emotionInsertionPoint = document.querySelector('meta[name="emotion-insertion-point"]')
     insertionPoint = emotionInsertionPoint ?? undefined
   }
 

@@ -1,15 +1,9 @@
-import { ReactElement } from 'react'
-
 import { CssBaseline, Paper, ThemeProvider } from '@mui/material'
 
 import { ThemeModeContext } from '@contexts'
 import { useCustomTheme } from '@styles/useCustomTheme'
 
-type ThemeWrapperProps = {
-  children: ReactElement
-}
-
-const ThemeWrapper = ({ children }: ThemeWrapperProps) => {
+const ThemeWrapper = ({ children }) => {
   const { theme, colorMode } = useCustomTheme()
 
   return (

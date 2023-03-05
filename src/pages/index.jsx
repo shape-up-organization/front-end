@@ -1,11 +1,12 @@
-import { useContext } from 'react'
 import Head from 'next/head'
+import { useContext, useState } from 'react'
 
 import { Switch, Typography, useTheme } from '@mui/material'
 
+import { Header } from '@/components/Header'
+import { LoginModal } from '@components/LoginModal'
 import { ThemeModeContext } from '@contexts'
 import { styled } from '@mui/material/styles'
-import { Header } from '@/components/Header'
 
 const StyledSwitch = styled(Switch)(({ theme = useTheme() }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -14,6 +15,8 @@ const StyledSwitch = styled(Switch)(({ theme = useTheme() }) => ({
 export default function Home() {
   const theme = useTheme()
   const colorMode = useContext(ThemeModeContext)
+
+  const [loginOpen, setLoginOpen] = useState(true)
 
   return (
     <>
@@ -30,6 +33,11 @@ export default function Home() {
           color="error"
         />
         <Header />
+        <button onClick={() => setLoginOpen(true)}>aperta</button>
+        <LoginModal
+          open={loginOpen}
+          handleClose={() => setLoginOpen(prevLoginOpen => !prevLoginOpen)}
+        />
       </main>
     </>
   )

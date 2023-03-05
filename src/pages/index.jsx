@@ -3,7 +3,7 @@ import { useContext, useState } from 'react'
 
 import { Switch, Typography, useTheme } from '@mui/material'
 
-import { Header } from '@/components/Header'
+import { Header } from '@components/Header'
 import { LoginModal } from '@components/LoginModal'
 import { ThemeModeContext } from '@contexts'
 import { styled } from '@mui/material/styles'

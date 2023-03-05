@@ -1,5 +1,7 @@
+import P from 'prop-types'
 import { useState } from 'react'
 
+import { Divider } from '@components/Divider'
 import { ExternalButton } from '@components/ExternalButton'
 import Close from '@mui/icons-material/Close'
 import Visibility from '@mui/icons-material/Visibility'
@@ -11,7 +13,6 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
-  Divider,
   Grid,
   IconButton,
   InputAdornment,
@@ -29,15 +30,18 @@ const LoginModal = ({ open, handleClose }) => {
       open={open}
       onClose={handleClose}
       maxWidth="xs"
-      repositionOnUpdate={false}
       PaperProps={{
         sx: { padding: theme => theme.spacing(2, 0, 3) },
       }}
     >
-      <DialogTitle justifyContent="center">
-        <Typography align="center" color="primary" fontWeight="bold" variant="h4">
-          Faça Login
-        </Typography>
+      <DialogTitle
+        align="center"
+        color="primary"
+        fontWeight="bold"
+        justifyContent="center"
+        variant="h4"
+      >
+        Faça Login
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -96,23 +100,9 @@ const LoginModal = ({ open, handleClose }) => {
               </Link>
             </Grid>
           </Grid>
-          <Divider
-            orientation="horizontal"
-            sx={{
-              margin: theme => theme.spacing(3, 0, 4),
-              '&::before, &::after': {
-                borderWidth: 2,
-                borderColor: 'primary.main',
-              },
-            }}
-            variant="fullWidth"
-          >
-            <Typography fontWeight="bold" variant="caption">
-              OU
-            </Typography>
-          </Divider>
+          <Divider text="OU" />
           <Box alignItems="center" display="flex" flexDirection="column">
-            <Grid container justifyContent="center" xs={10} gap={2}>
+            <Grid container justifyContent="center" gap={2}>
               {['google', 'facebook', 'twitter'].map((site, index) => (
                 <Grid item key={index} xs={12}>
                   <ExternalButton type={site} />
@@ -124,6 +114,11 @@ const LoginModal = ({ open, handleClose }) => {
       </DialogContent>
     </Dialog>
   )
+}
+
+LoginModal.propTypes = {
+  open: P.bool.isRequired,
+  handleClose: P.func.isRequired,
 }
 
 export { LoginModal }

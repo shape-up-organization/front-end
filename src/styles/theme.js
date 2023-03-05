@@ -7,9 +7,17 @@ export const fontPrimary = Ubuntu({
   weight: ['300', '400', '500', '700'],
 })
 
+const colors = {
+  black: '#303030',
+  blue: '#42A5F5',
+  red: '#ed1543',
+  white: '#F9F9F9',
+}
+
 const base = {
   palette: {
     mode: 'light',
+    colors,
     error: {
       main: '#ED145B',
     },
@@ -20,11 +28,6 @@ const base = {
     },
     secondary: {
       main: '#00FCA8',
-    },
-    base: {
-      black: '#222222',
-      blue: '#42A5F5',
-      red: '#ed1543',
     },
   },
   typography: {
@@ -37,6 +40,7 @@ const light = {
   palette: {
     ...base.palette,
     mode: 'light',
+    link: colors.black,
     background: {
       default: '#F1F1F1',
       paper: '#FAFAFA',
@@ -49,6 +53,7 @@ const dark = {
   palette: {
     ...base.palette,
     mode: 'dark',
+    link: colors.white,
     background: {
       default: '#2B2B2B',
       paper: '#222222',

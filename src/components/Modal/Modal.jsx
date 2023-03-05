@@ -21,7 +21,7 @@ import {
   Typography,
 } from '@mui/material'
 
-const LoginModal = ({ open, handleClose }) => {
+const Modal = ({ handleClose, open, title }) => {
   const [showPassword, setShowPassword] = useState(false)
 
   return (
@@ -34,16 +34,12 @@ const LoginModal = ({ open, handleClose }) => {
         sx: { padding: theme => theme.spacing(2, 0, 3) },
       }}
     >
-      <DialogTitle
-        align="center"
-        color="primary"
-        fontWeight="bold"
-        justifyContent="center"
-        variant="h4"
-      >
-        Faça Login
+      <DialogTitle align="center" justifyContent="center">
+        <Typography color="primary" component="p" fontWeight="bold" variant="h4">
+          {title}
+        </Typography>
         <IconButton
-          aria-label="close"
+          aria-label="Close login modal"
           onClick={handleClose}
           sx={{
             position: 'absolute',
@@ -118,9 +114,14 @@ const LoginModal = ({ open, handleClose }) => {
   )
 }
 
-LoginModal.propTypes = {
-  open: P.bool.isRequired,
+Modal.propTypes = {
   handleClose: P.func.isRequired,
+  open: P.bool.isRequired,
+  title: P.bool,
 }
 
-export { LoginModal }
+Modal.defaultProps = {
+  title: '',
+}
+
+export { Modal }

@@ -14,7 +14,12 @@
     }
   ],
   "eslint.codeActionsOnSave.mode": "problems",
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"], // LANGUAGE FORMATTERS
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ], // LANGUAGE FORMATTERS
   "javascipt.preferences.importModuleSpecifier": "non-relative",
   "[javascript]": {
     "editor.autoClosingBrackets": "always",
@@ -54,7 +59,7 @@
     ".prettierrc*"
   ],
   "cSpell.userWords": ["airbnb", "commitlint", "esnext"],
-  "cSpell.words": ["latin"],
+  "cSpell.words": ["facebook", "latin"],
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true
 }

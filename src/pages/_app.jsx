@@ -7,6 +7,8 @@ import { ThemeWrapper } from '@utils/wrappers/ThemeWrapper'
 
 const clientSideEmotionCache = createEmotionCache()
 
+import '../styles/globals.css'
+
 export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
 

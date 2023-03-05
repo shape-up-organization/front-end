@@ -14,10 +14,17 @@ const base = {
       main: '#ED145B',
     },
     primary: {
+      contrastText: '#FAFAFA',
+      dark: '#25D6B6',
       main: '#23C7A8',
     },
     secondary: {
       main: '#00FCA8',
+    },
+    base: {
+      black: '#222222',
+      blue: '#42A5F5',
+      red: '#ed1543',
     },
   },
   typography: {

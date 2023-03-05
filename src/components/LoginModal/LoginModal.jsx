@@ -3,6 +3,7 @@ import { useState } from 'react'
 
 import { Divider } from '@components/Divider'
 import { ExternalButton } from '@components/ExternalButton'
+import { Link } from '@components/Link'
 import Close from '@mui/icons-material/Close'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
@@ -16,7 +17,6 @@ import {
   Grid,
   IconButton,
   InputAdornment,
-  Link,
   TextField,
   Typography,
 } from '@mui/material'
@@ -95,8 +95,10 @@ const LoginModal = ({ open, handleClose }) => {
               </Button>
             </Grid>
             <Grid item textAlign="center" xs={12}>
-              <Link color="base.black" fontWeight="bold" underline="hover" variant="caption">
-                Esqueceu sua senha?
+              <Link>
+                <Typography fontWeight="bold" variant="caption">
+                  Esqueceu sua senha?
+                </Typography>
               </Link>
             </Grid>
           </Grid>

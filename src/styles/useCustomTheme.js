@@ -1,5 +1,7 @@
-import { useMemo, useState } from 'react'
+import { useLayoutEffect, useMemo, useState } from 'react'
+
 import { createTheme } from '@mui/material'
+
 import { getDesignTokens } from '@styles/theme'
 
 export const useCustomTheme = () => {
@@ -13,7 +15,16 @@ export const useCustomTheme = () => {
     []
   )
 
+  useLayoutEffect(() => {
+    if (
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    ) {
+      setMode('dark')
+    }
+  }, [])
+
   const theme = useMemo(() => createTheme(getDesignTokens(mode)), [mode])
 
-  return { theme, colorMode }
+  return { theme, colorMode, setMode }
 }

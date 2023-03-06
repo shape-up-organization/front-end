@@ -2,7 +2,6 @@ import P from 'prop-types'
 import { useState } from 'react'
 
 import { Link } from '@components/Link'
-import { Modal } from '@components/Modal/Modal'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import {
@@ -13,6 +12,10 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
+import { Modal } from '../Modal'
+
+const size = 'small'
+const title = 'Faça login'
 
 const Content = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -76,13 +79,12 @@ const Content = () => {
 }
 
 const LoginModal = ({ open, handleClose }) => {
-  const title = 'Faça Login'
-
   return (
     <Modal
       content={<Content />}
       handleClose={handleClose}
       open={open}
+      size={size}
       title={title}
     />
   )

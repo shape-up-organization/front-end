@@ -1,7 +1,6 @@
 import P from 'prop-types'
 
 import { Divider } from '@components/Divider'
-import { ExternalButtons } from '@components/Modal/ExternalButtons'
 import Close from '@mui/icons-material/Close'
 import {
   Box,
@@ -12,8 +11,15 @@ import {
   IconButton,
   Typography,
 } from '@mui/material'
+import { ExternalButtons } from './components/ExternalButtons'
 
-const Modal = ({ content, direction, handleClose, open, title }) => {
+const sizes = {
+  small: 'xs',
+  medium: 'md',
+  large: 'xl',
+}
+
+const Modal = ({ content, direction, handleClose, open, size, title }) => {
   const contentDirection = direction === 'horizontal' ? 'row' : 'column'
   const dividerDirection =
     contentDirection === 'row' ? 'vertical' : 'horizontal'
@@ -23,7 +29,7 @@ const Modal = ({ content, direction, handleClose, open, title }) => {
       fullWidth
       open={open}
       onClose={handleClose}
-      maxWidth="xs"
+      maxWidth={sizes[size]}
       PaperProps={{
         sx: { padding: theme => theme.spacing(2, 0, 3) },
       }}
@@ -70,11 +76,13 @@ Modal.propTypes = {
   direction: P.oneOf(['horizontal', 'vertical']),
   handleClose: P.func.isRequired,
   open: P.bool.isRequired,
-  title: P.bool,
+  size: P.oneOf(['small', 'medium', 'large']),
+  title: P.string,
 }
 
 Modal.defaultProps = {
   direction: 'vertical',
+  size: 'medium',
   title: '',
 }
 

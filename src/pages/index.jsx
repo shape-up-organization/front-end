@@ -4,7 +4,7 @@ import { useContext, useState } from 'react'
 import { Switch, Typography, useTheme } from '@mui/material'
 
 import { Header } from '@components/Header'
-import { LoginModal } from '@components/Modal'
+import { SignupModal } from '@components/Modal'
 import { ThemeModeContext } from '@contexts'
 import { styled } from '@mui/material/styles'
 
@@ -34,7 +34,7 @@ export default function Home() {
         />
         <Header />
         <button onClick={() => setLoginOpen(true)}>aperta</button>
-        <LoginModal
+        <SignupModal
           open={loginOpen}
           handleClose={() => setLoginOpen(prevLoginOpen => !prevLoginOpen)}
         />

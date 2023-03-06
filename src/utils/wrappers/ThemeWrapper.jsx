@@ -1,3 +1,5 @@
+import P from 'prop-types'
+
 import { CssBaseline, Paper, ThemeProvider } from '@mui/material'
 
 import { ThemeModeContext } from '@contexts'
@@ -16,6 +18,10 @@ const ThemeWrapper = ({ children }) => {
       </ThemeProvider>
     </ThemeModeContext.Provider>
   )
+}
+
+ThemeWrapper.propTypes = {
+  children: P.element,
 }
 
 export { ThemeWrapper }

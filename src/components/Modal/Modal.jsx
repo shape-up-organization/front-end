@@ -16,7 +16,7 @@ import { ExternalButtons } from './components/ExternalButtons'
 const sizes = {
   small: 'xs',
   medium: 'md',
-  large: 'xl',
+  large: 'lg',
 }
 
 const Modal = ({ content, direction, handleClose, open, size, title }) => {
@@ -57,7 +57,7 @@ const Modal = ({ content, direction, handleClose, open, size, title }) => {
       </DialogTitle>
       <DialogContent>
         <Container
-          maxWidth="xs"
+          maxWidth="xl"
           sx={{ display: 'flex', flexDirection: contentDirection }}
         >
           {content}

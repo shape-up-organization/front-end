@@ -22,7 +22,25 @@ const Content = () => {
   const [showPassword, setShowPassword] = useState(false)
 
   return (
-    <Grid container justifyContent="center" rowSpacing={2} paddingTop={1}>
+    <Grid container justifyContent="center" spacing={2} paddingTop={1}>
+      <Grid item xs={6}>
+        <TextField
+          fullWidth
+          label="Nome"
+          name="name"
+          type="text"
+          variant="outlined"
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <TextField
+          fullWidth
+          label="Sobrenome"
+          name="lastName"
+          type="text"
+          variant="outlined"
+        />
+      </Grid>
       <Grid item xs={12}>
         <TextField
           fullWidth
@@ -32,11 +50,67 @@ const Content = () => {
           variant="outlined"
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={2}>
+        <TextField
+          fullWidth
+          label="DDD"
+          name="ddd"
+          type="text"
+          variant="outlined"
+        />
+      </Grid>
+      <Grid item xs={5}>
+        <TextField
+          fullWidth
+          label="Número"
+          name="cellPhone"
+          type="text"
+          variant="outlined"
+        />
+      </Grid>
+      <Grid item xs={5}>
+        <TextField
+          fullWidth
+          label="Data de nascimento"
+          name="birthDate"
+          type="text"
+          variant="outlined"
+        />
+      </Grid>
+      <Grid item xs={6}>
         <TextField
           fullWidth
           label="Senha"
           name="password"
+          type={showPassword ? 'text' : 'password'}
+          variant="outlined"
+          onMouseEnter={event => event.preventDefault()}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="Toggle password visibility"
+                  onClick={() =>
+                    setShowPassword(prevShowPassword => !prevShowPassword)
+                  }
+                  onMouseDown={event => event.preventDefault()}
+                >
+                  {showPassword ? (
+                    <VisibilityOff fontSize="small" />
+                  ) : (
+                    <Visibility fontSize="small" />
+                  )}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <TextField
+          fullWidth
+          label="Confirmar senha"
+          name="confirmPassword"
           type={showPassword ? 'text' : 'password'}
           variant="outlined"
           onMouseEnter={event => event.preventDefault()}

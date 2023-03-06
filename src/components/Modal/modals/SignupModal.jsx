@@ -2,18 +2,20 @@ import P from 'prop-types'
 import { useState } from 'react'
 
 import { Link } from '@components/Link'
+import { Modal } from '../Modal'
 
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import {
   Button,
+  Checkbox,
+  FormControlLabel,
   Grid,
   IconButton,
   InputAdornment,
   TextField,
   Typography,
 } from '@mui/material'
-import { Modal } from '../Modal'
 
 const size = 'large'
 const title = 'Crie sua conta'
@@ -135,19 +137,23 @@ const Content = () => {
           }}
         />
       </Grid>
+      <Grid item xs={12} display="flex" justifyContent="center">
+        <FormControlLabel
+          control={<Checkbox />}
+          label={
+            <Typography fontWeight="bold" variant="subtitle2">
+              Li e aceito os <Link href="/">termos de uso</Link> e{' '}
+              <Link href="/">políticas de privacidade</Link>
+            </Typography>
+          }
+        />
+      </Grid>
       <Grid item xs={5}>
         <Button fullWidth size="large" variant="contained">
           <Typography fontWeight="bold" textTransform="none">
             ENTRAR
           </Typography>
         </Button>
-      </Grid>
-      <Grid item textAlign="center" xs={12}>
-        <Link>
-          <Typography fontWeight="bold" variant="caption">
-            Esqueceu sua senha?
-          </Typography>
-        </Link>
       </Grid>
     </Grid>
   )
@@ -162,6 +168,7 @@ const SignupModal = ({ open, handleClose }) => {
       open={open}
       size={size}
       title={title}
+      titleAlignment="left"
     />
   )
 }

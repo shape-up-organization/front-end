@@ -2,6 +2,9 @@ import P from 'prop-types'
 import { useState } from 'react'
 
 import { Link } from '@components/Link'
+import { Modal } from '../Modal'
+
+import { TextButton } from '@components/TextButton'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import {
@@ -12,12 +15,11 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import { Modal } from '../Modal'
 
 const size = 'small'
 const title = 'Faça login'
 
-const Content = () => {
+const Content = ({ switchModal }) => {
   const [showPassword, setShowPassword] = useState(false)
 
   return (
@@ -60,6 +62,13 @@ const Content = () => {
           }}
         />
       </Grid>
+      <Grid item textAlign="center" xs={12}>
+        <Link href="/">
+          <Typography fontWeight="bold" variant="caption">
+            Esqueceu sua senha?
+          </Typography>
+        </Link>
+      </Grid>
       <Grid item xs={5}>
         <Button fullWidth size="large" variant="contained">
           <Typography fontWeight="bold" textTransform="none">
@@ -68,20 +77,24 @@ const Content = () => {
         </Button>
       </Grid>
       <Grid item textAlign="center" xs={12}>
-        <Link>
-          <Typography fontWeight="bold" variant="caption">
-            Esqueceu sua senha?
-          </Typography>
-        </Link>
+        <Typography fontWeight="500" variant="caption">
+          Primeira vez por aqui?
+          <TextButton handleClick={switchModal} text="Crie sua conta" />
+          agora mesmo!
+        </Typography>
       </Grid>
     </Grid>
   )
 }
 
-const LoginModal = ({ open, handleClose }) => {
+Content.propTypes = {
+  switchModal: P.func.isRequired,
+}
+
+const LoginModal = ({ handleClose, open, switchModal }) => {
   return (
     <Modal
-      content={<Content />}
+      content={<Content switchModal={switchModal} />}
       handleClose={handleClose}
       open={open}
       size={size}
@@ -93,6 +106,7 @@ const LoginModal = ({ open, handleClose }) => {
 LoginModal.propTypes = {
   open: P.bool.isRequired,
   handleClose: P.func.isRequired,
+  switchModal: P.func.isRequired,
 }
 
 export { LoginModal }

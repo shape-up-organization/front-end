@@ -19,7 +19,21 @@ const sizes = {
   large: 'lg',
 }
 
-const Modal = ({ content, direction, handleClose, open, size, title }) => {
+const titleAlignments = {
+  center: '0%',
+  left: '-40%',
+  right: '40%',
+}
+
+const Modal = ({
+  content,
+  direction,
+  handleClose,
+  open,
+  size,
+  title,
+  titleAlignment,
+}) => {
   const contentDirection = direction === 'horizontal' ? 'row' : 'column'
   const dividerDirection =
     contentDirection === 'row' ? 'vertical' : 'horizontal'
@@ -39,6 +53,7 @@ const Modal = ({ content, direction, handleClose, open, size, title }) => {
           color="primary"
           component="p"
           fontWeight="bold"
+          marginLeft={titleAlignments[titleAlignment]}
           variant="h4"
         >
           {title}
@@ -58,7 +73,12 @@ const Modal = ({ content, direction, handleClose, open, size, title }) => {
       <DialogContent>
         <Container
           maxWidth="xl"
-          sx={{ display: 'flex', flexDirection: contentDirection }}
+          sx={{
+            alignItems: 'center',
+            display: 'flex',
+            flexDirection: contentDirection,
+            gap: theme => theme.spacing(4),
+          }}
         >
           {content}
           <Divider direction={dividerDirection} text="OU" />
@@ -78,12 +98,14 @@ Modal.propTypes = {
   open: P.bool.isRequired,
   size: P.oneOf(['small', 'medium', 'large']),
   title: P.string,
+  titleAlignment: P.oneOf(['left', 'center', 'right']),
 }
 
 Modal.defaultProps = {
   direction: 'vertical',
   size: 'medium',
   title: '',
+  titleAlignment: 'center',
 }
 
 export { Modal }

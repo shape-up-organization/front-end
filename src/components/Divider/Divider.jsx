@@ -7,14 +7,13 @@ const Divider = ({ direction, text }) => {
     <DividerMUI
       orientation={direction}
       sx={{
-        margin: theme => theme.spacing(3, 0, 4),
         '&::before, &::after': {
           borderWidth: 2,
           borderColor: 'primary.main',
         },
       }}
       variant="fullWidth"
-      flexItem={direction === 'vertical'}
+      flexItem
     >
       {text && (
         <Typography fontWeight="bold" variant="caption">

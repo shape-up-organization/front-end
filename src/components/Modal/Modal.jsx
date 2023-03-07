@@ -1,7 +1,6 @@
 import P from 'prop-types'
 
 import { Divider } from '@components/Divider'
-import { ExternalButtons } from '@components/Modal/ExternalButtons'
 import Close from '@mui/icons-material/Close'
 import {
   Box,
@@ -12,8 +11,29 @@ import {
   IconButton,
   Typography,
 } from '@mui/material'
+import { ExternalButtons } from './components/ExternalButtons'
 
-const Modal = ({ content, direction, handleClose, open, title }) => {
+const sizes = {
+  small: 'xs',
+  medium: 'md',
+  large: 'lg',
+}
+
+const titleAlignments = {
+  center: '0%',
+  left: '-40%',
+  right: '40%',
+}
+
+const Modal = ({
+  content,
+  direction,
+  handleClose,
+  open,
+  size,
+  title,
+  titleAlignment,
+}) => {
   const contentDirection = direction === 'horizontal' ? 'row' : 'column'
   const dividerDirection =
     contentDirection === 'row' ? 'vertical' : 'horizontal'
@@ -23,7 +43,7 @@ const Modal = ({ content, direction, handleClose, open, title }) => {
       fullWidth
       open={open}
       onClose={handleClose}
-      maxWidth="xs"
+      maxWidth={sizes[size]}
       PaperProps={{
         sx: { padding: theme => theme.spacing(2, 0, 3) },
       }}
@@ -33,6 +53,7 @@ const Modal = ({ content, direction, handleClose, open, title }) => {
           color="primary"
           component="p"
           fontWeight="bold"
+          marginLeft={titleAlignments[titleAlignment]}
           variant="h4"
         >
           {title}
@@ -51,8 +72,13 @@ const Modal = ({ content, direction, handleClose, open, title }) => {
       </DialogTitle>
       <DialogContent>
         <Container
-          maxWidth="xs"
-          sx={{ display: 'flex', flexDirection: contentDirection }}
+          maxWidth="xl"
+          sx={{
+            alignItems: 'center',
+            display: 'flex',
+            flexDirection: contentDirection,
+            gap: theme => theme.spacing(4),
+          }}
         >
           {content}
           <Divider direction={dividerDirection} text="OU" />
@@ -70,12 +96,16 @@ Modal.propTypes = {
   direction: P.oneOf(['horizontal', 'vertical']),
   handleClose: P.func.isRequired,
   open: P.bool.isRequired,
-  title: P.bool,
+  size: P.oneOf(['small', 'medium', 'large']),
+  title: P.string,
+  titleAlignment: P.oneOf(['left', 'center', 'right']),
 }
 
 Modal.defaultProps = {
   direction: 'vertical',
+  size: 'medium',
   title: '',
+  titleAlignment: 'center',
 }
 
 export { Modal }

@@ -59,7 +59,7 @@
     ".prettierrc*"
   ],
   "cSpell.userWords": ["airbnb", "commitlint", "esnext"],
-  "cSpell.words": ["facebook", "latin"],
+  "cSpell.words": ["facebook", "latin", "signup", "Signup"],
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true
 }

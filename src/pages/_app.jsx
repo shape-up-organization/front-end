@@ -1,13 +1,13 @@
 import Head from 'next/head'
+import P from 'prop-types'
 
 import { CacheProvider } from '@emotion/react'
 import { createEmotionCache } from '@styles/createEmotionCache'
 
 import { ThemeWrapper } from '@utils/wrappers/ThemeWrapper'
+import '../styles/globals.css'
 
 const clientSideEmotionCache = createEmotionCache()
-
-import '../styles/globals.css'
 
 export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props
@@ -23,4 +23,14 @@ export default function MyApp(props) {
       </ThemeWrapper>
     </CacheProvider>
   )
+}
+
+MyApp.propTypes = {
+  Component: P.func.isRequired,
+  emotionCache: P.object,
+  pageProps: P.object.isRequired,
+}
+
+MyApp.defaultProps = {
+  emotionCache: clientSideEmotionCache,
 }

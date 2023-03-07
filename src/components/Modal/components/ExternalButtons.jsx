@@ -4,13 +4,13 @@ import TwitterIcon from '@mui/icons-material/Twitter'
 import { Button, Grid, Typography } from '@mui/material'
 
 const types = {
-  facebook: {
-    icon: <FacebookIcon />,
-    name: 'Facebook',
-  },
   google: {
     icon: <GoogleIcon />,
     name: 'Google',
+  },
+  facebook: {
+    icon: <FacebookIcon />,
+    name: 'Facebook',
   },
   twitter: {
     icon: <TwitterIcon />,

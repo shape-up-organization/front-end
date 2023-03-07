@@ -12,18 +12,28 @@ import {
   Checkbox,
   FormControlLabel,
   Grid,
+  Grow,
   IconButton,
   InputAdornment,
   TextField,
   Typography,
 } from '@mui/material'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+import { schema } from './schema'
+
 const size = 'large'
 const title = 'Crie sua conta'
 
 const Content = () => {
   const [showPassword, setShowPassword] = useState(false)
-  const { register, handleSubmit } = useForm()
+  const [isTermsChecked, setIsTermsChecked] = useState(false)
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(schema) })
 
   const onSubmit = data => {
     console.log(data)
@@ -36,13 +46,25 @@ const Content = () => {
       justifyContent="center"
       noValidate
       onSubmit={handleSubmit(onSubmit)}
-      spacing={2}
+      rowSpacing={1}
+      columnSpacing={2}
       paddingTop={1}
     >
       <Grid item xs={6}>
         <TextField
           autoComplete="off"
           fullWidth
+          helperText={
+            Boolean(errors.name?.message) ? (
+              <Grow in={Boolean(errors.name?.message)} unmountOnExit>
+                <Typography color="error" variant="subtitle2">
+                  {errors.name?.message}
+                </Typography>
+              </Grow>
+            ) : (
+              ' '
+            )
+          }
           label="Nome"
           name="name"
           type="text"
@@ -54,6 +76,17 @@ const Content = () => {
         <TextField
           autoComplete="off"
           fullWidth
+          helperText={
+            Boolean(errors.lastName?.message) ? (
+              <Grow in={Boolean(errors.lastName?.message)} unmountOnExit>
+                <Typography color="error" variant="subtitle2">
+                  {errors.lastName?.message}
+                </Typography>
+              </Grow>
+            ) : (
+              ' '
+            )
+          }
           label="Sobrenome"
           name="lastName"
           type="text"
@@ -65,6 +98,17 @@ const Content = () => {
         <TextField
           autoComplete="off"
           fullWidth
+          helperText={
+            Boolean(errors.email?.message) ? (
+              <Grow in={Boolean(errors.email?.message)} unmountOnExit>
+                <Typography color="error" variant="subtitle2">
+                  {errors.email?.message}
+                </Typography>
+              </Grow>
+            ) : (
+              ' '
+            )
+          }
           label="E-mail"
           name="email"
           type="email"
@@ -76,6 +120,17 @@ const Content = () => {
         <TextField
           autoComplete="off"
           fullWidth
+          helperText={
+            Boolean(errors.ddd?.message) ? (
+              <Grow in={Boolean(errors.ddd?.message)} unmountOnExit>
+                <Typography color="error" variant="subtitle2">
+                  {errors.ddd?.message}
+                </Typography>
+              </Grow>
+            ) : (
+              ' '
+            )
+          }
           label="DDD"
           name="ddd"
           type="text"
@@ -87,9 +142,20 @@ const Content = () => {
         <TextField
           autoComplete="off"
           fullWidth
+          helperText={
+            Boolean(errors.cellPhone?.message) ? (
+              <Grow in={Boolean(errors.cellPhone?.message)} unmountOnExit>
+                <Typography color="error" variant="subtitle2">
+                  {errors.cellPhone?.message}
+                </Typography>
+              </Grow>
+            ) : (
+              ' '
+            )
+          }
           label="Número"
           name="cellPhone"
-          type="text"
+          type="tel"
           variant="outlined"
           {...register('cellPhone')}
         />
@@ -98,17 +164,39 @@ const Content = () => {
         <TextField
           autoComplete="off"
           fullWidth
+          helperText={
+            Boolean(errors.birth?.message) ? (
+              <Grow in={Boolean(errors.birth?.message)} unmountOnExit>
+                <Typography color="error" variant="subtitle2">
+                  {errors.birth?.message}
+                </Typography>
+              </Grow>
+            ) : (
+              ' '
+            )
+          }
           label="Data de nascimento"
-          name="birthDate"
+          name="birth"
           type="text"
           variant="outlined"
-          {...register('birthDate')}
+          {...register('birth')}
         />
       </Grid>
       <Grid item xs={6}>
         <TextField
           autoComplete="off"
           fullWidth
+          helperText={
+            Boolean(errors.password?.message) ? (
+              <Grow in={Boolean(errors.password?.message)} unmountOnExit>
+                <Typography color="error" variant="subtitle2">
+                  {errors.password?.message}
+                </Typography>
+              </Grow>
+            ) : (
+              ' '
+            )
+          }
           label="Senha"
           name="password"
           type={showPassword ? 'text' : 'password'}
@@ -140,6 +228,17 @@ const Content = () => {
         <TextField
           autoComplete="off"
           fullWidth
+          helperText={
+            Boolean(errors.confirmPassword?.message) ? (
+              <Grow in={Boolean(errors.confirmPassword?.message)} unmountOnExit>
+                <Typography color="error" variant="subtitle2">
+                  {errors.confirmPassword?.message}
+                </Typography>
+              </Grow>
+            ) : (
+              ' '
+            )
+          }
           label="Confirmar senha"
           name="confirmPassword"
           type={showPassword ? 'text' : 'password'}
@@ -169,7 +268,14 @@ const Content = () => {
       </Grid>
       <Grid item xs={12} display="flex" justifyContent="center">
         <FormControlLabel
-          control={<Checkbox {...register('terms')} />}
+          control={
+            <Checkbox
+              checked={isTermsChecked}
+              onChange={() =>
+                setIsTermsChecked(prevIsTermsChecked => !prevIsTermsChecked)
+              }
+            />
+          }
           label={
             <Typography fontWeight="bold" variant="subtitle2">
               Li e aceito os <Link href="/">termos de uso</Link> e{' '}
@@ -179,7 +285,13 @@ const Content = () => {
         />
       </Grid>
       <Grid item xs={5}>
-        <Button fullWidth size="large" variant="contained" type="submit">
+        <Button
+          disabled={!isTermsChecked}
+          fullWidth
+          size="large"
+          variant="contained"
+          type="submit"
+        >
           <Typography fontWeight="bold" textTransform="none">
             ENTRAR
           </Typography>

@@ -41,6 +41,7 @@ const Content = () => {
     >
       <Grid item xs={6}>
         <TextField
+          autoComplete="off"
           fullWidth
           label="Nome"
           name="name"
@@ -51,6 +52,7 @@ const Content = () => {
       </Grid>
       <Grid item xs={6}>
         <TextField
+          autoComplete="off"
           fullWidth
           label="Sobrenome"
           name="lastName"
@@ -61,6 +63,7 @@ const Content = () => {
       </Grid>
       <Grid item xs={12}>
         <TextField
+          autoComplete="off"
           fullWidth
           label="E-mail"
           name="email"
@@ -71,6 +74,7 @@ const Content = () => {
       </Grid>
       <Grid item xs={2}>
         <TextField
+          autoComplete="off"
           fullWidth
           label="DDD"
           name="ddd"
@@ -81,6 +85,7 @@ const Content = () => {
       </Grid>
       <Grid item xs={5}>
         <TextField
+          autoComplete="off"
           fullWidth
           label="Número"
           name="cellPhone"
@@ -91,6 +96,7 @@ const Content = () => {
       </Grid>
       <Grid item xs={5}>
         <TextField
+          autoComplete="off"
           fullWidth
           label="Data de nascimento"
           name="birthDate"
@@ -101,6 +107,7 @@ const Content = () => {
       </Grid>
       <Grid item xs={6}>
         <TextField
+          autoComplete="off"
           fullWidth
           label="Senha"
           name="password"
@@ -131,6 +138,7 @@ const Content = () => {
       </Grid>
       <Grid item xs={6}>
         <TextField
+          autoComplete="off"
           fullWidth
           label="Confirmar senha"
           name="confirmPassword"

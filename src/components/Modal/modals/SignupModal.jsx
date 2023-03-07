@@ -1,5 +1,6 @@
 import P from 'prop-types'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 import { Link } from '@components/Link'
 import { Modal } from '../Modal'
@@ -22,9 +23,22 @@ const title = 'Crie sua conta'
 
 const Content = () => {
   const [showPassword, setShowPassword] = useState(false)
+  const { register, handleSubmit } = useForm()
+
+  const onSubmit = data => {
+    console.log(data)
+  }
 
   return (
-    <Grid container justifyContent="center" spacing={2} paddingTop={1}>
+    <Grid
+      component="form"
+      container
+      justifyContent="center"
+      noValidate
+      onSubmit={handleSubmit(onSubmit)}
+      spacing={2}
+      paddingTop={1}
+    >
       <Grid item xs={6}>
         <TextField
           fullWidth
@@ -32,6 +46,7 @@ const Content = () => {
           name="name"
           type="text"
           variant="outlined"
+          {...register('name')}
         />
       </Grid>
       <Grid item xs={6}>
@@ -41,6 +56,7 @@ const Content = () => {
           name="lastName"
           type="text"
           variant="outlined"
+          {...register('lastName')}
         />
       </Grid>
       <Grid item xs={12}>
@@ -50,6 +66,7 @@ const Content = () => {
           name="email"
           type="email"
           variant="outlined"
+          {...register('email')}
         />
       </Grid>
       <Grid item xs={2}>
@@ -59,6 +76,7 @@ const Content = () => {
           name="ddd"
           type="text"
           variant="outlined"
+          {...register('ddd')}
         />
       </Grid>
       <Grid item xs={5}>
@@ -68,6 +86,7 @@ const Content = () => {
           name="cellPhone"
           type="text"
           variant="outlined"
+          {...register('cellPhone')}
         />
       </Grid>
       <Grid item xs={5}>
@@ -77,6 +96,7 @@ const Content = () => {
           name="birthDate"
           type="text"
           variant="outlined"
+          {...register('birthDate')}
         />
       </Grid>
       <Grid item xs={6}>
@@ -106,6 +126,7 @@ const Content = () => {
               </InputAdornment>
             ),
           }}
+          {...register('password')}
         />
       </Grid>
       <Grid item xs={6}>
@@ -135,11 +156,12 @@ const Content = () => {
               </InputAdornment>
             ),
           }}
+          {...register('confirmPassword')}
         />
       </Grid>
       <Grid item xs={12} display="flex" justifyContent="center">
         <FormControlLabel
-          control={<Checkbox />}
+          control={<Checkbox {...register('terms')} />}
           label={
             <Typography fontWeight="bold" variant="subtitle2">
               Li e aceito os <Link href="/">termos de uso</Link> e{' '}
@@ -149,7 +171,7 @@ const Content = () => {
         />
       </Grid>
       <Grid item xs={5}>
-        <Button fullWidth size="large" variant="contained">
+        <Button fullWidth size="large" variant="contained" type="submit">
           <Typography fontWeight="bold" textTransform="none">
             ENTRAR
           </Typography>

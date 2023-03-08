@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Link } from '@components/Link'
-import { Modal } from '../Modal'
+import { Modal } from '@components/Modal/Modal'
 
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
@@ -116,29 +116,7 @@ const Content = () => {
           {...register('email')}
         />
       </Grid>
-      <Grid item xs={2}>
-        <TextField
-          autoComplete="off"
-          fullWidth
-          helperText={
-            Boolean(errors.ddd?.message) ? (
-              <Grow in={Boolean(errors.ddd?.message)} unmountOnExit>
-                <Typography color="error" variant="subtitle2">
-                  {errors.ddd?.message}
-                </Typography>
-              </Grow>
-            ) : (
-              ' '
-            )
-          }
-          label="DDD"
-          name="ddd"
-          type="text"
-          variant="outlined"
-          {...register('ddd')}
-        />
-      </Grid>
-      <Grid item xs={5}>
+      <Grid item xs={6}>
         <TextField
           autoComplete="off"
           fullWidth
@@ -160,7 +138,7 @@ const Content = () => {
           {...register('cellPhone')}
         />
       </Grid>
-      <Grid item xs={5}>
+      <Grid item xs={6}>
         <TextField
           autoComplete="off"
           fullWidth

@@ -37,8 +37,9 @@ const Content = () => {
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) })
 
-  const onSubmit = data => {
-    console.log(data)
+  const handleSubmitForm = async (values, e) => {
+    e.preventDefault()
+    console.log(values)
   }
 
   return (
@@ -47,7 +48,7 @@ const Content = () => {
       container
       justifyContent="center"
       noValidate
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(handleSubmitForm)}
       rowSpacing={1}
       columnSpacing={2}
       paddingTop={1}
@@ -60,7 +61,7 @@ const Content = () => {
           helperText={
             Boolean(errors.name?.message) ? (
               <Grow in={Boolean(errors.name?.message)} unmountOnExit>
-                <Typography color="error" variant="subtitle2">
+                <Typography color="error" component="span" variant="subtitle2">
                   {errors.name?.message}
                 </Typography>
               </Grow>
@@ -83,7 +84,7 @@ const Content = () => {
           helperText={
             Boolean(errors.lastName?.message) ? (
               <Grow in={Boolean(errors.lastName?.message)} unmountOnExit>
-                <Typography color="error" variant="subtitle2">
+                <Typography color="error" component="span" variant="subtitle2">
                   {errors.lastName?.message}
                 </Typography>
               </Grow>
@@ -106,7 +107,7 @@ const Content = () => {
           helperText={
             Boolean(errors.email?.message) ? (
               <Grow in={Boolean(errors.email?.message)} unmountOnExit>
-                <Typography color="error" variant="subtitle2">
+                <Typography color="error" component="span" variant="subtitle2">
                   {errors.email?.message}
                 </Typography>
               </Grow>
@@ -129,7 +130,7 @@ const Content = () => {
           helperText={
             Boolean(errors.cellPhone?.message) ? (
               <Grow in={Boolean(errors.cellPhone?.message)} unmountOnExit>
-                <Typography color="error" variant="subtitle2">
+                <Typography color="error" component="span" variant="subtitle2">
                   {errors.cellPhone?.message}
                 </Typography>
               </Grow>
@@ -188,7 +189,7 @@ const Content = () => {
           helperText={
             Boolean(errors.password?.message) ? (
               <Grow in={Boolean(errors.password?.message)} unmountOnExit>
-                <Typography color="error" variant="subtitle2">
+                <Typography color="error" component="span" variant="subtitle2">
                   {errors.password?.message}
                 </Typography>
               </Grow>
@@ -230,7 +231,7 @@ const Content = () => {
           helperText={
             Boolean(errors.confirmPassword?.message) ? (
               <Grow in={Boolean(errors.confirmPassword?.message)} unmountOnExit>
-                <Typography color="error" variant="subtitle2">
+                <Typography color="error" component="span" variant="subtitle2">
                   {errors.confirmPassword?.message}
                 </Typography>
               </Grow>

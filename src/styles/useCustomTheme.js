@@ -1,4 +1,4 @@
-import { useLayoutEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { createTheme } from '@mui/material'
 
@@ -15,7 +15,7 @@ export const useCustomTheme = () => {
     []
   )
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (
       typeof window !== 'undefined' &&
       window.matchMedia('(prefers-color-scheme: dark)').matches

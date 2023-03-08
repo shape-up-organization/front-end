@@ -2,9 +2,9 @@ import P from 'prop-types'
 import { useState } from 'react'
 
 import { Link } from '@components/Link'
-import { Modal } from '../Modal'
-
+import { Modal } from '@components/Modal/Modal'
 import { TextButton } from '@components/TextButton'
+
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import {

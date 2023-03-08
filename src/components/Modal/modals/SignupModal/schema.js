@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { format, parseISO } from 'date-fns'
+
 const string = () => z.string().nonempty('Campo obrigatório!')
 
 export const schema = z
@@ -10,7 +12,9 @@ export const schema = z
     cellPhone: string()
       .min(10, { message: 'Número inválido!' })
       .max(13, { message: 'Número inválido!' }),
-    birth: string(),
+    birth: z
+      .date()
+      .transform(value => format(parseISO(value.toISOString()), 'dd/MM/yyyy')),
     password: string().min(8, { message: 'Deve ter pelo menos 8 caracteres!' }),
     confirmPassword: string().min(8, {
       message: 'Deve ter mais do que 8 letras!',

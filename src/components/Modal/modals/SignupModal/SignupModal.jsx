@@ -1,9 +1,12 @@
 import P from 'prop-types'
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 
 import { Link } from '@components/Link'
 import { Modal } from '@components/Modal/Modal'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+import { schema } from './schema'
 
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
@@ -18,9 +21,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-
-import { zodResolver } from '@hookform/resolvers/zod'
-import { schema } from './schema'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
 const size = 'large'
 const title = 'Crie sua conta'
@@ -30,6 +31,7 @@ const Content = () => {
   const [isTermsChecked, setIsTermsChecked] = useState(false)
 
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
@@ -53,6 +55,7 @@ const Content = () => {
       <Grid item xs={6}>
         <TextField
           autoComplete="off"
+          error={!!errors.name?.message}
           fullWidth
           helperText={
             Boolean(errors.name?.message) ? (
@@ -75,6 +78,7 @@ const Content = () => {
       <Grid item xs={6}>
         <TextField
           autoComplete="off"
+          error={!!errors.lastName?.message}
           fullWidth
           helperText={
             Boolean(errors.lastName?.message) ? (
@@ -97,6 +101,7 @@ const Content = () => {
       <Grid item xs={12}>
         <TextField
           autoComplete="off"
+          error={!!errors.email?.message}
           fullWidth
           helperText={
             Boolean(errors.email?.message) ? (
@@ -119,6 +124,7 @@ const Content = () => {
       <Grid item xs={6}>
         <TextField
           autoComplete="off"
+          error={!!errors.cellPhone?.message}
           fullWidth
           helperText={
             Boolean(errors.cellPhone?.message) ? (
@@ -139,30 +145,45 @@ const Content = () => {
         />
       </Grid>
       <Grid item xs={6}>
-        <TextField
-          autoComplete="off"
-          fullWidth
-          helperText={
-            Boolean(errors.birth?.message) ? (
-              <Grow in={Boolean(errors.birth?.message)} unmountOnExit>
-                <Typography color="error" variant="subtitle2">
-                  {errors.birth?.message}
-                </Typography>
-              </Grow>
-            ) : (
-              ' '
-            )
-          }
-          label="Data de nascimento"
+        <Controller
+          control={control}
+          defaultValue={null}
           name="birth"
-          type="text"
-          variant="outlined"
-          {...register('birth')}
+          rules={{
+            required: true,
+
+            validate: {
+              min: date => isNow(date) || 'Please, enter a future date',
+            },
+          }}
+          render={({ field: { ref, onBlur, name, ...field }, fieldState }) => (
+            <DatePicker
+              {...field}
+              format="dd/MM/yyyy"
+              inputRef={ref}
+              label="Data de nascimento"
+              sx={{
+                '& .MuiButtonBase-root': {
+                  marginRight: 0,
+                },
+              }}
+              renderInput={inputProps => (
+                <TextField
+                  {...inputProps}
+                  error={!!fieldState.error}
+                  helperText={fieldState.error?.message}
+                  name={name}
+                  onBlur={onBlur}
+                />
+              )}
+            />
+          )}
         />
       </Grid>
       <Grid item xs={6}>
         <TextField
           autoComplete="off"
+          error={!!errors.password?.message}
           fullWidth
           helperText={
             Boolean(errors.password?.message) ? (
@@ -179,12 +200,11 @@ const Content = () => {
           name="password"
           type={showPassword ? 'text' : 'password'}
           variant="outlined"
-          onMouseEnter={event => event.preventDefault()}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  aria-label="Toggle password visibility"
+                  aria-label={showPassword ? 'Esconder senha' : 'Mostrar senha'}
                   onClick={() =>
                     setShowPassword(prevShowPassword => !prevShowPassword)
                   }
@@ -205,6 +225,7 @@ const Content = () => {
       <Grid item xs={6}>
         <TextField
           autoComplete="off"
+          error={!!errors.confirmPassword?.message}
           fullWidth
           helperText={
             Boolean(errors.confirmPassword?.message) ? (
@@ -221,12 +242,11 @@ const Content = () => {
           name="confirmPassword"
           type={showPassword ? 'text' : 'password'}
           variant="outlined"
-          onMouseEnter={event => event.preventDefault()}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
                 <IconButton
-                  aria-label="Toggle password visibility"
+                  aria-label={showPassword ? 'Esconder senha' : 'Mostrar senha'}
                   onClick={() =>
                     setShowPassword(prevShowPassword => !prevShowPassword)
                   }

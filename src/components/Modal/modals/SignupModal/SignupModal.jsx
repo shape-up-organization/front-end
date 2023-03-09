@@ -39,7 +39,26 @@ const Content = () => {
 
   const handleSubmitForm = async (values, e) => {
     e.preventDefault()
-    console.log(values)
+
+    const payload = {
+      name: values.name,
+      last_name: values.lastName,
+      email: values.email,
+      cell_phone: values.cellPhone,
+      password: values.password,
+      birth: values.birth,
+    }
+
+    const response = await fetch('/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+
+    const data = await response.json()
+    console.log(data)
   }
 
   return (

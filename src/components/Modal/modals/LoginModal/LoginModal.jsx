@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { LinkButton } from '@components/LinkButton'
 import { Modal } from '@components/Modal/Modal'
 import { TextButton } from '@components/TextButton'
+import { TextField } from '@components/TextField'
 
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
@@ -12,54 +13,59 @@ import {
   Grid,
   IconButton,
   InputAdornment,
-  TextField,
   Typography,
 } from '@mui/material'
 
 const size = 'small'
 const title = 'Faça login'
 
+const PasswordEndAdornment = ({
+  isShowingPasswordStates: { isShowingPassword, setIsShowingPassword },
+}) => (
+  <InputAdornment position="end">
+    <IconButton
+      aria-label={`Trocar visibilidade da senha para ser ${
+        isShowingPassword ? 'escondida' : 'visível'
+      }`}
+      onClick={() =>
+        setIsShowingPassword(prevIsShowingPassword => !prevIsShowingPassword)
+      }
+      onMouseDown={event => event.preventDefault()}
+    >
+      {isShowingPassword ? (
+        <VisibilityOff fontSize="small" />
+      ) : (
+        <Visibility fontSize="small" />
+      )}
+    </IconButton>
+  </InputAdornment>
+)
+
+PasswordEndAdornment.propTypes = {
+  isShowingPasswordStates: P.shape([P.bool, P.func]).isRequired,
+}
+
 const Content = ({ switchModal }) => {
-  const [showPassword, setShowPassword] = useState(false)
+  const [isShowingPassword, setIsShowingPassword] = useState(false)
 
   return (
     <Grid container justifyContent="center" rowSpacing={2} paddingTop={1}>
       <Grid item xs={12}>
-        <TextField
-          fullWidth
-          label="E-mail"
-          name="email"
-          type="email"
-          variant="outlined"
-        />
+        <TextField label="E-mail" name="email" type="email" />
       </Grid>
       <Grid item xs={12}>
         <TextField
-          fullWidth
           label="Senha"
           name="password"
-          type={showPassword ? 'text' : 'password'}
-          variant="outlined"
-          onMouseEnter={event => event.preventDefault()}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="Toggle password visibility"
-                  onClick={() =>
-                    setShowPassword(prevShowPassword => !prevShowPassword)
-                  }
-                  onMouseDown={event => event.preventDefault()}
-                >
-                  {showPassword ? (
-                    <VisibilityOff fontSize="small" />
-                  ) : (
-                    <Visibility fontSize="small" />
-                  )}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
+          type={isShowingPassword ? 'text' : 'password'}
+          endAdornment={
+            <PasswordEndAdornment
+              isShowingPasswordStates={{
+                isShowingPassword,
+                setIsShowingPassword,
+              }}
+            />
+          }
         />
       </Grid>
       <Grid item textAlign="center" xs={12}>
@@ -76,7 +82,7 @@ const Content = ({ switchModal }) => {
           </Typography>
         </Button>
       </Grid>
-      <Grid item textAlign="center" xs={12}>
+      <Grid item textAlign="center" xs={12} sm={12}>
         <Typography fontWeight="500" variant="caption">
           Primeira vez por aqui?
           <TextButton handleClick={switchModal} text="Crie sua conta" />

@@ -15,7 +15,9 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
+  FormHelperText,
   Grid,
+  Grow,
   IconButton,
   InputAdornment,
   Typography,
@@ -117,12 +119,13 @@ const Content = () => {
               min: date => isNow(date) || 'Please, enter a future date',
             },
           }}
-          render={({ field: { ref, onBlur, name, ...field }, fieldState }) => (
+          render={({ field: { ref, name, ...field }, fieldState }) => (
             <DatePicker
               {...field}
               format="dd/MM/yyyy"
               inputRef={ref}
               label="Data de nascimento"
+              maxDate={new Date()}
               sx={{
                 '& .MuiButtonBase-root': {
                   marginRight: 0,
@@ -132,14 +135,27 @@ const Content = () => {
                 <TextField
                   {...inputProps}
                   error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
                   name={name}
-                  onBlur={onBlur}
+                  label="Data de nascimento"
                 />
               )}
             />
           )}
         />
+        <FormHelperText component="span">
+          <Grow in={!!errors.birth?.message} unmountOnExit>
+            <Typography
+              color="error"
+              component="p"
+              fontWeight={500}
+              gutterBottom
+              sx={{ padding: theme => theme.spacing(1, 2) }}
+              variant="caption"
+            >
+              {errors.birth?.message ?? ''}
+            </Typography>
+          </Grow>
+        </FormHelperText>
       </Grid>
       <Grid item xs={6}>
         <TextField
@@ -218,9 +234,6 @@ const Content = () => {
           size="large"
           variant="contained"
           type="submit"
-          onClick={() => {
-            console.log(errors)
-          }}
         >
           <Typography fontWeight="bold" textTransform="none">
             ENTRAR

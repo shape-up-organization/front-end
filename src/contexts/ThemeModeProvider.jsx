@@ -4,6 +4,7 @@ import { createContext } from 'react'
 import { CssBaseline, Paper, ThemeProvider } from '@mui/material'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { ptBR } from 'date-fns/locale'
 
 import { useCustomTheme } from '@styles/useCustomTheme'
 
@@ -17,7 +18,10 @@ export const ThemeModeProvider = ({ children }) => {
       <ThemeProvider theme={theme}>
         <Paper>
           <CssBaseline />
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <LocalizationProvider
+            dateAdapter={AdapterDateFns}
+            adapterLocale={ptBR}
+          >
             {children}
           </LocalizationProvider>
         </Paper>

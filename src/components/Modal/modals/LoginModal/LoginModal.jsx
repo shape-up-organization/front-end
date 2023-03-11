@@ -1,7 +1,7 @@
 import P from 'prop-types'
 import { useState } from 'react'
 
-import { Link } from '@components/Link'
+import { LinkButton } from '@components/LinkButton'
 import { Modal } from '@components/Modal/Modal'
 import { TextButton } from '@components/TextButton'
 
@@ -63,11 +63,11 @@ const Content = ({ switchModal }) => {
         />
       </Grid>
       <Grid item textAlign="center" xs={12}>
-        <Link href="/">
+        <LinkButton href="/">
           <Typography fontWeight="bold" variant="caption">
             Esqueceu sua senha?
           </Typography>
-        </Link>
+        </LinkButton>
       </Grid>
       <Grid item xs={5}>
         <Button fullWidth size="large" variant="contained">

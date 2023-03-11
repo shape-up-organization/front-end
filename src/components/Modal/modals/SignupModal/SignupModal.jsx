@@ -2,7 +2,7 @@ import P from 'prop-types'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import { Link } from '@components/Link'
+import { LinkButton } from '@components/LinkButton'
 import { Modal } from '@components/Modal/Modal'
 
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -296,8 +296,8 @@ const Content = () => {
           }
           label={
             <Typography fontWeight="bold" variant="subtitle2">
-              Li e aceito os <Link href="/">termos de uso</Link> e{' '}
-              <Link href="/">políticas de privacidade</Link>
+              Li e aceito os <LinkButton href="/">termos de uso</LinkButton> e{' '}
+              <LinkButton href="/">políticas de privacidade</LinkButton>
             </Typography>
           }
         />

@@ -24,6 +24,8 @@ import {
 } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
+import { users } from '@api/users'
+
 const size = 'large'
 const title = 'Crie sua conta'
 
@@ -40,7 +42,7 @@ const Content = () => {
 
   const handleSubmitForm = async (values, e) => {
     e.preventDefault()
-    console.log(values)
+
     const payload = {
       name: values.name,
       last_name: values.lastName,
@@ -50,16 +52,12 @@ const Content = () => {
       birth: values.birth,
     }
 
-    const response = await fetch('/api/users', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    })
-
-    const data = await response.json()
-    console.log(data)
+    try {
+      await users.create(payload)
+    } catch (error) {
+      console.log(error)
+    }
+    // console.log(response)
   }
 
   return (

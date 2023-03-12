@@ -1,7 +1,7 @@
 import { Link as LinkMUI } from '@mui/material'
 import P from 'prop-types'
 
-const Link = ({ children, href }) => {
+const LinkButton = ({ children, href }) => {
   return (
     <LinkMUI
       color="link"
@@ -15,9 +15,9 @@ const Link = ({ children, href }) => {
   )
 }
 
-Link.propTypes = {
+LinkButton.propTypes = {
   children: P.oneOfType([P.element, P.string]).isRequired,
   href: P.string.isRequired,
 }
 
-export { Link }
+export { LinkButton }

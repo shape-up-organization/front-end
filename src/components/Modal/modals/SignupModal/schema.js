@@ -13,7 +13,10 @@ export const schema = z
       .min(10, { message: 'Número inválido!' })
       .max(13, { message: 'Número inválido!' }),
     birth: z
-      .date()
+      .date({
+        required_error: 'Campo obrigatório!',
+        invalid_type_error: 'Data inválida!',
+      })
       .transform(value => format(parseISO(value.toISOString()), 'dd/MM/yyyy')),
     password: string().min(8, { message: 'Deve ter pelo menos 8 caracteres!' }),
     confirmPassword: string().min(8, {
@@ -21,6 +24,6 @@ export const schema = z
     }),
   })
   .refine(({ password, confirmPassword }) => password === confirmPassword, {
-    message: 'Senhas não são iguais!',
+    message: 'As senhas não são iguais!',
     path: ['confirmPassword'],
   })

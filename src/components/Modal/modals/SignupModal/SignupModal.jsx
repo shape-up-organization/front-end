@@ -2,8 +2,9 @@ import P from 'prop-types'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
-import { Link } from '@components/Link'
+import { LinkButton } from '@components/LinkButton'
 import { Modal } from '@components/Modal/Modal'
+import { TextField } from '@components/TextField'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { schema } from './schema'
@@ -14,14 +15,16 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
+  FormHelperText,
   Grid,
   Grow,
   IconButton,
   InputAdornment,
-  TextField,
   Typography,
 } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+
+import { users } from '@api/users'
 
 const size = 'large'
 const title = 'Crie sua conta'
@@ -39,7 +42,22 @@ const Content = () => {
 
   const handleSubmitForm = async (values, e) => {
     e.preventDefault()
-    console.log(values)
+
+    const payload = {
+      name: values.name,
+      last_name: values.lastName,
+      email: values.email,
+      cell_phone: values.cellPhone,
+      password: values.password,
+      birth: values.birth,
+    }
+
+    try {
+      await users.create(payload)
+    } catch (error) {
+      console.log(error)
+    }
+    // console.log(response)
   }
 
   return (
@@ -49,100 +67,43 @@ const Content = () => {
       justifyContent="center"
       noValidate
       onSubmit={handleSubmit(handleSubmitForm)}
-      rowSpacing={1}
-      columnSpacing={2}
+      spacing={2}
       paddingTop={1}
     >
       <Grid item xs={6}>
         <TextField
-          autoComplete="off"
-          error={!!errors.name?.message}
-          fullWidth
-          helperText={
-            Boolean(errors.name?.message) ? (
-              <Grow in={Boolean(errors.name?.message)} unmountOnExit>
-                <Typography color="error" component="span" variant="subtitle2">
-                  {errors.name?.message}
-                </Typography>
-              </Grow>
-            ) : (
-              ' '
-            )
-          }
+          error={errors.name?.message}
           label="Nome"
           name="name"
           type="text"
-          variant="outlined"
-          {...register('name')}
+          register={register}
         />
       </Grid>
       <Grid item xs={6}>
         <TextField
-          autoComplete="off"
-          error={!!errors.lastName?.message}
-          fullWidth
-          helperText={
-            Boolean(errors.lastName?.message) ? (
-              <Grow in={Boolean(errors.lastName?.message)} unmountOnExit>
-                <Typography color="error" component="span" variant="subtitle2">
-                  {errors.lastName?.message}
-                </Typography>
-              </Grow>
-            ) : (
-              ' '
-            )
-          }
+          error={errors.lastName?.message}
           label="Sobrenome"
           name="lastName"
           type="text"
-          variant="outlined"
-          {...register('lastName')}
+          register={register}
         />
       </Grid>
       <Grid item xs={12}>
         <TextField
-          autoComplete="off"
-          error={!!errors.email?.message}
-          fullWidth
-          helperText={
-            Boolean(errors.email?.message) ? (
-              <Grow in={Boolean(errors.email?.message)} unmountOnExit>
-                <Typography color="error" component="span" variant="subtitle2">
-                  {errors.email?.message}
-                </Typography>
-              </Grow>
-            ) : (
-              ' '
-            )
-          }
+          error={errors.email?.message}
           label="E-mail"
           name="email"
           type="email"
-          variant="outlined"
-          {...register('email')}
+          register={register}
         />
       </Grid>
       <Grid item xs={6}>
         <TextField
-          autoComplete="off"
-          error={!!errors.cellPhone?.message}
-          fullWidth
-          helperText={
-            Boolean(errors.cellPhone?.message) ? (
-              <Grow in={Boolean(errors.cellPhone?.message)} unmountOnExit>
-                <Typography color="error" component="span" variant="subtitle2">
-                  {errors.cellPhone?.message}
-                </Typography>
-              </Grow>
-            ) : (
-              ' '
-            )
-          }
+          error={errors.cellPhone?.message}
           label="Número"
           name="cellPhone"
           type="tel"
-          variant="outlined"
-          {...register('cellPhone')}
+          register={register}
         />
       </Grid>
       <Grid item xs={6}>
@@ -152,17 +113,17 @@ const Content = () => {
           name="birth"
           rules={{
             required: true,
-
             validate: {
               min: date => isNow(date) || 'Please, enter a future date',
             },
           }}
-          render={({ field: { ref, onBlur, name, ...field }, fieldState }) => (
+          render={({ field: { ref, name, ...field }, fieldState }) => (
             <DatePicker
               {...field}
               format="dd/MM/yyyy"
               inputRef={ref}
               label="Data de nascimento"
+              maxDate={new Date()}
               sx={{
                 '& .MuiButtonBase-root': {
                   marginRight: 0,
@@ -172,97 +133,78 @@ const Content = () => {
                 <TextField
                   {...inputProps}
                   error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
                   name={name}
-                  onBlur={onBlur}
+                  label="Data de nascimento"
                 />
               )}
             />
           )}
         />
+        <FormHelperText component="span">
+          <Grow in={!!errors.birth?.message} unmountOnExit>
+            <Typography
+              color="error"
+              component="p"
+              fontWeight={500}
+              gutterBottom
+              sx={{ padding: theme => theme.spacing(1, 2) }}
+              variant="caption"
+            >
+              {errors.birth?.message ?? ''}
+            </Typography>
+          </Grow>
+        </FormHelperText>
       </Grid>
       <Grid item xs={6}>
         <TextField
-          autoComplete="off"
-          error={!!errors.password?.message}
-          fullWidth
-          helperText={
-            Boolean(errors.password?.message) ? (
-              <Grow in={Boolean(errors.password?.message)} unmountOnExit>
-                <Typography color="error" component="span" variant="subtitle2">
-                  {errors.password?.message}
-                </Typography>
-              </Grow>
-            ) : (
-              ' '
-            )
-          }
+          error={errors.password?.message}
           label="Senha"
           name="password"
           type={showPassword ? 'text' : 'password'}
-          variant="outlined"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label={showPassword ? 'Esconder senha' : 'Mostrar senha'}
-                  onClick={() =>
-                    setShowPassword(prevShowPassword => !prevShowPassword)
-                  }
-                  onMouseDown={event => event.preventDefault()}
-                >
-                  {showPassword ? (
-                    <VisibilityOff fontSize="small" />
-                  ) : (
-                    <Visibility fontSize="small" />
-                  )}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          {...register('password')}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label={showPassword ? 'Esconder senha' : 'Mostrar senha'}
+                onClick={() =>
+                  setShowPassword(prevShowPassword => !prevShowPassword)
+                }
+                onMouseDown={event => event.preventDefault()}
+              >
+                {showPassword ? (
+                  <VisibilityOff fontSize="small" />
+                ) : (
+                  <Visibility fontSize="small" />
+                )}
+              </IconButton>
+            </InputAdornment>
+          }
+          register={register}
         />
       </Grid>
       <Grid item xs={6}>
         <TextField
-          autoComplete="off"
-          error={!!errors.confirmPassword?.message}
-          fullWidth
-          helperText={
-            Boolean(errors.confirmPassword?.message) ? (
-              <Grow in={Boolean(errors.confirmPassword?.message)} unmountOnExit>
-                <Typography color="error" component="span" variant="subtitle2">
-                  {errors.confirmPassword?.message}
-                </Typography>
-              </Grow>
-            ) : (
-              ' '
-            )
-          }
+          error={errors.confirmPassword?.message}
           label="Confirmar senha"
           name="confirmPassword"
           type={showPassword ? 'text' : 'password'}
-          variant="outlined"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label={showPassword ? 'Esconder senha' : 'Mostrar senha'}
-                  onClick={() =>
-                    setShowPassword(prevShowPassword => !prevShowPassword)
-                  }
-                  onMouseDown={event => event.preventDefault()}
-                >
-                  {showPassword ? (
-                    <VisibilityOff fontSize="small" />
-                  ) : (
-                    <Visibility fontSize="small" />
-                  )}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          {...register('confirmPassword')}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label={showPassword ? 'Esconder senha' : 'Mostrar senha'}
+                onClick={() =>
+                  setShowPassword(prevShowPassword => !prevShowPassword)
+                }
+                onMouseDown={event => event.preventDefault()}
+              >
+                {showPassword ? (
+                  <VisibilityOff fontSize="small" />
+                ) : (
+                  <Visibility fontSize="small" />
+                )}
+              </IconButton>
+            </InputAdornment>
+          }
+          register={register}
         />
       </Grid>
       <Grid item xs={12} display="flex" justifyContent="center">
@@ -277,8 +219,8 @@ const Content = () => {
           }
           label={
             <Typography fontWeight="bold" variant="subtitle2">
-              Li e aceito os <Link href="/">termos de uso</Link> e{' '}
-              <Link href="/">políticas de privacidade</Link>
+              Li e aceito os <LinkButton href="/">termos de uso</LinkButton> e{' '}
+              <LinkButton href="/">políticas de privacidade</LinkButton>
             </Typography>
           }
         />

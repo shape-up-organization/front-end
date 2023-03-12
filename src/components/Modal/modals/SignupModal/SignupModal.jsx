@@ -57,7 +57,6 @@ const Content = () => {
     } catch (error) {
       console.log(error)
     }
-    // console.log(response)
   }
 
   return (
@@ -113,32 +112,40 @@ const Content = () => {
           name="birth"
           rules={{
             required: true,
-            validate: {
-              min: date => isNow(date) || 'Please, enter a future date',
-            },
           }}
-          render={({ field: { ref, name, ...field }, fieldState }) => (
-            <DatePicker
-              {...field}
-              format="dd/MM/yyyy"
-              inputRef={ref}
-              label="Data de nascimento"
-              maxDate={new Date()}
-              sx={{
-                '& .MuiButtonBase-root': {
-                  marginRight: 0,
-                },
-              }}
-              renderInput={inputProps => (
-                <TextField
-                  {...inputProps}
-                  error={!!fieldState.error}
-                  name={name}
-                  label="Data de nascimento"
-                />
-              )}
-            />
-          )}
+          render={({ field: { ref, ...field } }) => {
+            const getErrorColor = field => {
+              return errors.birth?.message
+                ? {
+                    [field]: theme => {
+                      const errorColor = theme.palette.error.main
+                      return `${errorColor} !important`
+                    },
+                  }
+                : {}
+            }
+
+            return (
+              <DatePicker
+                {...field}
+                format="dd/MM/yyyy"
+                inputRef={ref}
+                label="Data de nascimento"
+                maxDate={new Date()}
+                sx={{
+                  '& .MuiButtonBase-root': {
+                    marginRight: 0,
+                  },
+                  '& .MuiInputLabel-root': {
+                    ...getErrorColor('color'),
+                  },
+                  '& .MuiOutlinedInput-notchedOutline': {
+                    ...getErrorColor('borderColor'),
+                  },
+                }}
+              />
+            )
+          }}
         />
         <FormHelperText component="span">
           <Grow in={!!errors.birth?.message} unmountOnExit>

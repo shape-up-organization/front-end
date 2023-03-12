@@ -1,6 +1,9 @@
+import P from 'prop-types'
+
 import { Button, Grid, Typography } from '@mui/material'
 
-const Header = () => {
+const Header = ({ openModals }) => {
+  const { setLoginOpen, setSignupOpen } = openModals
   return (
     <Grid container justifyContent="space-around" alignItems={'center'}>
       <Grid item xs={7} display={'flex'}>
@@ -9,13 +12,17 @@ const Header = () => {
         </Typography>
       </Grid>
       <Grid item xs={1.8} justifyContent={'space-between'} display={'flex'}>
-        <Button>Entrar</Button>
-        <Button variant="contained" color="secondary">
+        <Button onClick={setLoginOpen}>Entrar</Button>
+        <Button onClick={setSignupOpen} variant="contained" color="secondary">
           Cadastrar
         </Button>
       </Grid>
     </Grid>
   )
+}
+
+Header.propTypes = {
+  openModals: P.objectOf(P.func).isRequired,
 }
 
 export { Header }

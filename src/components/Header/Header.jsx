@@ -2,27 +2,38 @@ import P from 'prop-types'
 
 import { Button, Grid, Typography } from '@mui/material'
 
-const Header = ({ openModals }) => {
-  const { setLoginOpen, setSignupOpen } = openModals
+const Header = ({ handleOpenModals }) => {
+  const { handleOpenLogin, handleOpenSignup } = handleOpenModals
   return (
-    <Grid container justifyContent="space-around" alignItems={'center'}>
-      <Grid item xs={7} display={'flex'}>
-        <Typography variant="h4" color={'secondary'}>
-          ShapeUP{' '}
+    <Grid
+      container
+      alignItems="center"
+      justifyContent="space-between"
+      paddingY={4}
+    >
+      <Grid item xs={4} sm={7} md={8} lg={9}>
+        <Typography color="primary" fontWeight="bold" variant="h4">
+          ShapeUP
         </Typography>
       </Grid>
-      <Grid item xs={1.8} justifyContent={'space-between'} display={'flex'}>
-        <Button onClick={setLoginOpen}>Entrar</Button>
-        <Button onClick={setSignupOpen} variant="contained" color="secondary">
-          Cadastrar
-        </Button>
+      <Grid container item xs={7} sm={5} md={4} lg={3}>
+        <Grid item xs={6}>
+          <Button fullWidth onClick={handleOpenLogin}>
+            Entrar
+          </Button>
+        </Grid>
+        <Grid item xs={6}>
+          <Button fullWidth onClick={handleOpenSignup} variant="contained">
+            Cadastrar
+          </Button>
+        </Grid>
       </Grid>
     </Grid>
   )
 }
 
 Header.propTypes = {
-  openModals: P.objectOf(P.func).isRequired,
+  handleOpenModals: P.objectOf(P.func).isRequired,
 }
 
 export { Header }

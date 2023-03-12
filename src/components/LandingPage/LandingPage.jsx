@@ -6,69 +6,48 @@ import { LoginModal, SignupModal } from '@components/Modal'
 import { Banner } from '../Banner'
 import { Footer } from '../Footer'
 import { Header } from '../Header'
-import { Photo } from '../Photo'
 
 const LandingPage = () => {
-  const [loginOpen, setLoginOpen] = useState(false)
-  const [signupOpen, setSignupOpen] = useState(false)
+  const [isLoginOpen, setIsLoginOpen] = useState(false)
+  const [isSignupOpen, setIsSignupOpen] = useState(false)
 
   const switchModal = () => {
-    if (loginOpen && !signupOpen) {
-      setLoginOpen(false)
-      setSignupOpen(true)
-    } else if (signupOpen && !loginOpen) {
-      setSignupOpen(false)
-      setLoginOpen(true)
-    }
+    setIsLoginOpen(prevIsLoginOpen => !prevIsLoginOpen)
+    setIsSignupOpen(prevIsSignupOpen => !prevIsSignupOpen)
+  }
+
+  const handleOpenModals = {
+    handleOpenLogin: () => setIsLoginOpen(true),
+    handleOpenSignup: () => setIsSignupOpen(true),
   }
 
   return (
     <>
-      <Grid container height="100vh" display={'flex'}>
-        <Grid container height="10vh">
-          <Header openModals={{ setLoginOpen, setSignupOpen }} />
+      <Grid container justifyContent="center" minHeight="100vh">
+        <Grid item xs={10}>
+          <Header handleOpenModals={handleOpenModals} />
         </Grid>
-        <Grid container>
-          <Grid
-            item
-            xs={5.5}
-            height={'90vh'}
-            display={'flex'}
-            direction={'column'}
-          >
-            <Grid
-              item
-              xs={11}
-              display={'flex'}
-              paddingLeft={12}
-              justifyContent={'center'}
-              alignItems={'center'}
-            >
-              <Banner />
-            </Grid>
-            <Grid item xs={1} display={'flex'} direction={'column-reverse'}>
+        <Grid container item xs={10}>
+          <Banner handleOpenSignup={handleOpenModals.handleOpenSignup} />
+        </Grid>
+        <Grid container item xs={10}>
+          <Grid item display="flex" alignItems="flex-end" pb={4} xs={12} lg={6}>
+            <Grid item xs={12} lg={8}>
               <Footer />
             </Grid>
-          </Grid>
-          <Grid
-            item
-            xs={6.5}
-            height={'90vh'}
-            display={'flex'}
-            direction={'column-reverse'}
-          >
-            <Photo />
           </Grid>
         </Grid>
       </Grid>
       <LoginModal
-        open={loginOpen}
-        handleClose={() => setLoginOpen(prevLoginOpen => !prevLoginOpen)}
+        open={isLoginOpen}
+        handleClose={() => setIsLoginOpen(prevIsLoginOpen => !prevIsLoginOpen)}
         switchModal={switchModal}
       />
       <SignupModal
-        open={signupOpen}
-        handleClose={() => setSignupOpen(prevSignupOpen => !prevSignupOpen)}
+        open={isSignupOpen}
+        handleClose={() =>
+          setIsSignupOpen(prevIsSignupOpen => !prevIsSignupOpen)
+        }
       />
     </>
   )

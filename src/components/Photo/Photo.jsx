@@ -1,12 +1,12 @@
-import Box from '@mui/material/Box'
+import { Box } from '@mui/material'
 
 const Photo = () => {
   return (
     <Box
+      minHeight="48vh"
+      height="100%"
       sx={{
-        width: 733.4,
-        height: 500,
-        backgroundColor: 'primary.dark',
+        backgroundColor: 'primary.main',
       }}
     />
   )

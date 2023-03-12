@@ -1,59 +1,106 @@
+import P from 'prop-types'
+
+import { Photo } from '@components/Photo'
+
 import { Button, Grid, Typography } from '@mui/material'
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
+
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter'
 import SportsEsportsOutlinedIcon from '@mui/icons-material/SportsEsportsOutlined'
 
-const Banner = () => {
+const Banner = ({ handleOpenSignup }) => {
   return (
-    <Grid container spacing={6} direction={'column'}>
-      <Grid xs={3} item>
-        <Typography variant="h4">Seu impulso estético</Typography>
+    <Grid container>
+      <Grid container item xs={12} lg={6}>
+        <Grid item xs={12}>
+          <Typography variant="h3">Seu impulso estético</Typography>
+        </Grid>
+        <Grid container item xs={12}>
+          <Grid item alignItems="center" display="flex" gap={2} xs={12}>
+            <FitnessCenterIcon
+              color="primary"
+              sx={{ fontSize: theme => theme.spacing(5) }}
+            />
+            <Typography variant="h6">
+              <Typography
+                color="primary"
+                component="span"
+                display="inline"
+                variant="h6"
+              >
+                Compartilhe{' '}
+              </Typography>
+              seu{' '}
+              <Typography
+                color="primary"
+                component="span"
+                display="inline"
+                variant="h6"
+              >
+                progresso{' '}
+              </Typography>
+              com os amigos
+            </Typography>
+          </Grid>
+          <Grid item alignItems="center" display="flex" gap={2} xs={12}>
+            <CalendarMonthIcon
+              color="primary"
+              sx={{ fontSize: theme => theme.spacing(5) }}
+            />
+            <Typography variant="h6">
+              <Typography
+                color="primary"
+                component="span"
+                display="inline"
+                variant="h6"
+              >
+                Participe{' '}
+              </Typography>
+              de{' '}
+              <Typography
+                color="primary"
+                component="span"
+                display="inline"
+                variant="h6"
+              >
+                eventos{' '}
+              </Typography>
+              da comunidade
+            </Typography>
+          </Grid>
+          <Grid item alignItems="center" display="flex" gap={2} xs={12}>
+            <SportsEsportsOutlinedIcon
+              color="primary"
+              sx={{ fontSize: theme => theme.spacing(5) }}
+            />
+            <Typography variant="h6">
+              Uma rede social{' '}
+              <Typography
+                color="primary"
+                component="span"
+                display="inline"
+                variant="h6"
+              >
+                gameficada
+              </Typography>
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container item xs={12} pt={2}>
+          <Grid item xs={3}>
+            <Button fullWidth onClick={handleOpenSignup} variant="contained">
+              EVOLUA JÁ
+            </Button>
+          </Grid>
+        </Grid>
       </Grid>
-      <Grid item xs={6} alignItems="center" direction={'column'}>
-        <Grid item xs={4} alignItems="center" display="flex">
-          <FitnessCenterIcon sx={{ fontSize: 48 }} color="secondary" />
-          <Typography variant="h6">
-            <Typography color="secondary" variant="h7" display="inline">
-              Compartilhe{' '}
-            </Typography>
-            seu{' '}
-            <Typography color="secondary" variant="h7" display="inline">
-              progresso{' '}
-            </Typography>
-            com os amigos
-          </Typography>
-        </Grid>
-        <Grid item xs={4} alignItems="center" display="flex">
-          <CalendarMonthIcon sx={{ fontSize: 48 }} color="secondary" />
-          <Typography variant="h6">
-            <Typography color="secondary" variant="h7" display="inline">
-              Participe{' '}
-            </Typography>
-            de{' '}
-            <Typography color="secondary" variant="h7" display="inline">
-              eventos{' '}
-            </Typography>
-            da comunidade
-          </Typography>
-        </Grid>
-        <Grid item xs={4} alignItems="center" display="flex">
-          <SportsEsportsOutlinedIcon sx={{ fontSize: 48 }} color="secondary" />
-          <Typography variant="h6">
-            Uma rede social{' '}
-            <Typography color="secondary" variant="h7" display="inline">
-              gameficada
-            </Typography>
-          </Typography>
-        </Grid>
-      </Grid>
-      <Grid item>
-        <Grid item xs={3}>
-          <Button variant="contained" color="secondary">
-            Evolua já
-          </Button>
-        </Grid>
+      <Grid item xs={12} lg={6}>
+        <Photo />
       </Grid>
     </Grid>
   )
 }
+
+Banner.propTypes = { handleOpenSignup: P.func.isRequired }
+
 export { Banner }

@@ -76,7 +76,7 @@ const Content = ({ switchModal }) => {
       const response = await users.authenticate(payload)
 
       if (response.status === 200) {
-        signIn(response.token)
+        signIn(response.data['jwt-token'])
       }
     } catch (error) {
       console.log(error)

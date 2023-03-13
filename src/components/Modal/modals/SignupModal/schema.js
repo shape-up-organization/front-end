@@ -8,6 +8,7 @@ export const schema = z
   .object({
     name: string().min(2, { message: 'Deve ter mais do que uma letra!' }),
     lastName: string().min(2, { message: 'Deve ter mais do que uma letra!' }),
+    username: string().min(2, { message: 'Deve ter mais do que uma letra!' }),
     email: string().email('Email inválido!'),
     cellPhone: string()
       .min(10, { message: 'Número inválido!' })

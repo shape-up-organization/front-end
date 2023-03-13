@@ -18,10 +18,10 @@ const LinkButton = ({ children, external, internal }) => {
   return (
     <LinkMUI
       color="link"
-      sx={{ cursor: 'pointer' }}
-      target="_blank"
-      underline="always"
       onClick={handleNavigation}
+      sx={{ cursor: 'pointer' }}
+      tabIndex={0}
+      underline="always"
     >
       {children}
     </LinkMUI>

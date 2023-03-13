@@ -52,6 +52,7 @@ const Content = ({ switchModal }) => {
     const payload = {
       name: values.name,
       last_name: values.lastName,
+      username: values.username,
       email: values.email,
       cell_phone: values.cellPhone,
       password: values.password,
@@ -101,6 +102,15 @@ const Content = ({ switchModal }) => {
           error={errors.lastName?.message}
           label="Sobrenome"
           name="lastName"
+          type="text"
+          register={register}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          error={errors.username?.message}
+          label="Nome de usuário"
+          name="username"
           type="text"
           register={register}
         />

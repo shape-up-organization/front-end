@@ -8,4 +8,4 @@ npx lint-staged
 
 echo ""
 echo "🚨 TESTING MODIFIED TESTS..."
-npm run test
+npm run test:related

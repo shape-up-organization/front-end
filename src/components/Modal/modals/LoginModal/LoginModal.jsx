@@ -1,20 +1,29 @@
-import P from 'prop-types'
 import { useState } from 'react'
+
+import P from 'prop-types'
+import { useCookies } from 'react-cookie'
+import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 import { LinkButton } from '@components/LinkButton'
 import { TextButton } from '@components/TextButton'
 import { TextField } from '@components/TextField'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import {
   Button,
+  CircularProgress,
   Grid,
   IconButton,
   InputAdornment,
   Typography,
 } from '@mui/material'
+
+import { users } from '@api/users'
 import { Modal } from '../../Modal'
+import { schema } from './schema'
 
 const size = 'small'
 const title = 'Faça login'
@@ -47,17 +56,56 @@ PasswordEndAdornment.propTypes = {
 
 const Content = ({ switchModal }) => {
   const [isShowingPassword, setIsShowingPassword] = useState(false)
+  const [isButtonLoading, setIsButtonLoading] = useState(false)
+  const [, setCookie] = useCookies()
+
+  const navigate = useNavigate()
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(schema) })
+
+  const handleLogin = async values => {
+    const payload = values
+
+    try {
+      const response = await users.authenticate(payload)
+
+      if (response.status === 200) {
+        setCookie('jwt-token', response.data.token, {
+          path: '/user-cookies',
+        })
+        navigate('/logged')
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsButtonLoading(false)
+    }
+  }
 
   return (
-    <Grid container justifyContent="center" rowSpacing={2} paddingTop={1}>
+    <Grid
+      component="form"
+      container
+      justifyContent="center"
+      onSubmit={handleSubmit(handleLogin)}
+      rowSpacing={2}
+      paddingTop={1}
+    >
       <Grid item xs={12}>
-        <TextField label="E-mail" name="email" type="email" />
+        <TextField
+          error={errors.email?.message}
+          label="E-mail"
+          name="email"
+          type="email"
+          register={register}
+        />
       </Grid>
       <Grid item xs={12}>
         <TextField
-          label="Senha"
-          name="password"
-          type={isShowingPassword ? 'text' : 'password'}
           endAdornment={
             <PasswordEndAdornment
               isShowingPasswordStates={{
@@ -66,6 +114,11 @@ const Content = ({ switchModal }) => {
               }}
             />
           }
+          error={errors.password?.message}
+          label="Senha"
+          name="password"
+          type={isShowingPassword ? 'text' : 'password'}
+          register={register}
         />
       </Grid>
       <Grid item textAlign="center" xs={12}>
@@ -76,10 +129,20 @@ const Content = ({ switchModal }) => {
         </LinkButton>
       </Grid>
       <Grid item xs={5}>
-        <Button fullWidth size="large" variant="contained">
-          <Typography fontWeight="bold" textTransform="none">
-            ENTRAR
-          </Typography>
+        <Button
+          disabled={isButtonLoading}
+          fullWidth
+          size="large"
+          type="submit"
+          variant="contained"
+        >
+          {isButtonLoading ? (
+            <CircularProgress color="secondary" size={24} />
+          ) : (
+            <Typography fontWeight="bold" textTransform="none">
+              ENTRAR
+            </Typography>
+          )}
         </Button>
       </Grid>
       <Grid item textAlign="center" xs={12} sm={12}>

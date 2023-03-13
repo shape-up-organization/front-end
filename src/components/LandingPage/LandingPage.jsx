@@ -48,6 +48,7 @@ const LandingPage = () => {
         handleClose={() =>
           setIsSignupOpen(prevIsSignupOpen => !prevIsSignupOpen)
         }
+        switchModal={switchModal}
       />
     </>
   )

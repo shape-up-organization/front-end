@@ -12,6 +12,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import {
   Button,
   Checkbox,
+  CircularProgress,
   FormControlLabel,
   FormHelperText,
   Grid,
@@ -24,14 +25,15 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
 import { users } from '@api/users'
 import { Modal } from '../../Modal'
-import { schema } from './schema'
+import { schema } from '../LoginModal/schema'
 
 const size = 'large'
 const title = 'Crie sua conta'
 
-const Content = () => {
+const Content = ({ switchModal }) => {
   const [showPassword, setShowPassword] = useState(false)
   const [isTermsChecked, setIsTermsChecked] = useState(false)
+  const [isButtonLoading, setIsButtonLoading] = useState(false)
 
   const {
     control,
@@ -40,8 +42,9 @@ const Content = () => {
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) })
 
-  const handleSubmitForm = async (values, e) => {
+  const handleSignup = async (values, e) => {
     e.preventDefault()
+    setIsButtonLoading(true)
 
     const payload = {
       name: values.name,
@@ -52,12 +55,16 @@ const Content = () => {
       birth: values.birth,
     }
 
-    console.log(payload)
-
     try {
-      await users.create(payload)
+      const response = await users.create(payload)
+
+      if (response.status === 201) {
+        switchModal()
+      }
     } catch (error) {
-      console.log(error)
+      console.log('erro: ', error)
+    } finally {
+      setIsButtonLoading(false)
     }
   }
 
@@ -67,7 +74,7 @@ const Content = () => {
       container
       justifyContent="center"
       noValidate
-      onSubmit={handleSubmit(handleSubmitForm)}
+      onSubmit={handleSubmit(handleSignup)}
       spacing={2}
       paddingTop={1}
     >
@@ -235,24 +242,30 @@ const Content = () => {
       </Grid>
       <Grid item xs={5}>
         <Button
-          disabled={!isTermsChecked}
+          disabled={!isTermsChecked || isButtonLoading}
           fullWidth
           size="large"
           variant="contained"
           type="submit"
         >
-          <Typography fontWeight="bold" textTransform="none">
-            ENTRAR
-          </Typography>
+          {isButtonLoading ? (
+            <CircularProgress color="secondary" size={24} />
+          ) : (
+            <Typography fontWeight="bold" textTransform="none">
+              ENTRAR
+            </Typography>
+          )}
         </Button>
       </Grid>
     </Grid>
   )
 }
 
-const SignupModal = ({ isOpen, handleClose }) => (
+Content.propTypes = { switchModal: P.func.isRequired }
+
+const SignupModal = ({ isOpen, handleClose, switchModal }) => (
   <Modal
-    content={<Content />}
+    content={<Content switchModal={switchModal} />}
     direction="horizontal"
     handleClose={handleClose}
     isOpen={isOpen}
@@ -265,6 +278,7 @@ const SignupModal = ({ isOpen, handleClose }) => (
 SignupModal.propTypes = {
   isOpen: P.bool.isRequired,
   handleClose: P.func.isRequired,
+  switchModal: P.func.isRequired,
 }
 
 export { SignupModal }

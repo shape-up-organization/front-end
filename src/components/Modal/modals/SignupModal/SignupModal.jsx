@@ -3,11 +3,9 @@ import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
 import { LinkButton } from '@components/LinkButton'
-import { Modal } from '@components/Modal/Modal'
 import { TextField } from '@components/TextField'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { schema } from './schema'
 
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
@@ -25,6 +23,8 @@ import {
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
 import { users } from '@api/users'
+import { Modal } from '../../Modal'
+import { schema } from './schema'
 
 const size = 'large'
 const title = 'Crie sua conta'
@@ -51,6 +51,8 @@ const Content = () => {
       password: values.password,
       birth: values.birth,
     }
+
+    console.log(payload)
 
     try {
       await users.create(payload)
@@ -114,20 +116,18 @@ const Content = () => {
             required: true,
           }}
           render={({ field: { ref, ...field } }) => {
-            const getErrorColor = field => {
-              return errors.birth?.message
+            const getErrorColor = cssRule =>
+              errors.birth?.message
                 ? {
-                    [field]: theme => {
+                    [cssRule]: theme => {
                       const errorColor = theme.palette.error.main
                       return `${errorColor} !important`
                     },
                   }
                 : {}
-            }
 
             return (
               <DatePicker
-                {...field}
                 format="dd/MM/yyyy"
                 inputRef={ref}
                 label="Data de nascimento"
@@ -143,6 +143,7 @@ const Content = () => {
                     ...getErrorColor('borderColor'),
                   },
                 }}
+                {...field}
               />
             )
           }}
@@ -249,22 +250,20 @@ const Content = () => {
   )
 }
 
-const SignupModal = ({ open, handleClose }) => {
-  return (
-    <Modal
-      content={<Content />}
-      direction="horizontal"
-      handleClose={handleClose}
-      open={open}
-      size={size}
-      title={title}
-      titleAlignment="left"
-    />
-  )
-}
+const SignupModal = ({ isOpen, handleClose }) => (
+  <Modal
+    content={<Content />}
+    direction="horizontal"
+    handleClose={handleClose}
+    isOpen={isOpen}
+    size={size}
+    title={title}
+    titleAlignment="left"
+  />
+)
 
 SignupModal.propTypes = {
-  open: P.bool.isRequired,
+  isOpen: P.bool.isRequired,
   handleClose: P.func.isRequired,
 }
 

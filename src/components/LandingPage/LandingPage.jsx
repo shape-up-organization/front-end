@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import Grid from '@mui/material/Grid'
+import { Grid } from '@mui/material'
 
 import { LoginModal, SignupModal } from '@components/Modal'
 import { Banner } from '../Banner'
@@ -39,12 +39,12 @@ const LandingPage = () => {
         </Grid>
       </Grid>
       <LoginModal
-        open={isLoginOpen}
+        isOpen={isLoginOpen}
         handleClose={() => setIsLoginOpen(prevIsLoginOpen => !prevIsLoginOpen)}
         switchModal={switchModal}
       />
       <SignupModal
-        open={isSignupOpen}
+        isOpen={isSignupOpen}
         handleClose={() =>
           setIsSignupOpen(prevIsSignupOpen => !prevIsSignupOpen)
         }

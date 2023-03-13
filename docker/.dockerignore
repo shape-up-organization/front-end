@@ -1,0 +1,7 @@
+# dependencies
+dist
+node_modules
+.husky
+
+# testing
+/coverage

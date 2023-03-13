@@ -1,14 +1,11 @@
-import { Box } from '@mui/material'
+import P from 'prop-types'
 
-const Photo = () => {
-  return (
-    <Box
-      minHeight="48vh"
-      height="100%"
-      sx={{
-        backgroundColor: 'primary.main',
-      }}
-    />
-  )
-}
+import Image from 'mui-image'
+
+const Photo = ({ alt, src, ...props }) => (
+  <Image alt={alt} src={src} {...props} />
+)
+
+Photo.propTypes = { alt: P.string.isRequired, src: P.string.isRequired }
+
 export { Photo }

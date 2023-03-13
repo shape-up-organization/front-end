@@ -1,5 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /node_modules
 /.husky/
@@ -8,15 +6,12 @@
 # testing
 /coverage
 
-# next.js
-/.next/
-/out/
-/.swc/
-
 # production
-/build
+dist
+dist-ssr
 
 # local env files
+*.local
 .env*.local
 
 # vercel

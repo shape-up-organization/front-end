@@ -5,3 +5,7 @@ echo ""
 echo "🚨 VERIFYING COMMITED CHANGES..."
 exec >/dev/tty 2>&1 #if you dont use this line, probably the lint log will loop
 npx lint-staged
+
+echo ""
+echo "🚨 TESTING MODIFIED TESTS..."
+npm run test

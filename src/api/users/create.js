@@ -1,9 +1,3 @@
-import axios from 'axios'
+import { http } from '@api/lib/http'
 
-export const create = async payload => {
-  return await axios.post('http://localhost:7000/users', payload, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-}
+export const create = async payload => http.post('/users', payload)

@@ -29,7 +29,7 @@ const Modal = ({
   content,
   direction,
   handleClose,
-  open,
+  isOpen,
   size,
   title,
   titleAlignment,
@@ -41,7 +41,7 @@ const Modal = ({
   return (
     <Dialog
       fullWidth
-      open={open}
+      open={isOpen}
       onClose={handleClose}
       maxWidth={sizes[size]}
       PaperProps={{
@@ -95,7 +95,7 @@ Modal.propTypes = {
   content: P.element.isRequired,
   direction: P.oneOf(['horizontal', 'vertical']),
   handleClose: P.func.isRequired,
-  open: P.bool.isRequired,
+  isOpen: P.bool.isRequired,
   size: P.oneOf(['small', 'medium', 'large']),
   title: P.string,
   titleAlignment: P.oneOf(['left', 'center', 'right']),

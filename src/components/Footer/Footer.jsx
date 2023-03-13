@@ -1,22 +1,22 @@
-import { Grid, Typography } from '@mui/material'
+import { LinkButton } from '@components/LinkButton'
+
+import { Grid } from '@mui/material'
 
 import CircleIcon from '@mui/icons-material/Circle'
 
-const Footer = () => {
-  return (
-    <Grid container alignItems="center" justifyContent="space-between">
-      <Grid item>
-        <Typography variant="h8">Sobre</Typography>
-      </Grid>
-      <CircleIcon color="secondary" fontSize="Small" />
-      <Grid item>
-        <Typography variant="h8">Privacidade</Typography>
-      </Grid>
-      <CircleIcon color="secondary" fontSize="Small" />
-      <Grid item>
-        <Typography variant="h8">Ajuda</Typography>
-      </Grid>
+const Footer = () => (
+  <Grid container alignItems="center" justifyContent="space-between">
+    <Grid item>
+      <LinkButton href="#">Sobre</LinkButton>
     </Grid>
-  )
-}
+    <CircleIcon color="primary" sx={{ fontSize: 16 }} />
+    <Grid item>
+      <LinkButton href="#">Privacidade</LinkButton>
+    </Grid>
+    <CircleIcon color="primary" sx={{ fontSize: 16 }} />
+    <Grid item>
+      <LinkButton href="#">Ajuda</LinkButton>
+    </Grid>
+  </Grid>
+)
 export { Footer }

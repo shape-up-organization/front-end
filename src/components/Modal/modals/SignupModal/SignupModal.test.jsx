@@ -1,6 +1,6 @@
 import { ThemeModeProvider } from '@contexts'
-import { render } from '@testing-library/react'
-import { describe, test, vi } from 'vitest'
+import { render, screen } from '@testing-library/react'
+import { describe, expect, test, vi } from 'vitest'
 import { SignupModal } from './SignupModal'
 
 describe('SignupModal', () => {
@@ -10,5 +10,7 @@ describe('SignupModal', () => {
         <SignupModal isOpen handleClose={vi.fn} />
       </ThemeModeProvider>
     )
+
+    expect(screen.getByText('Crie sua conta')).toBeInTheDocument()
   })
 })

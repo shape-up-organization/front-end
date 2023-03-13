@@ -2,9 +2,7 @@ import { useState } from 'react'
 
 import { useSnackbar } from 'notistack'
 import P from 'prop-types'
-import { useCookies } from 'react-cookie'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
 
 import { LinkButton } from '@components/LinkButton'
 import { TextButton } from '@components/TextButton'
@@ -23,6 +21,8 @@ import {
 } from '@mui/material'
 
 import { users } from '@api/users'
+import { useAuth } from '@contexts'
+
 import { Modal } from '../../Modal'
 import { schema } from './schema'
 
@@ -59,9 +59,9 @@ const Content = ({ switchModal }) => {
   const [isShowingPassword, setIsShowingPassword] = useState(false)
   const [isButtonLoading, setIsButtonLoading] = useState(false)
 
-  const [, setCookie] = useCookies()
+  // const cookies = new Cookies()
+  const { signIn } = useAuth()
   const { enqueueSnackbar } = useSnackbar()
-  const navigate = useNavigate()
 
   const {
     register,
@@ -76,10 +76,7 @@ const Content = ({ switchModal }) => {
       const response = await users.authenticate(payload)
 
       if (response.status === 200) {
-        setCookie('jwt-token', response.data.token, {
-          path: '/user-cookies',
-        })
-        navigate('/logged')
+        signIn(response.token)
       }
     } catch (error) {
       console.log(error)
@@ -127,7 +124,7 @@ const Content = ({ switchModal }) => {
         />
       </Grid>
       <Grid item textAlign="center" xs={12}>
-        <LinkButton href="/">
+        <LinkButton internal="password-recovery">
           <Typography fontWeight="bold" variant="caption">
             Esqueceu sua senha?
           </Typography>

@@ -20,6 +20,7 @@ const base = {
     secondary: {
       main: '#00FCA8',
     },
+    success: { main: '#25D6B6' },
   },
   typography: {
     fontFamily: ['Ubuntu', 'Helvetica', 'Arial', 'sans-serif'].join(','),

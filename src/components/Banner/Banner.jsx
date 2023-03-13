@@ -2,7 +2,7 @@ import P from 'prop-types'
 
 import { Photo } from '@components/Photo'
 
-import pic from '@assets/images/landing-page.png'
+import landingPageImage from '@assets/images/landing-page.png'
 
 import { Button, Grid, Typography } from '@mui/material'
 
@@ -98,7 +98,7 @@ const Banner = ({ handleOpenSignup }) => (
     <Grid item xs={12} lg={6}>
       <Photo
         alt="Mulher se exercitando em uma bola de yoga"
-        src={pic}
+        src={landingPageImage}
         fit="contain"
         shift="left"
         sx={{

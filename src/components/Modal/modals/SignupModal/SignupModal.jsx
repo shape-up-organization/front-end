@@ -133,7 +133,7 @@ const Content = ({ switchModal }) => {
           }}
           render={({ field: { ref, ...field } }) => {
             const getErrorColor = cssRule =>
-              errors.birth?.message
+              errors.birth?.message || errors.birth?.birth?.message
                 ? {
                     [cssRule]: theme => {
                       const errorColor = theme.palette.error.main
@@ -165,7 +165,10 @@ const Content = ({ switchModal }) => {
           }}
         />
         <FormHelperText component="span">
-          <Grow in={!!errors.birth?.message} unmountOnExit>
+          <Grow
+            in={!!errors.birth?.message || !!errors.birth?.birth?.message}
+            unmountOnExit
+          >
             <Typography
               color="error"
               component="p"
@@ -174,7 +177,7 @@ const Content = ({ switchModal }) => {
               sx={{ padding: theme => theme.spacing(1, 2) }}
               variant="caption"
             >
-              {errors.birth?.message ?? ''}
+              {errors.birth?.message || errors.birth?.birth?.message || ''}
             </Typography>
           </Grow>
         </FormHelperText>
@@ -243,8 +246,11 @@ const Content = ({ switchModal }) => {
           }
           label={
             <Typography fontWeight="bold" variant="subtitle2">
-              Li e aceito os <LinkButton href="/">termos de uso</LinkButton> e{' '}
-              <LinkButton href="/">políticas de privacidade</LinkButton>
+              Li e aceito os{' '}
+              <LinkButton internal="terms-of-use">termos de uso</LinkButton> e{' '}
+              <LinkButton internal="privacy-policies">
+                políticas de privacidade
+              </LinkButton>
             </Typography>
           }
         />

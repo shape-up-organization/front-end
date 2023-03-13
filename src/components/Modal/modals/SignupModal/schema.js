@@ -17,6 +17,12 @@ export const schema = z
         required_error: 'Campo obrigatório!',
         invalid_type_error: 'Data inválida!',
       })
+      .refine(
+        value =>
+          value <=
+          new Date(new Date().setFullYear(new Date().getFullYear() - 18)),
+        { message: 'Deve ter mais maior 18 anos!', path: ['birth'] }
+      )
       .transform(value => format(parseISO(value.toISOString()), 'dd/MM/yyyy')),
     password: string().min(8, { message: 'Deve ter pelo menos 8 caracteres!' }),
     confirmPassword: string().min(8, {

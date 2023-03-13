@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
       "@api/*": ["./src/api/*"],
+      "@assets/*": ["./src/api/*"],
       "@contexts": ["./src/contexts"],
       "@components/*": ["./src/components/*"],
       "@styles/*": ["./src/styles/*"],

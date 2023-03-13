@@ -2,7 +2,6 @@ import P from 'prop-types'
 import { useState } from 'react'
 
 import { LinkButton } from '@components/LinkButton'
-import { Modal } from '@components/Modal/Modal'
 import { TextButton } from '@components/TextButton'
 import { TextField } from '@components/TextField'
 
@@ -15,6 +14,7 @@ import {
   InputAdornment,
   Typography,
 } from '@mui/material'
+import { Modal } from '../../Modal'
 
 const size = 'small'
 const title = 'Faça login'
@@ -97,20 +97,18 @@ Content.propTypes = {
   switchModal: P.func.isRequired,
 }
 
-const LoginModal = ({ handleClose, open, switchModal }) => {
-  return (
-    <Modal
-      content={<Content switchModal={switchModal} />}
-      handleClose={handleClose}
-      open={open}
-      size={size}
-      title={title}
-    />
-  )
-}
+const LoginModal = ({ handleClose, isOpen, switchModal }) => (
+  <Modal
+    content={<Content switchModal={switchModal} />}
+    handleClose={handleClose}
+    isOpen={isOpen}
+    size={size}
+    title={title}
+  />
+)
 
 LoginModal.propTypes = {
-  open: P.bool.isRequired,
+  isOpen: P.bool.isRequired,
   handleClose: P.func.isRequired,
   switchModal: P.func.isRequired,
 }

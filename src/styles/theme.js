@@ -1,12 +1,3 @@
-import { Ubuntu } from 'next/font/google'
-
-export const fontPrimary = Ubuntu({
-  display: 'swap',
-  fallback: ['Helvetica', 'Arial', 'sans-serif'],
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '700'],
-})
-
 const colors = {
   black: '#303030',
   blue: '#42A5F5',
@@ -31,7 +22,7 @@ const base = {
     },
   },
   typography: {
-    fontFamily: fontPrimary.style.fontFamily,
+    fontFamily: ['Ubuntu', 'Helvetica', 'Arial', 'sans-serif'].join(','),
   },
 }
 

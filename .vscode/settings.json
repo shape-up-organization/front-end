@@ -25,16 +25,7 @@
     "editor.autoClosingBrackets": "always",
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "typescript.preferences.importModuleSpecifier": "non-relative",
-  "[typescript]": {
-    "editor.autoClosingBrackets": "always",
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "[javascriptreact]": {
-    "editor.autoClosingBrackets": "always",
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[typescriptreact]": {
     "editor.autoClosingBrackets": "always",
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -59,7 +50,12 @@
     ".prettierrc*"
   ],
   "cSpell.userWords": ["airbnb", "commitlint", "esnext"],
-  "cSpell.words": ["Esports", "facebook", "latin", "signup", "Signup"],
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  "cSpell.words": [
+    "Esports",
+    "facebook",
+    "hookform",
+    "latin",
+    "signup",
+    "Signup"
+  ]
 }

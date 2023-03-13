@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  vite-prod-app:
+    container_name: vite-prod-app
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile.prod
+    env_file:
+      - ../.env.production.local
+    environment:
+      - MODE="production"
+      - VITE_API_URL=${VITE_API_URL}
+      - VITE_MODE=${VITE_MODE}
+    ports:
+      - 3000:3000
+    networks:
+      - vite_network
+
+networks:
+  vite_network:
+    external: false
+    name: 'vite_network'

@@ -17,7 +17,8 @@ export const useCustomTheme = () => {
 
   useEffect(() => {
     if (
-      typeof window !== 'undefined' &&
+      window &&
+      window.matchMedia &&
       window.matchMedia('(prefers-color-scheme: dark)').matches
     ) {
       setMode('dark')

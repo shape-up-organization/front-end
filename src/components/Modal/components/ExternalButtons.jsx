@@ -3,6 +3,8 @@ import GoogleIcon from '@mui/icons-material/Google'
 import TwitterIcon from '@mui/icons-material/Twitter'
 import { Button, Grid, Typography } from '@mui/material'
 
+import { v4 } from 'uuid'
+
 const types = {
   google: {
     icon: <GoogleIcon />,
@@ -20,25 +22,23 @@ const types = {
 
 const sites = Object.keys(types)
 
-const ExternalButtons = () => {
-  return (
-    <Grid container justifyContent="center" gap={2}>
-      {sites.map((site, index) => (
-        <Grid item key={index} xs={12}>
-          <Button
-            fullWidth
-            size="large"
-            startIcon={types[site].icon}
-            variant="contained"
-          >
-            <Typography fontWeight="bold" textTransform="none">
-              Entre com {types[site].name}
-            </Typography>
-          </Button>
-        </Grid>
-      ))}
-    </Grid>
-  )
-}
+const ExternalButtons = () => (
+  <Grid container justifyContent="center" gap={2}>
+    {sites.map(site => (
+      <Grid key={v4()} item xs={12}>
+        <Button
+          fullWidth
+          size="large"
+          startIcon={types[site].icon}
+          variant="contained"
+        >
+          <Typography fontWeight="bold" textTransform="none">
+            Entre com {types[site].name}
+          </Typography>
+        </Button>
+      </Grid>
+    ))}
+  </Grid>
+)
 
 export { ExternalButtons }

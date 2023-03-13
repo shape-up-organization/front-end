@@ -30,6 +30,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.5",
+    "react-router-dom": "^6.9.0",
     "typeface-ubuntu": "^1.1.13",
     "uuid": "^9.0.0",
     "vite": "^4.1.4",

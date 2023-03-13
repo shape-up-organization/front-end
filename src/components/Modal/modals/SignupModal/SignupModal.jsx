@@ -2,10 +2,11 @@ import P from 'prop-types'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useSnackbar } from 'notistack'
+
 import { LinkButton } from '@components/LinkButton'
 import { TextField } from '@components/TextField'
-
-import { zodResolver } from '@hookform/resolvers/zod'
 
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
@@ -25,7 +26,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
 import { users } from '@api/users'
 import { Modal } from '../../Modal'
-import { schema } from '../LoginModal/schema'
+import { schema } from './schema'
 
 const size = 'large'
 const title = 'Crie sua conta'
@@ -34,6 +35,8 @@ const Content = ({ switchModal }) => {
   const [showPassword, setShowPassword] = useState(false)
   const [isTermsChecked, setIsTermsChecked] = useState(false)
   const [isButtonLoading, setIsButtonLoading] = useState(false)
+
+  const { enqueueSnackbar } = useSnackbar()
 
   const {
     control,
@@ -60,9 +63,15 @@ const Content = ({ switchModal }) => {
 
       if (response.status === 201) {
         switchModal()
+        enqueueSnackbar('Usuário registrado com sucesso!', {
+          variant: 'success',
+        })
       }
     } catch (error) {
       console.log('erro: ', error)
+      enqueueSnackbar('Houve algum erro na criação do usuário', {
+        variant: 'error',
+      })
     } finally {
       setIsButtonLoading(false)
     }

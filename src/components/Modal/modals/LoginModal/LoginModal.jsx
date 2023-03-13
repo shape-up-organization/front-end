@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { useSnackbar } from 'notistack'
 import P from 'prop-types'
 import { useCookies } from 'react-cookie'
 import { useForm } from 'react-hook-form'
@@ -57,8 +58,9 @@ PasswordEndAdornment.propTypes = {
 const Content = ({ switchModal }) => {
   const [isShowingPassword, setIsShowingPassword] = useState(false)
   const [isButtonLoading, setIsButtonLoading] = useState(false)
-  const [, setCookie] = useCookies()
 
+  const [, setCookie] = useCookies()
+  const { enqueueSnackbar } = useSnackbar()
   const navigate = useNavigate()
 
   const {
@@ -81,6 +83,9 @@ const Content = ({ switchModal }) => {
       }
     } catch (error) {
       console.log(error)
+      enqueueSnackbar('E-mail e ou senha incorretos!', {
+        variant: 'error',
+      })
     } finally {
       setIsButtonLoading(false)
     }

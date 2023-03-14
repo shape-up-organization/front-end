@@ -1,7 +1,3 @@
 {
-  "rewrites": [
-    { "source": "/", "destination": "/" },
-    { "source": "/logged", "destination": "/logged" },
-    { "source": "/(.*)", "destination": "*" }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }

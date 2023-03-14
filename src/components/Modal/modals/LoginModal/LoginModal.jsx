@@ -59,7 +59,6 @@ const Content = ({ switchModal }) => {
   const [isShowingPassword, setIsShowingPassword] = useState(false)
   const [isButtonLoading, setIsButtonLoading] = useState(false)
 
-  // const cookies = new Cookies()
   const { signIn } = useAuth()
   const { enqueueSnackbar } = useSnackbar()
 
@@ -70,6 +69,7 @@ const Content = ({ switchModal }) => {
   } = useForm({ resolver: zodResolver(schema) })
 
   const handleLogin = async values => {
+    setIsButtonLoading(true)
     const payload = values
 
     try {

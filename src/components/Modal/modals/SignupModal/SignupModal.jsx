@@ -45,8 +45,7 @@ const Content = ({ switchModal }) => {
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) })
 
-  const handleSignup = async (values, e) => {
-    e.preventDefault()
+  const handleSignup = async values => {
     setIsButtonLoading(true)
 
     const payload = {

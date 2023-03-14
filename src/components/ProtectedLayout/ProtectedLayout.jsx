@@ -1,29 +1,26 @@
-import { useCookies } from 'react-cookie'
-import { Navigate, Outlet } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
+import { Outlet } from 'react-router-dom'
+
+import { LoadingPage } from '@components/LoadingPage'
 import { useAuth } from '@contexts'
-import { Buffer } from 'buffer'
 
 const ProtectedLayout = () => {
-  const { signOut } = useAuth()
-  const jwtToken = useCookies(['jwt-token'])[0]['jwt-token']
+  const { isTokenInvalid, signOut } = useAuth()
+  const [isLoading, setIsLoading] = useState(true)
 
-  if (!jwtToken || jwtToken === 'undefined' || jwtToken === 'null') {
-    signOut()
-    return <Navigate to="/" />
+  const verifyAuth = async () => {
+    if (await isTokenInvalid()) {
+      signOut()
+    }
+    setIsLoading(false)
   }
 
-  const parseJwt = token => {
-    const base64Payload = token.split('.')[1]
-    const payload = Buffer.from(base64Payload, 'base64')
-    return JSON.parse(payload.toString())
-  }
+  useEffect(() => {
+    verifyAuth()
+  })
 
-  if (parseJwt(jwtToken).exp < Date.now() / 1000) {
-    signOut()
-  }
-
-  return <Outlet />
+  return isLoading ? <LoadingPage /> : <Outlet />
 }
 
 export { ProtectedLayout }

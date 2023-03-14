@@ -21,6 +21,8 @@ import { LoggedPage } from '@components/LoggedPage'
 import { ProtectedLayout } from '@components/ProtectedLayout'
 import { getDesignTokens } from '@styles/theme'
 
+import '@styles/globals.css'
+
 const StyledNotistack = styled(MaterialDesignContent)(() => ({
   '&.notistack-MuiContent-success': {
     backgroundColor: getDesignTokens('light').palette.success.main,
@@ -49,7 +51,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           <AuthProvider>
             <Routes>
               <Route path="*" element={<ErrorPage />} />
-              <Route index element={<LandingPage />} />
+              <Route path="/" element={<LandingPage />} />
               <Route element={<ProtectedLayout />}>
                 <Route path="logged" element={<LoggedPage />} />
               </Route>

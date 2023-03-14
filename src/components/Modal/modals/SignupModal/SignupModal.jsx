@@ -2,16 +2,18 @@ import P from 'prop-types'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useSnackbar } from 'notistack'
+
 import { LinkButton } from '@components/LinkButton'
 import { TextField } from '@components/TextField'
-
-import { zodResolver } from '@hookform/resolvers/zod'
 
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import {
   Button,
   Checkbox,
+  CircularProgress,
   FormControlLabel,
   FormHelperText,
   Grid,
@@ -29,9 +31,12 @@ import { schema } from './schema'
 const size = 'large'
 const title = 'Crie sua conta'
 
-const Content = () => {
+const Content = ({ switchModal }) => {
   const [showPassword, setShowPassword] = useState(false)
   const [isTermsChecked, setIsTermsChecked] = useState(false)
+  const [isButtonLoading, setIsButtonLoading] = useState(false)
+
+  const { enqueueSnackbar } = useSnackbar()
 
   const {
     control,
@@ -40,24 +45,35 @@ const Content = () => {
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) })
 
-  const handleSubmitForm = async (values, e) => {
-    e.preventDefault()
+  const handleSignup = async values => {
+    setIsButtonLoading(true)
 
     const payload = {
       name: values.name,
       last_name: values.lastName,
+      username: values.username,
       email: values.email,
       cell_phone: values.cellPhone,
       password: values.password,
       birth: values.birth,
     }
 
-    console.log(payload)
-
     try {
-      await users.create(payload)
+      const response = await users.create(payload)
+
+      if (response.status === 201) {
+        switchModal()
+        enqueueSnackbar('Usuário registrado com sucesso!', {
+          variant: 'success',
+        })
+      }
     } catch (error) {
-      console.log(error)
+      console.log('erro: ', error)
+      enqueueSnackbar('Houve algum erro na criação do usuário', {
+        variant: 'error',
+      })
+    } finally {
+      setIsButtonLoading(false)
     }
   }
 
@@ -67,7 +83,7 @@ const Content = () => {
       container
       justifyContent="center"
       noValidate
-      onSubmit={handleSubmit(handleSubmitForm)}
+      onSubmit={handleSubmit(handleSignup)}
       spacing={2}
       paddingTop={1}
     >
@@ -85,6 +101,15 @@ const Content = () => {
           error={errors.lastName?.message}
           label="Sobrenome"
           name="lastName"
+          type="text"
+          register={register}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          error={errors.username?.message}
+          label="Nome de usuário"
+          name="username"
           type="text"
           register={register}
         />
@@ -117,7 +142,7 @@ const Content = () => {
           }}
           render={({ field: { ref, ...field } }) => {
             const getErrorColor = cssRule =>
-              errors.birth?.message
+              errors.birth?.message || errors.birth?.birth?.message
                 ? {
                     [cssRule]: theme => {
                       const errorColor = theme.palette.error.main
@@ -149,7 +174,10 @@ const Content = () => {
           }}
         />
         <FormHelperText component="span">
-          <Grow in={!!errors.birth?.message} unmountOnExit>
+          <Grow
+            in={!!errors.birth?.message || !!errors.birth?.birth?.message}
+            unmountOnExit
+          >
             <Typography
               color="error"
               component="p"
@@ -158,7 +186,7 @@ const Content = () => {
               sx={{ padding: theme => theme.spacing(1, 2) }}
               variant="caption"
             >
-              {errors.birth?.message ?? ''}
+              {errors.birth?.message || errors.birth?.birth?.message || ''}
             </Typography>
           </Grow>
         </FormHelperText>
@@ -227,32 +255,41 @@ const Content = () => {
           }
           label={
             <Typography fontWeight="bold" variant="subtitle2">
-              Li e aceito os <LinkButton href="/">termos de uso</LinkButton> e{' '}
-              <LinkButton href="/">políticas de privacidade</LinkButton>
+              Li e aceito os{' '}
+              <LinkButton internal="terms-of-use">termos de uso</LinkButton> e{' '}
+              <LinkButton internal="privacy-policies">
+                políticas de privacidade
+              </LinkButton>
             </Typography>
           }
         />
       </Grid>
       <Grid item xs={5}>
         <Button
-          disabled={!isTermsChecked}
+          disabled={!isTermsChecked || isButtonLoading}
           fullWidth
           size="large"
           variant="contained"
           type="submit"
         >
-          <Typography fontWeight="bold" textTransform="none">
-            ENTRAR
-          </Typography>
+          {isButtonLoading ? (
+            <CircularProgress color="secondary" size={24} />
+          ) : (
+            <Typography fontWeight="bold" textTransform="none">
+              ENTRAR
+            </Typography>
+          )}
         </Button>
       </Grid>
     </Grid>
   )
 }
 
-const SignupModal = ({ isOpen, handleClose }) => (
+Content.propTypes = { switchModal: P.func.isRequired }
+
+const SignupModal = ({ isOpen, handleClose, switchModal }) => (
   <Modal
-    content={<Content />}
+    content={<Content switchModal={switchModal} />}
     direction="horizontal"
     handleClose={handleClose}
     isOpen={isOpen}
@@ -265,6 +302,7 @@ const SignupModal = ({ isOpen, handleClose }) => (
 SignupModal.propTypes = {
   isOpen: P.bool.isRequired,
   handleClose: P.func.isRequired,
+  switchModal: P.func.isRequired,
 }
 
 export { SignupModal }

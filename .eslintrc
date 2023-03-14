@@ -43,6 +43,9 @@
     "import/prefer-default-export": "off",
     "import/no-extraneous-dependencies": "off",
     "react/jsx-props-no-spreading": "off",
-    "react/function-component-definition": ["off"]
+    "react/function-component-definition": ["off"],
+    "consistent-return": "off",
+    "react/no-unstable-nested-components": "off",
+    "import/no-cycle": "off"
   }
 }

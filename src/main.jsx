@@ -1,14 +1,17 @@
-import { ThemeModeProvider } from '@contexts'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App'
+
+import { RoutesProvider, SnackbarProvider, ThemeModeProvider } from '@contexts'
+import '@styles/globals.css'
 
 import 'typeface-ubuntu'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeModeProvider>
-      <App />
+      <SnackbarProvider>
+        <RoutesProvider />
+      </SnackbarProvider>
     </ThemeModeProvider>
   </React.StrictMode>
 )

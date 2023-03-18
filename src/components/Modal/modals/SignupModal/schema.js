@@ -6,12 +6,20 @@ const string = () => z.string().nonempty('Campo obrigatório!')
 
 export const schema = z
   .object({
-    name: string().min(2, { message: 'Deve ter mais do que uma letra!' }),
-    lastName: string().min(2, { message: 'Deve ter mais do que uma letra!' }),
+    name: string()
+      .min(2, { message: 'Deve ter mais do que uma letra!' })
+      .regex(/^[a-zA-Z]+$/, {
+        message: 'Não pode ter números ou caracteres especiais!',
+      }),
+    lastName: string()
+      .min(2, { message: 'Deve ter mais do que uma letra!' })
+      .regex(/^[a-zA-Z]+$/, {
+        message: 'Não pode ter números ou caracteres especiais!',
+      }),
     username: string().min(2, { message: 'Deve ter mais do que uma letra!' }),
     email: string().email('Email inválido!'),
     cellPhone: string()
-      .min(10, { message: 'Número inválido!' })
+      .min(9, { message: 'Número inválido!' })
       .max(13, { message: 'Número inválido!' }),
     birth: z
       .date({
@@ -22,10 +30,29 @@ export const schema = z
         value =>
           value <=
           new Date(new Date().setFullYear(new Date().getFullYear() - 18)),
-        { message: 'Deve ter mais maior 18 anos!', path: ['birth'] }
+        { message: 'Deve ter mais de 18 anos!', path: ['birth'] }
+      )
+      .refine(
+        value =>
+          value >=
+          new Date(new Date().setFullYear(new Date().getFullYear() - 120)),
+        { message: 'Data inválida!', path: ['birth'] }
       )
       .transform(value => format(parseISO(value.toISOString()), 'dd/MM/yyyy')),
-    password: string().min(8, { message: 'Deve ter pelo menos 8 caracteres!' }),
+    password: string()
+      .min(8, { message: 'Deve ter pelo menos 8 caracteres!' })
+      .regex(/.*[0-9].*/, {
+        message: 'Password must contain at least 1 number',
+      })
+      .regex(/.*[A-Z].*/, {
+        message: 'Password must contain at least 1 uppercase character',
+      })
+      .regex(/.*[a-z].*/, {
+        message: 'Password must contain at least 1 lowercase character',
+      })
+      .regex(/.*[\W_].*/, {
+        message: 'Password must contain at least 1 special character',
+      }),
     confirmPassword: string().min(8, {
       message: 'Deve ter mais do que 8 letras!',
     }),

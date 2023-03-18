@@ -1,7 +1,9 @@
-import { ThemeModeProvider } from '@contexts'
 import { render, screen } from '@testing-library/react'
-import { BrowserRouter } from 'react-router-dom'
 import { describe, expect, test, vi } from 'vitest'
+
+import { ThemeModeProvider } from '@contexts'
+import { BrowserRouter } from 'react-router-dom'
+
 import { SignupModal } from './SignupModal'
 
 describe('SignupModal', () => {
@@ -9,7 +11,7 @@ describe('SignupModal', () => {
     render(
       <ThemeModeProvider>
         <BrowserRouter>
-          <SignupModal isOpen handleClose={vi.fn} />
+          <SignupModal isOpen handleClose={vi.fn} switchModal={vi.fn} />
         </BrowserRouter>
       </ThemeModeProvider>
     )

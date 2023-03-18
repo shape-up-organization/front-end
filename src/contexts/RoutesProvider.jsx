@@ -12,7 +12,7 @@ const RoutesProvider = () => (
     <AuthProvider>
       <Routes>
         <Route path="*" element={<ErrorPage />} />
-        <Route path="/" element={<LandingPage />} />
+        <Route index element={<LandingPage />} />
         <Route element={<ProtectedLayout />}>
           <Route path="logged" element={<LoggedPage />} />
         </Route>

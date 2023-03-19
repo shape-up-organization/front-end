@@ -8,8 +8,17 @@ import {
   OutlinedInput,
   Typography,
 } from '@mui/material'
+import ReactInputMask from 'react-input-mask'
 
-const TextField = ({ endAdornment, error, label, name, register, type }) => (
+const TextField = ({
+  endAdornment,
+  error,
+  label,
+  mask,
+  name,
+  register,
+  type,
+}) => (
   <FormControl
     error={!!error}
     fullWidth
@@ -17,13 +26,18 @@ const TextField = ({ endAdornment, error, label, name, register, type }) => (
     {...(!!register && register(name))}
   >
     <InputLabel>{label}</InputLabel>
-    <OutlinedInput
-      autoComplete="off"
-      endAdornment={endAdornment}
-      label={label}
-      name={name}
-      type={type}
-    />
+    <ReactInputMask mask={mask}>
+      {() => (
+        <OutlinedInput
+          autoComplete="off"
+          endAdornment={endAdornment}
+          label={label}
+          name={name}
+          type={type}
+        />
+      )}
+    </ReactInputMask>
+
     <FormHelperText component="span">
       <Grow in={!!error} unmountOnExit>
         <Typography
@@ -44,6 +58,7 @@ TextField.propTypes = {
   endAdornment: P.node,
   error: P.string,
   label: P.string.isRequired,
+  mask: P.string,
   name: P.string.isRequired,
   register: P.func,
   type: P.string,
@@ -52,6 +67,7 @@ TextField.propTypes = {
 TextField.defaultProps = {
   endAdornment: null,
   error: '',
+  mask: null,
   register: null,
   type: 'text',
 }

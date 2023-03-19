@@ -25,11 +25,13 @@ import {
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
 import { users } from '@api/users'
+import { masks } from '@utils/masks'
 import { Modal } from '../../Modal'
 import { schema } from './schema'
 
 const size = 'large'
 const title = 'Crie sua conta'
+const locale = 'ptBR'
 
 const Content = ({ switchModal }) => {
   const [showPassword, setShowPassword] = useState(false)
@@ -127,6 +129,7 @@ const Content = ({ switchModal }) => {
         <TextField
           error={errors.cellPhone?.message}
           label="Número"
+          mask={masks.phoneMasks[locale]}
           name="cellPhone"
           type="tel"
           register={register}

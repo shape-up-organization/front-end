@@ -8,12 +8,12 @@ export const schema = z
   .object({
     name: string()
       .min(2, { message: 'Deve ter mais do que uma letra!' })
-      .regex(/^[a-zA-Z]+$/, {
+      .regex(/^[a-zA-Z\s]+$/, {
         message: 'Não pode ter números ou caracteres especiais!',
       }),
     lastName: string()
       .min(2, { message: 'Deve ter mais do que uma letra!' })
-      .regex(/^[a-zA-Z]+$/, {
+      .regex(/^[a-zA-Z\s]+$/, {
         message: 'Não pode ter números ou caracteres especiais!',
       }),
     username: string().min(2, { message: 'Deve ter mais do que uma letra!' }),

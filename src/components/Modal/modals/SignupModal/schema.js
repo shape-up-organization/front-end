@@ -19,8 +19,10 @@ export const schema = z
     username: string().min(2, { message: 'Deve ter mais do que uma letra!' }),
     email: string().email('Email inválido!'),
     cellPhone: string()
-      .min(9, { message: 'Número inválido!' })
-      .max(13, { message: 'Número inválido!' }),
+      .transform(value => value.replace(/[\D][^_]/g, ''))
+      .refine(value => !/\D/.test(value), {
+        message: 'Número inválido!',
+      }),
     birth: z
       .date({
         required_error: 'Campo obrigatório!',

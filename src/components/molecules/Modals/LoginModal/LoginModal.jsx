@@ -4,9 +4,9 @@ import { useSnackbar } from 'notistack'
 import P from 'prop-types'
 import { useForm } from 'react-hook-form'
 
-import { LinkButton } from '@components/LinkButton'
-import { TextButton } from '@components/TextButton'
-import { TextField } from '@components/TextField'
+import { LinkButton } from '@atoms/LinkButton'
+import { TextButton } from '@atoms/TextButton'
+import { TextField } from '@atoms/TextField'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import Visibility from '@mui/icons-material/Visibility'
@@ -23,7 +23,7 @@ import {
 import { users } from '@api/users'
 import { useAuth } from '@contexts'
 
-import { Modal } from '../../Modal'
+import { Modal } from '../../../templates/Modal/Modal'
 import { schema } from './schema'
 
 const size = 'small'

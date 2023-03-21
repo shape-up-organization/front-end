@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-import { ErrorPage } from '@components/ErrorPage'
-import { LandingPage } from '@components/LandingPage'
-import { LoggedPage } from '@components/LoggedPage'
-import { ProtectedLayout } from '@components/ProtectedLayout'
+import { ErrorPage } from '@pages/ErrorPage'
+import { LandingPage } from '@pages/LandingPage'
+import { LoggedPage } from '@pages/LoggedPage'
+import { ProtectedLayout } from '@templates/ProtectedLayout'
 
 import { AuthProvider } from './AuthProvider'
 

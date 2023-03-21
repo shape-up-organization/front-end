@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 
-import { Photo } from '@components/Photo'
+import { Photo } from '@atoms/Photo'
 
 import notFoundImageEn from '@assets/images/page-not-found-en.png'
 import notFoundImagePt from '@assets/images/page-not-found-pt.png'

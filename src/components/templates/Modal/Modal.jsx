@@ -1,6 +1,6 @@
 import P from 'prop-types'
 
-import { Divider } from '@components/Divider'
+import { Divider } from '@atoms/Divider'
 import Close from '@mui/icons-material/Close'
 import {
   Box,
@@ -11,7 +11,7 @@ import {
   IconButton,
   Typography,
 } from '@mui/material'
-import { ExternalButtons } from './components/ExternalButtons'
+import { ExternalButtons } from '../../atoms/ExternalButtons/ExternalButtons'
 
 const sizes = {
   small: 'xs',

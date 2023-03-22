@@ -8,6 +8,7 @@ import {
   OutlinedInput,
   Typography,
 } from '@mui/material'
+
 import ReactInputMask from 'react-input-mask'
 
 const TextField = ({
@@ -37,7 +38,6 @@ const TextField = ({
         />
       )}
     </ReactInputMask>
-
     <FormHelperText component="span">
       <Grow in={!!error} unmountOnExit>
         <Typography
@@ -59,7 +59,6 @@ TextField.propTypes = {
   error: P.string,
   label: P.string.isRequired,
   mask: P.string,
-  name: P.string.isRequired,
   register: P.func,
   type: P.string,
 }

@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 
 import { Outlet } from 'react-router-dom'
 
-import { LoadingPage } from '@components/LoadingPage'
 import { useAuth } from '@contexts'
+import { LoadingPage } from '@pages/LoadingPage'
 
 const ProtectedLayout = () => {
   const { isTokenInvalid, signOut } = useAuth()

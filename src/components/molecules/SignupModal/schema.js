@@ -8,12 +8,12 @@ export const schema = z
   .object({
     name: string()
       .min(2, { message: 'Deve ter mais do que uma letra!' })
-      .regex(/^[a-zA-Z]+$/, {
+      .regex(/^[a-zA-Z\s]+$/, {
         message: 'Não pode ter números ou caracteres especiais!',
       }),
     lastName: string()
       .min(2, { message: 'Deve ter mais do que uma letra!' })
-      .regex(/^[a-zA-Z]+$/, {
+      .regex(/^[a-zA-Z\s]+$/, {
         message: 'Não pode ter números ou caracteres especiais!',
       }),
     username: string().min(2, { message: 'Deve ter mais do que uma letra!' }),
@@ -44,16 +44,16 @@ export const schema = z
     password: string()
       .min(8, { message: 'Deve ter pelo menos 8 caracteres!' })
       .regex(/.*[0-9].*/, {
-        message: 'Password must contain at least 1 number',
+        message: 'Deve conter pelo menos 1 número',
       })
       .regex(/.*[A-Z].*/, {
-        message: 'Password must contain at least 1 uppercase character',
+        message: 'Deve conter pelo menos 1 letra maiúscula',
       })
       .regex(/.*[a-z].*/, {
-        message: 'Password must contain at least 1 lowercase character',
+        message: 'Deve conter pelo menos 1 letra minúscula',
       })
       .regex(/.*[\W_].*/, {
-        message: 'Password must contain at least 1 special character',
+        message: 'Deve conter pelo menos 1 caractere especial',
       }),
     confirmPassword: string().min(8, {
       message: 'Deve ter mais do que 8 letras!',

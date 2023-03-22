@@ -1,6 +1,6 @@
 import P from 'prop-types'
 
-import { Photo } from '@components/Photo'
+import { Photo } from '@atoms/Photo'
 
 import landingPageImage from '@assets/images/landing-page.png'
 

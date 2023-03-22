@@ -5,8 +5,9 @@ import { Controller, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useSnackbar } from 'notistack'
 
-import { LinkButton } from '@components/LinkButton'
-import { TextField } from '@components/TextField'
+import { LinkButton } from '@atoms/LinkButton'
+import { TextField } from '@atoms/TextField'
+import { Modal } from '@templates/Modal'
 
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
@@ -26,7 +27,6 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
 import { users } from '@api/users'
 import { masks } from '@utils/masks'
-import { Modal } from '../../Modal'
 import { schema } from './schema'
 
 const size = 'large'

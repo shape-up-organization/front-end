@@ -1,12 +1,11 @@
 import { useState } from 'react'
 
 import { Grid } from '@mui/material'
-
-import { LoginModal } from '@molecules/Modals/LoginModal'
-import { SignupModal } from '@molecules/Modals/SignupModal'
-import { Banner } from '../../organisms/Banner'
-import { Footer } from '../../organisms/Footer'
-import { Header } from '../../organisms/Header'
+import { LoginModal } from '@molecules/LoginModal'
+import { SignupModal } from '@molecules/SignupModal'
+import { Banner } from '@organisms/Banner'
+import { Footer } from '@organisms/Footer'
+import { Header } from '@organisms/Header'
 
 const LandingPage = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false)

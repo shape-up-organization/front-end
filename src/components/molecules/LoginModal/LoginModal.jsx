@@ -4,10 +4,6 @@ import { useSnackbar } from 'notistack'
 import P from 'prop-types'
 import { useForm } from 'react-hook-form'
 
-import { LinkButton } from '@atoms/LinkButton'
-import { TextButton } from '@atoms/TextButton'
-import { TextField } from '@atoms/TextField'
-
 import { zodResolver } from '@hookform/resolvers/zod'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
@@ -20,10 +16,13 @@ import {
   Typography,
 } from '@mui/material'
 
+import { LinkButton } from '@atoms/LinkButton'
+import { TextButton } from '@atoms/TextButton'
+import { TextField } from '@atoms/TextField'
+import { Modal } from '@templates/Modal'
+
 import { users } from '@api/users'
 import { useAuth } from '@contexts'
-
-import { Modal } from '@templates/Modal'
 import { schema } from './schema'
 
 const size = 'small'
@@ -130,7 +129,7 @@ const Content = ({ switchModal }) => {
           </Typography>
         </LinkButton>
       </Grid>
-      <Grid item xs={5}>
+      <Grid item xs={8} sm={6}>
         <Button
           disabled={isButtonLoading}
           fullWidth

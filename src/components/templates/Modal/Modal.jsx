@@ -56,6 +56,7 @@ const Modal = ({
       PaperProps={{
         className: classes.paperProps,
       }}
+      sx={{ maxWidth: '100vw' }}
     >
       <DialogTitle align="center" justifyContent="center">
         <Typography

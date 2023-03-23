@@ -11,6 +11,7 @@ import { Modal } from '@templates/Modal'
 
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
+
 import {
   Button,
   Checkbox,
@@ -22,8 +23,12 @@ import {
   IconButton,
   InputAdornment,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+
+import { TextButton } from '@atoms/TextButton'
 
 import { users } from '@api/users'
 import { masks } from '@utils/masks'
@@ -89,7 +94,7 @@ const Content = ({ switchModal }) => {
       spacing={2}
       paddingTop={1}
     >
-      <Grid item xs={6}>
+      <Grid item xs={6} sm={6}>
         <TextField
           error={errors.name?.message}
           label="Nome"
@@ -109,15 +114,6 @@ const Content = ({ switchModal }) => {
       </Grid>
       <Grid item xs={12}>
         <TextField
-          error={errors.username?.message}
-          label="Nome de usuário"
-          name="username"
-          type="text"
-          register={register}
-        />
-      </Grid>
-      <Grid item xs={12}>
-        <TextField
           error={errors.email?.message}
           label="E-mail"
           name="email"
@@ -125,7 +121,16 @@ const Content = ({ switchModal }) => {
           register={register}
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={5} sm={12}>
+        <TextField
+          error={errors.username?.message}
+          label="Usuário"
+          name="username"
+          type="text"
+          register={register}
+        />
+      </Grid>
+      <Grid item xs={7} sm={6}>
         <TextField
           error={errors.cellPhone?.message}
           label="Número"
@@ -135,7 +140,7 @@ const Content = ({ switchModal }) => {
           register={register}
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <Controller
           control={control}
           defaultValue={null}
@@ -161,6 +166,8 @@ const Content = ({ switchModal }) => {
                 label="Data de nascimento"
                 maxDate={new Date()}
                 sx={{
+                  width: '100%',
+
                   '& .MuiButtonBase-root': {
                     marginRight: 0,
                   },
@@ -194,7 +201,7 @@ const Content = ({ switchModal }) => {
           </Grow>
         </FormHelperText>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <TextField
           error={errors.password?.message}
           label="Senha"
@@ -220,7 +227,7 @@ const Content = ({ switchModal }) => {
           register={register}
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <TextField
           error={errors.confirmPassword?.message}
           label="Confirmar senha"
@@ -246,7 +253,14 @@ const Content = ({ switchModal }) => {
           register={register}
         />
       </Grid>
-      <Grid item xs={12} display="flex" justifyContent="center">
+      <Grid
+        item
+        xs={10}
+        sm={12}
+        display="flex"
+        textAlign="center"
+        justifyContent="center"
+      >
         <FormControlLabel
           control={
             <Checkbox
@@ -267,7 +281,7 @@ const Content = ({ switchModal }) => {
           }
         />
       </Grid>
-      <Grid item xs={5}>
+      <Grid item xs={6} sm={4} md={3} lg={4}>
         <Button
           disabled={!isTermsChecked || isButtonLoading}
           fullWidth
@@ -284,23 +298,33 @@ const Content = ({ switchModal }) => {
           )}
         </Button>
       </Grid>
+      <Grid item textAlign="center" xs={12} sm={12}>
+        <Typography fontWeight="500" variant="caption">
+          Já tem uma conta?
+          <TextButton handleClick={switchModal} text="Entre agora mesmo!" />
+        </Typography>
+      </Grid>
     </Grid>
   )
 }
 
 Content.propTypes = { switchModal: P.func.isRequired }
 
-const SignupModal = ({ isOpen, handleClose, switchModal }) => (
-  <Modal
-    content={<Content switchModal={switchModal} />}
-    direction="horizontal"
-    handleClose={handleClose}
-    isOpen={isOpen}
-    size={size}
-    title={title}
-    titleAlignment="left"
-  />
-)
+const SignupModal = ({ isOpen, handleClose, switchModal }) => {
+  const lessThanLarge = useMediaQuery(useTheme().breakpoints.down('lg'))
+
+  return (
+    <Modal
+      content={<Content switchModal={switchModal} />}
+      direction={lessThanLarge ? 'vertical' : 'horizontal'}
+      handleClose={handleClose}
+      isOpen={isOpen}
+      size={size}
+      title={title}
+      titleAlignment={lessThanLarge ? 'center' : 'left'}
+    />
+  )
+}
 
 SignupModal.propTypes = {
   isOpen: P.bool.isRequired,

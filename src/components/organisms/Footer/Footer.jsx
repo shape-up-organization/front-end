@@ -10,11 +10,21 @@ const Footer = ({ showCircles }) => (
     <Grid item>
       <LinkButton internal="about">Sobre</LinkButton>
     </Grid>
-    {showCircles && <CircleIcon color="primary" sx={{ fontSize: 16 }} />}
+    {showCircles && (
+      <CircleIcon
+        color="primary"
+        sx={{ fontSize: theme => theme.typography.pxToRem(16) }}
+      />
+    )}
     <Grid item>
       <LinkButton internal="privacy-policies">Privacidade</LinkButton>
     </Grid>
-    {showCircles && <CircleIcon color="primary" sx={{ fontSize: 16 }} />}
+    {showCircles && (
+      <CircleIcon
+        color="primary"
+        sx={{ fontSize: theme => theme.typography.pxToRem(16) }}
+      />
+    )}
     <Grid item>
       <LinkButton internal="help">Ajuda</LinkButton>
     </Grid>

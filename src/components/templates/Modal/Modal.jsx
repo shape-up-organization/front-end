@@ -12,7 +12,11 @@ import {
   DialogTitle,
   IconButton,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material'
+
+import { useStyles } from './Modal.styles'
 
 const sizes = {
   small: 'xs',
@@ -39,15 +43,20 @@ const Modal = ({
   const dividerDirection =
     contentDirection === 'row' ? 'vertical' : 'horizontal'
 
+  const lessThanMedium = useMediaQuery(useTheme().breakpoints.down('sm'))
+  const classes = useStyles()
+
   return (
     <Dialog
+      fullScreen={lessThanMedium}
       fullWidth
       open={isOpen}
       onClose={handleClose}
       maxWidth={sizes[size]}
       PaperProps={{
-        sx: { padding: theme => theme.spacing(2, 0, 3) },
+        className: classes.paperProps,
       }}
+      sx={{ maxWidth: '100vw' }}
     >
       <DialogTitle align="center" justifyContent="center">
         <Typography
@@ -61,12 +70,9 @@ const Modal = ({
         </Typography>
         <IconButton
           aria-label="Close login modal"
+          className={classes.closeIcon}
           onClick={handleClose}
-          sx={{
-            position: 'absolute',
-            right: theme => theme.spacing(2),
-            top: theme => theme.spacing(2),
-          }}
+          sx={{ position: 'absolute' }}
         >
           <Close />
         </IconButton>
@@ -78,7 +84,7 @@ const Modal = ({
             alignItems: 'center',
             display: 'flex',
             flexDirection: contentDirection,
-            gap: theme => theme.spacing(4),
+            gap: theme => theme.spacing(lessThanMedium ? 8 : 4),
           }}
         >
           {content}

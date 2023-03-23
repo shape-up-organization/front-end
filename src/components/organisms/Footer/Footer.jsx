@@ -1,22 +1,42 @@
-import { LinkButton } from '@atoms/LinkButton'
-
-import { Grid } from '@mui/material'
+import P from 'prop-types'
 
 import CircleIcon from '@mui/icons-material/Circle'
+import { Grid } from '@mui/material'
 
-const Footer = () => (
-  <Grid container alignItems="center" justifyContent="space-between">
+import { LinkButton } from '@atoms/LinkButton'
+
+const Footer = ({ showCircles }) => (
+  <>
     <Grid item>
       <LinkButton internal="about">Sobre</LinkButton>
     </Grid>
-    <CircleIcon color="primary" sx={{ fontSize: 16 }} />
+    {showCircles && (
+      <CircleIcon
+        color="primary"
+        sx={{ fontSize: theme => theme.typography.pxToRem(16) }}
+      />
+    )}
     <Grid item>
       <LinkButton internal="privacy-policies">Privacidade</LinkButton>
     </Grid>
-    <CircleIcon color="primary" sx={{ fontSize: 16 }} />
+    {showCircles && (
+      <CircleIcon
+        color="primary"
+        sx={{ fontSize: theme => theme.typography.pxToRem(16) }}
+      />
+    )}
     <Grid item>
       <LinkButton internal="help">Ajuda</LinkButton>
     </Grid>
-  </Grid>
+  </>
 )
+
+Footer.propTypes = {
+  showCircles: P.bool,
+}
+
+Footer.defaultProps = {
+  showCircles: false,
+}
+
 export { Footer }

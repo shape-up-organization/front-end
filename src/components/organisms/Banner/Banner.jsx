@@ -13,7 +13,7 @@ import SportsEsportsOutlinedIcon from '@mui/icons-material/SportsEsportsOutlined
 import { useStyles } from './Banner.styles'
 
 const Banner = ({ handleOpenSignup }) => {
-  const classes = useStyles()
+  const { classes } = useStyles()
 
   return (
     <>

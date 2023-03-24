@@ -28,7 +28,7 @@ const Header = ({ handleOpenModals }) => {
   const [showMenu, setShowMenu] = useState(false)
 
   const lessThanMedium = useMediaQuery(useTheme().breakpoints.down('md'))
-  const classes = useStyles()
+  const { classes } = useStyles()
 
   useEffect(() => {
     setShowMenu(lessThanMedium)

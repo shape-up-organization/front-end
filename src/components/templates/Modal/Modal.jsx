@@ -44,7 +44,7 @@ const Modal = ({
     contentDirection === 'row' ? 'vertical' : 'horizontal'
 
   const lessThanMedium = useMediaQuery(useTheme().breakpoints.down('sm'))
-  const classes = useStyles()
+  const { classes } = useStyles()
 
   return (
     <Dialog

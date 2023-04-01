@@ -12,14 +12,16 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      '@mocks': path.resolve(__dirname, './src/__mocks__'),
       '@api': path.resolve(__dirname, './src/api'),
       '@assets': path.resolve(__dirname, './src/assets'),
       '@contexts': path.resolve(__dirname, './src/contexts'),
-      '@pages': path.resolve(__dirname, './src/components/pages'),
+      '@layouts': path.resolve(__dirname, './src/layouts'),
       '@atoms': path.resolve(__dirname, './src/components/atoms'),
       '@molecules': path.resolve(__dirname, './src/components/molecules'),
       '@organisms': path.resolve(__dirname, './src/components/organisms'),
       '@templates': path.resolve(__dirname, './src/components/templates'),
+      '@pages': path.resolve(__dirname, './src/pages'),
       '@styles': path.resolve(__dirname, './src/styles'),
       '@utils': path.resolve(__dirname, './src/utils'),
     },

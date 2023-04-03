@@ -6,12 +6,12 @@
       "@api/*": ["./src/api/*"],
       "@assets/*": ["./src/api/*"],
       "@contexts": ["./src/contexts"],
-      "@layouts/*": ["src/layouts/*"],
+      "@layouts/*": ["./src/layouts/*"],
       "@atoms/*": ["./src/components/atoms/*"],
       "@molecules/*": ["./src/components/molecules/*"],
       "@organisms/*": ["./src/components/organisms/*"],
       "@templates/*": ["./src/components/templates/*"],
-      "@pages/*": ["src/pages/*"],
+      "@pages/*": ["./src/pages/*"],
       "@styles/*": ["./src/styles/*"],
       "@utils/*": ["./src/utils/*"]
     }

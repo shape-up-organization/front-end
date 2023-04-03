@@ -52,6 +52,7 @@
     "react/function-component-definition": ["off"],
     "consistent-return": "off",
     "react/no-unstable-nested-components": "off",
-    "import/no-cycle": "off"
+    "import/no-cycle": "off",
+    "react/forbid-prop-types": "off"
   }
 }

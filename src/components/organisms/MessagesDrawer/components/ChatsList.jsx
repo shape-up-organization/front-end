@@ -113,7 +113,6 @@ ChatButton.propTypes = {
 }
 
 const locale = 'pt'
-
 const chatNotFoundImage = {
   en: chatNotFoundImageEn,
   pt: chatNotFoundImagePt,
@@ -124,7 +123,7 @@ const ChatsList = () => {
 
   if (isLoading || chatsList === undefined || chatsList.length <= 0)
     return (
-      <Grid container item>
+      <Grid container item height="100%">
         <Grid item xs={12}>
           <Divider />
         </Grid>

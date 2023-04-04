@@ -19,6 +19,7 @@ export const ChatProvider = ({ children }) => {
   const [chatsList, setChatsList] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [chatType, setChatType] = useState('')
+  const [totalNotifications, setTotalNotifications] = useState(0)
 
   const changeChatType = newChatType => setChatType(newChatType)
 
@@ -42,16 +43,34 @@ export const ChatProvider = ({ children }) => {
       const mockedData = mockedFriends.data
       setData(mockedData)
 
-      if (mockedData.friends?.length > 0) {
-        setChatType('friends')
-      } else if (mockedData.squads?.length > 0) {
-        setChatType('squads')
-      } else {
-        setChatType(null)
-      }
+      loadTotalNotifications(mockedData)
+      setupChats(mockedData)
 
       setIsLoading(false)
     }, 1000)
+  }
+
+  const loadTotalNotifications = obj => {
+    setTotalNotifications(
+      (obj.friends?.reduce(
+        (acc, { unreadMessages }) => acc + unreadMessages,
+        0
+      ) || 0) +
+        (obj.squads?.reduce(
+          (acc, { unreadMessages }) => acc + unreadMessages,
+          0
+        ) || 0)
+    )
+  }
+
+  const setupChats = obj => {
+    if (obj.friends?.length > 0) {
+      setChatType('friends')
+    } else if (obj.squads?.length > 0) {
+      setChatType('squads')
+    } else {
+      setChatType(null)
+    }
   }
 
   const updateChats = () => setChatsList(data[chatType] || undefined)
@@ -68,8 +87,9 @@ export const ChatProvider = ({ children }) => {
       filterChats,
       isLoading,
       loadData,
+      totalNotifications,
     }),
-    [chatsList, chatType]
+    [chatsList, chatType, totalNotifications]
   )
 
   return <ChatContext.Provider value={values}>{children}</ChatContext.Provider>

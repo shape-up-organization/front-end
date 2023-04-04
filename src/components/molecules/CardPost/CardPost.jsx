@@ -14,7 +14,7 @@ import ShareIcon from '@mui/icons-material/Share'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 
-const Post = () => (
+const CardPost = () => (
   <Card sx={4}>
     <CardHeader
       avatar={
@@ -57,4 +57,4 @@ const Post = () => (
     </CardActions>
   </Card>
 )
-export { Post }
+export { CardPost }

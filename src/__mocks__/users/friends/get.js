@@ -1,40 +1,10 @@
 export default Object.freeze({
   data: {
-    groups: [
-      {
-        id: 1,
-        name: 'Group 1',
-        lastMessage: {
-          text: 'Hello, how are you?',
-          date: '2022-04-02',
-        },
-        unreadMessages: 2,
-      },
-      {
-        id: 2,
-        name: 'AiAiGroup 2',
-        lastMessage: {
-          text: 'Hello, how are you?',
-          date: '2022-04-02',
-        },
-        unreadMessages: 120,
-      },
-      {
-        id: 3,
-        name: 'Pimbalim 3',
-        lastMessage: {
-          text: 'Hello, how are you?',
-          date: '2022-04-02',
-        },
-        unreadMessages: 0,
-      },
-    ],
-
     friends: [
       {
         id: 1,
         online: true,
-        name: 'John Doe Doe Doe',
+        name: 'Jóhn Doe Doe Doe',
         username: 'johndoe',
         lastMessage: {
           text: 'Hello, how are you?',
@@ -174,6 +144,35 @@ export default Object.freeze({
         },
         unreadMessages: 0,
         hasDailies: false,
+      },
+    ],
+    squads: [
+      {
+        id: 1,
+        name: 'Group 1',
+        lastMessage: {
+          text: 'Hello, how are you?',
+          date: '2022-04-02',
+        },
+        unreadMessages: 2,
+      },
+      {
+        id: 2,
+        name: 'AiAiGroup 2',
+        lastMessage: {
+          text: 'Hello, how are you?',
+          date: '2022-04-02',
+        },
+        unreadMessages: 120,
+      },
+      {
+        id: 3,
+        name: 'Pimbalim 3',
+        lastMessage: {
+          text: 'Hello, how are you?',
+          date: '2022-04-02',
+        },
+        unreadMessages: 0,
       },
     ],
   },

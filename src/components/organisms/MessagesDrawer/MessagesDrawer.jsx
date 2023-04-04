@@ -1,18 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Grid } from '@mui/material'
 
-import { AutocompleteSearchMessages } from './AutocompleteSearchMessages'
-import { ChatsList } from './ChatsLists'
+import { useChat } from '@contexts'
 import { ChatTypeSwitcher } from './ChatTypeSwitcher'
+import { ChatsList } from './ChatsList'
 import { Header } from './Header'
+import { SearchField } from './SearchField'
 
 import { useStyles } from './MessagesDrawer.styles'
 
 const MessagesDrawer = () => {
-  const [drawerOpen, setDrawerOpen] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(true)
 
-  const { classes } = useStyles({ messagesRight: 2 })
+  const { loadData } = useChat()
+  const { classes } = useStyles()
+
+  useEffect(() => {
+    loadData()
+  }, [])
 
   const toggleDrawer = () => {
     setDrawerOpen(current => !current)
@@ -38,7 +44,7 @@ const MessagesDrawer = () => {
         rowGap={1}
       >
         <Grid item xs={12}>
-          <AutocompleteSearchMessages />
+          <SearchField />
         </Grid>
         <Grid
           container
@@ -49,7 +55,13 @@ const MessagesDrawer = () => {
         >
           <ChatTypeSwitcher />
         </Grid>
-        <Grid height="100%" overflow="auto" paddingBottom={8} paddingX={1}>
+        <Grid
+          width="100%"
+          height="100%"
+          overflow="auto"
+          paddingBottom={8}
+          paddingX={1}
+        >
           <ChatsList />
         </Grid>
       </Grid>

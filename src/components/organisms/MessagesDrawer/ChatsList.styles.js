@@ -19,5 +19,5 @@ export const useStyles = makeStyles()(
       },
     },
   }),
-  { name: 'FriendsList' }
+  { name: 'ChatsList' }
 )

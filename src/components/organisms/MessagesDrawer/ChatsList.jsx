@@ -1,12 +1,24 @@
 import P from 'prop-types'
 
-import mockedFriends from '@mocks/users/friends/get'
-
-import { Avatar, Badge, Box, Button, Grid, Typography } from '@mui/material'
+import {
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  CircularProgress,
+  Grid,
+  Typography,
+} from '@mui/material'
 
 import { Divider } from '@atoms/Divider'
 
-import { useStyles } from './ChatsLists.styles'
+import { useChat } from '@contexts'
+
+import chatNotFoundImageEn from '@assets/images/chats-not-found-en.png'
+import chatNotFoundImagePt from '@assets/images/chats-not-found-pt.png'
+
+import { Photo } from '@atoms/Photo'
+import { useStyles } from './ChatsList.styles'
 
 const ChatButton = ({ lastMessage, name, online, unreadMessages }) => {
   const { classes } = useStyles()
@@ -100,20 +112,56 @@ ChatButton.propTypes = {
   unreadMessages: P.number.isRequired,
 }
 
-const ChatsList = () => (
-  <>
-    {mockedFriends.data.friends.map(friend => (
-      <Box key={friend.id}>
-        <Divider />
-        <ChatButton
-          lastMessage={friend.lastMessage}
-          name={friend.name}
-          online={friend.online}
-          unreadMessages={friend.unreadMessages}
-        />
-      </Box>
-    ))}
-  </>
-)
+const locale = 'pt'
+
+const chatNotFoundImage = {
+  en: chatNotFoundImageEn,
+  pt: chatNotFoundImagePt,
+}
+
+const ChatsList = () => {
+  const { chatsList, isLoading } = useChat()
+
+  if (isLoading || chatsList === undefined || chatsList.length <= 0)
+    return (
+      <Grid container item>
+        <Grid item xs={12}>
+          <Divider />
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          alignItems="center"
+          display="flex"
+          height="100%"
+          justifyContent="center"
+          mt={8}
+        >
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <Photo
+              alt="Mulher com uma lupa com texto 'Nenhum CHAT foi encontrado'"
+              animationSpeed={400}
+              src={chatNotFoundImage[locale]}
+              fit="contain"
+            />
+          )}
+        </Grid>
+      </Grid>
+    )
+
+  return chatsList.map(friend => (
+    <Box width="100%" key={friend.id}>
+      <Divider />
+      <ChatButton
+        lastMessage={friend.lastMessage}
+        name={friend.name}
+        online={friend.online}
+        unreadMessages={friend.unreadMessages}
+      />
+    </Box>
+  ))
+}
 
 export { ChatsList }

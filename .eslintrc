@@ -53,6 +53,7 @@
     "consistent-return": "off",
     "react/no-unstable-nested-components": "off",
     "import/no-cycle": "off",
-    "react/forbid-prop-types": "off"
+    "react/forbid-prop-types": "off",
+    "no-use-before-define": "off"
   }
 }

@@ -8,9 +8,11 @@ import { useStyles } from './Header.styles'
 
 const Header = ({ drawerOpenStates }) => {
   const [drawerOpen, setDrawerOpen] = drawerOpenStates
+
   const toggleDrawerOpen = () => setDrawerOpen(current => !current)
 
   const { classes } = useStyles()
+
   return (
     <Button
       className={classes.header}

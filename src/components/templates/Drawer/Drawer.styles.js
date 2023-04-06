@@ -3,14 +3,20 @@ import { makeStyles } from 'tss-react/mui'
 export const sizes = {
   thinTall: {
     contentHeight() {
-      return Math.ceil((94 / 100) * this.height)
+      return this.height - this.headerHeight
     },
-    headerHeight() {
-      return this.height - this.contentHeight()
-    },
-    height: 72,
-    minHeaderHeight: 32,
+    headerHeight: 6,
+    height: 80,
     minWidth: 352,
+    width: 100,
+  },
+  small: {
+    contentHeight() {
+      return this.height - this.headerHeight
+    },
+    headerHeight: 6,
+    height: 48,
+    minWidth: 400,
     width: 100,
   },
 }
@@ -22,12 +28,6 @@ export const useStyles = makeStyles()(
         easing: theme.transitions.easing.easeOut,
         duration: 560,
       }),
-    },
-    content: {
-      backgroundColor: theme.palette.background.paper,
-      borderColor: theme.palette.secondary.main,
-      borderStyle: 'solid',
-      borderWidth: 2,
     },
     drawerContainer: {
       height: `${sizes[params.size].height}vh`,

@@ -59,6 +59,7 @@ TextField.propTypes = {
   error: P.string,
   label: P.string.isRequired,
   mask: P.string,
+  name: P.string,
   register: P.func,
   type: P.string,
 }
@@ -67,6 +68,7 @@ TextField.defaultProps = {
   endAdornment: null,
   error: '',
   mask: null,
+  name: '',
   register: null,
   type: 'text',
 }

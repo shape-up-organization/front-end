@@ -16,8 +16,8 @@ const MessagesDrawer = () => {
 
   return (
     <Drawer
-      DrawerHeader={Header}
-      DrawerContent={Content}
+      HeaderComponent={Header}
+      ContentComponent={Content}
       notification={totalNotifications || 0}
       size="thinTall"
     />

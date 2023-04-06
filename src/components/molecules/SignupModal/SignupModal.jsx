@@ -30,7 +30,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
 import { TextButton } from '@atoms/TextButton'
 
-import { users } from '@api/users'
+import { users } from '@api/services/users'
 import { masks } from '@utils/masks'
 import { schema } from './schema'
 

@@ -21,7 +21,7 @@ import { TextButton } from '@atoms/TextButton'
 import { TextField } from '@atoms/TextField'
 import { Modal } from '@templates/Modal'
 
-import { users } from '@api/users'
+import { users } from '@api/services/users'
 import { useAuth } from '@contexts'
 import { schema } from './schema'
 

@@ -17,6 +17,8 @@
     "lint:fix": "eslint --fix src/**/*.{js,jsx} && echo \"eslint: no lint errors\""
   },
   "dependencies": {
+    "@emoji-mart/data": "^1.1.2",
+    "@emoji-mart/react": "^1.1.1",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@hookform/resolvers": "^2.9.11",
@@ -27,6 +29,7 @@
     "axios": "^1.3.4",
     "buffer": "^6.0.3",
     "date-fns": "^2.29.3",
+    "emoji-mart": "^5.5.2",
     "i18next": "^22.4.13",
     "i18next-browser-languagedetector": "^7.0.1",
     "i18next-http-backend": "^2.2.0",

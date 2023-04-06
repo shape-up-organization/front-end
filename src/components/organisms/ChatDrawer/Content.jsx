@@ -7,9 +7,13 @@ import {
   IconButton,
   List,
   ListItem,
+  Popover,
   TextField,
   Typography,
 } from '@mui/material'
+
+import emojisData from '@emoji-mart/data'
+import EmojiPicker from '@emoji-mart/react'
 
 import { useStyles } from './Content.styles'
 
@@ -17,29 +21,13 @@ const username = 'user'
 
 const Content = () => {
   const { classes } = useStyles()
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      text: 'Olá, tudo bem?',
-      sender: 'user',
-    },
-    {
-      id: 2,
-      text: 'Tudo sim, e você?',
-      sender: 'bot',
-    },
-    {
-      id: 3,
-      text: 'Também tudo bem, obrigado!',
-      sender: 'user',
-    },
-  ])
+  const [anchorEl, setAnchorEl] = useState(null)
+  const [messages, setMessages] = useState([])
   const [messageText, setMessageText] = useState('')
 
   const listRef = useRef(null)
 
   const handleSendMessage = () => {
-    console.log(listRef.current)
     if (messageText.trim()) {
       setMessages([
         ...messages,
@@ -58,6 +46,12 @@ const Content = () => {
   useLayoutEffect(() => {
     listRef.current.scrollTop = listRef.current.scrollHeight
   }, [messages])
+
+  const handleClickEmoji = event => {
+    setAnchorEl(event.currentTarget)
+  }
+
+  const open = Boolean(anchorEl)
 
   return (
     <Grid
@@ -109,9 +103,21 @@ const Content = () => {
         <Grid item xs={12}>
           <Grid container>
             <Grid item xs={2}>
-              <IconButton color="primary" onClick={handleSendMessage}>
+              <IconButton color="primary" onClick={handleClickEmoji}>
                 <EmojiEmotionsIcon />
               </IconButton>
+              <Popover
+                open={open}
+                anchorEl={anchorEl}
+                onClose={() => setAnchorEl(null)}
+              >
+                <EmojiPicker
+                  data={emojisData}
+                  onEmojiSelect={emojiObject =>
+                    setMessageText(messageText + emojiObject.native)
+                  }
+                />
+              </Popover>
             </Grid>
             <Grid item xs={10} display="flex" justifyContent="flex-end">
               <IconButton color="primary" onClick={handleSendMessage}>

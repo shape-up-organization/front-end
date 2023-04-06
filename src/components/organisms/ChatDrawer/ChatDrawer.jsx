@@ -2,8 +2,8 @@ import P from 'prop-types'
 
 import { Drawer } from '@templates/Drawer'
 
-import { Content } from './Content'
-import { Header } from './Header'
+import { Content } from './components/Content'
+import { Header } from './components/Header'
 
 const ChatDrawer = ({ chatData }) => (
   <Drawer

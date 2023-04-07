@@ -30,7 +30,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
 import { TextButton } from '@atoms/TextButton'
 
-import { users } from '@api/services/users'
+import api from '@api/services/users'
 import { masks } from '@utils/masks'
 import { schema } from './schema'
 
@@ -66,7 +66,7 @@ const Content = ({ switchModal }) => {
     }
 
     try {
-      const response = await users.create(payload)
+      const response = await api.create(payload)
 
       if (response.status === 201) {
         switchModal()

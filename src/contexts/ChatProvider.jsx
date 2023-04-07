@@ -9,7 +9,7 @@ import {
 
 import P from 'prop-types'
 
-import mockedFriends from '@mocks/users/friends/get'
+import mockedFriends from '@mocks/friends/get'
 import { normalize } from '@utils/stringManipulation'
 
 const ChatContext = createContext()
@@ -22,13 +22,13 @@ export const ChatProvider = ({ children }) => {
   const [chatType, setChatType] = useState('')
   const [totalNotifications, setTotalNotifications] = useState(0)
 
-  const addChat = id => {
-    const newChat = data[chatType]?.find(chat => chat.id === id)
+  const addChat = username => {
+    const newChat = data[chatType]?.find(chat => chat.username === username)
     if (newChat) setChats([...chats, newChat])
   }
 
-  const removeChat = id => {
-    const newChats = chats?.filter(chat => chat.id !== id)
+  const removeChat = username => {
+    const newChats = chats?.filter(chat => chat.username !== username)
     setChats(newChats)
   }
 

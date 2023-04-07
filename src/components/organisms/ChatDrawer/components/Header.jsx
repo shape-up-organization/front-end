@@ -50,7 +50,10 @@ const Header = ({ drawerOpenStates, chatData }) => {
         </Grid>
         <Grid item xs={3} display="flex" justifyContent="end">
           <Tooltip title="Fechar chat">
-            <IconButton type="button" onClick={() => removeChat(chatData.id)}>
+            <IconButton
+              type="button"
+              onClick={() => removeChat(chatData.username)}
+            >
               <CloseRoundedIcon />
             </IconButton>
           </Tooltip>

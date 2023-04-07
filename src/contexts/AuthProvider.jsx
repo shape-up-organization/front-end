@@ -35,12 +35,15 @@ export const AuthProvider = ({ children }) => {
     if (jwtToken === undefined || jwtToken === null) {
       return null
     }
-    return parseJwt(jwtToken)
+    return jwtToken
   }
+
+  const getTokenProp = async prop => parseJwt(await getJwtToken())[prop]
 
   const isTokenInvalid = async () => {
     const jwtToken = await getJwtToken()
-    if (jwtToken === null || jwtToken.exp < Date.now() / 1000) {
+    const parsedJwtToken = parseJwt(jwtToken)
+    if (parsedJwtToken === null || parsedJwtToken.exp < Date.now() / 1000) {
       return true
     }
     return false
@@ -57,6 +60,8 @@ export const AuthProvider = ({ children }) => {
 
   const auth = useMemo(
     () => ({
+      getJwtToken,
+      getTokenProp,
       isTokenInvalid,
       signIn,
       signOut,

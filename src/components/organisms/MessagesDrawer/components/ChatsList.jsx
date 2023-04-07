@@ -56,7 +56,7 @@ const ChatsList = () => {
         name={friend.name}
         online={friend.online}
         unreadMessages={friend.unreadMessages}
-        userId={friend.id}
+        username={friend.username}
       />
     </Box>
   ))

@@ -1,23 +1,51 @@
 import P from 'prop-types'
 
+import api from '@api/services/friends'
+
 import { Avatar, Badge, Button, Grid, Typography } from '@mui/material'
 
-import { useChat } from '@contexts'
+import { useAuth, useChat } from '@contexts'
 
 import { useStyles } from './ChatsList.styles'
 
-const ChatButton = ({ lastMessage, name, online, unreadMessages, userId }) => {
+const ChatButton = ({
+  lastMessage,
+  name,
+  online,
+  unreadMessages,
+  username,
+}) => {
   const { addChat, chats, removeChat } = useChat()
+  const { getJwtToken } = useAuth()
 
   const { classes } = useStyles()
 
   const handleClick = () => {
-    if (chats.find(chat => chat.id === userId)) {
-      removeChat(userId)
+    if (chats.find(chat => chat.id === username)) {
+      removeChat(username)
       return
     }
 
-    addChat(userId)
+    addChat(username)
+  }
+
+  const handleAccept = async () => {
+    try {
+      const jwtToken = await getJwtToken()
+      const response = await api.acceptFriendshipRequest(jwtToken, username)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const handleSend = async () => {
+    try {
+      const jwtToken = await getJwtToken()
+      const response = await api.sendFriendshipRequest(jwtToken, username)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -46,6 +74,12 @@ const ChatButton = ({ lastMessage, name, online, unreadMessages, userId }) => {
         </Grid>
         <Grid container item xs={9} rowSpacing={0}>
           <Grid item xs={8}>
+            <button onClick={handleAccept} type="button">
+              Accept
+            </button>
+            <button onClick={handleSend} type="button">
+              Send
+            </button>
             <Typography
               fontWeight={unreadMessages ? '700' : '400'}
               noWrap
@@ -105,9 +139,13 @@ ChatButton.propTypes = {
     text: P.string.isRequired,
   }).isRequired,
   name: P.string.isRequired,
-  online: P.bool.isRequired,
+  online: P.bool,
   unreadMessages: P.number.isRequired,
-  userId: P.number.isRequired,
+  username: P.number.isRequired,
+}
+
+ChatButton.defaultProps = {
+  online: false,
 }
 
 export { ChatButton }

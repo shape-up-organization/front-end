@@ -21,7 +21,7 @@ import { TextButton } from '@atoms/TextButton'
 import { TextField } from '@atoms/TextField'
 import { Modal } from '@templates/Modal'
 
-import { users } from '@api/services/users'
+import api from '@api/services/users'
 import { useAuth } from '@contexts'
 import { schema } from './schema'
 
@@ -72,13 +72,13 @@ const Content = ({ switchModal }) => {
     const payload = values
 
     try {
-      const response = await users.authenticate(payload)
+      const response = await api.authenticate(payload)
 
       if (response.status === 200) {
         signIn(response.data['jwt-token'])
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
       enqueueSnackbar('E-mail e ou senha incorretos!', {
         variant: 'error',
       })

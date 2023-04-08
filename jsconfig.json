@@ -5,6 +5,7 @@
       "@mocks/*": ["./src/__mocks__/*"],
       "@api/*": ["./src/api/*"],
       "@assets/*": ["./src/api/*"],
+      "@hooks": ["./src/hooks"],
       "@contexts": ["./src/contexts"],
       "@layouts/*": ["./src/layouts/*"],
       "@atoms/*": ["./src/components/atoms/*"],

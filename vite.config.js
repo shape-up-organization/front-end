@@ -15,6 +15,7 @@ export default defineConfig({
       '@mocks': path.resolve(__dirname, './src/__mocks__'),
       '@api': path.resolve(__dirname, './src/api'),
       '@assets': path.resolve(__dirname, './src/assets'),
+      '@hooks': path.resolve(__dirname, './src/hooks'),
       '@contexts': path.resolve(__dirname, './src/contexts'),
       '@layouts': path.resolve(__dirname, './src/layouts'),
       '@atoms': path.resolve(__dirname, './src/components/atoms'),

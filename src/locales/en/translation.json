@@ -1,0 +1,30 @@
+{
+  "pages": {
+    "error": {
+      "alt": {
+        "notFoundPageImage": "Woman with a magnifying glass and an error text written behind her 'page not found'"
+      }
+    },
+    "chat": {
+      "alt": {
+        "chatAvatarHeader": "{{name}} profile picture",
+        "notFoundChatImage": "Woman with a magnifying glass with text 'No chat was found'"
+      },
+      "others": {
+        "messageListTitle": "Friends",
+        "messageInputPlaceholder": "Type a message...",
+        "searchChatsPlaceholder": "Search friends..."
+      },
+      "tooltip": {
+        "chatAvatarButton": "Open profile picture",
+        "emojiPickerButton": "Open emoji picker menu",
+        "scrollToTop": "Scroll to top",
+        "scrollToBottom": "Scroll to bottom",
+        "switchChatTypeButton": {
+          "friends": "Friends",
+          "squads": "Squads"
+        }
+      }
+    }
+  }
+}

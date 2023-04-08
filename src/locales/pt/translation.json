@@ -1,0 +1,30 @@
+{
+  "pages": {
+    "error": {
+      "alt": {
+        "notFoundPageImageAlt": "Mulher com uma lupa e um texto escrito atrás dela de 'página não encontrada'"
+      }
+    },
+    "chat": {
+      "alt": {
+        "chatAvatarHeader": "Foto de perfil de {{name}}",
+        "notFoundChatImageAlt": "Mulher com uma lupa com texto 'Nenhum chat foi encontrado'"
+      },
+      "others": {
+        "messageListTitle": "Amigos",
+        "messageInputPlaceholder": "Digite uma mensagem...",
+        "searchChatsPlaceholder": "Procure por amigos..."
+      },
+      "tooltip": {
+        "chatAvatarButton": "Abrir foto de perfil",
+        "emojiPickerButton": "Abrir menu de emoji",
+        "scrollToTop": "Rolar para o topo",
+        "scrollToBottom": "Rolar para o final",
+        "switchChatTypeButton": {
+          "friends": "Amigos",
+          "squads": "Squads"
+        }
+      }
+    }
+  }
+}

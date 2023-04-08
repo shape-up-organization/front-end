@@ -4,6 +4,10 @@
   "version": "0.1.0",
   "type": "module",
   "homepage": ".",
+  "eslintConfig": {
+    "extends": "./config/.eslintrc"
+  },
+  "prettier": "./config/.prettierrc.json",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -15,7 +19,8 @@
     "coverage": "vitest --coverage --passWithNoTests",
     "lint": "eslint src/**/*.{js,jsx} && echo \"eslint: no lint errors\"",
     "lint:all": "eslint src/**/* && echo \"eslint: no lint errors\"",
-    "lint:fix": "eslint --fix src/**/*.{js,jsx} && echo \"eslint: no lint errors\""
+    "lint:fix": "eslint --fix src/**/*.{js,jsx} && echo \"eslint: no lint errors\"",
+    "lint:staged": "lint-staged"
   },
   "dependencies": {
     "@emoji-mart/data": "^1.1.2",

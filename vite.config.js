@@ -6,6 +6,7 @@ import path from 'path'
 
 export default defineConfig({
   base: './',
+  envDir: './env',
   plugins: [react()],
   preview: {
     port: 3000,
@@ -38,6 +39,9 @@ export default defineConfig({
   test: {
     environment: 'jsdom',
     globals: true,
-    setupFiles: 'vitest.setup.js',
+    setupFiles: 'config/vitest.setup.js',
+  },
+  eslintConfig: {
+    ignorePatterns: ['config/.eslintignore'],
   },
 })

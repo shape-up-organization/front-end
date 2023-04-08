@@ -10,7 +10,8 @@ const ProtectedLayout = () => {
   const [isLoading, setIsLoading] = useState(true)
 
   const verifyAuth = async () => {
-    if (await isTokenInvalid()) {
+    const isInvalid = await isTokenInvalid()
+    if (isInvalid) {
       signOut()
     }
     setIsLoading(false)

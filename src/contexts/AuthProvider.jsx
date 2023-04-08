@@ -42,11 +42,14 @@ export const AuthProvider = ({ children }) => {
 
   const isTokenInvalid = async () => {
     const jwtToken = await getJwtToken()
-    const parsedJwtToken = parseJwt(jwtToken)
-    if (parsedJwtToken === null || parsedJwtToken.exp < Date.now() / 1000) {
-      return true
+    if (jwtToken) {
+      const parsedJwtToken = parseJwt(jwtToken)
+      if (parsedJwtToken === null || parsedJwtToken.exp < Date.now() / 1000) {
+        return true
+      }
+      return false
     }
-    return false
+    return true
   }
 
   // TODO: Validate with Back-end to revalidate or not here

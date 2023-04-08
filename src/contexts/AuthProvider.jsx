@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
     setCookie('jwt-token', newJwtToken, {
       path: '/',
     })
-    navigate('/logged')
+    navigate('/chat')
   }
 
   const signOut = () => {

@@ -16,20 +16,15 @@ const ChatContext = createContext()
 
 export const ChatProvider = ({ children }) => {
   const [data, setData] = useState({})
-  const [chats, setChats] = useState([])
+  const [activeChat, setActiveChat] = useState(null)
   const [chatsList, setChatsList] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [chatType, setChatType] = useState('')
   const [totalNotifications, setTotalNotifications] = useState(0)
 
-  const addChat = username => {
+  const openChat = username => {
     const newChat = data[chatType]?.find(chat => chat.username === username)
-    if (newChat) setChats([...chats, newChat])
-  }
-
-  const removeChat = username => {
-    const newChats = chats?.filter(chat => chat.username !== username)
-    setChats(newChats)
+    if (newChat) setActiveChat(newChat)
   }
 
   const changeChatType = newChatType => setChatType(newChatType)
@@ -92,18 +87,17 @@ export const ChatProvider = ({ children }) => {
 
   const values = useMemo(
     () => ({
-      addChat,
       changeChatType,
-      chats,
+      activeChat,
       chatsList,
       chatType,
       filterChats,
       isLoading,
       loadData,
-      removeChat,
+      openChat,
       totalNotifications,
     }),
-    [chats, chatsList, chatType, totalNotifications]
+    [activeChat, chatsList, chatType, totalNotifications]
   )
 
   return <ChatContext.Provider value={values}>{children}</ChatContext.Provider>

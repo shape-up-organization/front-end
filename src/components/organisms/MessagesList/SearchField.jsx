@@ -1,8 +1,11 @@
+import { useTranslation } from 'react-i18next'
+
 import { TextField } from '@mui/material'
 
 import { useChat } from '@contexts'
 
 const SearchField = () => {
+  const { t } = useTranslation()
   const { filterChats } = useChat()
 
   const handleChange = ({ target: { value } }) => {
@@ -13,7 +16,7 @@ const SearchField = () => {
     <TextField
       fullWidth
       onChange={handleChange}
-      placeholder="Procure por amigos"
+      placeholder={t('pages.chat.others.searchChatsPlaceholder')}
     />
   )
 }

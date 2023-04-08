@@ -16,7 +16,7 @@ export const ThemeModeProvider = ({ children }) => {
   return (
     <ThemeModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
-        <Paper>
+        <Paper sx={{ bgcolor: 'background.default' }}>
           <CssBaseline />
           <LocalizationProvider
             dateAdapter={AdapterDateFns}

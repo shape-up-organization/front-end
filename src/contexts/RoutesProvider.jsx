@@ -1,10 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
+import { ChatPage } from '@pages/ChatPage'
 import { ErrorPage } from '@pages/ErrorPage'
 import { LandingPage } from '@pages/LandingPage'
-import { LoggedPage } from '@pages/LoggedPage'
 
-import { ChatLayout } from '@layouts/ChatLayout'
 import { ProtectedLayout } from '@layouts/ProtectedLayout'
 
 import { AuthProvider } from './AuthProvider'
@@ -15,10 +14,8 @@ const RoutesProvider = () => (
       <Routes>
         <Route path="*" element={<ErrorPage />} />
         <Route index element={<LandingPage />} />
-        <Route element={<ChatLayout />}>
-          <Route element={<ProtectedLayout />}>
-            <Route path="logged" element={<LoggedPage />} />
-          </Route>
+        <Route element={<ProtectedLayout />}>
+          <Route path="chat" element={<ChatPage />} />
         </Route>
       </Routes>
     </AuthProvider>

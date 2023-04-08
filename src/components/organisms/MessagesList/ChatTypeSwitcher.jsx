@@ -1,18 +1,27 @@
+import { useTranslation } from 'react-i18next'
+
 import PeopleIcon from '@mui/icons-material/People'
 import PersonIcon from '@mui/icons-material/Person'
-import { IconButton, Tooltip } from '@mui/material'
+import { Box, IconButton, Stack, Tooltip } from '@mui/material'
 
 import { Divider } from '@atoms/Divider'
 
 import { useChat } from '@contexts'
 
 const ChatTypeSwitcher = () => {
+  const { t } = useTranslation()
   const { changeChatType, isLoading, chatType } = useChat()
 
   return (
-    <>
-      <Tooltip title="Amigos">
-        <span>
+    <Stack direction="row" justifyContent="center" spacing={4}>
+      <Tooltip
+        title={
+          isLoading || chatType === null
+            ? ''
+            : t('pages.chat.tooltip.switchChatTypeButton.friends')
+        }
+      >
+        <Box component="span" pb={1}>
           <IconButton
             disabled={isLoading || chatType === null}
             onClick={() => chatType !== 'friends' && changeChatType('friends')}
@@ -23,11 +32,17 @@ const ChatTypeSwitcher = () => {
               fontSize="large"
             />
           </IconButton>
-        </span>
+        </Box>
       </Tooltip>
       <Divider direction="vertical" />
-      <Tooltip title="Squads">
-        <span>
+      <Tooltip
+        title={
+          isLoading || chatType === null
+            ? ''
+            : t('pages.chat.tooltip.switchChatTypeButton.squads')
+        }
+      >
+        <Box component="span" pb={1}>
           <IconButton
             disabled={isLoading || chatType === null}
             onClick={() => chatType !== 'squads' && changeChatType('squads')}
@@ -38,9 +53,9 @@ const ChatTypeSwitcher = () => {
               fontSize="large"
             />
           </IconButton>
-        </span>
+        </Box>
       </Tooltip>
-    </>
+    </Stack>
   )
 }
 

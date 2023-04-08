@@ -3,10 +3,11 @@ import { useEffect } from 'react'
 import P from 'prop-types'
 
 import { Stack } from '@mui/material'
-import { Content } from './Content'
+
+import { Content } from './components/Content'
 
 // const stompClient = null
-const ChatComponent = () => {
+const Chat = () => {
   // const [privateChats, setPrivateChats] = useState(new Map())
   // const [publicChats, setPublicChats] = useState([])
   // const [tab, setTab] = useState('CHATROOM')
@@ -132,11 +133,11 @@ const ChatComponent = () => {
   )
 }
 
-ChatComponent.propTypes = {
+Chat.propTypes = {
   chatData: P.shape({
     name: P.string.isRequired,
     unreadMessages: P.number,
   }).isRequired,
 }
 
-export { ChatComponent }
+export { Chat }

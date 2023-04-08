@@ -1,1 +1,1 @@
-export { ChatComponent } from './ChatComponent'
+export { Chat } from './Chat'

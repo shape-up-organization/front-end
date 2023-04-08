@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Container, Grid, Paper } from '@mui/material'
 
-import { ChatComponent } from '@organisms/Chat'
+import { Chat } from '@organisms/Chat'
 import { MessagesList } from '@organisms/MessagesList'
 
 import { useChat } from '@contexts'
@@ -48,7 +48,7 @@ const ChatPage = () => {
             borderColor: 'primary.main',
           }}
         >
-          {activeChat && <ChatComponent chatData={activeChat} />}
+          {activeChat && <Chat />}
         </Grid>
       </Grid>
     </Container>

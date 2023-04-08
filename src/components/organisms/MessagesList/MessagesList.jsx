@@ -18,9 +18,9 @@ import {
 import { useChat } from '@contexts'
 import { useVisible } from '@hooks'
 
-import { ChatTypeSwitcher } from './ChatTypeSwitcher'
-import { ChatsList } from './ChatsList'
-import { SearchField } from './SearchField'
+import { ChatTypeSwitcher } from './components/ChatTypeSwitcher'
+import { ChatsList } from './components/ChatsList'
+import { SearchField } from './components/SearchField'
 
 const MessagesList = () => {
   const theme = useTheme()

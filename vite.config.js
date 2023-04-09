@@ -23,6 +23,7 @@ export default ({ mode }) => {
     resolve: {
       alias: {
         '@mocks': path.resolve(__dirname, './src/__mocks__'),
+        '@app': path.resolve(__dirname, './src/app'),
         '@api': path.resolve(__dirname, './src/api'),
         '@assets': path.resolve(__dirname, './src/assets'),
         '@hooks': path.resolve(__dirname, './src/hooks'),

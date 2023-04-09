@@ -1,18 +1,13 @@
 import { useState } from 'react'
 
-import P from 'prop-types'
-import { Controller, useForm } from 'react-hook-form'
-
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useSnackbar } from 'notistack'
-
-import { LinkButton } from '@atoms/LinkButton'
-import { TextField } from '@atoms/TextField'
-import { Modal } from '@templates/Modal'
+import P from 'prop-types'
+import { Controller, useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
-
 import {
   Button,
   Checkbox,
@@ -23,35 +18,35 @@ import {
   Grow,
   IconButton,
   InputAdornment,
+  Tooltip,
   Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
+import { LinkButton } from '@atoms/LinkButton'
 import { TextButton } from '@atoms/TextButton'
+import { TextField } from '@atoms/TextField'
+import { Modal } from '@templates/Modal'
 
 import api from '@api/services/users'
 import { masks } from '@utils/masks'
 import { schema } from './schema'
 
-const size = 'large'
-const title = 'Crie sua conta'
-const locale = 'ptBR'
-
 const Content = ({ switchModal }) => {
-  const [showPassword, setShowPassword] = useState(false)
-  const [isTermsChecked, setIsTermsChecked] = useState(false)
-  const [isButtonLoading, setIsButtonLoading] = useState(false)
-
   const { enqueueSnackbar } = useSnackbar()
-
   const {
     control,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) })
+  const { t, i18n } = useTranslation()
+
+  const [showPassword, setShowPassword] = useState(false)
+  const [isTermsChecked, setIsTermsChecked] = useState(false)
+  const [isButtonLoading, setIsButtonLoading] = useState(false)
 
   const handleSignup = async values => {
     setIsButtonLoading(true)
@@ -71,13 +66,13 @@ const Content = ({ switchModal }) => {
 
       if (response.status === 201) {
         switchModal()
-        enqueueSnackbar('Usuário registrado com sucesso!', {
+        enqueueSnackbar(t('pages.landing.signup.snackbar.success'), {
           variant: 'success',
         })
       }
     } catch (error) {
-      console.log('erro: ', error)
-      enqueueSnackbar('Houve algum erro na criação do usuário', {
+      console.error(error)
+      enqueueSnackbar(t('pages.landing.signup.snackbar.error'), {
         variant: 'error',
       })
     } finally {
@@ -95,47 +90,47 @@ const Content = ({ switchModal }) => {
       spacing={2}
       paddingTop={1}
     >
-      <Grid item xs={6} sm={6}>
+      <Grid item xs={12} sm={6}>
         <TextField
           error={errors.name?.message}
-          label="Nome"
+          label={t('pages.landing.signup.label.name')}
           name="name"
           type="text"
           register={register}
         />
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={12} sm={6}>
         <TextField
           error={errors.lastName?.message}
-          label="Sobrenome"
+          label={t('pages.landing.signup.label.lastName')}
           name="lastName"
           type="text"
           register={register}
         />
       </Grid>
-      <Grid item xs={12}>
-        <TextField
-          error={errors.email?.message}
-          label="E-mail"
-          name="email"
-          type="email"
-          register={register}
-        />
-      </Grid>
-      <Grid item xs={5} sm={12}>
+      <Grid item xs={12} sm={6}>
         <TextField
           error={errors.username?.message}
-          label="Usuário"
+          label={t('pages.landing.signup.label.username')}
           name="username"
           type="text"
           register={register}
         />
       </Grid>
-      <Grid item xs={7} sm={6}>
+      <Grid item xs={12} sm={6}>
+        <TextField
+          error={errors.email?.message}
+          label={t('pages.landing.signup.label.email')}
+          name="email"
+          type="email"
+          register={register}
+        />
+      </Grid>
+      <Grid item xs={12} sm={6}>
         <TextField
           error={errors.cellPhone?.message}
-          label="Número"
-          mask={masks.phoneMasks[locale]}
+          label={t('pages.landing.signup.label.cellPhone')}
+          mask={masks.phoneMasks[i18n.resolvedLanguage]}
           name="cellPhone"
           type="tel"
           register={register}
@@ -162,9 +157,9 @@ const Content = ({ switchModal }) => {
 
             return (
               <DatePicker
-                format="dd/MM/yyyy"
+                format={masks.dateMasks[i18n.resolvedLanguage]}
                 inputRef={ref}
-                label="Data de nascimento"
+                label={t('pages.landing.signup.label.birthDate')}
                 maxDate={new Date()}
                 sx={{
                   width: '100%',
@@ -205,24 +200,32 @@ const Content = ({ switchModal }) => {
       <Grid item xs={12} sm={6}>
         <TextField
           error={errors.password?.message}
-          label="Senha"
+          label={t('pages.landing.signup.label.password')}
           name="password"
           type={showPassword ? 'text' : 'password'}
           endAdornment={
             <InputAdornment position="end">
-              <IconButton
-                aria-label={showPassword ? 'Esconder senha' : 'Mostrar senha'}
-                onClick={() =>
-                  setShowPassword(prevShowPassword => !prevShowPassword)
+              <Tooltip
+                title={
+                  showPassword
+                    ? t('pages.landing.signup.others.hidePassword')
+                    : t('pages.landing.signup.others.showPassword')
                 }
-                onMouseDown={event => event.preventDefault()}
               >
-                {showPassword ? (
-                  <VisibilityOff fontSize="small" />
-                ) : (
-                  <Visibility fontSize="small" />
-                )}
-              </IconButton>
+                <IconButton
+                  aria-label={showPassword ? 'Esconder senha' : 'Mostrar senha'}
+                  onClick={() =>
+                    setShowPassword(prevShowPassword => !prevShowPassword)
+                  }
+                  onMouseDown={event => event.preventDefault()}
+                >
+                  {showPassword ? (
+                    <VisibilityOff fontSize="small" />
+                  ) : (
+                    <Visibility fontSize="small" />
+                  )}
+                </IconButton>
+              </Tooltip>
             </InputAdornment>
           }
           register={register}
@@ -231,24 +234,31 @@ const Content = ({ switchModal }) => {
       <Grid item xs={12} sm={6}>
         <TextField
           error={errors.confirmPassword?.message}
-          label="Confirmar senha"
+          label={t('pages.landing.signup.label.confirmPassword')}
           name="confirmPassword"
           type={showPassword ? 'text' : 'password'}
           endAdornment={
             <InputAdornment position="end">
-              <IconButton
-                aria-label={showPassword ? 'Esconder senha' : 'Mostrar senha'}
-                onClick={() =>
-                  setShowPassword(prevShowPassword => !prevShowPassword)
+              <Tooltip
+                title={
+                  showPassword
+                    ? t('pages.landing.signup.others.hidePassword')
+                    : t('pages.landing.signup.others.showPassword')
                 }
-                onMouseDown={event => event.preventDefault()}
               >
-                {showPassword ? (
-                  <VisibilityOff fontSize="small" />
-                ) : (
-                  <Visibility fontSize="small" />
-                )}
-              </IconButton>
+                <IconButton
+                  onClick={() =>
+                    setShowPassword(prevShowPassword => !prevShowPassword)
+                  }
+                  onMouseDown={event => event.preventDefault()}
+                >
+                  {showPassword ? (
+                    <VisibilityOff fontSize="small" />
+                  ) : (
+                    <Visibility fontSize="small" />
+                  )}
+                </IconButton>
+              </Tooltip>
             </InputAdornment>
           }
           register={register}
@@ -259,8 +269,8 @@ const Content = ({ switchModal }) => {
         xs={10}
         sm={12}
         display="flex"
-        textAlign="center"
         justifyContent="center"
+        textAlign="center"
       >
         <FormControlLabel
           control={
@@ -273,10 +283,13 @@ const Content = ({ switchModal }) => {
           }
           label={
             <Typography fontWeight="bold" variant="subtitle2">
-              Li e aceito os{' '}
-              <LinkButton internal="terms-of-use">termos de uso</LinkButton> e{' '}
+              {t('pages.landing.signup.others.checkbox.1')}
+              <LinkButton internal="terms-of-use">
+                {t('pages.landing.signup.others.checkbox.2')}
+              </LinkButton>
+              {t('pages.landing.signup.others.checkbox.3')}
               <LinkButton internal="privacy-policies">
-                políticas de privacidade
+                {t('pages.landing.signup.others.checkbox.4')}
               </LinkButton>
             </Typography>
           }
@@ -293,16 +306,19 @@ const Content = ({ switchModal }) => {
           {isButtonLoading ? (
             <CircularProgress color="secondary" size={24} />
           ) : (
-            <Typography fontWeight="bold" textTransform="none">
-              ENTRAR
+            <Typography fontWeight="bold" textTransform="uppercase">
+              {t('pages.landing.signup.others.buttonSignUp')}
             </Typography>
           )}
         </Button>
       </Grid>
       <Grid item textAlign="center" xs={12} sm={12}>
         <Typography fontWeight="500" variant="caption">
-          Já tem uma conta?
-          <TextButton handleClick={switchModal} text="Entre agora mesmo!" />
+          {t('pages.landing.signup.others.signInCall.1')}
+          <TextButton
+            handleClick={switchModal}
+            text={t('pages.landing.signup.others.signInCall.2')}
+          />
         </Typography>
       </Grid>
     </Grid>
@@ -311,7 +327,10 @@ const Content = ({ switchModal }) => {
 
 Content.propTypes = { switchModal: P.func.isRequired }
 
+const size = 'large'
+
 const SignupModal = ({ isOpen, handleClose, switchModal }) => {
+  const { t } = useTranslation()
   const lessThanLarge = useMediaQuery(useTheme().breakpoints.down('lg'))
 
   return (
@@ -321,7 +340,7 @@ const SignupModal = ({ isOpen, handleClose, switchModal }) => {
       handleClose={handleClose}
       isOpen={isOpen}
       size={size}
-      title={title}
+      title={t('pages.landing.signup.others.title')}
       titleAlignment={lessThanLarge ? 'center' : 'left'}
     />
   )

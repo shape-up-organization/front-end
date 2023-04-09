@@ -3,6 +3,7 @@
     "baseUrl": "./.",
     "paths": {
       "@mocks/*": ["./src/__mocks__/*"],
+      "@app/*": ["./src/app/*"],
       "@api/*": ["./src/api/*"],
       "@assets/*": ["./src/assets/*"],
       "@hooks": ["./src/hooks"],

@@ -4,14 +4,21 @@ import { createContext } from 'react'
 import { CssBaseline, Paper, ThemeProvider } from '@mui/material'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
-import { ptBR } from 'date-fns/locale'
+import { enUS, ptBR } from 'date-fns/locale'
 
 import { useCustomTheme } from '@styles/useCustomTheme'
+import { useTranslation } from 'react-i18next'
 
 export const ThemeModeContext = createContext({ toggleColorMode: () => {} })
 
+const locales = {
+  en: enUS,
+  pt: ptBR,
+}
+
 export const ThemeModeProvider = ({ children }) => {
   const { theme, colorMode } = useCustomTheme()
+  const { i18n } = useTranslation()
 
   return (
     <ThemeModeContext.Provider value={colorMode}>
@@ -20,7 +27,7 @@ export const ThemeModeProvider = ({ children }) => {
           <CssBaseline />
           <LocalizationProvider
             dateAdapter={AdapterDateFns}
-            adapterLocale={ptBR}
+            adapterLocale={locales[i18n.resolvedLanguage]}
           >
             {children}
           </LocalizationProvider>

@@ -30,6 +30,119 @@
           "squads": "Squads"
         }
       }
+    },
+    "landing": {
+      "alt": {
+        "landingPageImageAlt": "Mulher se exercitando em uma bola de yoga",
+        "menuGreenDog": "Cachorro fofinho e verde"
+      },
+      "header": {
+        "buttonSignIn": "Entrar",
+        "buttonSignUp": "Cadastrar"
+      },
+      "banner": {
+        "bullet1": {
+          "1": "Compartilhe ",
+          "2": "seu ",
+          "3": "progresso ",
+          "4": "com os amigos"
+        },
+        "bullet2": {
+          "1": "Participe ",
+          "2": "de ",
+          "3": "eventos ",
+          "4": "da comunidade"
+        },
+        "bullet3": {
+          "1": "Uma rede social ",
+          "2": "gamificada "
+        },
+        "button": "Evolua já",
+        "title": "Seu impulso estético"
+      },
+      "footer": {
+        "linkAbout": "Sobre",
+        "linkHelp": "Ajuda",
+        "linkPrivacy": "Privacidade"
+      },
+      "login": {
+        "others": {
+          "buttonSignIn": "Entrar",
+          "forgotPassword": "Esqueceu a senha?",
+          "hidePassword": "Ocultar senha",
+          "showPassword": "Mostrar senha",
+          "signUpCall": {
+            "1": "Primeira vez por aqui?",
+            "2": "Crie sua conta",
+            "3": "agora mesmo!"
+          },
+          "title": "Faça login"
+        },
+        "schema": {
+          "requiredField": "Campo obrigatório!",
+          "invalidEmail": "E-mail inválido!"
+        },
+        "snackbar": {
+          "error": "E-mail e/ou senha incorretos!"
+        },
+        "label": {
+          "email": "E-mail",
+          "password": "Senha"
+        }
+      },
+      "signup": {
+        "others": {
+          "buttonSignUp": "Entrar",
+          "checkbox": {
+            "1": "Li e aceito os ",
+            "2": "termos de uso",
+            "3": " e ",
+            "4": "políticas de privacidade."
+          },
+          "forgotPassword": "Esqueceu a senha?",
+          "hidePassword": "Ocultar senha",
+          "showPassword": "Mostrar senha",
+          "signInCall": {
+            "1": "Já tem uma conta?",
+            "2": "Entre agora mesmo!"
+          },
+          "title": "Crie sua conta"
+        },
+        "schema": {
+          "atLeast1Number": "Deve ter pelo menos 1 número!",
+          "atLeast1LowerCaseLetter": "Deve ter pelo menos 1 letra minúscula!",
+          "atLeast1SpecialChar": "Deve ter pelo menos 1 caractere especial!",
+          "atLeast1UpperCaseLetter": "Deve ter pelo menos 1 letra maiúscula!",
+          "atLeast8Chars": "Deve ter pelo menos 8 caracteres!",
+          "invalidDate": "Data inválida!",
+          "invalidEmail": "E-mail inválido!",
+          "invalidNumber": "Número inválido!",
+          "moreThan1Letter": "Deve ter mais do que uma letra!",
+          "moreThan8Chars": "Deve ter mais do que uma letra!",
+          "noNumbersOrSpecialChars": "Não pode ter números ou caracteres especiais!",
+          "olderThan18": "Deve ter mais de 18 anos!",
+          "passwordsNotTheSame": "As senhas não são iguais!",
+          "requiredField": "Campo obrigatório!"
+        },
+        "snackbar": {
+          "error": "Houve algum erro ao criar sua conta!",
+          "success": "Conta criada com sucesso!"
+        },
+        "label": {
+          "birthDate": "Data de nascimento",
+          "cellPhone": "Número",
+          "confirmPassword": "Confirmar senha",
+          "email": "E-mail",
+          "name": "Nome",
+          "lastName": "Sobrenome",
+          "password": "Senha",
+          "username": "Usuário"
+        }
+      },
+      "others": {
+        "dividerText": "OU",
+        "externalButton": "Entre com {{provider}}"
+      }
     }
   }
 }

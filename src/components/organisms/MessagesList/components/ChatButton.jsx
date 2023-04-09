@@ -4,6 +4,7 @@ import { Avatar, Badge, Button, Grid, Typography } from '@mui/material'
 
 import { useChat } from '@contexts'
 import { reformatSimpleDate } from '@utils/dateTimeHelper'
+import { charactersToLineBreaks } from '@utils/stringHelper'
 
 import { useStyles } from './ChatButton.styles'
 
@@ -45,7 +46,7 @@ const ChatButton = ({
             <Avatar alt={name} />
           </Badge>
         </Grid>
-        <Grid container item xs={9} rowSpacing={0}>
+        <Grid container item xs={9} rowSpacing={1}>
           <Grid item xs={8}>
             <Typography
               fontWeight={unreadMessages ? '700' : '400'}
@@ -78,13 +79,13 @@ const ChatButton = ({
               noWrap
               variant="subtitle2"
             >
-              {lastMessage?.message}
+              {charactersToLineBreaks(lastMessage?.message)}
             </Typography>
           </Grid>
           <Grid item xs={3} display="flex" justifyContent="end">
             <Badge
               anchorOrigin={{
-                vertical: 'bottom',
+                vertical: 'top',
                 horizontal: 'left',
               }}
               badgeContent={unreadMessages}

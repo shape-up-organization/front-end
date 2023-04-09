@@ -37,7 +37,7 @@ const MessagesList = () => {
 
   return (
     <>
-      <Zoom in={!isHeaderVisible && chatsData.deprecated}>
+      <Zoom in={!isHeaderVisible}>
         <Tooltip
           sx={{
             bgcolor: 'background.default',

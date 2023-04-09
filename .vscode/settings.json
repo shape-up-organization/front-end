@@ -58,6 +58,8 @@
     "latin",
     "notistack",
     "signup",
-    "Signup"
+    "Signup",
+    "sockjs",
+    "stompjs"
   ]
 }

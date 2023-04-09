@@ -7,6 +7,7 @@ import {
   useState,
 } from 'react'
 
+import { useMediaQuery, useTheme } from '@mui/material'
 import P from 'prop-types'
 
 import mockedFriends from '@mocks/friends/get'
@@ -35,6 +36,18 @@ export const ChatProvider = ({ children }) => {
     connected: false,
   })
 
+  const lessThanMedium = useMediaQuery(useTheme().breakpoints.down('md'))
+
+  const [displayChat, setDisplayChat] = useState(
+    !lessThanMedium || !!activeChat
+  )
+  const [displayMessagesList, setDisplayMessagesList] = useState(
+    !lessThanMedium || (lessThanMedium && !activeChat)
+  )
+  const [responsiveSize, setResponsiveSize] = useState(
+    lessThanMedium ? 'mobile' : 'desktop'
+  )
+
   useEffect(() => {
     if (userData.username) connect(userData.username)
   }, [userData.username])
@@ -42,6 +55,12 @@ export const ChatProvider = ({ children }) => {
   useEffect(() => {
     if (!chatsData.deprecated) connect(userData.username)
   }, [chatsData.deprecated])
+
+  useEffect(() => {
+    setDisplayChat(!lessThanMedium || !!activeChat)
+    setDisplayMessagesList(!lessThanMedium || (lessThanMedium && !activeChat))
+    setResponsiveSize(lessThanMedium ? 'mobile' : 'desktop')
+  }, [lessThanMedium])
 
   const connect = async username => {
     if (!stompClient && !chatsData.deprecated) {
@@ -167,7 +186,21 @@ export const ChatProvider = ({ children }) => {
     const newChat = chatsData[chatsData.type]?.find(
       chat => chat.username === username
     )
-    if (newChat) setActiveChat(newChat)
+    if (newChat) {
+      if (lessThanMedium) {
+        setDisplayChat(true)
+        setDisplayMessagesList(false)
+      }
+      setActiveChat(newChat)
+    }
+  }
+
+  const closeChat = () => {
+    setActiveChat(null)
+    if (lessThanMedium) {
+      setDisplayChat(false)
+      setDisplayMessagesList(true)
+    }
   }
 
   const changeChatType = newChatType =>
@@ -216,10 +249,14 @@ export const ChatProvider = ({ children }) => {
 
   const values = useMemo(
     () => ({
+      displayChat,
+      displayMessagesList,
+      responsiveSize,
       activeChat,
       canSendMessage,
       changeChatType,
       chatsData,
+      closeChat,
       filterChats,
       getChatType,
       isLoading,
@@ -230,7 +267,14 @@ export const ChatProvider = ({ children }) => {
       totalNotifications,
       updateUsername,
     }),
-    [activeChat, canSendMessage, chatsData, isLoading, totalNotifications]
+    [
+      activeChat,
+      canSendMessage,
+      chatsData,
+      isLoading,
+      totalNotifications,
+      responsiveSize,
+    ]
   )
 
   return <ChatContext.Provider value={values}>{children}</ChatContext.Provider>

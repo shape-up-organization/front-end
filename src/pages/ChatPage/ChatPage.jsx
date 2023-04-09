@@ -1,55 +1,55 @@
-import { useState } from 'react'
-
-import { Container, Grid, Paper } from '@mui/material'
+import { Container, Fade, Grid, Paper } from '@mui/material'
 
 import { Chat } from '@organisms/Chat'
 import { MessagesList } from '@organisms/MessagesList'
 
 import { useChat } from '@contexts'
 
+import { useStyles } from './ChatPage.styles'
+
+const sizes = {
+  desktop: {
+    messagesList: 4,
+    chat: 8,
+  },
+  mobile: {
+    messagesList: 12,
+    chat: 12,
+  },
+}
+
 const ChatPage = () => {
-  const [messagesListWidth] = useState(4)
-  const [chatWidth] = useState(8)
+  const { activeChat, displayChat, displayMessagesList, responsiveSize } =
+    useChat()
 
-  const { activeChat } = useChat()
-
-  // TODO: Implement expand to responsiveness
-  // const handleExpandMessagesList = () => {
-  //   setMessagesListWidth(6)
-  //   setChatWidth(6)
-  // }
+  const { classes } = useStyles()
 
   return (
-    <Container
-      disableGutters
-      fixed
-      sx={{ alignItems: 'center', display: 'flex', height: '100vh' }}
-    >
-      <Grid container component={Paper} height="88%">
-        <Grid
-          item
-          xs={messagesListWidth}
-          height="100%"
-          overflow="auto"
-          sx={{
-            transition: 'all 0.5s ease-in-out',
-          }}
-        >
-          <MessagesList />
-        </Grid>
-        <Grid
-          item
-          xs={chatWidth}
-          borderLeft={2}
-          height="100%"
-          overflow="auto"
-          sx={{
-            transition: 'all 0.5s ease-in-out',
-            borderColor: 'primary.main',
-          }}
-        >
-          {activeChat && <Chat />}
-        </Grid>
+    <Container className={classes.container} disableGutters fixed>
+      <Grid container className={classes.paper} component={Paper}>
+        <Fade in={displayMessagesList} unmountOnExit>
+          <Grid
+            item
+            xs={sizes[responsiveSize].messagesList}
+            className={classes.messagesList}
+            height="100%"
+            overflow="auto"
+          >
+            <MessagesList />
+          </Grid>
+        </Fade>
+        <Fade in={displayChat} unmountOnExit>
+          <Grid
+            item
+            xs={sizes[responsiveSize].chat}
+            className={classes.chat}
+            borderLeft={2}
+            height="100%"
+            overflow="auto"
+          >
+            {activeChat && <Chat />}
+          </Grid>
+        </Fade>
       </Grid>
     </Container>
   )

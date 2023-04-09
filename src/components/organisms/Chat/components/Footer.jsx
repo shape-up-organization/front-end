@@ -107,9 +107,18 @@ const Footer = ({
             </Popover>
           </Grid>
           <Grid item xs={10} display="flex" justifyContent="flex-end">
-            <IconButton color="primary" onClick={handleSendMessage}>
-              <SendIcon />
-            </IconButton>
+            <Tooltip
+              placement="top-end"
+              title={t('pages.chat.tooltip.sendMessageButton')}
+            >
+              <IconButton
+                color="primary"
+                disabled={!messageText.trim()}
+                onClick={handleSendMessage}
+              >
+                <SendIcon />
+              </IconButton>
+            </Tooltip>
           </Grid>
         </Grid>
       </Grid>

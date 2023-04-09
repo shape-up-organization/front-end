@@ -14,8 +14,8 @@ export const useStyles = makeStyles()(
     },
     badge: {
       '& .MuiBadge-badge': {
-        bottom: 10,
-        left: -10,
+        // bottom: 10,
+        // left: -10,
       },
     },
   }),

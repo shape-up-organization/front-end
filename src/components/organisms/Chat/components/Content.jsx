@@ -4,12 +4,13 @@ import { Stack } from '@mui/material'
 
 import { useAuth, useChat } from '@contexts'
 import { useVisible } from '@hooks'
+import { lineBreaksToCharacters } from '@utils/stringHelper'
 
-import { useStyles } from './Content.styles'
 import { Footer } from './Footer'
-
 import { Header } from './Header'
 import { MessagesList } from './MessagesList'
+
+import { useStyles } from './Content.styles'
 
 const Content = () => {
   const { extractUsername } = useAuth()
@@ -84,15 +85,24 @@ const Content = () => {
 
   const handleScrollToBottom = () => {
     setIsScrollingDown(true)
-    listBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    listBottomRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    })
   }
 
   const handleSendMessage = () => {
     if (canSendMessage && messageText.trim()) {
       if (activeChat.username === 'group1') {
-        sendPublicMessage(messageText, activeChat.username)
+        sendPublicMessage(
+          lineBreaksToCharacters(messageText),
+          activeChat.username
+        )
       } else {
-        sendPrivateMessage(messageText, activeChat.username)
+        sendPrivateMessage(
+          lineBreaksToCharacters(messageText),
+          activeChat.username
+        )
       }
       setMessageText('')
     }
@@ -132,88 +142,6 @@ const Content = () => {
         isScrollingDown={isScrollingDown}
         messageText={messageText}
       />
-      {/* <Grid container alignItems="center" height="20%" rowGap={0}>
-        <Grid item xs={12}>
-          <Badge
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'left',
-            }}
-            badgeContent={
-              <Zoom
-                in={!isListBottomVisible && !isScrollingDown}
-                easing="ease-out"
-              >
-                <Tooltip
-                  placement="top-start"
-                  title={t('pages.chat.tooltip.scrollToBottom')}
-                  sx={{
-                    bgcolor: 'background.default',
-                    mt: 1,
-                    ml: 1,
-                    zIndex: 1200,
-                  }}
-                >
-                  <IconButton
-                    color="primary"
-                    onClick={handleScrollToBottom}
-                    type="button"
-                  >
-                    <ArrowDownwardRoundedIcon />
-                  </IconButton>
-                </Tooltip>
-              </Zoom>
-            }
-            sx={{ width: '100%' }}
-          >
-            <TextField
-              fullWidth
-              onChange={event => setMessageText(event.target.value)}
-              onKeyPress={handleKeyPress}
-              maxRows={3}
-              multiline
-              placeholder={t('pages.chat.others.messageInputPlaceholder')}
-              value={messageText}
-              variant="outlined"
-            />
-          </Badge>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container>
-            <Grid item xs={2}>
-              <Tooltip
-                placement="bottom-start"
-                title={t('pages.chat.tooltip.emojiPickerButton')}
-              >
-                <IconButton
-                  color="primary"
-                  onClick={handleOpenEmojiPicker}
-                  ref={emojiButtonRef}
-                >
-                  <EmojiEmotionsIcon />
-                </IconButton>
-              </Tooltip>
-              <Popover
-                anchorEl={emojiPickerAnchorEl}
-                onClose={handleCloseEmojiPicker}
-                open={emojiPickerOpen}
-              >
-                <EmojiPicker
-                  data={emojisData}
-                  onEmojiSelect={emojiObject =>
-                    setMessageText(messageText + emojiObject.native)
-                  }
-                />
-              </Popover>
-            </Grid>
-            <Grid item xs={10} display="flex" justifyContent="flex-end">
-              <IconButton color="primary" onClick={handleSendMessage}>
-                <SendIcon />
-              </IconButton>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid> */}
     </Stack>
   )
 }

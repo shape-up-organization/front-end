@@ -43,12 +43,12 @@ const Modal = ({
   const dividerDirection =
     contentDirection === 'row' ? 'vertical' : 'horizontal'
 
-  const lessThanMedium = useMediaQuery(useTheme().breakpoints.down('sm'))
+  const lessThanSmall = useMediaQuery(useTheme().breakpoints.down('sm'))
   const { classes } = useStyles()
 
   return (
     <Dialog
-      fullScreen={lessThanMedium}
+      fullScreen={lessThanSmall}
       fullWidth
       open={isOpen}
       onClose={handleClose}
@@ -84,7 +84,7 @@ const Modal = ({
             alignItems: 'center',
             display: 'flex',
             flexDirection: contentDirection,
-            gap: theme => theme.spacing(lessThanMedium ? 8 : 4),
+            gap: theme => theme.spacing(lessThanSmall ? 8 : 4),
           }}
         >
           {content}

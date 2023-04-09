@@ -18,9 +18,11 @@
         "searchChatsPlaceholder": "Procure por amigos..."
       },
       "tooltip": {
+        "chatArrowBackButton": "Voltar",
         "chatAvatarButton": "Abrir foto de perfil",
         "chatMenuButton": "Abrir menu de chat",
         "emojiPickerButton": "Abrir menu de emoji",
+        "sendMessageButton": "Enviar mensagem",
         "scrollToTop": "Rolar para o topo",
         "scrollToBottom": "Rolar para o final",
         "switchChatTypeButton": {

@@ -1,8 +1,17 @@
 import P from 'prop-types'
 
-import { Badge, Box, List, ListItem, Typography } from '@mui/material'
+import {
+  Avatar,
+  Badge,
+  Box,
+  Grow,
+  List,
+  ListItem,
+  Typography,
+} from '@mui/material'
 
 import { reformatSimpleTime } from '@utils/dateTimeHelper'
+import { charactersToLineBreaks } from '@utils/stringHelper'
 
 const MessagesList = ({ listBottomRef, messages, username }) => (
   <List
@@ -13,59 +22,67 @@ const MessagesList = ({ listBottomRef, messages, username }) => (
     }}
   >
     {messages?.map(({ date, message, senderName }) => (
-      <ListItem
-        key={date}
-        sx={{
-          justifyContent: senderName === username ? 'flex-end' : 'flex-start',
-          '& span': {
-            textAlign: senderName === username ? 'end' : 'start',
-          },
-        }}
-      >
-        <Badge
-          anchorOrigin={
-            senderName === username
-              ? {
-                  vertical: 'top',
-                  horizontal: 'right',
-                }
-              : {
-                  vertical: 'top',
-                  horizontal: 'left',
-                }
-          }
-          color="primary"
-          component="div"
-          overlap="rectangular"
-          variant="dot"
+      <Grow in key={date} unmountOnExit>
+        <ListItem
+          key={date}
+          sx={{
+            justifyContent: senderName === username ? 'flex-end' : 'flex-start',
+            '& span': {
+              textAlign: senderName === username ? 'end' : 'start',
+            },
+          }}
         >
-          <Box
-            bgcolor="background.default"
-            borderRadius={1}
-            maxWidth={312}
-            p={2}
-            sx={{
-              '&:hover': {
-                backgroundColor: 'chat.backgroundHeader',
-                transition: 'background-color 0.2s ease-in-out',
-              },
-            }}
+          <Badge
+            anchorOrigin={
+              senderName === username
+                ? {
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }
+                : {
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }
+            }
+            badgeContent={
+              <Avatar alt={senderName} sx={{ height: 24, width: 24 }} />
+            }
+            component="div"
+            overlap="rectangular"
+            variant="standard"
           >
-            <Typography sx={{ userSelect: 'text' }} variant="body1">
-              {message}
-            </Typography>
-            <span>
+            <Box
+              bgcolor="background.default"
+              borderRadius={1}
+              maxWidth={312}
+              p={2}
+              sx={{
+                '&:hover': {
+                  backgroundColor: 'chat.backgroundHeader',
+                  transition: 'background-color 0.2s ease-in-out',
+                },
+              }}
+            >
               <Typography
-                color="text.secondary"
-                component="p"
-                variant="caption"
+                sx={{ userSelect: 'text' }}
+                variant="body1"
+                whiteSpace="pre-wrap"
               >
-                {reformatSimpleTime(date)}
+                {charactersToLineBreaks(message)}
               </Typography>
-            </span>
-          </Box>
-        </Badge>
-      </ListItem>
+              <span>
+                <Typography
+                  color="text.secondary"
+                  component="p"
+                  variant="caption"
+                >
+                  {reformatSimpleTime(date)}
+                </Typography>
+              </span>
+            </Box>
+          </Badge>
+        </ListItem>
+      </Grow>
     ))}
     <Box component="span" ref={listBottomRef} />
   </List>

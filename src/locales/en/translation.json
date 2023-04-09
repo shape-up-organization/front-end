@@ -3,6 +3,9 @@
     "error": {
       "alt": {
         "notFoundPageImage": "Woman with a magnifying glass and an error text written behind her 'page not found'"
+      },
+      "others": {
+        "notFoundPageMessage": "Page not found!"
       }
     },
     "chat": {
@@ -11,11 +14,13 @@
         "notFoundChatImage": "Woman with a magnifying glass with text 'No chat was found'"
       },
       "others": {
+        "chatNotFoundMessage": "No chat was found!",
         "menuItemAcceptFriendshipRequest": "Accept friendship request",
         "menuItemAddFriend": "Add friend",
         "messageListTitle": "Friends",
         "messageInputPlaceholder": "Type a message...",
-        "searchChatsPlaceholder": "Search friends..."
+        "searchChatsPlaceholder": "Search friends...",
+        "searchChatsPlaceholderDisabled": "You have no friends yet!"
       },
       "tooltip": {
         "chatArrowBackButton": "Go back",
@@ -113,6 +118,7 @@
           "atLeast1LowerCaseLetter": "Must have at least 1 lowercase letter!",
           "atLeast1SpecialChar": "Must have at least 1 special character!",
           "atLeast1UpperCaseLetter": "Must have at least 1 uppercase letter!",
+          "noAtSignOrWhiteSpace": "Cannot have @ or whitespace!",
           "atLeast8Chars": "Must have at least 8 characters!",
           "invalidDate": "Invalid date!",
           "invalidEmail": "Invalid email!",
@@ -142,6 +148,19 @@
       "others": {
         "dividerText": "OR",
         "externalButton": "Sign in with {{provider}}"
+      }
+    },
+    "search": {
+      "others": {
+        "friendLabel": "Friend",
+        "levelLabel": "Level",
+        "searchPlaceholder": "Search for users..."
+      },
+      "menu": {
+        "acceptFriendshipRequest": "Accept friendship request",
+        "addFriend": "Add friend",
+        "goToProfile": "Go to profile",
+        "removeFriend": "Remove friend"
       }
     }
   }

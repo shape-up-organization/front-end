@@ -22,9 +22,13 @@ export const schema = z
       .regex(/^[a-zA-Z\s]+$/, {
         message: i18n.t('pages.landing.signup.schema.noNumbersOrSpecialChars'),
       }),
-    username: string().min(2, {
-      message: i18n.t('pages.landing.signup.schema.moreThan1Letter'),
-    }),
+    username: string()
+      .min(2, {
+        message: i18n.t('pages.landing.signup.schema.moreThan1Letter'),
+      })
+      .regex(/^[^@\s]+$/, {
+        message: i18n.t('pages.landing.signup.schema.noAtSignOrWhiteSpace'),
+      }),
     email: string().email(i18n.t('pages.landing.signup.schema.invalidEmail')),
     cellPhone: string()
       .transform(value => value.replace(/[\D][^_]/g, ''))

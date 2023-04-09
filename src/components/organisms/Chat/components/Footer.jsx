@@ -111,13 +111,15 @@ const Footer = ({
               placement="top-end"
               title={t('pages.chat.tooltip.sendMessageButton')}
             >
-              <IconButton
-                color="primary"
-                disabled={!messageText.trim()}
-                onClick={handleSendMessage}
-              >
-                <SendIcon />
-              </IconButton>
+              <span>
+                <IconButton
+                  color="primary"
+                  disabled={!messageText.trim()}
+                  onClick={handleSendMessage}
+                >
+                  <SendIcon />
+                </IconButton>
+              </span>
             </Tooltip>
           </Grid>
         </Grid>

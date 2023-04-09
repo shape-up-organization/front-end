@@ -14,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate()
 
   const parseJwt = unparsedToken => {
+    if (!unparsedToken) return null
     const base64Payload = unparsedToken.split('.')[1]
     const payload = Buffer.from(base64Payload, 'base64')
     return JSON.parse(payload.toString())
@@ -24,7 +25,7 @@ export const AuthProvider = ({ children }) => {
       path: '/',
     })
 
-    navigate('/chat')
+    navigate('/search')
   }
 
   const signOut = () => {
@@ -40,8 +41,6 @@ export const AuthProvider = ({ children }) => {
     return jwtToken
   }
 
-  const getTokenProp = async prop => parseJwt(await getJwtToken())[prop]
-
   const isTokenInvalid = async () => {
     const jwtToken = await getJwtToken()
     if (jwtToken) {
@@ -53,6 +52,15 @@ export const AuthProvider = ({ children }) => {
     }
     return true
   }
+
+  const getTokenProp = async prop => parseJwt(await getJwtToken())[prop]
+
+  const getUserData = async () => ({
+    username: await extractUsername(),
+    picture: await extractPicture(),
+  })
+
+  const extractPicture = async () => getTokenProp('picture')
 
   const extractUsername = async () => {
     const usernamePromise = await getTokenProp('email')
@@ -71,9 +79,9 @@ export const AuthProvider = ({ children }) => {
 
   const auth = useMemo(
     () => ({
-      extractUsername,
       getJwtToken,
       getTokenProp,
+      getUserData,
       isTokenInvalid,
       signIn,
       signOut,

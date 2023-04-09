@@ -6,17 +6,25 @@ import { useChat } from '@contexts'
 
 const SearchField = () => {
   const { t } = useTranslation()
-  const { filterChats } = useChat()
+  const { chatsData, filterChats, isLoading } = useChat()
 
   const handleChange = ({ target: { value } }) => {
     filterChats(value)
   }
 
+  const disabled =
+    isLoading || (!chatsData?.friends?.length && !chatsData?.squads?.length)
+
   return (
     <TextField
+      disabled={disabled}
       fullWidth
       onChange={handleChange}
-      placeholder={t('pages.chat.others.searchChatsPlaceholder')}
+      placeholder={
+        disabled
+          ? t('pages.chat.others.searchChatsPlaceholderDisabled')
+          : t('pages.chat.others.searchChatsPlaceholder')
+      }
     />
   )
 }

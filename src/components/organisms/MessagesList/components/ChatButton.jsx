@@ -3,13 +3,13 @@ import P from 'prop-types'
 import { Avatar, Badge, Button, Grid, Typography } from '@mui/material'
 
 import { useChat } from '@contexts'
-import { reformatSimpleDate } from '@utils/dateTimeHelper'
-import { charactersToLineBreaks } from '@utils/stringHelper'
+import { reformatSimpleDate } from '@utils/helpers/dateTime'
+import { charactersToLineBreaks } from '@utils/helpers/strings'
 
 import { useStyles } from './ChatButton.styles'
 
 const ChatButton = ({
-  data: { lastMessage, name, unreadMessages },
+  data: { lastMessage, name, picture, unreadMessages },
   online,
   username,
 }) => {
@@ -43,7 +43,7 @@ const ChatButton = ({
             overlap="circular"
             variant={online !== undefined ? 'dot' : 'standard'}
           >
-            <Avatar alt={name} />
+            <Avatar alt={name} src={picture} />
           </Badge>
         </Grid>
         <Grid container item xs={9} rowSpacing={1}>
@@ -108,6 +108,7 @@ ChatButton.propTypes = {
       message: P.string.isRequired,
     }),
     name: P.string.isRequired,
+    picture: P.string,
     unreadMessages: P.number.isRequired,
   }).isRequired,
   online: P.bool,

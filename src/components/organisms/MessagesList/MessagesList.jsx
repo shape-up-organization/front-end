@@ -1,5 +1,3 @@
-import { useEffect } from 'react'
-
 import { useTranslation } from 'react-i18next'
 
 import { Divider } from '@atoms/Divider'
@@ -15,7 +13,6 @@ import {
   useTheme,
 } from '@mui/material'
 
-import { useChat } from '@contexts'
 import { useVisible } from '@hooks'
 
 import { ChatTypeSwitcher } from './components/ChatTypeSwitcher'
@@ -25,12 +22,8 @@ import { SearchField } from './components/SearchField'
 const MessagesList = () => {
   const theme = useTheme()
   const { t } = useTranslation()
-  const { chatsData, loadData } = useChat()
-  const [headerRef, isHeaderVisible] = useVisible()
 
-  useEffect(() => {
-    if (chatsData.deprecated) loadData()
-  }, [])
+  const [headerRef, isHeaderVisible] = useVisible()
 
   const handleScrollToTop = () =>
     headerRef.current.scrollIntoView({ behavior: 'smooth' })

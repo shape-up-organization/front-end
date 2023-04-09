@@ -2,9 +2,9 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 import { Stack } from '@mui/material'
 
-import { useAuth, useChat } from '@contexts'
+import { useChat } from '@contexts'
 import { useVisible } from '@hooks'
-import { lineBreaksToCharacters } from '@utils/stringHelper'
+import { lineBreaksToCharacters } from '@utils/helpers/strings'
 
 import { Footer } from './Footer'
 import { Header } from './Header'
@@ -13,13 +13,12 @@ import { MessagesList } from './MessagesList'
 import { useStyles } from './Content.styles'
 
 const Content = () => {
-  const { extractUsername } = useAuth()
   const {
     activeChat,
-    canSendMessage,
     chatsData,
     sendPrivateMessage,
     sendPublicMessage,
+    userData,
   } = useChat()
   const [listBottomRef, isListBottomVisible] = useVisible()
 
@@ -27,16 +26,11 @@ const Content = () => {
   const [isScrollingDown, setIsScrollingDown] = useState(true)
   const [messages, setMessages] = useState([])
   const [messageText, setMessageText] = useState('')
-  const [username, setUsername] = useState('')
 
   const emojiButtonRef = useRef(null)
   const { classes } = useStyles()
 
   const emojiPickerOpen = Boolean(emojiPickerAnchorEl)
-
-  useEffect(() => {
-    getUsername()
-  }, [])
 
   useEffect(() => {
     setIsScrollingDown(false)
@@ -47,16 +41,14 @@ const Content = () => {
   }, [activeChat])
 
   useLayoutEffect(() => {
-    if (messages.at(-1)?.senderName !== username && !isListBottomVisible) {
+    if (
+      messages.at(-1)?.senderName !== userData.username &&
+      !isListBottomVisible
+    ) {
       return
     }
     handleScrollToBottom()
   }, [chatsData, messages])
-
-  const getUsername = async () => {
-    const usernamePromise = await extractUsername()
-    setUsername(usernamePromise)
-  }
 
   const handleChangeMessageText = ({ target: { value } }) =>
     setMessageText(value)
@@ -92,7 +84,7 @@ const Content = () => {
   }
 
   const handleSendMessage = () => {
-    if (canSendMessage && messageText.trim()) {
+    if (messageText.trim()) {
       if (activeChat.username === 'group1') {
         sendPublicMessage(
           lineBreaksToCharacters(messageText),
@@ -125,7 +117,7 @@ const Content = () => {
       <MessagesList
         listBottomRef={listBottomRef}
         messages={messages}
-        username={username}
+        username={userData.username}
       />
       <Footer
         emojiButtonRef={emojiButtonRef}

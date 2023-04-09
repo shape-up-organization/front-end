@@ -31,7 +31,7 @@ import { TextField } from '@atoms/TextField'
 import { Modal } from '@templates/Modal'
 
 import api from '@api/services/users'
-import { masks } from '@utils/masks'
+import { masks } from '@utils/constants/masks'
 import { schema } from './schema'
 
 const Content = ({ switchModal }) => {
@@ -130,7 +130,7 @@ const Content = ({ switchModal }) => {
         <TextField
           error={errors.cellPhone?.message}
           label={t('pages.landing.signup.label.cellPhone')}
-          mask={masks.phoneMasks[i18n.resolvedLanguage]}
+          mask={masks.PHONES[i18n.resolvedLanguage]}
           name="cellPhone"
           type="tel"
           register={register}
@@ -157,7 +157,7 @@ const Content = ({ switchModal }) => {
 
             return (
               <DatePicker
-                format={masks.dateMasks[i18n.resolvedLanguage]}
+                format={masks.DATES[i18n.resolvedLanguage]}
                 inputRef={ref}
                 label={t('pages.landing.signup.label.birthDate')}
                 maxDate={new Date()}

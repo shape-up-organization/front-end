@@ -6,8 +6,9 @@ import { useAuth, useChat } from '@contexts'
 import { LoadingPage } from '@pages/LoadingPage'
 
 const ProtectedLayout = () => {
-  const { extractUsername, isTokenInvalid, signOut } = useAuth()
-  const { updateUsername } = useChat()
+  const { getUserData, isTokenInvalid, signOut } = useAuth()
+  const { chatsData, loadData, updateUserData, userData } = useChat()
+
   const [isLoading, setIsLoading] = useState(true)
 
   const verifyAuth = async () => {
@@ -15,12 +16,17 @@ const ProtectedLayout = () => {
     if (isInvalid) {
       signOut()
       setIsLoading(false)
-      return
     }
 
-    const username = await extractUsername()
-    await updateUsername(username)
+    getChatsData()
+  }
 
+  const getChatsData = async () => {
+    if (!userData.connected) {
+      const data = await getUserData()
+      await updateUserData(data)
+    }
+    if (chatsData.deprecated) loadData()
     setIsLoading(false)
   }
 

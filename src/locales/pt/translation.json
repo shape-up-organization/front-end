@@ -3,6 +3,9 @@
     "error": {
       "alt": {
         "notFoundPageImageAlt": "Mulher com uma lupa e um texto escrito atrás dela de 'página não encontrada'"
+      },
+      "others": {
+        "notFoundPageMessage": "Página não encontrada!"
       }
     },
     "chat": {
@@ -11,11 +14,13 @@
         "notFoundChatImageAlt": "Mulher com uma lupa com texto 'Nenhum chat foi encontrado'"
       },
       "others": {
+        "chatNotFoundMessage": "Nenhum chat foi encontrado!",
         "menuItemAcceptFriendshipRequest": "Aceitar solicitação de amizade",
         "menuItemAddFriend": "Adicionar amigo",
         "messageListTitle": "Amigos",
         "messageInputPlaceholder": "Digite uma mensagem...",
-        "searchChatsPlaceholder": "Procure por amigos..."
+        "searchChatsPlaceholder": "Procure por amigos...",
+        "searchChatsPlaceholderDisabled": "Sem amigos ainda..."
       },
       "tooltip": {
         "chatArrowBackButton": "Voltar",
@@ -113,6 +118,7 @@
           "atLeast1LowerCaseLetter": "Deve ter pelo menos 1 letra minúscula!",
           "atLeast1SpecialChar": "Deve ter pelo menos 1 caractere especial!",
           "atLeast1UpperCaseLetter": "Deve ter pelo menos 1 letra maiúscula!",
+          "noAtSignOrWhiteSpace": "Não pode ter @ ou espaço em branco!",
           "atLeast8Chars": "Deve ter pelo menos 8 caracteres!",
           "invalidDate": "Data inválida!",
           "invalidEmail": "E-mail inválido!",
@@ -142,6 +148,19 @@
       "others": {
         "dividerText": "OU",
         "externalButton": "Entre com {{provider}}"
+      }
+    },
+    "search": {
+      "others": {
+        "friendLabel": "Amigo(a)",
+        "levelLabel": "Nível",
+        "searchPlaceholder": "Procure por pessoas..."
+      },
+      "menu": {
+        "acceptFriendshipRequest": "Aceitar solicitação de amizade",
+        "addFriend": "Adicionar amigo",
+        "goToProfile": "Ir para o perfil",
+        "removeFriend": "Remover amigo"
       }
     }
   }

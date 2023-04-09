@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 
 import PeopleIcon from '@mui/icons-material/People'
 import PersonIcon from '@mui/icons-material/Person'
-import { Box, IconButton, Stack, Tooltip } from '@mui/material'
+import { Badge, Box, IconButton, Stack, Tooltip } from '@mui/material'
 
 import { Divider } from '@atoms/Divider'
 
@@ -10,53 +10,77 @@ import { useChat } from '@contexts'
 
 const ChatTypeSwitcher = () => {
   const { t } = useTranslation()
-  const { changeChatType, isLoading, getChatType } = useChat()
-
-  const chatType = getChatType()
+  const { changeChatType, isLoading, chatsData } = useChat()
 
   return (
     <Stack direction="row" justifyContent="center" spacing={4}>
-      <Tooltip
-        title={
-          isLoading || chatType === null
-            ? ''
-            : t('pages.chat.tooltip.switchChatTypeButton.friends')
-        }
+      <Badge
+        anchorOrigin={{
+          horizontal: 'left',
+          vertical: 'top',
+        }}
+        badgeContent={chatsData.notifications.friends}
+        color="primary"
+        max={99}
+        overlap="circular"
       >
-        <Box component="span" pb={1}>
-          <IconButton
-            disabled={isLoading || chatType === null}
-            onClick={() => chatType !== 'friends' && changeChatType('friends')}
-            type="button"
-          >
-            <PersonIcon
-              color={chatType === 'friends' ? 'primary' : 'inherit'}
-              fontSize="large"
-            />
-          </IconButton>
-        </Box>
-      </Tooltip>
+        <Tooltip
+          title={
+            isLoading || chatsData.type === null
+              ? ''
+              : t('pages.chat.tooltip.switchChatTypeButton.friends')
+          }
+        >
+          <Box component="span" pb={1}>
+            <IconButton
+              disabled={isLoading || chatsData.type === null}
+              onClick={() =>
+                chatsData.type !== 'friends' && changeChatType('friends')
+              }
+              type="button"
+            >
+              <PersonIcon
+                color={chatsData.type === 'friends' ? 'primary' : 'inherit'}
+                fontSize="large"
+              />
+            </IconButton>
+          </Box>
+        </Tooltip>
+      </Badge>
       <Divider direction="vertical" />
-      <Tooltip
-        title={
-          isLoading || chatType === null
-            ? ''
-            : t('pages.chat.tooltip.switchChatTypeButton.squads')
-        }
+      <Badge
+        anchorOrigin={{
+          horizontal: 'right',
+          vertical: 'top',
+        }}
+        badgeContent={chatsData.notifications.squads}
+        color="primary"
+        max={99}
+        overlap="circular"
       >
-        <Box component="span" pb={1}>
-          <IconButton
-            disabled={isLoading || chatType === null}
-            onClick={() => chatType !== 'squads' && changeChatType('squads')}
-            type="button"
-          >
-            <PeopleIcon
-              color={chatType === 'squads' ? 'primary' : 'inherit'}
-              fontSize="large"
-            />
-          </IconButton>
-        </Box>
-      </Tooltip>
+        <Tooltip
+          title={
+            isLoading || chatsData.type === null
+              ? ''
+              : t('pages.chat.tooltip.switchChatTypeButton.squads')
+          }
+        >
+          <Box component="span" pb={1}>
+            <IconButton
+              disabled={isLoading || chatsData.type === null}
+              onClick={() =>
+                chatsData.type !== 'squads' && changeChatType('squads')
+              }
+              type="button"
+            >
+              <PeopleIcon
+                color={chatsData.type === 'squads' ? 'primary' : 'inherit'}
+                fontSize="large"
+              />
+            </IconButton>
+          </Box>
+        </Tooltip>
+      </Badge>
     </Stack>
   )
 }

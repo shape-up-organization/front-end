@@ -1,6 +1,5 @@
+import P from 'prop-types'
 import { useTranslation } from 'react-i18next'
-
-import { useChat } from '@contexts'
 
 import { Photo } from '@atoms/Photo'
 import {
@@ -14,17 +13,14 @@ import {
 
 import notFoundGeneric from '@assets/images/not-found-generic.png'
 
-import { ChatButton } from './ChatButton'
+import { UserButton } from './UserButton'
 
-const ChatsList = () => {
-  const { chatsData, isLoading } = useChat()
-  const friends = chatsData?.filteredChats ?? chatsData[chatsData.type]
-
+const UsersList = ({ isLoading, handleSelectUser, users }) => {
   const { t } = useTranslation()
 
-  if (isLoading || chatsData.deprecated || !friends?.length)
+  if (isLoading || !users.length)
     return (
-      <Stack alignItems="center">
+      <Stack alignItems="center" justifyContent="center" pt={8} width="100%">
         {isLoading ? (
           <Box pt={2}>
             <CircularProgress />
@@ -57,12 +53,14 @@ const ChatsList = () => {
 
   return (
     <Stack>
-      {friends?.map(friend => (
-        <Stack key={friend.username}>
-          <ChatButton
-            data={friend}
-            online={friend.online}
-            username={friend.username}
+      {users?.map(user => (
+        <Stack key={user.username}>
+          <UserButton
+            handleSelectUser={handleSelectUser}
+            name={user.name}
+            picture={user.picture}
+            username={user.username}
+            xp={user.xp}
           />
           <Divider />
         </Stack>
@@ -71,4 +69,22 @@ const ChatsList = () => {
   )
 }
 
-export { ChatsList }
+UsersList.propTypes = {
+  isLoading: P.bool,
+  handleSelectUser: P.func.isRequired,
+  users: P.arrayOf(
+    P.shape({
+      name: P.string,
+      picture: P.string,
+      username: P.string,
+      xp: P.number,
+    })
+  ),
+}
+
+UsersList.defaultProps = {
+  isLoading: true,
+  users: [],
+}
+
+export { UsersList }

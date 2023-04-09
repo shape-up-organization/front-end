@@ -1,39 +1,37 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 
-import { useMediaQuery, useTheme } from '@mui/material'
 import P from 'prop-types'
-
-import mockedFriends from '@mocks/friends/get'
-import { getLocalDateTimeFormatted } from '@utils/dateTimeHelper'
-import { normalize } from '@utils/stringHelper'
-
 import SockJS from 'sockjs-client'
 import { over } from 'stompjs'
+
+import { useMediaQuery, useTheme } from '@mui/material'
+
+import mockedFriends from '@mocks/friends/get'
+import { getLocalDateTimeFormatted } from '@utils/helpers/dateTime'
+import { normalize } from '@utils/helpers/strings'
 
 const ChatContext = createContext()
 let stompClient = null
 
 export const ChatProvider = ({ children }) => {
   const [activeChat, setActiveChat] = useState(null)
-  const [canSendMessage, setCanSendMessage] = useState(true)
   const [chatsData, setChatsData] = useState({
     deprecated: true,
+    filteredChats: null,
     friends: [],
+    notifications: {
+      friends: 0,
+      squads: 0,
+      total: 0,
+    },
     squads: [],
     type: 'friends',
   })
   const [isLoading, setIsLoading] = useState(true)
-  const [totalNotifications, setTotalNotifications] = useState(0)
   const [userData, setUserData] = useState({
-    username: '',
     connected: false,
+    picture: null,
+    username: null,
   })
 
   const lessThanMedium = useMediaQuery(useTheme().breakpoints.down('md'))
@@ -131,7 +129,6 @@ export const ChatProvider = ({ children }) => {
 
   const sendPublicMessage = (message, receiverName) => {
     if (stompClient) {
-      setCanSendMessage(false)
       const chatMessage = {
         date: getLocalDateTimeFormatted(),
         message,
@@ -145,7 +142,6 @@ export const ChatProvider = ({ children }) => {
 
   const sendPrivateMessage = (message, receiverName) => {
     if (stompClient) {
-      setCanSendMessage(false)
       const chatMessage = {
         date: getLocalDateTimeFormatted(),
         message,
@@ -158,8 +154,8 @@ export const ChatProvider = ({ children }) => {
     }
   }
 
-  const updateUsername = username =>
-    setUserData(current => ({ ...current, username }))
+  const updateUserData = data =>
+    setUserData(current => ({ ...current, ...data, connected: true }))
 
   const addMessageToChat = (
     { date, message, senderName, receiverName },
@@ -179,7 +175,6 @@ export const ChatProvider = ({ children }) => {
     })
 
     setChatsData(current => ({ ...current, [type]: newChat }))
-    setCanSendMessage(true)
   }
 
   const openChat = username => {
@@ -206,45 +201,54 @@ export const ChatProvider = ({ children }) => {
   const changeChatType = newChatType =>
     setChatsData(current => ({ ...current, type: newChatType }))
 
-  const getChatType = () => chatsData.type
-
-  const filterChats = useCallback(
-    value => {
-      if (value === '') return
-      const filteredChats = chatsData[chatsData.type].filter(({ name }) =>
-        normalize(name).includes(normalize(value))
-      )
-      setChatsData(current => ({ ...current, [chatsData.type]: filteredChats }))
-    },
-    [chatsData.type]
-  )
+  const filterChats = value =>
+    setChatsData(current => ({
+      ...current,
+      filteredChats:
+        value !== ''
+          ? chatsData[chatsData.type]?.filter(chat =>
+              normalize(chat.name).includes(normalize(value))
+            )
+          : null,
+    }))
 
   const loadData = () => {
     if (chatsData.deprecated) {
       setIsLoading(true)
-      const mockedData = mockedFriends.data
+      const { data } = mockedFriends
+
+      let type = null
+      if (data?.friends?.length > 0) type = 'friends'
+      else if (data?.squads?.length > 0) type = 'squads'
+
       setChatsData({
         ...chatsData,
-        friends: mockedData.friends,
-        squads: mockedData.squads,
+        friends: data?.friends,
+        squads: data?.squads,
+        type,
         deprecated: false,
       })
-      loadTotalNotifications(mockedData)
+
+      loadTotalNotifications(data)
       setIsLoading(false)
     }
   }
 
-  const loadTotalNotifications = obj => {
-    setTotalNotifications(
-      (obj.friends?.reduce(
-        (acc, { unreadMessages }) => acc + unreadMessages,
-        0
-      ) || 0) +
-        (obj.squads?.reduce(
-          (acc, { unreadMessages }) => acc + unreadMessages,
-          0
-        ) || 0)
+  const loadTotalNotifications = data => {
+    const friends = data?.friends?.reduce(
+      (acc, cur) => acc + cur.unreadMessages,
+      0
     )
+    const squads = data?.squads?.reduce(
+      (acc, cur) => acc + cur.unreadMessages,
+      0
+    )
+    const total = friends + squads
+
+    setChatsData(current => ({
+      ...current,
+      notifications: { friends, squads, total },
+    }))
   }
 
   const values = useMemo(
@@ -253,28 +257,19 @@ export const ChatProvider = ({ children }) => {
       displayMessagesList,
       responsiveSize,
       activeChat,
-      canSendMessage,
       changeChatType,
       chatsData,
       closeChat,
       filterChats,
-      getChatType,
       isLoading,
       loadData,
       openChat,
       sendPublicMessage,
       sendPrivateMessage,
-      totalNotifications,
-      updateUsername,
+      updateUserData,
+      userData,
     }),
-    [
-      activeChat,
-      canSendMessage,
-      chatsData,
-      isLoading,
-      totalNotifications,
-      responsiveSize,
-    ]
+    [activeChat, chatsData, isLoading, responsiveSize, userData]
   )
 
   return <ChatContext.Provider value={values}>{children}</ChatContext.Provider>

@@ -5,15 +5,19 @@ export default Object.freeze({
         messages: [],
         name: 'test one',
         online: false,
+        picture: 'https://placehold.co/400',
         unreadMessages: 0,
         username: 'testone',
+        xp: 120,
       },
       {
         messages: [],
         name: 'test two',
         online: false,
+        picture: 'https://placehold.co/400',
         unreadMessages: 0,
         username: 'testtwo',
+        xp: 200,
       },
     ],
 
@@ -21,6 +25,7 @@ export default Object.freeze({
       {
         messages: [],
         name: 'group 1',
+        picture: 'https://placehold.co/400',
         unreadMessages: 2,
         username: 'group1',
       },

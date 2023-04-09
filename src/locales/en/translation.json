@@ -11,12 +11,15 @@
         "notFoundChatImage": "Woman with a magnifying glass with text 'No chat was found'"
       },
       "others": {
+        "menuItemAcceptFriendshipRequest": "Accept friendship request",
+        "menuItemAddFriend": "Add friend",
         "messageListTitle": "Friends",
         "messageInputPlaceholder": "Type a message...",
         "searchChatsPlaceholder": "Search friends..."
       },
       "tooltip": {
         "chatAvatarButton": "Open profile picture",
+        "chatMenuButton": "Open chat menu",
         "emojiPickerButton": "Open emoji picker menu",
         "scrollToTop": "Scroll to top",
         "scrollToBottom": "Scroll to bottom",

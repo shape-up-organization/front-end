@@ -11,12 +11,15 @@
         "notFoundChatImageAlt": "Mulher com uma lupa com texto 'Nenhum chat foi encontrado'"
       },
       "others": {
+        "menuItemAcceptFriendshipRequest": "Aceitar solicitação de amizade",
+        "menuItemAddFriend": "Adicionar amigo",
         "messageListTitle": "Amigos",
         "messageInputPlaceholder": "Digite uma mensagem...",
         "searchChatsPlaceholder": "Procure por amigos..."
       },
       "tooltip": {
         "chatAvatarButton": "Abrir foto de perfil",
+        "chatMenuButton": "Abrir menu de chat",
         "emojiPickerButton": "Abrir menu de emoji",
         "scrollToTop": "Rolar para o topo",
         "scrollToBottom": "Rolar para o final",

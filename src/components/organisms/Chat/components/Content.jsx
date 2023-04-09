@@ -1,61 +1,66 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
-import emojisData from '@emoji-mart/data'
-import EmojiPicker from '@emoji-mart/react'
-import { useTranslation } from 'react-i18next'
+import { Stack } from '@mui/material'
 
-import ArrowDownwardRoundedIcon from '@mui/icons-material/ArrowDownwardRounded'
-import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions'
-import SendIcon from '@mui/icons-material/Send'
-import {
-  Badge,
-  Box,
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  Popover,
-  Stack,
-  TextField,
-  Tooltip,
-  Typography,
-  Zoom,
-} from '@mui/material'
-
+import { useAuth, useChat } from '@contexts'
 import { useVisible } from '@hooks'
 
 import { useStyles } from './Content.styles'
-import { Header } from './Header'
+import { Footer } from './Footer'
 
-const username = 'user'
+import { Header } from './Header'
+import { MessagesList } from './MessagesList'
 
 const Content = () => {
-  const { t } = useTranslation()
+  const { extractUsername } = useAuth()
+  const {
+    activeChat,
+    canSendMessage,
+    chatsData,
+    sendPrivateMessage,
+    sendPublicMessage,
+  } = useChat()
   const [listBottomRef, isListBottomVisible] = useVisible()
 
   const [emojiPickerAnchorEl, setEmojiPickerAnchorEl] = useState(null)
+  const [isScrollingDown, setIsScrollingDown] = useState(true)
   const [messages, setMessages] = useState([])
   const [messageText, setMessageText] = useState('')
-  const [isScrollingDown, setIsScrollingDown] = useState(true)
+  const [username, setUsername] = useState('')
 
-  const listRef = useRef(null)
   const emojiButtonRef = useRef(null)
-
   const { classes } = useStyles()
 
   const emojiPickerOpen = Boolean(emojiPickerAnchorEl)
 
   useEffect(() => {
+    getUsername()
+  }, [])
+
+  useEffect(() => {
     setIsScrollingDown(false)
   }, [isListBottomVisible])
 
-  useLayoutEffect(() => {
-    handleScrollToBottom()
-  }, [messages])
+  useEffect(() => {
+    setMessages(activeChat?.messages)
+  }, [activeChat])
 
-  const handleClickEmoji = event => {
-    setEmojiPickerAnchorEl(event.currentTarget)
+  useLayoutEffect(() => {
+    if (messages.at(-1)?.senderName !== username && !isListBottomVisible) {
+      return
+    }
+    handleScrollToBottom()
+  }, [chatsData, messages])
+
+  const getUsername = async () => {
+    const usernamePromise = await extractUsername()
+    setUsername(usernamePromise)
   }
+
+  const handleChangeMessageText = ({ target: { value } }) =>
+    setMessageText(value)
+
+  const handleCloseEmojiPicker = () => setEmojiPickerAnchorEl(null)
 
   const handleKeyPress = event => {
     if (event.key === 'Enter') {
@@ -74,19 +79,28 @@ const Content = () => {
     }
   }
 
+  const handleOpenEmojiPicker = event =>
+    setEmojiPickerAnchorEl(event.currentTarget)
+
   const handleScrollToBottom = () => {
     setIsScrollingDown(true)
     listBottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
   const handleSendMessage = () => {
-    if (messageText.trim()) {
-      setMessages([
-        ...messages,
-        { id: messages.length + 1, text: messageText, sender: username },
-      ])
+    if (canSendMessage && messageText.trim()) {
+      if (activeChat.username === 'group1') {
+        sendPublicMessage(messageText, activeChat.username)
+      } else {
+        sendPrivateMessage(messageText, activeChat.username)
+      }
       setMessageText('')
     }
+  }
+
+  const handleSelectEmoji = emoji => {
+    setMessageText(messageText + emoji.native)
+    handleCloseEmojiPicker()
   }
 
   return (
@@ -98,29 +112,27 @@ const Content = () => {
       p={2}
     >
       <Header />
-      <List
-        ref={listRef}
-        sx={{
-          height: '80%',
-          overflow: 'scroll',
-        }}
-      >
-        {messages.map(message => (
-          <ListItem
-            key={message.id}
-            sx={{
-              justifyContent:
-                message.sender === username ? 'flex-end' : 'flex-start',
-            }}
-          >
-            <Typography component="p" variant="body1">
-              {message.text}
-            </Typography>
-          </ListItem>
-        ))}
-        <Box component="span" ref={listBottomRef} />
-      </List>
-      <Grid container alignItems="center" height="20%" rowGap={0}>
+      <MessagesList
+        listBottomRef={listBottomRef}
+        messages={messages}
+        username={username}
+      />
+      <Footer
+        emojiButtonRef={emojiButtonRef}
+        emojiPickerAnchorEl={emojiPickerAnchorEl}
+        emojiPickerOpen={emojiPickerOpen}
+        handleChangeMessageText={handleChangeMessageText}
+        handleCloseEmojiPicker={handleCloseEmojiPicker}
+        handleKeyPress={handleKeyPress}
+        handleOpenEmojiPicker={handleOpenEmojiPicker}
+        handleSelectEmoji={handleSelectEmoji}
+        handleSendMessage={handleSendMessage}
+        handleScrollToBottom={handleScrollToBottom}
+        isListBottomVisible={isListBottomVisible}
+        isScrollingDown={isScrollingDown}
+        messageText={messageText}
+      />
+      {/* <Grid container alignItems="center" height="20%" rowGap={0}>
         <Grid item xs={12}>
           <Badge
             anchorOrigin={{
@@ -139,7 +151,7 @@ const Content = () => {
                     bgcolor: 'background.default',
                     mt: 1,
                     ml: 1,
-                    zIndex: 3000,
+                    zIndex: 1200,
                   }}
                 >
                   <IconButton
@@ -175,7 +187,7 @@ const Content = () => {
               >
                 <IconButton
                   color="primary"
-                  onClick={handleClickEmoji}
+                  onClick={handleOpenEmojiPicker}
                   ref={emojiButtonRef}
                 >
                   <EmojiEmotionsIcon />
@@ -183,7 +195,7 @@ const Content = () => {
               </Tooltip>
               <Popover
                 anchorEl={emojiPickerAnchorEl}
-                onClose={() => setEmojiPickerAnchorEl(null)}
+                onClose={handleCloseEmojiPicker}
                 open={emojiPickerOpen}
               >
                 <EmojiPicker
@@ -201,7 +213,7 @@ const Content = () => {
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Grid> */}
     </Stack>
   )
 }

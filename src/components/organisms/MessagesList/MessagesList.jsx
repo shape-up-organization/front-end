@@ -25,11 +25,11 @@ import { SearchField } from './components/SearchField'
 const MessagesList = () => {
   const theme = useTheme()
   const { t } = useTranslation()
-  const { chatsList, loadData } = useChat()
+  const { chatsData, loadData } = useChat()
   const [headerRef, isHeaderVisible] = useVisible()
 
   useEffect(() => {
-    loadData()
+    if (chatsData.deprecated) loadData()
   }, [])
 
   const handleScrollToTop = () =>
@@ -37,7 +37,7 @@ const MessagesList = () => {
 
   return (
     <>
-      <Zoom in={!isHeaderVisible && chatsList?.length > 0}>
+      <Zoom in={!isHeaderVisible && chatsData.deprecated}>
         <Tooltip
           sx={{
             bgcolor: 'background.default',

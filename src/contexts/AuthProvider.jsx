@@ -1,7 +1,8 @@
 import { createContext, useContext, useMemo } from 'react'
 
-import { Buffer } from 'buffer'
 import P from 'prop-types'
+
+import { Buffer } from 'buffer'
 import { Cookies, useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
 
@@ -22,6 +23,7 @@ export const AuthProvider = ({ children }) => {
     setCookie('jwt-token', newJwtToken, {
       path: '/',
     })
+
     navigate('/chat')
   }
 
@@ -52,6 +54,12 @@ export const AuthProvider = ({ children }) => {
     return true
   }
 
+  const extractUsername = async () => {
+    const usernamePromise = await getTokenProp('email')
+    const username = usernamePromise.split('@')[0]
+    return username
+  }
+
   // TODO: Validate with Back-end to revalidate or not here
   // const revalidateToken = async () => {
   //   const jwtToken = await getJwtToken()
@@ -63,6 +71,7 @@ export const AuthProvider = ({ children }) => {
 
   const auth = useMemo(
     () => ({
+      extractUsername,
       getJwtToken,
       getTokenProp,
       isTokenInvalid,
@@ -75,6 +84,8 @@ export const AuthProvider = ({ children }) => {
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
 }
 
-AuthProvider.propTypes = { children: P.node.isRequired }
+AuthProvider.propTypes = {
+  children: P.node.isRequired,
+}
 
 export const useAuth = () => useContext(AuthContext)

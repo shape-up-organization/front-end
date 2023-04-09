@@ -14,10 +14,10 @@ export const useStyles = makeStyles()(
     },
     badge: {
       '& .MuiBadge-badge': {
-        top: 10,
+        bottom: 10,
         left: -10,
       },
     },
   }),
-  { name: 'ChatsList' }
+  { name: 'ChatButton' }
 )

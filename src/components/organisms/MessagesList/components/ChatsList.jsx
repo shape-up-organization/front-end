@@ -16,13 +16,14 @@ const chatNotFoundImage = {
 }
 
 const ChatsList = () => {
-  const { chatsList, isLoading } = useChat()
+  const { chatsData, isLoading } = useChat()
+
   const {
     t,
     i18n: { resolvedLanguage },
   } = useTranslation()
 
-  if (isLoading || chatsList === undefined || chatsList.length <= 0)
+  if (isLoading || chatsData.deprecated)
     return (
       <Stack alignItems="center">
         {isLoading ? (
@@ -42,7 +43,7 @@ const ChatsList = () => {
 
   return (
     <Stack>
-      {chatsList.map(friend => (
+      {chatsData[chatsData.type]?.map(friend => (
         <Stack key={friend.username}>
           <ChatButton
             data={friend}

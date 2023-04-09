@@ -1,28 +1,65 @@
+import { useState } from 'react'
+
 import { useTranslation } from 'react-i18next'
 
+import { Divider } from '@atoms/Divider'
+import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
 import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded'
+import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded'
 import {
   Avatar,
   Box,
   Grid,
   IconButton,
+  Menu,
+  MenuItem,
   Paper,
   Stack,
   Tooltip,
   Typography,
 } from '@mui/material'
 
-import { useChat } from '@contexts'
+import { useAuth, useChat } from '@contexts'
+
+import api from '@api/services/friends'
 
 import { useStyles } from './Header.styles'
 
 const Header = () => {
+  const {
+    activeChat: { name, username },
+  } = useChat()
+  const { getJwtToken } = useAuth()
+
   const { t } = useTranslation()
   const { classes } = useStyles()
 
-  const {
-    activeChat: { name },
-  } = useChat()
+  const [menuAnchorEl, setMenuAnchorEl] = useState(null)
+  const isMenuOpen = Boolean(menuAnchorEl)
+
+  const handleAcceptFriendshipRequest = async () => {
+    try {
+      const jwtToken = await getJwtToken()
+      const response = await api.acceptFriendshipRequest(jwtToken, username)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleCloseMenu = () => setMenuAnchorEl(null)
+
+  const handleOpenMenu = event => setMenuAnchorEl(event.currentTarget)
+
+  const handleSendFriendshipRequest = async () => {
+    try {
+      const jwtToken = await getJwtToken()
+      const response = await api.sendFriendshipRequest(jwtToken, username)
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <Paper className={classes.header}>
@@ -58,9 +95,44 @@ const Header = () => {
             justifyContent="flex-end"
             width="100%"
           >
-            <IconButton>
-              <MoreHorizRoundedIcon />
-            </IconButton>
+            <Tooltip title={t('pages.chat.tooltip.chatMenuButton')}>
+              <IconButton onClick={handleOpenMenu}>
+                <MoreHorizRoundedIcon />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              anchorEl={menuAnchorEl}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              onClose={handleCloseMenu}
+              open={isMenuOpen}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+            >
+              <MenuItem
+                onClick={handleSendFriendshipRequest}
+                sx={{ width: '100%', justifyContent: 'center', gap: 1 }}
+              >
+                <PersonAddRoundedIcon />
+                <Typography variant="subtitle1">
+                  {t('pages.chat.others.menuItemAddFriend')}
+                </Typography>
+              </MenuItem>
+              <Divider />
+              <MenuItem
+                onClick={handleAcceptFriendshipRequest}
+                sx={{ width: '100%', justifyContent: 'center', gap: 1 }}
+              >
+                <CheckRoundedIcon />
+                <Typography variant="subtitle1">
+                  {t('pages.chat.others.menuItemAcceptFriendshipRequest')}
+                </Typography>
+              </MenuItem>
+            </Menu>
           </Box>
         </Grid>
       </Grid>

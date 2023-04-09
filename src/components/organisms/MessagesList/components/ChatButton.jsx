@@ -3,8 +3,9 @@ import P from 'prop-types'
 import { Avatar, Badge, Button, Grid, Typography } from '@mui/material'
 
 import { useChat } from '@contexts'
+import { reformatSimpleDate } from '@utils/dateTimeHelper'
 
-import { useStyles } from './ChatsList.styles'
+import { useStyles } from './ChatButton.styles'
 
 const ChatButton = ({
   data: { lastMessage, name, unreadMessages },
@@ -12,7 +13,6 @@ const ChatButton = ({
   username,
 }) => {
   const { activeChat, openChat } = useChat()
-  // const { getJwtToken } = useAuth()
 
   const { classes } = useStyles()
 
@@ -20,25 +20,6 @@ const ChatButton = ({
     if (activeChat?.username === username) return
     openChat(username)
   }
-
-  // const handleAccept = async () => {
-  //   try {
-  //     const jwtToken = await getJwtToken()
-  //     const response = await api.acceptFriendshipRequest(jwtToken, username)
-  //     console.log(response)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
-  // const handleSend = async () => {
-  //   try {
-  //     const jwtToken = await getJwtToken()
-  //     const response = await api.sendFriendshipRequest(jwtToken, username)
-  //     console.log(response)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
 
   return (
     <Button className={classes.chatButton} fullWidth onClick={handleSelectChat}>
@@ -87,7 +68,7 @@ const ChatButton = ({
               noWrap
               variant="caption"
             >
-              {lastMessage.date}
+              {reformatSimpleDate(lastMessage?.date)}
             </Typography>
           </Grid>
           <Grid item xs={9}>
@@ -97,13 +78,13 @@ const ChatButton = ({
               noWrap
               variant="subtitle2"
             >
-              {lastMessage.text}
+              {lastMessage?.message}
             </Typography>
           </Grid>
           <Grid item xs={3} display="flex" justifyContent="end">
             <Badge
               anchorOrigin={{
-                vertical: 'top',
+                vertical: 'bottom',
                 horizontal: 'left',
               }}
               badgeContent={unreadMessages}
@@ -123,8 +104,8 @@ ChatButton.propTypes = {
   data: P.shape({
     lastMessage: P.shape({
       date: P.string.isRequired,
-      text: P.string.isRequired,
-    }).isRequired,
+      message: P.string.isRequired,
+    }),
     name: P.string.isRequired,
     unreadMessages: P.number.isRequired,
   }).isRequired,

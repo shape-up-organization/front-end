@@ -10,7 +10,9 @@ import { useChat } from '@contexts'
 
 const ChatTypeSwitcher = () => {
   const { t } = useTranslation()
-  const { changeChatType, isLoading, chatType } = useChat()
+  const { changeChatType, isLoading, getChatType } = useChat()
+
+  const chatType = getChatType()
 
   return (
     <Stack direction="row" justifyContent="center" spacing={4}>

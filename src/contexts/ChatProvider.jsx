@@ -10,50 +10,195 @@ import {
 import P from 'prop-types'
 
 import mockedFriends from '@mocks/friends/get'
-import { normalize } from '@utils/stringManipulation'
+import { getLocalDateTimeFormatted } from '@utils/dateTimeHelper'
+import { normalize } from '@utils/stringHelper'
+
+import SockJS from 'sockjs-client'
+import { over } from 'stompjs'
 
 const ChatContext = createContext()
+let stompClient = null
 
 export const ChatProvider = ({ children }) => {
-  const [data, setData] = useState({})
   const [activeChat, setActiveChat] = useState(null)
-  const [chatsList, setChatsList] = useState([])
+  const [canSendMessage, setCanSendMessage] = useState(true)
+  const [chatsData, setChatsData] = useState({
+    deprecated: true,
+    friends: [],
+    squads: [],
+    type: 'friends',
+  })
   const [isLoading, setIsLoading] = useState(true)
-  const [chatType, setChatType] = useState('')
   const [totalNotifications, setTotalNotifications] = useState(0)
+  const [userData, setUserData] = useState({
+    username: '',
+    connected: false,
+  })
+
+  useEffect(() => {
+    if (userData.username) connect(userData.username)
+  }, [userData.username])
+
+  useEffect(() => {
+    if (!chatsData.deprecated) connect(userData.username)
+  }, [chatsData.deprecated])
+
+  const connect = async username => {
+    if (!stompClient && !chatsData.deprecated) {
+      const Sock = new SockJS(`${import.meta.env.VITE_API_URL}/ws`)
+      stompClient = over(Sock)
+      stompClient.connect({}, () => onConnected(username), onError)
+      if (import.meta.env.MODE === 'production') stompClient.debug = () => {}
+    }
+  }
+
+  const onConnected = async username => {
+    stompClient.subscribe('/chatroom/public', onPublicMessage)
+    stompClient.subscribe(`/user/${username}/private`, onPrivateMessage)
+
+    stompClient.send(
+      '/app/message',
+      {},
+      JSON.stringify({
+        date: getLocalDateTimeFormatted(),
+        message: '',
+        senderName: username,
+        status: 'JOIN',
+      })
+    )
+
+    // TODO: Fix private chat
+    // const chatMessage = {
+    //   date: getLocalDateTimeFormatted(),
+    //   message: '',
+    //   receiverName: username,
+    //   senderName: username,
+    //   status: 'JOIN',
+    // }
+    // stompClient.send('/app/private-message', {}, JSON.stringify(chatMessage))
+  }
+
+  const onError = error => {
+    console.error(error)
+  }
+
+  const onPrivateMessage = ({ body }) => {
+    const payload = JSON.parse(body)
+    switch (payload.status) {
+      case 'JOIN':
+        console.log('JOINING PRIVATE')
+        break
+      case 'MESSAGE':
+        addMessageToChat(payload.message, payload.senderName)
+        break
+      default:
+        break
+    }
+  }
+
+  const onPublicMessage = ({ body }) => {
+    const payload = JSON.parse(body)
+    switch (payload.status) {
+      case 'JOIN':
+        console.log('JOINING PUBLIC')
+        break
+      case 'MESSAGE':
+        addMessageToChat(payload, 'squads')
+        break
+      default:
+        break
+    }
+  }
+
+  const sendPublicMessage = (message, receiverName) => {
+    if (stompClient) {
+      setCanSendMessage(false)
+      const chatMessage = {
+        date: getLocalDateTimeFormatted(),
+        message,
+        receiverName,
+        senderName: userData.username,
+        status: 'MESSAGE',
+      }
+      stompClient.send('/app/message', {}, JSON.stringify(chatMessage))
+    }
+  }
+
+  const sendPrivateMessage = (message, receiverName) => {
+    if (stompClient) {
+      setCanSendMessage(false)
+      const chatMessage = {
+        date: getLocalDateTimeFormatted(),
+        message,
+        receiverName,
+        senderName: userData.username,
+        status: 'MESSAGE',
+      }
+
+      stompClient.send('/app/private-message', {}, JSON.stringify(chatMessage))
+    }
+  }
+
+  const updateUsername = username =>
+    setUserData(current => ({ ...current, username }))
+
+  const addMessageToChat = (
+    { date, message, senderName, receiverName },
+    type
+  ) => {
+    const newChat = chatsData[type].map(chat => {
+      if (chat.username === receiverName) {
+        chat.messages.push({ date, message, senderName })
+      }
+      return {
+        ...chat,
+        lastMessage: {
+          date,
+          message,
+        },
+      }
+    })
+
+    setChatsData(current => ({ ...current, [type]: newChat }))
+    setCanSendMessage(true)
+  }
 
   const openChat = username => {
-    const newChat = data[chatType]?.find(chat => chat.username === username)
+    const newChat = chatsData[chatsData.type]?.find(
+      chat => chat.username === username
+    )
     if (newChat) setActiveChat(newChat)
   }
 
-  const changeChatType = newChatType => setChatType(newChatType)
+  const changeChatType = newChatType =>
+    setChatsData(current => ({ ...current, type: newChatType }))
+
+  const getChatType = () => chatsData.type
 
   const filterChats = useCallback(
     value => {
-      if (value === '') {
-        updateChats()
-        return
-      }
-      const filteredChats = data[chatType].filter(({ name }) =>
+      if (value === '') return
+      const filteredChats = chatsData[chatsData.type].filter(({ name }) =>
         normalize(name).includes(normalize(value))
       )
-      setChatsList(filteredChats)
+      setChatsData(current => ({ ...current, [chatsData.type]: filteredChats }))
     },
-    [chatType]
+    [chatsData.type]
   )
 
   const loadData = () => {
-    setIsLoading(true)
-    setTimeout(() => {
+    if (chatsData.deprecated) {
+      setIsLoading(true)
       const mockedData = mockedFriends.data
-      setData(mockedData)
-
+      setChatsData({
+        ...chatsData,
+        friends: mockedData.friends,
+        squads: mockedData.squads,
+        deprecated: false,
+      })
       loadTotalNotifications(mockedData)
-      setupChats(mockedData)
-
       setIsLoading(false)
-    }, 1)
+    }
   }
 
   const loadTotalNotifications = obj => {
@@ -69,35 +214,23 @@ export const ChatProvider = ({ children }) => {
     )
   }
 
-  const setupChats = obj => {
-    if (obj.friends?.length > 0) {
-      setChatType('friends')
-    } else if (obj.squads?.length > 0) {
-      setChatType('squads')
-    } else {
-      setChatType(null)
-    }
-  }
-
-  const updateChats = () => setChatsList(data[chatType] || undefined)
-
-  useEffect(() => {
-    if (data) updateChats()
-  }, [chatType])
-
   const values = useMemo(
     () => ({
-      changeChatType,
       activeChat,
-      chatsList,
-      chatType,
+      canSendMessage,
+      changeChatType,
+      chatsData,
       filterChats,
+      getChatType,
       isLoading,
       loadData,
       openChat,
+      sendPublicMessage,
+      sendPrivateMessage,
       totalNotifications,
+      updateUsername,
     }),
-    [activeChat, chatsList, chatType, totalNotifications]
+    [activeChat, canSendMessage, chatsData, isLoading, totalNotifications]
   )
 
   return <ChatContext.Provider value={values}>{children}</ChatContext.Provider>

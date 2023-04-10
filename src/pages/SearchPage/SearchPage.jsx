@@ -28,8 +28,8 @@ const SearchPage = () => {
   const handleCloseMenu = () => setMenuAnchorEl(null)
 
   const handleSelectUser = (anchorButton, username) => {
-    setMenuAnchorEl(anchorButton)
     setUserSelected(username)
+    setMenuAnchorEl(anchorButton)
   }
 
   return (
@@ -57,10 +57,10 @@ const SearchPage = () => {
             item
             xs={12}
             sm={8}
-            px={2}
             alignItems="center"
             justifyContent="center"
             minWidth={312}
+            px={2}
           >
             <UsersList
               isLoading={isLoading}

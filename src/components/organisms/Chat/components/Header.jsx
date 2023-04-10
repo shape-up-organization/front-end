@@ -46,10 +46,9 @@ const Header = () => {
   const handleAcceptFriendshipRequest = async () => {
     try {
       const jwtToken = await getJwtToken()
-      const response = await api.acceptFriendshipRequest(jwtToken, username)
-      console.log(response)
+      await api.acceptFriendshipRequest(jwtToken, username)
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
@@ -60,10 +59,9 @@ const Header = () => {
   const handleSendFriendshipRequest = async () => {
     try {
       const jwtToken = await getJwtToken()
-      const response = await api.sendFriendshipRequest(jwtToken, username)
-      console.log(response)
+      await api.sendFriendshipRequest(jwtToken, username)
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 
@@ -111,7 +109,9 @@ const Header = () => {
               <Tooltip title={t('pages.chat.tooltip.chatAvatarButton')}>
                 <IconButton>
                   <Avatar
-                    alt={t('pages.chat.alt.chatAvatarHeader', { name })}
+                    alt={t('pages.chat.alt.chatAvatarHeader', {
+                      name,
+                    })}
                     src={profilePicture}
                     sx={{
                       border: 4,

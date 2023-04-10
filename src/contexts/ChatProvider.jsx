@@ -6,7 +6,9 @@ import { over } from 'stompjs'
 
 import { useMediaQuery, useTheme } from '@mui/material'
 
-import mockedFriends from '@mocks/friends/get'
+import api from '@api/services/friends'
+import mockedSquads from '@mocks/squads/get'
+import { formatLocalDate } from '@utils/helpers/dateTime'
 import { normalize } from '@utils/helpers/strings'
 
 const ChatContext = createContext()
@@ -64,7 +66,8 @@ export const ChatProvider = ({ children }) => {
       const Sock = new SockJS(`${import.meta.env.VITE_API_URL}/ws`)
       stompClient = over(Sock)
       stompClient.connect({}, () => onConnected(username), onError)
-      if (import.meta.env.MODE === 'production') stompClient.debug = () => {}
+      // if (import.meta.env.MODE === 'production')
+      stompClient.debug = () => {}
     }
   }
 
@@ -81,15 +84,6 @@ export const ChatProvider = ({ children }) => {
         status: 'JOIN',
       })
     )
-
-    // TODO: Fix private chat
-    const chatMessage = {
-      message: 'asd',
-      receiverName: username,
-      senderName: username,
-      status: 'MESSAGE',
-    }
-    stompClient.send('/app/private-message', {}, JSON.stringify(chatMessage))
   }
 
   const onError = error => {
@@ -97,7 +91,6 @@ export const ChatProvider = ({ children }) => {
   }
 
   const onPrivateMessage = ({ body }) => {
-    console.log('AAAA')
     const payload = JSON.parse(body)
     switch (payload.status) {
       case 'JOIN':
@@ -105,8 +98,9 @@ export const ChatProvider = ({ children }) => {
         break
       case 'MESSAGE':
         addMessageToChat(
-          { ...payload, date: new Date(payload.date) },
-          'friends'
+          { ...payload, date: formatLocalDate(payload.date) },
+          'friends',
+          'receiving'
         )
         break
       default:
@@ -121,7 +115,11 @@ export const ChatProvider = ({ children }) => {
         console.log('JOINING PUBLIC')
         break
       case 'MESSAGE':
-        addMessageToChat({ ...payload, date: new Date(payload.date) }, 'squads')
+        addMessageToChat(
+          { ...payload, date: formatLocalDate(payload.date) },
+          'squads',
+          'sending'
+        )
         break
       default:
         break
@@ -150,18 +148,22 @@ export const ChatProvider = ({ children }) => {
       }
 
       stompClient.send('/app/private-message', {}, JSON.stringify(chatMessage))
+      addMessageToChat(
+        { ...chatMessage, date: formatLocalDate(new Date()) },
+        'friends',
+        'sending'
+      )
     }
   }
 
-  const updateUserData = data =>
-    setUserData(current => ({ ...current, ...data, connected: true }))
+  const updateUserData = data => setUserData(data)
 
-  const addMessageToChat = (
-    { date, message, senderName, receiverName },
-    type
-  ) => {
+  const addMessageToChat = (payload, type, status) => {
+    const { date, message, senderName, receiverName } = payload
     const newChat = chatsData[type].map(chat => {
-      if (chat.username === receiverName) {
+      if (
+        chat.username === (status === 'receiving' ? senderName : receiverName)
+      ) {
         chat.messages.push({ date, message, senderName })
       }
       return {
@@ -211,37 +213,45 @@ export const ChatProvider = ({ children }) => {
           : null,
     }))
 
-  const loadData = () => {
+  const loadData = async nextUserData => {
+    if (!userData.connected) updateUserData(nextUserData)
+
     if (chatsData.deprecated) {
       setIsLoading(true)
-      const { data } = mockedFriends
 
-      let type = null
-      if (data?.friends?.length > 0) type = 'friends'
-      else if (data?.squads?.length > 0) type = 'squads'
+      const response = await api.getAllFriendship(nextUserData.jwtToken)
 
-      setChatsData({
-        ...chatsData,
-        friends: data?.friends,
-        squads: data?.squads,
-        type,
-        deprecated: false,
-      })
+      if (response.status === 200) {
+        let type = null
+        if (response.data?.length > 0) type = 'friends'
+        else if (mockedSquads.data.squads?.length > 0) type = 'squads'
 
-      loadTotalNotifications(data)
-      setIsLoading(false)
+        setChatsData({
+          ...chatsData,
+          friends: response.data
+            ?.filter(friend => friend.username !== nextUserData.username)
+            ?.map(friend => ({
+              ...friend,
+              name: `${friend.firstName} ${friend.lastName || ''}`,
+              messages: [],
+            })),
+          squads: mockedSquads.data.squads,
+          type,
+          deprecated: false,
+        })
+
+        loadTotalNotifications(response.data)
+
+        setIsLoading(false)
+      }
     }
   }
 
   const loadTotalNotifications = data => {
-    const friends = data?.friends?.reduce(
-      (acc, cur) => acc + cur.unreadMessages,
-      0
-    )
-    const squads = data?.squads?.reduce(
-      (acc, cur) => acc + cur.unreadMessages,
-      0
-    )
+    const friends =
+      data?.friends?.reduce((acc, cur) => acc + cur.unreadMessages, 0) || 0
+    const squads =
+      data?.squads?.reduce((acc, cur) => acc + cur.unreadMessages, 0) || 0
     const total = friends + squads
 
     setChatsData(current => ({
@@ -252,20 +262,19 @@ export const ChatProvider = ({ children }) => {
 
   const values = useMemo(
     () => ({
-      displayChat,
-      displayMessagesList,
-      responsiveSize,
       activeChat,
       changeChatType,
       chatsData,
       closeChat,
+      displayChat,
+      displayMessagesList,
       filterChats,
       isLoading,
       loadData,
       openChat,
-      sendPublicMessage,
+      responsiveSize,
       sendPrivateMessage,
-      updateUserData,
+      sendPublicMessage,
       userData,
     }),
     [activeChat, chatsData, isLoading, responsiveSize, userData]

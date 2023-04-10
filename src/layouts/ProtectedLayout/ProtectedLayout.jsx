@@ -7,7 +7,7 @@ import { LoadingPage } from '@pages/LoadingPage'
 
 const ProtectedLayout = () => {
   const { getUserData, isTokenInvalid, signOut } = useAuth()
-  const { chatsData, loadData, updateUserData, userData } = useChat()
+  const { chatsData, loadData, userData } = useChat()
 
   const [isLoading, setIsLoading] = useState(true)
 
@@ -18,15 +18,10 @@ const ProtectedLayout = () => {
       setIsLoading(false)
     }
 
-    getChatsData()
-  }
-
-  const getChatsData = async () => {
     if (!userData.connected) {
-      const data = await getUserData()
-      await updateUserData(data)
+      const nextUserData = await getUserData()
+      loadData(nextUserData)
     }
-    if (chatsData.deprecated) loadData()
     setIsLoading(false)
   }
 
@@ -34,7 +29,7 @@ const ProtectedLayout = () => {
     verifyAuth()
   }, [])
 
-  return isLoading ? <LoadingPage /> : <Outlet />
+  return isLoading && chatsData.deprecated ? <LoadingPage /> : <Outlet />
 }
 
 export { ProtectedLayout }

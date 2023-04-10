@@ -30,7 +30,7 @@ import { TextButton } from '@atoms/TextButton'
 import { TextField } from '@atoms/TextField'
 import { Modal } from '@templates/Modal'
 
-import api from '@api/services/users'
+import api from '@api/services/auth'
 import { masks } from '@utils/constants/masks'
 import { schema } from './schema'
 
@@ -38,9 +38,11 @@ const Content = ({ switchModal }) => {
   const { enqueueSnackbar } = useSnackbar()
   const {
     control,
-    register,
-    handleSubmit,
+    clearErrors,
     formState: { errors },
+    handleSubmit,
+    register,
+    setError,
   } = useForm({ resolver: zodResolver(schema) })
   const { t, i18n } = useTranslation()
 
@@ -61,23 +63,52 @@ const Content = ({ switchModal }) => {
       birth: values.birth,
     }
 
-    try {
-      const response = await api.create(payload)
+    const response = await api.register(payload)
+    setIsButtonLoading(false)
 
-      if (response.status === 201) {
-        switchModal()
-        enqueueSnackbar(t('pages.landing.signup.snackbar.success'), {
-          variant: 'success',
-        })
-      }
-    } catch (error) {
-      console.error(error)
-      enqueueSnackbar(t('pages.landing.signup.snackbar.error'), {
+    if (response.status === 409) {
+      const fieldMessage = response.data.messages[0]
+        ?.toLowerCase()
+        .includes('cell phone')
+        ? 'cellPhone'
+        : 'email'
+
+      setError(fieldMessage, {
+        type: 'onBlur',
+        message: t(`pages.landing.signup.schema.${fieldMessage}AlreadyExists`),
+      })
+      return
+    }
+
+    if (response.status !== 201) {
+      enqueueSnackbar(t('pages.landing.signup.snackbar.genericError'), {
         variant: 'error',
       })
-    } finally {
-      setIsButtonLoading(false)
+      return
     }
+
+    switchModal()
+    enqueueSnackbar(t('pages.landing.signup.snackbar.success'), {
+      variant: 'success',
+    })
+  }
+
+  const handleOnBlurUsername = async event => {
+    const { value } = event.target
+    if (value === '') return
+    const response = await api.validateUsername(value)
+    if (response.status === 400) {
+      setError('username', {
+        type: 'onBlur',
+        message: t('pages.landing.signup.schema.usernameAlreadyExists'),
+      })
+      return
+    }
+    if (response.status !== 200) {
+      console.error(response)
+      return
+    }
+    clearErrors('username')
   }
 
   return (
@@ -114,7 +145,11 @@ const Content = ({ switchModal }) => {
           label={t('pages.landing.signup.label.username')}
           name="username"
           type="text"
-          register={register}
+          register={() =>
+            register('username', {
+              onBlur: handleOnBlurUsername,
+            })
+          }
         />
       </Grid>
       <Grid item xs={12} sm={6}>

@@ -23,7 +23,7 @@ import { TextButton } from '@atoms/TextButton'
 import { TextField } from '@atoms/TextField'
 import { Modal } from '@templates/Modal'
 
-import api from '@api/services/users'
+import api from '@api/services/auth'
 import { useAuth } from '@contexts'
 import { schema } from './schema'
 
@@ -82,7 +82,7 @@ const Content = ({ switchModal }) => {
     const payload = values
 
     try {
-      const response = await api.authenticate(payload)
+      const response = await api.login(payload)
 
       if (response.status === 200) {
         signIn(response.data['jwt-token'])

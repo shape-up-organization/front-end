@@ -12,6 +12,7 @@ import { Menu, MenuItem, Stack, Typography } from '@mui/material'
 
 import { Divider } from '@atoms/Divider'
 
+import api from '@api/services/friends'
 import { useChat } from '@contexts'
 
 const ContextMenu = ({ anchorEl, handleCloseMenu, userSelected }) => {
@@ -19,32 +20,66 @@ const ContextMenu = ({ anchorEl, handleCloseMenu, userSelected }) => {
 
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const { sendFriendshipRequest, acceptFriendshipRequest } = useChat()
+  const {
+    chatsData: { friends },
+    userData,
+  } = useChat()
+
+  const sendFriendship = async () => {
+    try {
+      await api.sendFriendshipRequest(userData.jwtToken, 'testtwo')
+    } catch (error) {
+      console.log(error.response)
+    } finally {
+      // handleCloseMenu()
+    }
+  }
+
+  const acceptFriendship = async () => {
+    try {
+      await api.acceptFriendshipRequest(userData.jwtToken, userSelected)
+    } catch (error) {
+      console.log(error.response)
+    } finally {
+      // handleCloseMenu()
+    }
+  }
 
   const menuItems = useMemo(
-    () => [
-      {
+    () => ({
+      acceptFriend: {
         icon: () => <CheckRoundedIcon />,
-        onClick: acceptFriendshipRequest,
+        onClick: acceptFriendship,
         text: 'acceptFriendshipRequest',
       },
-      {
+      addFriend: {
         icon: () => <PersonAddRoundedIcon />,
-        onClick: sendFriendshipRequest,
+        onClick: sendFriendship,
         text: 'addFriend',
       },
-      {
+      removeFriend: {
         icon: () => <PersonRemoveRoundedIcon />,
         onClick: () => {},
         text: 'removeFriend',
       },
-    ],
+    }),
     []
   )
+
+  const iterateMenuItems = []
 
   const handleGoToProfile = () => {
     handleCloseMenu()
     navigate(`/profile/${userSelected}`)
+  }
+
+  if (anchorEl) {
+    if (friends.find(({ username }) => username === userSelected)) {
+      iterateMenuItems.push(menuItems.removeFriend)
+    } else {
+      iterateMenuItems.push(menuItems.acceptFriend)
+      iterateMenuItems.push(menuItems.addFriend)
+    }
   }
 
   return (
@@ -70,11 +105,11 @@ const ContextMenu = ({ anchorEl, handleCloseMenu, userSelected }) => {
           {t('pages.search.menu.goToProfile')}
         </Typography>
       </MenuItem>
-      {menuItems.map(({ onClick, icon, text }) => (
+      {iterateMenuItems.map(({ onClick, icon, text }) => (
         <Stack key={text}>
           <Divider />
           <MenuItem
-            onClick={onClick}
+            onClick={() => onClick()}
             sx={{ width: '100%', justifyContent: 'center', gap: 1 }}
           >
             {icon()}

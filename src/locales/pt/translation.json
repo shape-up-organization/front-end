@@ -114,24 +114,27 @@
           "title": "Crie sua conta"
         },
         "schema": {
-          "atLeast1Number": "Deve ter pelo menos 1 número!",
           "atLeast1LowerCaseLetter": "Deve ter pelo menos 1 letra minúscula!",
+          "atLeast1Number": "Deve ter pelo menos 1 número!",
           "atLeast1SpecialChar": "Deve ter pelo menos 1 caractere especial!",
           "atLeast1UpperCaseLetter": "Deve ter pelo menos 1 letra maiúscula!",
-          "noAtSignOrWhiteSpace": "Não pode ter @ ou espaço em branco!",
           "atLeast8Chars": "Deve ter pelo menos 8 caracteres!",
+          "cellPhoneAlreadyExists": "Número já existe!",
+          "emailAlreadyExists": "E-mail já existe!",
           "invalidDate": "Data inválida!",
           "invalidEmail": "E-mail inválido!",
           "invalidNumber": "Número inválido!",
           "moreThan1Letter": "Deve ter mais do que uma letra!",
           "moreThan8Chars": "Deve ter mais do que uma letra!",
+          "noAtSignOrWhiteSpace": "Não pode ter @ ou espaço em branco!",
           "noNumbersOrSpecialChars": "Não pode ter números ou caracteres especiais!",
           "olderThan18": "Deve ter mais de 18 anos!",
           "passwordsNotTheSame": "As senhas não são iguais!",
-          "requiredField": "Campo obrigatório!"
+          "requiredField": "Campo obrigatório!",
+          "usernameAlreadyExists": "Usuário já existe!"
         },
         "snackbar": {
-          "error": "Houve algum erro ao criar sua conta!",
+          "genericError": "Houve algum erro ao criar sua conta!",
           "success": "Conta criada com sucesso!"
         },
         "label": {

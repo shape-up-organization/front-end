@@ -10,7 +10,7 @@
     },
     "chat": {
       "alt": {
-        "chatAvatarHeader": "{{name}} profile profilePicture",
+        "chatAvatarHeader": "{{name}} profile picture",
         "notFoundChatImage": "Woman with a magnifying glass with text 'No chat was found'"
       },
       "others": {
@@ -24,7 +24,7 @@
       },
       "tooltip": {
         "chatArrowBackButton": "Go back",
-        "chatAvatarButton": "Open profile profilePicture",
+        "chatAvatarButton": "Open profile picture",
         "chatMenuButton": "Open chat menu",
         "emojiPickerButton": "Open emoji picker menu",
         "sendMessageButton": "Send message",
@@ -114,24 +114,27 @@
           "title": "Create your account"
         },
         "schema": {
-          "atLeast1Number": "Must have at least 1 number!",
           "atLeast1LowerCaseLetter": "Must have at least 1 lowercase letter!",
+          "atLeast1Number": "Must have at least 1 number!",
           "atLeast1SpecialChar": "Must have at least 1 special character!",
           "atLeast1UpperCaseLetter": "Must have at least 1 uppercase letter!",
-          "noAtSignOrWhiteSpace": "Cannot have @ or whitespace!",
           "atLeast8Chars": "Must have at least 8 characters!",
+          "cellPhoneAlreadyExists": "Phone number already exists!",
+          "emailAlreadyExists": "Email already exists!",
           "invalidDate": "Invalid date!",
           "invalidEmail": "Invalid email!",
           "invalidNumber": "Invalid number!",
           "moreThan1Letter": "Must have more than 1 letter!",
           "moreThan8Chars": "Must have more than 8 characters!",
+          "noAtSignOrWhiteSpace": "Cannot have @ or whitespace!",
           "noNumbersOrSpecialChars": "Cannot have numbers or special characters!",
           "olderThan18": "Must be older than 18 years!",
           "passwordsNotTheSame": "Passwords do not match!",
-          "requiredField": "This field is required!"
+          "requiredField": "This field is required!",
+          "usernameAlreadyExists": "Username already exists!"
         },
         "snackbar": {
-          "error": "There was an error creating your account!",
+          "genericError": "There was an error creating your account!",
           "success": "Account created successfully!"
         },
         "label": {

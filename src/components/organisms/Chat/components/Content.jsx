@@ -114,11 +114,7 @@ const Content = () => {
       p={2}
     >
       <Header />
-      <MessagesList
-        listBottomRef={listBottomRef}
-        messages={messages}
-        username={userData.username}
-      />
+      <MessagesList listBottomRef={listBottomRef} messages={messages} />
       <Footer
         emojiButtonRef={emojiButtonRef}
         emojiPickerAnchorEl={emojiPickerAnchorEl}

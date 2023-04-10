@@ -5,21 +5,34 @@ import { Avatar, Badge, Button, Grid, Typography } from '@mui/material'
 import { useChat } from '@contexts'
 import { getBorder } from '@utils/constants/levels'
 import { reformatSimpleDate } from '@utils/helpers/dateTime'
-import { charactersToLineBreaks } from '@utils/helpers/strings'
 
 import { useStyles } from './ChatButton.styles'
 
 const ChatButton = ({
-  data: { lastMessage, name, profilePicture, unreadMessages, username, xp },
+  data: { messages, name, profilePicture, unreadMessages = 0, username, xp },
   online,
 }) => {
-  const { activeChat, openChat } = useChat()
+  const { activeChat, openChat, userData } = useChat()
 
   const { classes } = useStyles()
 
   const handleSelectChat = () => {
     if (activeChat?.username === username) return
     openChat(username)
+  }
+
+  const mountLastMessage = () => {
+    const lastMessage = messages.at(-1)
+    let sender = ''
+    const lastMessageContent = lastMessage?.message || ''
+
+    if (lastMessage?.senderName) {
+      if (lastMessage?.senderName === userData.username) sender = 'Você'
+      else sender = lastMessage?.senderName
+      sender += ':'
+    }
+
+    return `${sender} ${lastMessageContent}`
   }
 
   return (
@@ -44,7 +57,7 @@ const ChatButton = ({
             variant={online !== undefined ? 'dot' : 'standard'}
           >
             <Avatar
-              alt={name}
+              alt={username}
               src={profilePicture}
               sx={{
                 border: 4,
@@ -80,7 +93,7 @@ const ChatButton = ({
               noWrap
               variant="caption"
             >
-              {reformatSimpleDate(lastMessage?.date)}
+              {reformatSimpleDate(messages.at(-1)?.date)}
             </Typography>
           </Grid>
           <Grid item xs={9}>
@@ -90,7 +103,7 @@ const ChatButton = ({
               noWrap
               variant="subtitle2"
             >
-              {charactersToLineBreaks(lastMessage?.message)}
+              {mountLastMessage()}
             </Typography>
           </Grid>
           <Grid item xs={3} display="flex" justifyContent="end">
@@ -114,13 +127,16 @@ const ChatButton = ({
 
 ChatButton.propTypes = {
   data: P.shape({
-    lastMessage: P.shape({
-      date: P.string.isRequired,
-      message: P.string.isRequired,
-    }),
     name: P.string.isRequired,
+    messages: P.arrayOf(
+      P.shape({
+        date: P.string.isRequired,
+        message: P.string.isRequired,
+        senderName: P.string.isRequired,
+      })
+    ),
     profilePicture: P.string,
-    unreadMessages: P.number.isRequired,
+    unreadMessages: P.number,
     username: P.string.isRequired,
     xp: P.number,
   }).isRequired,

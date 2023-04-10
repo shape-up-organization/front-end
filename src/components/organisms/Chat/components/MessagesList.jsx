@@ -7,6 +7,7 @@ import {
   Grow,
   List,
   ListItem,
+  Tooltip,
   Typography,
 } from '@mui/material'
 
@@ -14,14 +15,17 @@ import { useChat } from '@contexts'
 import { reformatSimpleTime } from '@utils/helpers/dateTime'
 import { charactersToLineBreaks } from '@utils/helpers/strings'
 
-const MessagesList = ({ listBottomRef, messages, username }) => {
+const MessagesList = ({ listBottomRef, messages }) => {
   const {
     chatsData: { friends },
+    userData,
   } = useChat()
 
-  const getMessageprofilePicture = () =>
-    friends.find(({ username: friendUsername }) => username === friendUsername)
+  const getMessageProfilePicture = senderName => {
+    if (senderName === userData.username) return userData.profilePicture
+    return friends.find(({ username }) => username === senderName)
       ?.profilePicture
+  }
 
   return (
     <List
@@ -37,15 +41,15 @@ const MessagesList = ({ listBottomRef, messages, username }) => {
             key={date}
             sx={{
               justifyContent:
-                senderName === username ? 'flex-end' : 'flex-start',
+                senderName === userData.username ? 'flex-end' : 'flex-start',
               '& span': {
-                textAlign: senderName === username ? 'end' : 'start',
+                textAlign: senderName === userData.username ? 'end' : 'start',
               },
             }}
           >
             <Badge
               anchorOrigin={
-                senderName === username
+                senderName === userData.username
                   ? {
                       vertical: 'top',
                       horizontal: 'right',
@@ -56,11 +60,13 @@ const MessagesList = ({ listBottomRef, messages, username }) => {
                     }
               }
               badgeContent={
-                <Avatar
-                  alt={senderName}
-                  src={getMessageprofilePicture(message)}
-                  sx={{ height: 24, width: 24 }}
-                />
+                <Tooltip title={senderName} placement="top" arrow>
+                  <Avatar
+                    alt={senderName}
+                    src={getMessageProfilePicture(senderName)}
+                    sx={{ height: 24, width: 24 }}
+                  />
+                </Tooltip>
               }
               component="div"
               overlap="rectangular"
@@ -113,7 +119,6 @@ MessagesList.propTypes = {
       senderName: P.string.isRequired,
     })
   ).isRequired,
-  username: P.string.isRequired,
 }
 
 export { MessagesList }

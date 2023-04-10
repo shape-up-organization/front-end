@@ -32,9 +32,12 @@ const reformatSimpleDate = date => date?.split(' - ')[0]
 
 const reformatSimpleTime = date => date?.split(' - ')[1]?.slice(0, -3)
 
+const formatLocalDate = date => formatDateTime(new Date(date))
+
 export {
   getLocalDateFormatted,
   getLocalDateTimeFormatted,
+  formatLocalDate,
   reformatSimpleDate,
   reformatSimpleTime,
 }

@@ -1,7 +1,7 @@
-import i18n from '@app/i18n'
+import { format, parseISO } from 'date-fns'
 import { z } from 'zod'
 
-import { format, parseISO } from 'date-fns'
+import i18n from '@app/i18n'
 
 const string = () =>
   z.string().nonempty(i18n.t('pages.landing.signup.schema.requiredField'))

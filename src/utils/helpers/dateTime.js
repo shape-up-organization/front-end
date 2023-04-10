@@ -30,7 +30,7 @@ const getLocalDateTimeFormatted = () => formatDateTime(getLocalDate())
 
 const reformatSimpleDate = date => date?.split(' - ')[0]
 
-const reformatSimpleTime = date => date?.split(' - ')[1].slice(0, -3)
+const reformatSimpleTime = date => date?.split(' - ')[1]?.slice(0, -3)
 
 export {
   getLocalDateFormatted,

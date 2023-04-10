@@ -9,7 +9,13 @@ import { getBorder, getLevel } from '@utils/constants/levels'
 
 import { useStyles } from './UserButton.styles'
 
-const UserButton = ({ handleSelectUser, name, picture, username, xp }) => {
+const UserButton = ({
+  handleSelectUser,
+  name,
+  profilePicture,
+  username,
+  xp,
+}) => {
   const {
     chatsData: { friends },
   } = useChat()
@@ -41,24 +47,19 @@ const UserButton = ({ handleSelectUser, name, picture, username, xp }) => {
         container
         justifyContent="center"
         height="100%"
-        pr={2}
         py={1}
       >
-        <Grid item xs={3} display="flex" justifyContent="center">
+        <Grid item xs={2} display="flex" justifyContent="center">
           <Avatar
             alt={name}
-            src={picture}
+            className={classes.avatar}
+            src={profilePicture}
             sx={{
-              border: 4,
-              borderStyle: 'solid',
-              borderColor: 'transparent',
               background: `${getBorder(xp)} border-box`,
-              height: 56,
-              width: 56,
             }}
           />
         </Grid>
-        <Grid container item xs={6} rowSpacing={0}>
+        <Grid container item xs={7} rowSpacing={0}>
           <Grid item xs={12}>
             <Typography
               color="primary"
@@ -117,7 +118,7 @@ const UserButton = ({ handleSelectUser, name, picture, username, xp }) => {
 UserButton.propTypes = {
   handleSelectUser: P.func.isRequired,
   name: P.string.isRequired,
-  picture: P.string.isRequired,
+  profilePicture: P.string.isRequired,
   username: P.string.isRequired,
   xp: P.number.isRequired,
 }

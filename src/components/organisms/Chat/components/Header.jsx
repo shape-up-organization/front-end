@@ -23,6 +23,7 @@ import {
 import { Divider } from '@atoms/Divider'
 
 import { useAuth, useChat } from '@contexts'
+import { getBorder } from '@utils/constants/levels'
 
 import api from '@api/services/friends'
 
@@ -30,7 +31,7 @@ import { useStyles } from './Header.styles'
 
 const Header = () => {
   const {
-    activeChat: { name, username },
+    activeChat: { name, profilePicture, username, xp },
     closeChat,
     responsiveSize,
   } = useChat()
@@ -111,6 +112,13 @@ const Header = () => {
                 <IconButton>
                   <Avatar
                     alt={t('pages.chat.alt.chatAvatarHeader', { name })}
+                    src={profilePicture}
+                    sx={{
+                      border: 4,
+                      borderStyle: 'solid',
+                      borderColor: 'transparent',
+                      background: `${getBorder(xp)} border-box`,
+                    }}
                   />
                 </IconButton>
               </Tooltip>

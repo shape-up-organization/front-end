@@ -10,7 +10,7 @@
     },
     "chat": {
       "alt": {
-        "chatAvatarHeader": "{{name}} profile picture",
+        "chatAvatarHeader": "{{name}} profile profilePicture",
         "notFoundChatImage": "Woman with a magnifying glass with text 'No chat was found'"
       },
       "others": {
@@ -24,7 +24,7 @@
       },
       "tooltip": {
         "chatArrowBackButton": "Go back",
-        "chatAvatarButton": "Open profile picture",
+        "chatAvatarButton": "Open profile profilePicture",
         "chatMenuButton": "Open chat menu",
         "emojiPickerButton": "Open emoji picker menu",
         "sendMessageButton": "Send message",

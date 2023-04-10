@@ -7,7 +7,6 @@ import { over } from 'stompjs'
 import { useMediaQuery, useTheme } from '@mui/material'
 
 import mockedFriends from '@mocks/friends/get'
-import { getLocalDateTimeFormatted } from '@utils/helpers/dateTime'
 import { normalize } from '@utils/helpers/strings'
 
 const ChatContext = createContext()
@@ -30,7 +29,7 @@ export const ChatProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true)
   const [userData, setUserData] = useState({
     connected: false,
-    picture: null,
+    profilePicture: null,
     username: null,
   })
 
@@ -77,7 +76,6 @@ export const ChatProvider = ({ children }) => {
       '/app/message',
       {},
       JSON.stringify({
-        date: getLocalDateTimeFormatted(),
         message: '',
         senderName: username,
         status: 'JOIN',
@@ -85,14 +83,13 @@ export const ChatProvider = ({ children }) => {
     )
 
     // TODO: Fix private chat
-    // const chatMessage = {
-    //   date: getLocalDateTimeFormatted(),
-    //   message: '',
-    //   receiverName: username,
-    //   senderName: username,
-    //   status: 'JOIN',
-    // }
-    // stompClient.send('/app/private-message', {}, JSON.stringify(chatMessage))
+    const chatMessage = {
+      message: 'asd',
+      receiverName: username,
+      senderName: username,
+      status: 'MESSAGE',
+    }
+    stompClient.send('/app/private-message', {}, JSON.stringify(chatMessage))
   }
 
   const onError = error => {
@@ -100,13 +97,17 @@ export const ChatProvider = ({ children }) => {
   }
 
   const onPrivateMessage = ({ body }) => {
+    console.log('AAAA')
     const payload = JSON.parse(body)
     switch (payload.status) {
       case 'JOIN':
         console.log('JOINING PRIVATE')
         break
       case 'MESSAGE':
-        addMessageToChat(payload.message, payload.senderName)
+        addMessageToChat(
+          { ...payload, date: new Date(payload.date) },
+          'friends'
+        )
         break
       default:
         break
@@ -120,7 +121,7 @@ export const ChatProvider = ({ children }) => {
         console.log('JOINING PUBLIC')
         break
       case 'MESSAGE':
-        addMessageToChat(payload, 'squads')
+        addMessageToChat({ ...payload, date: new Date(payload.date) }, 'squads')
         break
       default:
         break
@@ -130,7 +131,6 @@ export const ChatProvider = ({ children }) => {
   const sendPublicMessage = (message, receiverName) => {
     if (stompClient) {
       const chatMessage = {
-        date: getLocalDateTimeFormatted(),
         message,
         receiverName,
         senderName: userData.username,
@@ -143,7 +143,6 @@ export const ChatProvider = ({ children }) => {
   const sendPrivateMessage = (message, receiverName) => {
     if (stompClient) {
       const chatMessage = {
-        date: getLocalDateTimeFormatted(),
         message,
         receiverName,
         senderName: userData.username,

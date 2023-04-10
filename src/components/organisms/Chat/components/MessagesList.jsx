@@ -19,10 +19,9 @@ const MessagesList = ({ listBottomRef, messages, username }) => {
     chatsData: { friends },
   } = useChat()
 
-  const getMessagePicture = message =>
-    friends.find(
-      ({ username: friendUsername }) => message.username === friendUsername
-    )?.picture || 'No picture'
+  const getMessageprofilePicture = () =>
+    friends.find(({ username: friendUsername }) => username === friendUsername)
+      ?.profilePicture
 
   return (
     <List
@@ -59,7 +58,7 @@ const MessagesList = ({ listBottomRef, messages, username }) => {
               badgeContent={
                 <Avatar
                   alt={senderName}
-                  src={getMessagePicture(message)}
+                  src={getMessageprofilePicture(message)}
                   sx={{ height: 24, width: 24 }}
                 />
               }

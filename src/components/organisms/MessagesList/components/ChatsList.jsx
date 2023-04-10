@@ -59,11 +59,7 @@ const ChatsList = () => {
     <Stack>
       {friends?.map(friend => (
         <Stack key={friend.username}>
-          <ChatButton
-            data={friend}
-            online={friend.online}
-            username={friend.username}
-          />
+          <ChatButton data={friend} online={friend.online} />
           <Divider />
         </Stack>
       ))}

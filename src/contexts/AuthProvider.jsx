@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
       path: '/',
     })
 
-    navigate('/search')
+    navigate('/chats')
   }
 
   const signOut = () => {
@@ -57,16 +57,11 @@ export const AuthProvider = ({ children }) => {
 
   const getUserData = async () => ({
     username: await extractUsername(),
-    picture: await extractPicture(),
+    profilePicture: await extractprofilePicture(),
   })
 
-  const extractPicture = async () => getTokenProp('picture')
-
-  const extractUsername = async () => {
-    const usernamePromise = await getTokenProp('email')
-    const username = usernamePromise.split('@')[0]
-    return username
-  }
+  const extractprofilePicture = async () => getTokenProp('profilePicture')
+  const extractUsername = async () => getTokenProp('username')
 
   // TODO: Validate with Back-end to revalidate or not here
   // const revalidateToken = async () => {

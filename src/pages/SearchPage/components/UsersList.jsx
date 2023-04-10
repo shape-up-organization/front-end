@@ -58,7 +58,7 @@ const UsersList = ({ isLoading, handleSelectUser, users }) => {
           <UserButton
             handleSelectUser={handleSelectUser}
             name={user.name}
-            picture={user.picture}
+            profilePicture={user.profilePicture}
             username={user.username}
             xp={user.xp}
           />
@@ -75,7 +75,7 @@ UsersList.propTypes = {
   users: P.arrayOf(
     P.shape({
       name: P.string,
-      picture: P.string,
+      profilePicture: P.string,
       username: P.string,
       xp: P.number,
     })

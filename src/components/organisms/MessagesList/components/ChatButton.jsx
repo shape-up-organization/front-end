@@ -3,15 +3,15 @@ import P from 'prop-types'
 import { Avatar, Badge, Button, Grid, Typography } from '@mui/material'
 
 import { useChat } from '@contexts'
+import { getBorder } from '@utils/constants/levels'
 import { reformatSimpleDate } from '@utils/helpers/dateTime'
 import { charactersToLineBreaks } from '@utils/helpers/strings'
 
 import { useStyles } from './ChatButton.styles'
 
 const ChatButton = ({
-  data: { lastMessage, name, picture, unreadMessages },
+  data: { lastMessage, name, profilePicture, unreadMessages, username, xp },
   online,
-  username,
 }) => {
   const { activeChat, openChat } = useChat()
 
@@ -43,7 +43,18 @@ const ChatButton = ({
             overlap="circular"
             variant={online !== undefined ? 'dot' : 'standard'}
           >
-            <Avatar alt={name} src={picture} />
+            <Avatar
+              alt={name}
+              src={profilePicture}
+              sx={{
+                border: 4,
+                borderStyle: 'solid',
+                borderColor: 'transparent',
+                background: `${getBorder(xp)} border-box`,
+                height: 56,
+                width: 56,
+              }}
+            />
           </Badge>
         </Grid>
         <Grid container item xs={9} rowSpacing={1}>
@@ -108,16 +119,16 @@ ChatButton.propTypes = {
       message: P.string.isRequired,
     }),
     name: P.string.isRequired,
-    picture: P.string,
+    profilePicture: P.string,
     unreadMessages: P.number.isRequired,
+    username: P.string.isRequired,
+    xp: P.number,
   }).isRequired,
   online: P.bool,
-  username: P.string,
 }
 
 ChatButton.defaultProps = {
   online: undefined,
-  username: undefined,
 }
 
 export { ChatButton }

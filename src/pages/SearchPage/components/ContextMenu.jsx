@@ -15,9 +15,7 @@ import { Divider } from '@atoms/Divider'
 import api from '@api/services/friends'
 import { useChat } from '@contexts'
 
-const ContextMenu = ({ anchorEl, handleCloseMenu, userSelected }) => {
-  const isMenuOpen = Boolean(anchorEl)
-
+const ContextMenu = ({ anchorEl, handleCloseMenu, open, userSelected }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const {
@@ -27,11 +25,11 @@ const ContextMenu = ({ anchorEl, handleCloseMenu, userSelected }) => {
 
   const sendFriendship = async () => {
     try {
-      await api.sendFriendshipRequest(userData.jwtToken, 'testtwo')
+      await api.sendFriendshipRequest(userData.jwtToken, userSelected)
     } catch (error) {
       console.log(error.response)
     } finally {
-      // handleCloseMenu()
+      handleCloseMenu()
     }
   }
 
@@ -41,7 +39,7 @@ const ContextMenu = ({ anchorEl, handleCloseMenu, userSelected }) => {
     } catch (error) {
       console.log(error.response)
     } finally {
-      // handleCloseMenu()
+      handleCloseMenu()
     }
   }
 
@@ -90,7 +88,7 @@ const ContextMenu = ({ anchorEl, handleCloseMenu, userSelected }) => {
         vertical: 'bottom',
       }}
       onClose={handleCloseMenu}
-      open={isMenuOpen}
+      open={open}
       transformOrigin={{
         horizontal: 'center',
         vertical: 'top',
@@ -126,6 +124,7 @@ const ContextMenu = ({ anchorEl, handleCloseMenu, userSelected }) => {
 ContextMenu.propTypes = {
   anchorEl: P.object,
   handleCloseMenu: P.func.isRequired,
+  open: P.bool.isRequired,
   userSelected: P.string.isRequired,
 }
 

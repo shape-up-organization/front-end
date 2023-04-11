@@ -7,39 +7,39 @@ import { Avatar, Button, Fab, Grid, Typography } from '@mui/material'
 import { useChat } from '@contexts'
 import { getBorder, getLevel } from '@utils/constants/levels'
 
+import { useState } from 'react'
+import { ContextMenu } from './ContextMenu'
 import { useStyles } from './UserButton.styles'
 
-const UserButton = ({
-  handleSelectUser,
-  name,
-  profilePicture,
-  username,
-  xp,
-}) => {
+const UserButton = ({ name, profilePicture, username, xp }) => {
   const {
     chatsData: { friends },
   } = useChat()
   const navigate = useNavigate()
   const { t } = useTranslation()
 
+  const [anchorEl, setAnchorEl] = useState(null)
+
   const { classes } = useStyles()
 
   const checkIfIsFriend = () =>
     friends.some(friend => friend.username === username)
 
-  const handleClickContextMenu = event => {
-    event.preventDefault()
-    handleSelectUser(event.currentTarget, username)
-  }
-
   const handleGoToProfile = () => navigate(`/profile/${username}`)
+
+  const handleCloseMenu = () => setAnchorEl(null)
+
+  const handleOpenContextMenu = event => {
+    event.preventDefault()
+    setAnchorEl(event.currentTarget)
+  }
 
   return (
     <Button
       className={classes.chatButton}
       fullWidth
       onClick={handleGoToProfile}
-      onContextMenu={handleClickContextMenu}
+      onContextMenu={handleOpenContextMenu}
     >
       <Grid
         alignItems="center"
@@ -111,12 +111,17 @@ const UserButton = ({
           </Grid>
         </Grid>
       </Grid>
+      <ContextMenu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        handleCloseMenu={handleCloseMenu}
+        userSelected={username}
+      />
     </Button>
   )
 }
 
 UserButton.propTypes = {
-  handleSelectUser: P.func.isRequired,
   name: P.string.isRequired,
   profilePicture: P.string.isRequired,
   username: P.string.isRequired,

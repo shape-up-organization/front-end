@@ -15,7 +15,7 @@ import notFoundGeneric from '@assets/images/not-found-generic.png'
 
 import { UserButton } from './UserButton'
 
-const UsersList = ({ isLoading, handleSelectUser, users }) => {
+const UsersList = ({ isLoading, users }) => {
   const { t } = useTranslation()
 
   if (isLoading || !users.length)
@@ -56,7 +56,6 @@ const UsersList = ({ isLoading, handleSelectUser, users }) => {
       {users?.map(user => (
         <Stack key={user.username}>
           <UserButton
-            handleSelectUser={handleSelectUser}
             name={user.name}
             profilePicture={user.profilePicture}
             username={user.username}
@@ -71,7 +70,6 @@ const UsersList = ({ isLoading, handleSelectUser, users }) => {
 
 UsersList.propTypes = {
   isLoading: P.bool,
-  handleSelectUser: P.func.isRequired,
   users: P.arrayOf(
     P.shape({
       name: P.string,

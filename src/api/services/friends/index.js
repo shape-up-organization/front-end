@@ -2,7 +2,7 @@ import { http } from '@api/lib/http'
 import { tryCatch } from '@api/lib/tryCatch'
 
 const acceptFriendshipRequest = async (jwtToken, username) =>
-  http.post(`/friends/accept-friendship-request/${username}`, null, {
+  tryCatch(http.post, `/friends/accept-friendship-request/${username}`, null, {
     headers: {
       Authorization: `Bearer ${jwtToken}`,
     },

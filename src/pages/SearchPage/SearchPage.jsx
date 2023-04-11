@@ -6,7 +6,6 @@ import { Divider } from '@atoms/Divider'
 import mockedSearch from '@mocks/users/get'
 import { useStyles } from './SearchPage.styles'
 
-import { ContextMenu } from './components/ContextMenu'
 import { SearchField } from './components/SearchField'
 import { UsersList } from './components/UsersList'
 
@@ -15,22 +14,12 @@ const SearchPage = () => {
   const [search, setSearch] = useState('')
   const [users, setUsers] = useState([])
 
-  const [userSelected, setUserSelected] = useState('')
-  const [menuAnchorEl, setMenuAnchorEl] = useState(null)
-
   const { classes } = useStyles()
 
   useEffect(() => {
     setUsers(mockedSearch?.data?.users)
     setIsLoading(false)
   }, [search])
-
-  const handleCloseMenu = () => setMenuAnchorEl(null)
-
-  const handleSelectUser = (anchorButton, username) => {
-    setUserSelected(username)
-    setMenuAnchorEl(anchorButton)
-  }
 
   return (
     <Container className={classes.container} disableGutters fixed>
@@ -62,20 +51,10 @@ const SearchPage = () => {
             minWidth={312}
             px={2}
           >
-            <UsersList
-              isLoading={isLoading}
-              handleSelectUser={handleSelectUser}
-              search={search}
-              users={users}
-            />
+            <UsersList isLoading={isLoading} search={search} users={users} />
           </Grid>
         </Grid>
       </Stack>
-      <ContextMenu
-        anchorEl={menuAnchorEl}
-        handleCloseMenu={handleCloseMenu}
-        userSelected={userSelected}
-      />
     </Container>
   )
 }

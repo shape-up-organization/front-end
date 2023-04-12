@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useSnackbar } from 'notistack'
 import P from 'prop-types'
 import { useForm } from 'react-hook-form'
+import { useTranslation } from 'react-i18next'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import Visibility from '@mui/icons-material/Visibility'
@@ -13,6 +14,7 @@ import {
   Grid,
   IconButton,
   InputAdornment,
+  Tooltip,
   Typography,
 } from '@mui/material'
 
@@ -21,70 +23,82 @@ import { TextButton } from '@atoms/TextButton'
 import { TextField } from '@atoms/TextField'
 import { Modal } from '@templates/Modal'
 
-import { users } from '@api/services/users'
+import api from '@api/services/auth'
 import { useAuth } from '@contexts'
 import { schema } from './schema'
 
-const size = 'small'
-const title = 'Faça login'
-
 const PasswordEndAdornment = ({
   isShowingPasswordStates: { isShowingPassword, setIsShowingPassword },
-}) => (
-  <InputAdornment position="end">
-    <IconButton
-      aria-label={`Trocar visibilidade da senha para ser ${
-        isShowingPassword ? 'escondida' : 'visível'
-      }`}
-      onClick={() =>
-        setIsShowingPassword(prevIsShowingPassword => !prevIsShowingPassword)
-      }
-      onMouseDown={event => event.preventDefault()}
-    >
-      {isShowingPassword ? (
-        <VisibilityOff fontSize="small" />
-      ) : (
-        <Visibility fontSize="small" />
-      )}
-    </IconButton>
-  </InputAdornment>
-)
+}) => {
+  const { t } = useTranslation()
+
+  return (
+    <InputAdornment position="end">
+      <Tooltip
+        title={
+          isShowingPassword
+            ? t('pages.landing.login.others.hidePassword')
+            : t('pages.landing.login.others.showPassword')
+        }
+      >
+        <IconButton
+          onClick={() =>
+            setIsShowingPassword(
+              prevIsShowingPassword => !prevIsShowingPassword
+            )
+          }
+          onMouseDown={event => event.preventDefault()}
+        >
+          {isShowingPassword ? (
+            <VisibilityOff fontSize="small" />
+          ) : (
+            <Visibility fontSize="small" />
+          )}
+        </IconButton>
+      </Tooltip>
+    </InputAdornment>
+  )
+}
 
 PasswordEndAdornment.propTypes = {
   isShowingPasswordStates: P.shape([P.bool, P.func]).isRequired,
 }
 
 const Content = ({ switchModal }) => {
-  const [isShowingPassword, setIsShowingPassword] = useState(false)
-  const [isButtonLoading, setIsButtonLoading] = useState(false)
-
   const { signIn } = useAuth()
   const { enqueueSnackbar } = useSnackbar()
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) })
+  const { t } = useTranslation()
+
+  const [isShowingPassword, setIsShowingPassword] = useState(false)
+  const [isButtonLoading, setIsButtonLoading] = useState(false)
 
   const handleLogin = async values => {
     setIsButtonLoading(true)
     const payload = values
 
-    try {
-      const response = await users.authenticate(payload)
+    const response = await api.login(payload)
+    setIsButtonLoading(false)
 
-      if (response.status === 200) {
-        signIn(response.data['jwt-token'])
-      }
-    } catch (error) {
-      console.log(error)
-      enqueueSnackbar('E-mail e ou senha incorretos!', {
+    if (response.status === 404) {
+      enqueueSnackbar(t('pages.landing.login.snackbar.wrongCredentials'), {
         variant: 'error',
       })
-    } finally {
-      setIsButtonLoading(false)
+      return
     }
+
+    if (response.status !== 200) {
+      enqueueSnackbar(t('pages.landing.login.snackbar.genericError'), {
+        variant: 'error',
+      })
+      return
+    }
+
+    signIn(response.data['jwt-token'])
   }
 
   return (
@@ -99,7 +113,7 @@ const Content = ({ switchModal }) => {
       <Grid item xs={12}>
         <TextField
           error={errors.email?.message}
-          label="E-mail"
+          label={t('pages.landing.login.label.email')}
           name="email"
           type="email"
           register={register}
@@ -116,7 +130,7 @@ const Content = ({ switchModal }) => {
             />
           }
           error={errors.password?.message}
-          label="Senha"
+          label={t('pages.landing.login.label.password')}
           name="password"
           type={isShowingPassword ? 'text' : 'password'}
           register={register}
@@ -125,7 +139,7 @@ const Content = ({ switchModal }) => {
       <Grid item textAlign="center" xs={12}>
         <LinkButton internal="password-recovery">
           <Typography fontWeight="bold" variant="caption">
-            Esqueceu sua senha?
+            {t('pages.landing.login.others.forgotPassword')}
           </Typography>
         </LinkButton>
       </Grid>
@@ -140,17 +154,20 @@ const Content = ({ switchModal }) => {
           {isButtonLoading ? (
             <CircularProgress color="secondary" size={24} />
           ) : (
-            <Typography fontWeight="bold" textTransform="none">
-              ENTRAR
+            <Typography fontWeight="bold" textTransform="uppercase">
+              {t('pages.landing.login.others.buttonSignIn')}
             </Typography>
           )}
         </Button>
       </Grid>
       <Grid item textAlign="center" xs={12} sm={12}>
         <Typography fontWeight="500" variant="caption">
-          Primeira vez por aqui?
-          <TextButton handleClick={switchModal} text="Crie sua conta" />
-          agora mesmo!
+          {t('pages.landing.login.others.signUpCall.1')}
+          <TextButton
+            handleClick={switchModal}
+            text={t('pages.landing.login.others.signUpCall.2')}
+          />
+          {t('pages.landing.login.others.signUpCall.3')}
         </Typography>
       </Grid>
     </Grid>
@@ -161,15 +178,20 @@ Content.propTypes = {
   switchModal: P.func.isRequired,
 }
 
-const LoginModal = ({ handleClose, isOpen, switchModal }) => (
-  <Modal
-    content={<Content switchModal={switchModal} />}
-    handleClose={handleClose}
-    isOpen={isOpen}
-    size={size}
-    title={title}
-  />
-)
+const size = 'small'
+const LoginModal = ({ handleClose, isOpen, switchModal }) => {
+  const { t } = useTranslation()
+
+  return (
+    <Modal
+      content={<Content switchModal={switchModal} />}
+      handleClose={handleClose}
+      isOpen={isOpen}
+      size={size}
+      title={t('pages.landing.login.others.title')}
+    />
+  )
+}
 
 LoginModal.propTypes = {
   isOpen: P.bool.isRequired,

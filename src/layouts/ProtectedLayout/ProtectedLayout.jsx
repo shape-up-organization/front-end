@@ -1,26 +1,42 @@
 import { useEffect, useState } from 'react'
 
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 
-import { useAuth } from '@contexts'
+import { useAuth, useChat } from '@contexts'
 import { LoadingPage } from '@pages/LoadingPage'
 
 const ProtectedLayout = () => {
-  const { isTokenInvalid, signOut } = useAuth()
+  const { getUserData, isTokenInvalid, signOut } = useAuth()
+  const { chatsData, loadData, updateOnline, userData } = useChat()
+
   const [isLoading, setIsLoading] = useState(true)
 
   const verifyAuth = async () => {
-    if (await isTokenInvalid()) {
+    const isInvalid = await isTokenInvalid()
+    if (isInvalid) {
+      updateOnline(false)
       signOut()
+      setIsLoading(false)
+      return
     }
+
+    if (!userData.username) {
+      const nextUserData = await getUserData()
+      loadData(nextUserData)
+    }
+
+    if (!userData.connected && !chatsData.deprecated) updateOnline(true)
+
     setIsLoading(false)
   }
 
+  const location = useLocation()
+
   useEffect(() => {
     verifyAuth()
-  })
+  }, [location])
 
-  return isLoading ? <LoadingPage /> : <Outlet />
+  return isLoading && chatsData.deprecated ? <LoadingPage /> : <Outlet />
 }
 
 export { ProtectedLayout }

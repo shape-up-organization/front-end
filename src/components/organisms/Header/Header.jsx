@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import P from 'prop-types'
+import { useTranslation } from 'react-i18next'
 
 import Close from '@mui/icons-material/Close'
 import MenuIcon from '@mui/icons-material/Menu'
@@ -23,6 +24,8 @@ import { useStyles } from './Header.styles'
 
 const Header = ({ handleOpenModals }) => {
   const { handleOpenLogin, handleOpenSignup } = handleOpenModals
+
+  const { t } = useTranslation()
 
   const [showDrawer, setShowDrawer] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
@@ -58,7 +61,6 @@ const Header = ({ handleOpenModals }) => {
           <Box display="flex" justifyContent="right" width="100%">
             <IconButton
               size="large"
-              aria-label="Abrir menu de navegação"
               aria-controls="menu-header"
               aria-haspopup="true"
               onClick={toggleNavMenu}
@@ -70,12 +72,12 @@ const Header = ({ handleOpenModals }) => {
           <>
             <Grid item xs={6}>
               <Button fullWidth onClick={handleOpenLogin}>
-                Entrar
+                {t('pages.landing.header.buttonSignIn')}
               </Button>
             </Grid>
             <Grid item xs={6}>
               <Button fullWidth onClick={handleOpenSignup} variant="contained">
-                Cadastrar
+                {t('pages.landing.header.buttonSignUp')}
               </Button>
             </Grid>
           </>
@@ -104,7 +106,7 @@ const Header = ({ handleOpenModals }) => {
             <Grid container item direction="column" rowSpacing={2}>
               <Grid item>
                 <Button fullWidth onClick={handleOpenLogin}>
-                  Entrar
+                  {t('pages.landing.header.buttonSignIn')}
                 </Button>
               </Grid>
               <Grid item>
@@ -113,14 +115,14 @@ const Header = ({ handleOpenModals }) => {
                   onClick={handleOpenSignup}
                   variant="contained"
                 >
-                  Cadastrar
+                  {t('pages.landing.header.buttonSignUp')}
                 </Button>
               </Grid>
             </Grid>
             <Grid item>
               <Photo
                 animationSpeed={0}
-                alt="Cachorro fofinho e verde"
+                alt={t('pages.landing.alt.menuGreenDog')}
                 className={classes.dogPic}
                 fit="contain"
                 src={dogPic}

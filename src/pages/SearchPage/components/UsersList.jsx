@@ -55,12 +55,7 @@ const UsersList = ({ isLoading, users }) => {
     <Stack>
       {users?.map(user => (
         <Stack key={user.username}>
-          <UserButton
-            name={user.name}
-            profilePicture={user.profilePicture}
-            username={user.username}
-            xp={user.xp}
-          />
+          <UserButton user={user} />
           <Divider />
         </Stack>
       ))}

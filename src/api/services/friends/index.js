@@ -16,7 +16,7 @@ const getAllFriendship = async jwtToken =>
   })
 
 const sendFriendshipRequest = async (jwtToken, username) =>
-  http.post(`/friends/sent-friendship-request/${username}`, null, {
+  tryCatch(http.post, `/friends/sent-friendship-request/${username}`, null, {
     headers: {
       Authorization: `Bearer ${jwtToken}`,
     },

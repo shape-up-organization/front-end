@@ -57,13 +57,23 @@ export const AuthProvider = ({ children }) => {
 
   const getUserData = async () => ({
     connected: true,
+    email: await extractEmail(),
+    id: await extractId(),
     jwtToken: await getJwtToken(),
+    lastName: await extractLastName(),
+    name: await extractName(),
     profilePicture: (await extractProfilePicture()) || '',
     username: await extractUsername(),
+    xp: await extractXp(),
   })
 
   const extractProfilePicture = async () => getTokenProp('profilePicture')
+  const extractEmail = async () => getTokenProp('email')
+  const extractId = async () => getTokenProp('id')
+  const extractLastName = async () => getTokenProp('lastName')
+  const extractName = async () => getTokenProp('name')
   const extractUsername = async () => getTokenProp('username')
+  const extractXp = async () => getTokenProp('xp')
 
   // TODO: Validate with Back-end to revalidate or not here
   // const revalidateToken = async () => {

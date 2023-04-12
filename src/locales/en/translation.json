@@ -17,7 +17,7 @@
         "chatNotFoundMessage": "No chat was found!",
         "menuItemAcceptFriendshipRequest": "Accept friendship request",
         "menuItemAddFriend": "Add friend",
-        "messageListTitle": "Friends",
+        "messageListTitle": "Messages",
         "messageInputPlaceholder": "Type a message...",
         "searchChatsPlaceholder": "Search friends...",
         "searchChatsPlaceholderDisabled": "You have no friends yet!"
@@ -88,7 +88,8 @@
           "invalidEmail": "Invalid email!"
         },
         "snackbar": {
-          "error": "Incorrect email and/or password!"
+          "wrongCredentials": "Incorrect email and/or password!",
+          "genericError": "Ops, something went wrong, please try again later!"
         },
         "label": {
           "email": "Email",
@@ -134,7 +135,7 @@
           "usernameAlreadyExists": "Username already exists!"
         },
         "snackbar": {
-          "genericError": "There was an error creating your account!",
+          "genericError": "There was an error creating your account, please try again later!",
           "success": "Account created successfully!"
         },
         "label": {
@@ -162,8 +163,19 @@
       "menu": {
         "acceptFriendshipRequest": "Accept friendship request",
         "addFriend": "Add friend",
+        "cancelFriendshipRequest": "Cancel friendship request",
         "goToProfile": "Go to profile",
+        "refuseFriendshipRequest": "Refuse friendship request",
         "removeFriend": "Remove friend"
+      },
+      "snackbar": {
+        "acceptFriendshipRequest": "Friendship request accepted, you and {{userFirstName}} are now friends!",
+        "alreadyFriends": "You and {{newFriendFirstName}} are already friends!",
+        "friendshipRequestAlreadyExists": "There is already a friendship request between you and {{newFriendFirstName}}!",
+        "genericErrorAcceptFriendshipRequest": "Ops, there was an error accepting the friendship request, please try again later!",
+        "genericErrorSendFriendshipRequest": "Ops, there was an error sending the friendship request, please try again later!",
+        "sentFriendshipRequest": "Friendship request sent to {{newFriendFirstName}}!",
+        "userNotFound": "User not found!"
       }
     }
   }

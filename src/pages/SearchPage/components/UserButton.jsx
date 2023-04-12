@@ -1,6 +1,5 @@
 import P from 'prop-types'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
 
 import { Avatar, Button, Fab, Grid, Typography } from '@mui/material'
 
@@ -11,11 +10,12 @@ import { useState } from 'react'
 import { ContextMenu } from './ContextMenu'
 import { useStyles } from './UserButton.styles'
 
-const UserButton = ({ name, profilePicture, username, xp }) => {
+const UserButton = ({ user }) => {
+  const { name, profilePicture, username, xp } = user
+
   const {
     chatsData: { friends },
   } = useChat()
-  const navigate = useNavigate()
   const { t } = useTranslation()
 
   const [anchorEl, setAnchorEl] = useState(null)
@@ -25,21 +25,18 @@ const UserButton = ({ name, profilePicture, username, xp }) => {
   const checkIfIsFriend = () =>
     friends.some(friend => friend.username === username)
 
-  const handleGoToProfile = () => navigate(`/profile/${username}`)
-
   const handleCloseMenu = () => setAnchorEl(null)
 
   const handleOpenContextMenu = event => {
     event.preventDefault()
-    setAnchorEl(event.currentTarget)
+    setAnchorEl(anchorEl ? null : event.currentTarget)
   }
 
   return (
     <Button
       className={classes.chatButton}
       fullWidth
-      onClick={handleGoToProfile}
-      onContextMenu={handleOpenContextMenu}
+      onClick={handleOpenContextMenu}
     >
       <Grid
         alignItems="center"
@@ -113,19 +110,21 @@ const UserButton = ({ name, profilePicture, username, xp }) => {
       </Grid>
       <ContextMenu
         anchorEl={anchorEl}
-        open={Boolean(anchorEl)}
+        open={!!anchorEl}
         handleCloseMenu={handleCloseMenu}
-        userSelected={username}
+        userSelected={user}
       />
     </Button>
   )
 }
 
 UserButton.propTypes = {
-  name: P.string.isRequired,
-  profilePicture: P.string.isRequired,
-  username: P.string.isRequired,
-  xp: P.number.isRequired,
+  user: P.shape({
+    name: P.string.isRequired,
+    profilePicture: P.string.isRequired,
+    username: P.string.isRequired,
+    xp: P.number.isRequired,
+  }).isRequired,
 }
 
 export { UserButton }

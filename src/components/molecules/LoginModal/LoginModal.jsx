@@ -81,20 +81,24 @@ const Content = ({ switchModal }) => {
     setIsButtonLoading(true)
     const payload = values
 
-    try {
-      const response = await api.login(payload)
+    const response = await api.login(payload)
+    setIsButtonLoading(false)
 
-      if (response.status === 200) {
-        signIn(response.data['jwt-token'])
-      }
-    } catch (error) {
-      console.error(error)
-      enqueueSnackbar(t('pages.landing.login.snackbar.error'), {
+    if (response.status === 404) {
+      enqueueSnackbar(t('pages.landing.login.snackbar.wrongCredentials'), {
         variant: 'error',
       })
-    } finally {
-      setIsButtonLoading(false)
+      return
     }
+
+    if (response.status !== 200) {
+      enqueueSnackbar(t('pages.landing.login.snackbar.genericError'), {
+        variant: 'error',
+      })
+      return
+    }
+
+    signIn(response.data['jwt-token'])
   }
 
   return (

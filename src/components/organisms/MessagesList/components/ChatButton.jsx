@@ -1,6 +1,13 @@
 import P from 'prop-types'
 
-import { Avatar, Badge, Button, Grid, Typography } from '@mui/material'
+import {
+  Avatar,
+  Badge,
+  Button,
+  CircularProgress,
+  Grid,
+  Typography,
+} from '@mui/material'
 
 import { useChat } from '@contexts'
 import { getBorder } from '@utils/constants/levels'
@@ -14,7 +21,7 @@ const ChatButton = ({
 }) => {
   const { activeChat, openChat, userData } = useChat()
 
-  const { classes } = useStyles()
+  const { classes } = useStyles({ online })
 
   const handleSelectChat = () => {
     if (activeChat?.username === username) return
@@ -52,20 +59,31 @@ const ChatButton = ({
               vertical: 'bottom',
               horizontal: 'right',
             }}
-            color={online ? 'secondary' : 'error'}
+            badgeContent={
+              online === undefined ? (
+                <CircularProgress color="secondary" size={8} />
+              ) : (
+                ''
+              )
+            }
             overlap="circular"
-            variant={online !== undefined ? 'dot' : 'standard'}
+            sx={{
+              '& .MuiBadge-badge': {
+                bgcolor: theme => {
+                  if (online === undefined)
+                    return theme.palette.background.default
+                  return online ? 'secondary.main' : 'error.main'
+                },
+              },
+            }}
+            variant="standard"
           >
             <Avatar
               alt={username}
+              className={classes.avatar}
               src={profilePicture}
               sx={{
-                border: 4,
-                borderStyle: 'solid',
-                borderColor: 'transparent',
                 background: `${getBorder(xp)} border-box`,
-                height: 56,
-                width: 56,
               }}
             />
           </Badge>

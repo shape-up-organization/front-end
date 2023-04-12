@@ -2,6 +2,18 @@ import { makeStyles } from 'tss-react/mui'
 
 export const useStyles = makeStyles()(
   theme => ({
+    avatar: {
+      border: 4,
+      borderColor: 'transparent',
+      borderStyle: 'solid',
+      height: 56,
+      width: 56,
+
+      [theme.breakpoints.down('lg')]: {
+        height: 40,
+        width: 40,
+      },
+    },
     chatButton: {
       alignItems: 'center',
       color: theme.palette.text.primary,
@@ -11,12 +23,6 @@ export const useStyles = makeStyles()(
       paddingY: 2,
       textAlign: 'left',
       textTransform: 'none',
-    },
-    badge: {
-      '& .MuiBadge-badge': {
-        // bottom: 10,
-        // left: -10,
-      },
     },
   }),
   { name: 'ChatButton' }

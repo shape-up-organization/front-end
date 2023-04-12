@@ -7,6 +7,7 @@ const LEVELS = [
   { min: 500, max: 599, level: 6 },
   { min: 600, max: 699, level: 7 },
 ]
+Object.freeze(LEVELS)
 
 const BORDERS = {
   1: 'linear-gradient(to right, #C0C0C0 0%, #C0C0C0 100%)',
@@ -17,6 +18,7 @@ const BORDERS = {
   6: 'linear-gradient(to right, #8E2FC8 0%, #8E2FC8 100%)',
   7: 'linear-gradient(to right, #0C0490 0%, #8E2FC8 100%)',
 }
+Object.freeze(BORDERS)
 
 const getLevel = xp =>
   LEVELS.find(lvl => xp >= lvl.min && xp <= lvl.max)?.level ||

@@ -17,7 +17,7 @@
         "chatNotFoundMessage": "Nenhum chat foi encontrado!",
         "menuItemAcceptFriendshipRequest": "Aceitar solicitação de amizade",
         "menuItemAddFriend": "Adicionar amigo",
-        "messageListTitle": "Amigos",
+        "messageListTitle": "Mensagens",
         "messageInputPlaceholder": "Digite uma mensagem...",
         "searchChatsPlaceholder": "Procure por amigos...",
         "searchChatsPlaceholderDisabled": "Sem amigos ainda..."
@@ -88,7 +88,8 @@
           "invalidEmail": "E-mail inválido!"
         },
         "snackbar": {
-          "error": "E-mail e/ou senha incorretos!"
+          "wrongCredentials": "E-mail e/ou senha incorretos!",
+          "genericError": "Ops, houve algum erro inesperado, tente novamente mais tarde!"
         },
         "label": {
           "email": "E-mail",
@@ -134,7 +135,7 @@
           "usernameAlreadyExists": "Usuário já existe!"
         },
         "snackbar": {
-          "genericError": "Houve algum erro ao criar sua conta!",
+          "genericError": "Houve algum erro ao criar sua conta, tente novamente mais tarde!",
           "success": "Conta criada com sucesso!"
         },
         "label": {
@@ -162,8 +163,19 @@
       "menu": {
         "acceptFriendshipRequest": "Aceitar solicitação de amizade",
         "addFriend": "Adicionar amigo",
+        "cancelFriendshipRequest": "Cancelar solicitação de amizade",
         "goToProfile": "Ir para o perfil",
+        "refuseFriendshipRequest": "Recusar solicitação de amizade",
         "removeFriend": "Remover amigo"
+      },
+      "snackbar": {
+        "acceptFriendshipRequest": "Solicitação aceita, você e {{userFirstName}} agora são amigos(as)!",
+        "alreadyFriends": "Você e {{userFirstName}} já são amigos(as)!",
+        "friendshipRequestAlreadyExists": "Já existe uma solicitação de amizade entre você e {{userFirstName}}!",
+        "genericErrorAcceptFriendshipRequest": "Ops, houve algum erro ao aceitar a solicitação de amizade, tente novamente mais tarde!",
+        "genericErrorSendFriendshipRequest": "Ops, houve algum erro ao enviar ao enviar a solicitação de amizade, tente novamente mais tarde!",
+        "sentFriendshipRequest": "Solicitação de amizade enviada para {{userFirstName}}!",
+        "userNotFound": "Usuário não encontrado!"
       }
     }
   }

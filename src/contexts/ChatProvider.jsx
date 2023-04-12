@@ -6,7 +6,8 @@ import { over } from 'stompjs'
 
 import { useMediaQuery, useTheme } from '@mui/material'
 
-import api from '@api/services/friends'
+import apiFriends from '@api/services/friends'
+import apiPresence from '@api/services/presence'
 import mockedSquads from '@mocks/squads/get'
 import { formatLocalDate } from '@utils/helpers/dateTime'
 import { normalize } from '@utils/helpers/strings'
@@ -48,11 +49,18 @@ export const ChatProvider = ({ children }) => {
   )
 
   useEffect(() => {
-    if (userData.username) connect(userData.username)
-  }, [userData.username])
+    if (userData.connected) {
+      window.onbeforeunload = async () => {
+        await apiPresence.markOffline(userData.id)
+        updateUserData({ ...userData, connected: false })
+      }
+
+      connect(userData.username)
+    }
+  }, [userData.connected])
 
   useEffect(() => {
-    if (!chatsData.deprecated) connect(userData.username)
+    if (!chatsData.deprecated) connect()
   }, [chatsData.deprecated])
 
   useEffect(() => {
@@ -61,17 +69,19 @@ export const ChatProvider = ({ children }) => {
     setResponsiveSize(lessThanMedium ? 'mobile' : 'desktop')
   }, [lessThanMedium])
 
-  const connect = async username => {
+  const connect = () => {
     if (!stompClient && !chatsData.deprecated) {
       const Sock = new SockJS(`${import.meta.env.VITE_API_URL}/ws`)
       stompClient = over(Sock)
-      stompClient.connect({}, () => onConnected(username), onError)
+      stompClient.connect({}, () => onConnected(userData.username), onError)
+
       // if (import.meta.env.MODE === 'production')
       stompClient.debug = () => {}
     }
   }
 
   const onConnected = async username => {
+    await apiPresence.markOnline(userData.id)
     stompClient.subscribe('/chatroom/public', onPublicMessage)
     stompClient.subscribe(`/user/${username}/private`, onPrivateMessage)
 
@@ -156,7 +166,17 @@ export const ChatProvider = ({ children }) => {
     }
   }
 
-  const updateUserData = data => setUserData(data)
+  const updateUserData = async data => setUserData(data)
+
+  const updateOnline = async connected => {
+    if (connected) {
+      updateUserData(current => ({ ...current, connected }))
+      await apiPresence.markOnline(userData.id)
+      return
+    }
+    await apiPresence.markOffline(userData.id)
+    updateUserData({ connected: false })
+  }
 
   const addMessageToChat = (payload, type, status) => {
     const { date, message, senderName, receiverName } = payload
@@ -213,20 +233,45 @@ export const ChatProvider = ({ children }) => {
           : null,
     }))
 
+  const createOnlineEventSource = async friend => {
+    const { id } = friend
+
+    new EventSource(
+      `${import.meta.env.VITE_API_URL}/presence/stream?userId=${id}`
+    ).onmessage = event => {
+      const data = JSON.parse(event.data)
+      setChatsData(current => {
+        const newFriends = current.friends.map(newFriend => {
+          if (newFriend.username === friend.username) {
+            return {
+              ...friend,
+              online: data.online,
+            }
+          }
+          return newFriend
+        })
+        return {
+          ...current,
+          friends: newFriends,
+        }
+      })
+    }
+  }
+
   const loadData = async nextUserData => {
-    if (!userData.connected) updateUserData(nextUserData)
+    updateUserData(nextUserData)
 
     if (chatsData.deprecated) {
       setIsLoading(true)
 
-      const response = await api.getAllFriendship(nextUserData.jwtToken)
+      const response = await apiFriends.getAllFriendship(nextUserData.jwtToken)
 
       if (response.status === 200) {
         let type = null
         if (response.data?.length > 0) type = 'friends'
         else if (mockedSquads.data.squads?.length > 0) type = 'squads'
 
-        setChatsData({
+        const newData = {
           ...chatsData,
           friends: response.data
             ?.filter(friend => friend.username !== nextUserData.username)
@@ -234,11 +279,16 @@ export const ChatProvider = ({ children }) => {
               ...friend,
               name: `${friend.firstName} ${friend.lastName || ''}`,
               messages: [],
+              online: undefined,
             })),
           squads: mockedSquads.data.squads,
           type,
           deprecated: false,
-        })
+        }
+
+        newData.friends.forEach(friend => createOnlineEventSource(friend))
+
+        setChatsData(newData)
 
         loadTotalNotifications(response.data)
 
@@ -275,6 +325,7 @@ export const ChatProvider = ({ children }) => {
       responsiveSize,
       sendPrivateMessage,
       sendPublicMessage,
+      updateOnline,
       userData,
     }),
     [activeChat, chatsData, isLoading, responsiveSize, userData]

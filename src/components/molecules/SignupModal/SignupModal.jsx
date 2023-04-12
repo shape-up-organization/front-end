@@ -97,7 +97,7 @@ const Content = ({ switchModal }) => {
     const { value } = event.target
     if (value === '') return
     const response = await api.validateUsername(value)
-    if (response.status === 400) {
+    if (response.status === 409) {
       setError('username', {
         type: 'onBlur',
         message: t('pages.landing.signup.schema.usernameAlreadyExists'),

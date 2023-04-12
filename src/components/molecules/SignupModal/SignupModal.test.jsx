@@ -16,6 +16,6 @@ describe('SignupModal', () => {
       </ThemeModeProvider>
     )
 
-    expect(screen.getByText('Crie sua conta')).toBeInTheDocument()
+    expect(screen.getByText('Sign up')).toBeInTheDocument()
   })
 })

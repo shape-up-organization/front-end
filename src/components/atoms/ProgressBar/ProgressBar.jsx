@@ -1,6 +1,5 @@
 import P from 'prop-types'
 import LinearProgress from '@mui/material/LinearProgress'
-import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 
 const ProgressBar = ({ progress }) => {
@@ -9,11 +8,6 @@ const ProgressBar = ({ progress }) => {
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Box sx={{ width: '100%', mr: 1 }}>
           <LinearProgress variant="determinate" {...value} />
-        </Box>
-        <Box sx={{ minWidth: 35 }}>
-          <Typography variant="body2" color="text.secondary">{`${Math.round(
-            progress
-          )}%`}</Typography>
         </Box>
       </Box>
     )
@@ -31,7 +25,6 @@ const ProgressBar = ({ progress }) => {
   )
 }
 ProgressBar.propTypes = {
-  progress: P.number,
+  progress: P.number.isRequired,
 }
-ProgressBar.defaultProps = { progress: 90 }
 export { ProgressBar }

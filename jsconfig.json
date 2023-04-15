@@ -1,19 +1,15 @@
 {
   "compilerOptions": {
-    "baseUrl": "./.",
+    "baseUrl": ".",
     "paths": {
-      "@mocks/*": ["./src/__mocks__/*"],
-      "@app/*": ["./src/app/*"],
       "@api/*": ["./src/api/*"],
-      "@assets/*": ["./src/assets/*"],
-      "@hooks": ["./src/hooks"],
+      "@assets/*": ["./src/api/*"],
       "@contexts": ["./src/contexts"],
-      "@layouts/*": ["./src/layouts/*"],
+      "@pages/*": ["./src/components/pages/*"],
       "@atoms/*": ["./src/components/atoms/*"],
       "@molecules/*": ["./src/components/molecules/*"],
       "@organisms/*": ["./src/components/organisms/*"],
       "@templates/*": ["./src/components/templates/*"],
-      "@pages/*": ["./src/pages/*"],
       "@styles/*": ["./src/styles/*"],
       "@utils/*": ["./src/utils/*"]
     }

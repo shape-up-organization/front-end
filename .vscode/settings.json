@@ -1,5 +1,4 @@
 {
-  "prettier.ignorePath": "./config/.prettierignore",
   // EDITOR
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.semanticHighlighting.enabled": true,
@@ -58,8 +57,6 @@
     "latin",
     "notistack",
     "signup",
-    "Signup",
-    "sockjs",
-    "stompjs"
+    "Signup"
   ]
 }

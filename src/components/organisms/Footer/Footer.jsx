@@ -1,46 +1,35 @@
 import P from 'prop-types'
-import { useTranslation } from 'react-i18next'
 
 import CircleIcon from '@mui/icons-material/Circle'
 import { Grid } from '@mui/material'
 
 import { LinkButton } from '@atoms/LinkButton'
 
-const Footer = ({ showCircles }) => {
-  const { t } = useTranslation()
-
-  return (
-    <>
-      <Grid item>
-        <LinkButton internal="about">
-          {t('pages.landing.footer.linkAbout')}
-        </LinkButton>
-      </Grid>
-      {showCircles && (
-        <CircleIcon
-          color="primary"
-          sx={{ fontSize: theme => theme.typography.pxToRem(16) }}
-        />
-      )}
-      <Grid item>
-        <LinkButton internal="privacy-policies">
-          {t('pages.landing.footer.linkPrivacy')}
-        </LinkButton>
-      </Grid>
-      {showCircles && (
-        <CircleIcon
-          color="primary"
-          sx={{ fontSize: theme => theme.typography.pxToRem(16) }}
-        />
-      )}
-      <Grid item>
-        <LinkButton internal="help">
-          {t('pages.landing.footer.linkHelp')}
-        </LinkButton>
-      </Grid>
-    </>
-  )
-}
+const Footer = ({ showCircles }) => (
+  <>
+    <Grid item>
+      <LinkButton internal="about">Sobre</LinkButton>
+    </Grid>
+    {showCircles && (
+      <CircleIcon
+        color="primary"
+        sx={{ fontSize: theme => theme.typography.pxToRem(16) }}
+      />
+    )}
+    <Grid item>
+      <LinkButton internal="privacy-policies">Privacidade</LinkButton>
+    </Grid>
+    {showCircles && (
+      <CircleIcon
+        color="primary"
+        sx={{ fontSize: theme => theme.typography.pxToRem(16) }}
+      />
+    )}
+    <Grid item>
+      <LinkButton internal="help">Ajuda</LinkButton>
+    </Grid>
+  </>
+)
 
 Footer.propTypes = {
   showCircles: P.bool,

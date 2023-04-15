@@ -1,13 +1,17 @@
+import P from 'prop-types'
 import { useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useSnackbar } from 'notistack'
-import P from 'prop-types'
-import { Controller, useForm } from 'react-hook-form'
-import { useTranslation } from 'react-i18next'
+
+import { LinkButton } from '@atoms/LinkButton'
+import { TextField } from '@atoms/TextField'
+import { Modal } from '@templates/Modal'
 
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
+
 import {
   Button,
   Checkbox,
@@ -18,37 +22,35 @@ import {
   Grow,
   IconButton,
   InputAdornment,
-  Tooltip,
   Typography,
   useMediaQuery,
   useTheme,
 } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
-import { LinkButton } from '@atoms/LinkButton'
 import { TextButton } from '@atoms/TextButton'
-import { TextField } from '@atoms/TextField'
-import { Modal } from '@templates/Modal'
 
-import api from '@api/services/auth'
-import { masks } from '@utils/constants/masks'
+import { users } from '@api/users'
+import { masks } from '@utils/masks'
 import { schema } from './schema'
 
-const Content = ({ switchModal }) => {
-  const { enqueueSnackbar } = useSnackbar()
-  const {
-    control,
-    clearErrors,
-    formState: { errors },
-    handleSubmit,
-    register,
-    setError,
-  } = useForm({ resolver: zodResolver(schema) })
-  const { t, i18n } = useTranslation()
+const size = 'large'
+const title = 'Crie sua conta'
+const locale = 'ptBR'
 
+const Content = ({ switchModal }) => {
   const [showPassword, setShowPassword] = useState(false)
   const [isTermsChecked, setIsTermsChecked] = useState(false)
   const [isButtonLoading, setIsButtonLoading] = useState(false)
+
+  const { enqueueSnackbar } = useSnackbar()
+
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(schema) })
 
   const handleSignup = async values => {
     setIsButtonLoading(true)
@@ -63,52 +65,23 @@ const Content = ({ switchModal }) => {
       birth: values.birth,
     }
 
-    const response = await api.register(payload)
-    setIsButtonLoading(false)
+    try {
+      const response = await users.create(payload)
 
-    if (response.status === 409) {
-      const fieldMessage = response.data.messages[0]
-        ?.toLowerCase()
-        .includes('cell phone')
-        ? 'cellPhone'
-        : 'email'
-
-      setError(fieldMessage, {
-        type: 'onBlur',
-        message: t(`pages.landing.signup.schema.${fieldMessage}AlreadyExists`),
-      })
-      return
-    }
-
-    if (response.status !== 201) {
-      enqueueSnackbar(t('pages.landing.signup.snackbar.genericError'), {
+      if (response.status === 201) {
+        switchModal()
+        enqueueSnackbar('Usuário registrado com sucesso!', {
+          variant: 'success',
+        })
+      }
+    } catch (error) {
+      console.log('erro: ', error)
+      enqueueSnackbar('Houve algum erro na criação do usuário', {
         variant: 'error',
       })
-      return
+    } finally {
+      setIsButtonLoading(false)
     }
-
-    switchModal()
-    enqueueSnackbar(t('pages.landing.signup.snackbar.success'), {
-      variant: 'success',
-    })
-  }
-
-  const handleOnBlurUsername = async event => {
-    const { value } = event.target
-    if (value === '') return
-    const response = await api.validateUsername(value)
-    if (response.status === 409) {
-      setError('username', {
-        type: 'onBlur',
-        message: t('pages.landing.signup.schema.usernameAlreadyExists'),
-      })
-      return
-    }
-    if (response.status !== 200) {
-      console.error(response)
-      return
-    }
-    clearErrors('username')
   }
 
   return (
@@ -121,51 +94,47 @@ const Content = ({ switchModal }) => {
       spacing={2}
       paddingTop={1}
     >
-      <Grid item xs={12} sm={6}>
+      <Grid item xs={6} sm={6}>
         <TextField
           error={errors.name?.message}
-          label={t('pages.landing.signup.label.name')}
+          label="Nome"
           name="name"
           type="text"
           register={register}
         />
       </Grid>
-      <Grid item xs={12} sm={6}>
+      <Grid item xs={6}>
         <TextField
           error={errors.lastName?.message}
-          label={t('pages.landing.signup.label.lastName')}
+          label="Sobrenome"
           name="lastName"
           type="text"
           register={register}
         />
       </Grid>
-      <Grid item xs={12} sm={6}>
-        <TextField
-          error={errors.username?.message}
-          label={t('pages.landing.signup.label.username')}
-          name="username"
-          type="text"
-          register={() =>
-            register('username', {
-              onBlur: handleOnBlurUsername,
-            })
-          }
-        />
-      </Grid>
-      <Grid item xs={12} sm={6}>
+      <Grid item xs={12}>
         <TextField
           error={errors.email?.message}
-          label={t('pages.landing.signup.label.email')}
+          label="E-mail"
           name="email"
           type="email"
           register={register}
         />
       </Grid>
-      <Grid item xs={12} sm={6}>
+      <Grid item xs={5} sm={12}>
+        <TextField
+          error={errors.username?.message}
+          label="Usuário"
+          name="username"
+          type="text"
+          register={register}
+        />
+      </Grid>
+      <Grid item xs={7} sm={6}>
         <TextField
           error={errors.cellPhone?.message}
-          label={t('pages.landing.signup.label.cellPhone')}
-          mask={masks.PHONES[i18n.resolvedLanguage]}
+          label="Número"
+          mask={masks.phoneMasks[locale]}
           name="cellPhone"
           type="tel"
           register={register}
@@ -192,9 +161,9 @@ const Content = ({ switchModal }) => {
 
             return (
               <DatePicker
-                format={masks.DATES[i18n.resolvedLanguage]}
+                format="dd/MM/yyyy"
                 inputRef={ref}
-                label={t('pages.landing.signup.label.birthDate')}
+                label="Data de nascimento"
                 maxDate={new Date()}
                 sx={{
                   width: '100%',
@@ -235,32 +204,24 @@ const Content = ({ switchModal }) => {
       <Grid item xs={12} sm={6}>
         <TextField
           error={errors.password?.message}
-          label={t('pages.landing.signup.label.password')}
+          label="Senha"
           name="password"
           type={showPassword ? 'text' : 'password'}
           endAdornment={
             <InputAdornment position="end">
-              <Tooltip
-                title={
-                  showPassword
-                    ? t('pages.landing.signup.others.hidePassword')
-                    : t('pages.landing.signup.others.showPassword')
+              <IconButton
+                aria-label={showPassword ? 'Esconder senha' : 'Mostrar senha'}
+                onClick={() =>
+                  setShowPassword(prevShowPassword => !prevShowPassword)
                 }
+                onMouseDown={event => event.preventDefault()}
               >
-                <IconButton
-                  aria-label={showPassword ? 'Esconder senha' : 'Mostrar senha'}
-                  onClick={() =>
-                    setShowPassword(prevShowPassword => !prevShowPassword)
-                  }
-                  onMouseDown={event => event.preventDefault()}
-                >
-                  {showPassword ? (
-                    <VisibilityOff fontSize="small" />
-                  ) : (
-                    <Visibility fontSize="small" />
-                  )}
-                </IconButton>
-              </Tooltip>
+                {showPassword ? (
+                  <VisibilityOff fontSize="small" />
+                ) : (
+                  <Visibility fontSize="small" />
+                )}
+              </IconButton>
             </InputAdornment>
           }
           register={register}
@@ -269,31 +230,24 @@ const Content = ({ switchModal }) => {
       <Grid item xs={12} sm={6}>
         <TextField
           error={errors.confirmPassword?.message}
-          label={t('pages.landing.signup.label.confirmPassword')}
+          label="Confirmar senha"
           name="confirmPassword"
           type={showPassword ? 'text' : 'password'}
           endAdornment={
             <InputAdornment position="end">
-              <Tooltip
-                title={
-                  showPassword
-                    ? t('pages.landing.signup.others.hidePassword')
-                    : t('pages.landing.signup.others.showPassword')
+              <IconButton
+                aria-label={showPassword ? 'Esconder senha' : 'Mostrar senha'}
+                onClick={() =>
+                  setShowPassword(prevShowPassword => !prevShowPassword)
                 }
+                onMouseDown={event => event.preventDefault()}
               >
-                <IconButton
-                  onClick={() =>
-                    setShowPassword(prevShowPassword => !prevShowPassword)
-                  }
-                  onMouseDown={event => event.preventDefault()}
-                >
-                  {showPassword ? (
-                    <VisibilityOff fontSize="small" />
-                  ) : (
-                    <Visibility fontSize="small" />
-                  )}
-                </IconButton>
-              </Tooltip>
+                {showPassword ? (
+                  <VisibilityOff fontSize="small" />
+                ) : (
+                  <Visibility fontSize="small" />
+                )}
+              </IconButton>
             </InputAdornment>
           }
           register={register}
@@ -304,8 +258,8 @@ const Content = ({ switchModal }) => {
         xs={10}
         sm={12}
         display="flex"
-        justifyContent="center"
         textAlign="center"
+        justifyContent="center"
       >
         <FormControlLabel
           control={
@@ -318,13 +272,10 @@ const Content = ({ switchModal }) => {
           }
           label={
             <Typography fontWeight="bold" variant="subtitle2">
-              {t('pages.landing.signup.others.checkbox.1')}
-              <LinkButton internal="terms-of-use">
-                {t('pages.landing.signup.others.checkbox.2')}
-              </LinkButton>
-              {t('pages.landing.signup.others.checkbox.3')}
+              Li e aceito os{' '}
+              <LinkButton internal="terms-of-use">termos de uso</LinkButton> e{' '}
               <LinkButton internal="privacy-policies">
-                {t('pages.landing.signup.others.checkbox.4')}
+                políticas de privacidade
               </LinkButton>
             </Typography>
           }
@@ -341,19 +292,16 @@ const Content = ({ switchModal }) => {
           {isButtonLoading ? (
             <CircularProgress color="secondary" size={24} />
           ) : (
-            <Typography fontWeight="bold" textTransform="uppercase">
-              {t('pages.landing.signup.others.buttonSignUp')}
+            <Typography fontWeight="bold" textTransform="none">
+              ENTRAR
             </Typography>
           )}
         </Button>
       </Grid>
       <Grid item textAlign="center" xs={12} sm={12}>
         <Typography fontWeight="500" variant="caption">
-          {t('pages.landing.signup.others.signInCall.1')}
-          <TextButton
-            handleClick={switchModal}
-            text={t('pages.landing.signup.others.signInCall.2')}
-          />
+          Já tem uma conta?
+          <TextButton handleClick={switchModal} text="Entre agora mesmo!" />
         </Typography>
       </Grid>
     </Grid>
@@ -362,10 +310,7 @@ const Content = ({ switchModal }) => {
 
 Content.propTypes = { switchModal: P.func.isRequired }
 
-const size = 'large'
-
 const SignupModal = ({ isOpen, handleClose, switchModal }) => {
-  const { t } = useTranslation()
   const lessThanLarge = useMediaQuery(useTheme().breakpoints.down('lg'))
 
   return (
@@ -375,7 +320,7 @@ const SignupModal = ({ isOpen, handleClose, switchModal }) => {
       handleClose={handleClose}
       isOpen={isOpen}
       size={size}
-      title={t('pages.landing.signup.others.title')}
+      title={title}
       titleAlignment={lessThanLarge ? 'center' : 'left'}
     />
   )

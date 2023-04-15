@@ -1,83 +1,65 @@
-import { format, parseISO } from 'date-fns'
 import { z } from 'zod'
 
-import i18n from '@app/i18n'
+import { format, parseISO } from 'date-fns'
 
-const string = () =>
-  z.string().nonempty(i18n.t('pages.landing.signup.schema.requiredField'))
+const string = () => z.string().nonempty('Campo obrigatório!')
 
 export const schema = z
   .object({
     name: string()
-      .min(2, {
-        message: i18n.t('pages.landing.signup.schema.moreThan1Letter'),
-      })
+      .min(2, { message: 'Deve ter mais do que uma letra!' })
       .regex(/^[a-zA-Z\s]+$/, {
-        message: i18n.t('pages.landing.signup.schema.noNumbersOrSpecialChars'),
+        message: 'Não pode ter números ou caracteres especiais!',
       }),
     lastName: string()
-      .min(2, {
-        message: i18n.t('pages.landing.signup.schema.moreThan1Letter'),
-      })
+      .min(2, { message: 'Deve ter mais do que uma letra!' })
       .regex(/^[a-zA-Z\s]+$/, {
-        message: i18n.t('pages.landing.signup.schema.noNumbersOrSpecialChars'),
+        message: 'Não pode ter números ou caracteres especiais!',
       }),
-    username: string()
-      .min(2, {
-        message: i18n.t('pages.landing.signup.schema.moreThan1Letter'),
-      })
-      .regex(/^[^@\s]+$/, {
-        message: i18n.t('pages.landing.signup.schema.noAtSignOrWhiteSpace'),
-      }),
-    email: string().email(i18n.t('pages.landing.signup.schema.invalidEmail')),
+    username: string().min(2, { message: 'Deve ter mais do que uma letra!' }),
+    email: string().email('Email inválido!'),
     cellPhone: string()
       .transform(value => value.replace(/[\D][^_]/g, ''))
       .refine(value => !/\D/.test(value), {
-        message: i18n.t('pages.landing.signup.schema.invalidNumber'),
+        message: 'Número inválido!',
       }),
     birth: z
       .date({
-        required_error: i18n.t('pages.landing.signup.schema.requiredField'),
-        invalid_type_error: i18n.t('pages.landing.signup.schema.invalidDate'),
+        required_error: 'Campo obrigatório!',
+        invalid_type_error: 'Data inválida!',
       })
       .refine(
         value =>
           value <=
           new Date(new Date().setFullYear(new Date().getFullYear() - 18)),
-        {
-          message: i18n.t('pages.landing.signup.schema.olderThan18'),
-          path: ['birth'],
-        }
+        { message: 'Deve ter mais de 18 anos!', path: ['birth'] }
       )
       .refine(
         value =>
           value >=
           new Date(new Date().setFullYear(new Date().getFullYear() - 120)),
-        {
-          message: i18n.t('pages.landing.signup.schema.invalidDate'),
-          path: ['birth'],
-        }
+        { message: 'Data inválida!', path: ['birth'] }
       )
       .transform(value => format(parseISO(value.toISOString()), 'dd/MM/yyyy')),
     password: string()
-      .min(8, { message: i18n.t('pages.landing.signup.schema.atLeast8Chars') })
+      .min(8, { message: 'Deve ter pelo menos 8 caracteres!' })
       .regex(/.*[0-9].*/, {
-        message: i18n.t('pages.landing.signup.schema.atLeast1Number'),
+        message: 'Deve conter pelo menos 1 número',
       })
       .regex(/.*[A-Z].*/, {
-        message: i18n.t('pages.landing.signup.schema.atLeast1UpperCaseLetter'),
+        message: 'Deve conter pelo menos 1 letra maiúscula',
       })
       .regex(/.*[a-z].*/, {
-        message: i18n.t('pages.landing.signup.schema.atLeast1LowerCaseLetter'),
+        message: 'Deve conter pelo menos 1 letra minúscula',
       })
       .regex(/.*[\W_].*/, {
-        message: i18n.t('pages.landing.signup.schema.atLeast1SpecialChar'),
+        message: 'Deve conter pelo menos 1 caractere especial',
       }),
     confirmPassword: string().min(8, {
-      message: i18n.t('pages.landing.signup.schema.moreThan8Chars'),
+      message: 'Deve ter mais do que 8 letras!',
     }),
   })
   .refine(({ password, confirmPassword }) => password === confirmPassword, {
-    message: i18n.t('pages.landing.signup.schema.passwordsNotTheSame'),
+    message: 'As senhas não são iguais!',
     path: ['confirmPassword'],
   })

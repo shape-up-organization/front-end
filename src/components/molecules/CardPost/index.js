@@ -1,1 +1,0 @@
-export { CardPost } from './CardPost'

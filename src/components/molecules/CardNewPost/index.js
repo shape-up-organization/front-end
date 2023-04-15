@@ -1,0 +1,1 @@
+export { CardNewPost } from './CardNewPost'

@@ -1,0 +1,1 @@
+export { AvatarPhoto } from './AvatarPhoto'

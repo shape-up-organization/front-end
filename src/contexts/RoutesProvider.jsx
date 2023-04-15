@@ -1,10 +1,11 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-import { ErrorPage } from '@components/ErrorPage'
-import { LandingPage } from '@components/LandingPage'
-import { LoggedPage } from '@components/LoggedPage'
-import { ProtectedLayout } from '@components/ProtectedLayout'
+import { ErrorPage } from '@pages/ErrorPage'
+import { LandingPage } from '@pages/LandingPage'
+import { LoggedPage } from '@pages/LoggedPage'
+import { ProtectedLayout } from '@templates/ProtectedLayout'
 
+import { FeedPage } from '@pages/FeedPage'
 import { AuthProvider } from './AuthProvider'
 
 const RoutesProvider = () => (
@@ -12,7 +13,8 @@ const RoutesProvider = () => (
     <AuthProvider>
       <Routes>
         <Route path="*" element={<ErrorPage />} />
-        <Route path="/" element={<LandingPage />} />
+        {/* <Route index element={<LandingPage />} /> */}
+        <Route index element={<FeedPage />} />
         <Route element={<ProtectedLayout />}>
           <Route path="logged" element={<LoggedPage />} />
         </Route>

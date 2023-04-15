@@ -1,7 +1,7 @@
 # dependencies
-../dist
-../node_modules
-../.husky
+dist
+node_modules
+.husky
 
 # testing
-../coverage
+/coverage

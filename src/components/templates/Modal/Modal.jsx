@@ -1,6 +1,7 @@
 import P from 'prop-types'
 
-import { useTranslation } from 'react-i18next'
+import { Divider } from '@atoms/Divider'
+import { ExternalButtons } from '@atoms/ExternalButtons'
 
 import Close from '@mui/icons-material/Close'
 import {
@@ -15,11 +16,7 @@ import {
   useTheme,
 } from '@mui/material'
 
-import { Divider } from '@atoms/Divider'
-
 import { useStyles } from './Modal.styles'
-
-import { ExternalButtons } from './components/ExternalButtons'
 
 const sizes = {
   small: 'xs',
@@ -46,13 +43,12 @@ const Modal = ({
   const dividerDirection =
     contentDirection === 'row' ? 'vertical' : 'horizontal'
 
-  const { t } = useTranslation()
-  const lessThanSmall = useMediaQuery(useTheme().breakpoints.down('sm'))
+  const lessThanMedium = useMediaQuery(useTheme().breakpoints.down('sm'))
   const { classes } = useStyles()
 
   return (
     <Dialog
-      fullScreen={lessThanSmall}
+      fullScreen={lessThanMedium}
       fullWidth
       open={isOpen}
       onClose={handleClose}
@@ -88,14 +84,11 @@ const Modal = ({
             alignItems: 'center',
             display: 'flex',
             flexDirection: contentDirection,
-            gap: theme => theme.spacing(4),
+            gap: theme => theme.spacing(lessThanMedium ? 8 : 4),
           }}
         >
           {content}
-          <Divider
-            direction={dividerDirection}
-            text={t('pages.landing.others.dividerText')}
-          />
+          <Divider direction={dividerDirection} text="OU" />
           <Box alignItems="center" display="flex" flexDirection="column">
             <ExternalButtons />
           </Box>

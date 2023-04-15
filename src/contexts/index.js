@@ -1,5 +1,4 @@
 export { AuthProvider, useAuth } from './AuthProvider'
-export { ChatProvider, useChat } from './ChatProvider'
 export { RoutesProvider } from './RoutesProvider'
 export { SnackbarProvider } from './SnackbarProvider'
 export { ThemeModeContext, ThemeModeProvider } from './ThemeModeProvider'

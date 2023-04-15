@@ -3,6 +3,11 @@
   "private": true,
   "version": "0.1.0",
   "type": "module",
+  "homepage": ".",
+  "eslintConfig": {
+    "extends": "./config/.eslintrc"
+  },
+  "prettier": "./config/.prettierrc.json",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -14,9 +19,12 @@
     "coverage": "vitest --coverage --passWithNoTests",
     "lint": "eslint src/**/*.{js,jsx} && echo \"eslint: no lint errors\"",
     "lint:all": "eslint src/**/* && echo \"eslint: no lint errors\"",
-    "lint:fix": "eslint --fix src/**/*.{js,jsx} && echo \"eslint: no lint errors\""
+    "lint:fix": "eslint --fix src/**/*.{js,jsx} && echo \"eslint: no lint errors\"",
+    "lint:staged": "lint-staged"
   },
   "dependencies": {
+    "@emoji-mart/data": "^1.1.2",
+    "@emoji-mart/react": "^1.1.1",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@hookform/resolvers": "^2.9.11",
@@ -27,6 +35,7 @@
     "axios": "^1.3.4",
     "buffer": "^6.0.3",
     "date-fns": "^2.29.3",
+    "emoji-mart": "^5.5.2",
     "i18next": "^22.4.13",
     "i18next-browser-languagedetector": "^7.0.1",
     "i18next-http-backend": "^2.2.0",
@@ -39,6 +48,8 @@
     "react-i18next": "^12.2.0",
     "react-input-mask": "^2.0.4",
     "react-router-dom": "^6.9.0",
+    "sockjs-client": "^1.6.1",
+    "stompjs": "^2.3.3",
     "tss-react": "^4.8.2",
     "typeface-ubuntu": "^1.1.13",
     "uuid": "^9.0.0",

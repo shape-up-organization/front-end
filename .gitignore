@@ -1,7 +1,7 @@
 # dependencies
 /node_modules
 /.husky/
-.next
+/public/
 
 # testing
 /coverage

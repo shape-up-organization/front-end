@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Grid, useMediaQuery, useTheme } from '@mui/material'
+import { Grid, useMediaQuery } from '@mui/material'
 
 import { LoginModal } from '@molecules/LoginModal'
 import { SignupModal } from '@molecules/SignupModal'
@@ -12,7 +12,7 @@ const LandingPage = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false)
   const [isSignupOpen, setIsSignupOpen] = useState(false)
 
-  const lessThanMedium = useMediaQuery(useTheme().breakpoints.down('md'))
+  const lessThanMedium = useMediaQuery(theme => theme.breakpoints.down('md'))
 
   const switchModal = () => {
     setIsLoginOpen(prevIsLoginOpen => !prevIsLoginOpen)
@@ -30,18 +30,18 @@ const LandingPage = () => {
         <Grid item xs={10}>
           <Header handleOpenModals={handleOpenModals} />
         </Grid>
-        <Grid container item xs={10} minHeight="48vh" alignItems="center">
+        <Grid container item xs={10} alignItems="center" minHeight="48vh">
           <Banner handleOpenSignup={handleOpenModals.handleOpenSignup} />
         </Grid>
         {!lessThanMedium && (
           <Grid container item xs={10}>
             <Grid
               item
+              xs={12}
+              lg={6}
               alignItems="flex-end"
               display="flex"
               py={4}
-              xs={12}
-              lg={6}
             >
               <Grid
                 container

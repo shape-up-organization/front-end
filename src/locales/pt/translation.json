@@ -1,4 +1,25 @@
 {
+  "components": {
+    "molecules": {
+      "cardProfile": {
+        "quest": {
+          "title": "Desafios Diários"
+        },
+        "tooltips": {
+          "goToProfile": "Ir para o perfil"
+        },
+        "xpCard": {
+          "currentLevel": "Nível {{level}}",
+          "currentXp": "{{xp}} pontos de XP",
+          "nextLevel": "para o level"
+        }
+      },
+      "confirmationModal": {
+        "cancel": "Cancelar",
+        "confirm": "Confirmar"
+      }
+    }
+  },
   "pages": {
     "error": {
       "alt": {
@@ -6,6 +27,9 @@
       },
       "others": {
         "notFoundPageMessage": "Página não encontrada!"
+      },
+      "tooltip": {
+        "arrowBackButton": "Voltar"
       }
     },
     "chat": {
@@ -17,7 +41,7 @@
         "chatNotFoundMessage": "Nenhum chat foi encontrado!",
         "menuItemAcceptFriendshipRequest": "Aceitar solicitação de amizade",
         "menuItemAddFriend": "Adicionar amigo",
-        "messageListTitle": "Mensagens",
+        "messageListTitle": "Conversas",
         "messageInputPlaceholder": "Digite uma mensagem...",
         "searchChatsPlaceholder": "Procure por amigos...",
         "searchChatsPlaceholderDisabled": "Sem amigos ainda..."
@@ -34,6 +58,27 @@
           "friends": "Amigos",
           "squads": "Squads"
         }
+      }
+    },
+    "feed": {
+      "menu": {
+        "exit": "Sair",
+        "profile": "Perfil",
+        "settings": "Configurações"
+      },
+      "others": {
+        "confirmationModalMessage": "Tem certeza que deseja sair da sua conta e voltar para a tela inicial?",
+        "confirmationModalTitle": "Sair da conta",
+        "searchPlaceholder": "Procure por usuários..."
+      },
+      "tooltip": {
+        "chats": "Conversas",
+        "feed": "Feed",
+        "menu": "Menu",
+        "notifications": "Notificações",
+        "quests": "Missões",
+        "search": "Pesquisar",
+        "settings": "Configurações"
       }
     },
     "landing": {

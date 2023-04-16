@@ -7,7 +7,6 @@ import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
 import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded'
 import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded'
 import {
-  Avatar,
   Badge,
   Box,
   Grid,
@@ -20,22 +19,20 @@ import {
   Typography,
 } from '@mui/material'
 
+import { Avatar } from '@atoms/Avatar'
 import { Divider } from '@atoms/Divider'
 
 import { useAuth, useChat } from '@contexts'
-import { getBorder } from '@utils/constants/levels'
 
 import api from '@api/services/friends'
 
 import { useStyles } from './Header.styles'
 
 const Header = () => {
-  const {
-    activeChat: { name, profilePicture, username, xp },
-    closeChat,
-    responsiveSize,
-  } = useChat()
+  const { activeChat, closeChat, responsiveSize } = useChat()
   const { getJwtToken } = useAuth()
+
+  const { name, username } = activeChat
 
   const { t } = useTranslation()
   const { classes } = useStyles()
@@ -108,18 +105,7 @@ const Header = () => {
             >
               <Tooltip title={t('pages.chat.tooltip.chatAvatarButton')}>
                 <IconButton>
-                  <Avatar
-                    alt={t('pages.chat.alt.chatAvatarHeader', {
-                      name,
-                    })}
-                    src={profilePicture}
-                    sx={{
-                      border: 4,
-                      borderStyle: 'solid',
-                      borderColor: 'transparent',
-                      background: `${getBorder(xp)} border-box`,
-                    }}
-                  />
+                  <Avatar user={activeChat} />
                 </IconButton>
               </Tooltip>
               <Typography

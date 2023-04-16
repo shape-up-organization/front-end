@@ -1,15 +1,8 @@
 import P from 'prop-types'
 
-import {
-  Avatar,
-  Badge,
-  Box,
-  Grow,
-  List,
-  ListItem,
-  Tooltip,
-  Typography,
-} from '@mui/material'
+import { Badge, Box, Grow, List, ListItem, Typography } from '@mui/material'
+
+import { Avatar } from '@atoms/Avatar'
 
 import { useChat } from '@contexts'
 import { reformatSimpleTime } from '@utils/helpers/dateTime'
@@ -21,10 +14,10 @@ const MessagesList = ({ listBottomRef, messages }) => {
     userData,
   } = useChat()
 
-  const getMessageProfilePicture = senderName => {
-    if (senderName === userData.username) return userData.profilePicture
+  const getMessageSender = senderName => {
+    console.log(senderName === userData.username)
+    if (senderName === userData.username) return userData
     return friends.find(({ username }) => username === senderName)
-      ?.profilePicture
   }
 
   return (
@@ -59,15 +52,7 @@ const MessagesList = ({ listBottomRef, messages }) => {
                       horizontal: 'left',
                     }
               }
-              badgeContent={
-                <Tooltip title={senderName} placement="top" arrow>
-                  <Avatar
-                    alt={senderName}
-                    src={getMessageProfilePicture(senderName)}
-                    sx={{ height: 24, width: 24 }}
-                  />
-                </Tooltip>
-              }
+              badgeContent={<Avatar mini user={getMessageSender(senderName)} />}
               component="div"
               overlap="rectangular"
               variant="standard"

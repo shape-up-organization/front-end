@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
-import PeopleIcon from '@mui/icons-material/People'
-import PersonIcon from '@mui/icons-material/Person'
+import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded'
+import PersonRoundedIcon from '@mui/icons-material/PersonRounded'
 import { Badge, Box, IconButton, Stack, Tooltip } from '@mui/material'
 
 import { Divider } from '@atoms/Divider'
@@ -39,7 +39,7 @@ const ChatTypeSwitcher = () => {
               }
               type="button"
             >
-              <PersonIcon
+              <PersonRoundedIcon
                 color={chatsData.type === 'friends' ? 'primary' : 'inherit'}
                 fontSize="large"
               />
@@ -73,7 +73,7 @@ const ChatTypeSwitcher = () => {
               }
               type="button"
             >
-              <PeopleIcon
+              <PeopleRoundedIcon
                 color={chatsData.type === 'squads' ? 'primary' : 'inherit'}
                 fontSize="large"
               />

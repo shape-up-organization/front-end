@@ -1,11 +1,11 @@
 const LEVELS = [
-  { min: 0, max: 99, level: 1 },
-  { min: 100, max: 199, level: 2 },
-  { min: 200, max: 299, level: 3 },
-  { min: 300, max: 399, level: 4 },
-  { min: 400, max: 499, level: 5 },
-  { min: 500, max: 599, level: 6 },
-  { min: 600, max: 699, level: 7 },
+  { level: 1, max: 99, min: 0 },
+  { level: 2, max: 199, min: 100 },
+  { level: 3, max: 299, min: 200 },
+  { level: 4, max: 399, min: 300 },
+  { level: 5, max: 499, min: 400 },
+  { level: 6, max: 599, min: 500 },
+  { level: 7, max: 699, min: 600 },
 ]
 Object.freeze(LEVELS)
 
@@ -20,13 +20,28 @@ const BORDERS = {
 }
 Object.freeze(BORDERS)
 
-const getLevel = xp =>
-  LEVELS.find(lvl => xp >= lvl.min && xp <= lvl.max)?.level ||
-  LEVELS[LEVELS.length - 1]?.level
-
-const getBorder = xp => {
-  const level = getLevel(xp)
-  return BORDERS[level]
+const getLevel = xp => {
+  if (xp < 0) return 1
+  return (
+    LEVELS.find(lvl => xp >= lvl.min && xp <= lvl.max)?.level ||
+    LEVELS.at(-1)?.level
+  )
 }
 
-export { getLevel, getBorder }
+const getBorder = xp => BORDERS[getLevel(xp)]
+
+const getProgress = xp => {
+  const level = getLevel(xp)
+  const { min, max } = LEVELS.find(lvl => lvl.level === level)
+  return Math.round(((xp - min) / (max - min)) * 100)
+}
+
+const getNextLevel = level => LEVELS.find(lvl => lvl.level === level + 1)?.level
+
+const getXpToNextLevel = xp => {
+  const level = getLevel(xp)
+  const { max } = LEVELS.find(lvl => lvl.level === level)
+  return max - xp
+}
+
+export { getBorder, getLevel, getNextLevel, getProgress, getXpToNextLevel }

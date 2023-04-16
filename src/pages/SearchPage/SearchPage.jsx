@@ -1,20 +1,22 @@
 import { useEffect, useState } from 'react'
 
+import { useTranslation } from 'react-i18next'
+
 import { Container, Grid, Paper, Stack } from '@mui/material'
 
 import { Divider } from '@atoms/Divider'
-import mockedSearch from '@mocks/users/get'
-import { useStyles } from './SearchPage.styles'
+import { SearchField } from '@atoms/SearchField'
 
-import { SearchField } from './components/SearchField'
+import mockedSearch from '@mocks/users/get'
+
 import { UsersList } from './components/UsersList'
 
 const SearchPage = () => {
+  const { t } = useTranslation()
+
   const [isLoading, setIsLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [users, setUsers] = useState([])
-
-  const { classes } = useStyles()
 
   useEffect(() => {
     setUsers(mockedSearch?.data?.users)
@@ -22,12 +24,13 @@ const SearchPage = () => {
   }, [search])
 
   return (
-    <Container className={classes.container} disableGutters fixed>
+    <Container sx={{ height: '100%' }} disableGutters fixed>
       <Stack
         alignItems="center"
-        className={classes.paper}
         component={Paper}
+        height="100%"
         justifyContent="start"
+        overflow="auto"
         px={8}
         py={4}
         spacing={4}
@@ -35,7 +38,11 @@ const SearchPage = () => {
       >
         <Grid container justifyContent="center">
           <Grid item xs={12} sm={10} md={8}>
-            <SearchField value={search} setValue={setSearch} />
+            <SearchField
+              placeholder={t('pages.search.others.searchPlaceholder')}
+              value={search}
+              setValue={setSearch}
+            />
           </Grid>
         </Grid>
         <Grid container justifyContent="center">

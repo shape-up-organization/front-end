@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import { ChatPage } from '@pages/ChatPage'
 import { ErrorPage } from '@pages/ErrorPage'
+import { FeedPage } from '@pages/FeedPage'
 import { LandingPage } from '@pages/LandingPage'
 import { SearchPage } from '@pages/SearchPage'
 
@@ -16,9 +17,9 @@ const RoutesProvider = () => (
         <Route path="*" element={<ErrorPage />} />
         <Route index element={<LandingPage />} />
         <Route element={<ProtectedLayout />}>
-          <Route path="search" element={<SearchPage />} />
+          <Route path="feed" element={<FeedPage />} />
           <Route path="chats" element={<ChatPage />} />
-          <Route path="profile/:username" element={<ChatPage />} />
+          <Route path="search" element={<SearchPage />} />
         </Route>
       </Routes>
     </AuthProvider>

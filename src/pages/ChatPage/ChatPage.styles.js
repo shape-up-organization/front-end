@@ -3,13 +3,10 @@ import { makeStyles } from 'tss-react/mui'
 export const useStyles = makeStyles()(
   theme => ({
     container: {
-      alignItems: 'center',
-      display: 'flex',
-      height: '100vh',
-      overflow: 'hidden',
+      height: '100%',
     },
     paper: {
-      height: '88%',
+      height: '94%',
 
       [theme.breakpoints.down('sm')]: {
         height: '100%',

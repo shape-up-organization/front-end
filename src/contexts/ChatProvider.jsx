@@ -4,7 +4,7 @@ import P from 'prop-types'
 import SockJS from 'sockjs-client'
 import { over } from 'stompjs'
 
-import { useMediaQuery, useTheme } from '@mui/material'
+import { useMediaQuery } from '@mui/material'
 
 import apiFriends from '@api/services/friends'
 import apiPresence from '@api/services/presence'
@@ -36,7 +36,7 @@ export const ChatProvider = ({ children }) => {
     username: null,
   })
 
-  const lessThanMedium = useMediaQuery(useTheme().breakpoints.down('md'))
+  const lessThanMedium = useMediaQuery(theme => theme.breakpoints.down('md'))
 
   const [displayChat, setDisplayChat] = useState(
     !lessThanMedium || !!activeChat

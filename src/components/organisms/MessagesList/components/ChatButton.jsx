@@ -1,7 +1,6 @@
 import P from 'prop-types'
 
 import {
-  Avatar,
   Badge,
   Button,
   CircularProgress,
@@ -9,16 +8,16 @@ import {
   Typography,
 } from '@mui/material'
 
+import { Avatar } from '@atoms/Avatar'
+
 import { useChat } from '@contexts'
-import { getBorder } from '@utils/constants/levels'
 import { reformatSimpleDate } from '@utils/helpers/dateTime'
+import { charactersToLineBreaks } from '@utils/helpers/strings'
 
 import { useStyles } from './ChatButton.styles'
 
-const ChatButton = ({
-  data: { messages, name, profilePicture, unreadMessages = 0, username, xp },
-  online,
-}) => {
+const ChatButton = ({ data, online }) => {
+  const { messages, name, unreadMessages = 0, username } = data
   const { activeChat, openChat, userData } = useChat()
 
   const { classes } = useStyles({ online })
@@ -31,7 +30,8 @@ const ChatButton = ({
   const mountLastMessage = () => {
     const lastMessage = messages.at(-1)
     let sender = ''
-    const lastMessageContent = lastMessage?.message || ''
+    const lastMessageContent =
+      charactersToLineBreaks(lastMessage?.message) || ''
 
     if (lastMessage?.senderName) {
       if (lastMessage?.senderName === userData.username) sender = 'Você'
@@ -78,14 +78,7 @@ const ChatButton = ({
             }}
             variant="standard"
           >
-            <Avatar
-              alt={username}
-              className={classes.avatar}
-              src={profilePicture}
-              sx={{
-                background: `${getBorder(xp)} border-box`,
-              }}
-            />
+            <Avatar user={data} />
           </Badge>
         </Grid>
         <Grid container item xs={9} rowSpacing={1}>

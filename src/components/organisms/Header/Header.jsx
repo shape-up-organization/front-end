@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import P from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
-import Close from '@mui/icons-material/Close'
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import MenuIcon from '@mui/icons-material/Menu'
 import {
   Box,
@@ -14,7 +14,6 @@ import {
   IconButton,
   Typography,
   useMediaQuery,
-  useTheme,
 } from '@mui/material'
 
 import dogPic from '@assets/images/dog.png'
@@ -30,7 +29,7 @@ const Header = ({ handleOpenModals }) => {
   const [showDrawer, setShowDrawer] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
 
-  const lessThanMedium = useMediaQuery(useTheme().breakpoints.down('md'))
+  const lessThanMedium = useMediaQuery(theme => theme.breakpoints.down('md'))
   const { classes } = useStyles()
 
   useEffect(() => {
@@ -59,12 +58,7 @@ const Header = ({ handleOpenModals }) => {
       <Grid container item xs={7} sm={5} md={4} lg={3}>
         {showMenu ? (
           <Box display="flex" justifyContent="right" width="100%">
-            <IconButton
-              size="large"
-              aria-controls="menu-header"
-              aria-haspopup="true"
-              onClick={toggleNavMenu}
-            >
+            <IconButton size="large" onClick={toggleNavMenu}>
               <MenuIcon />
             </IconButton>
           </Box>
@@ -91,7 +85,7 @@ const Header = ({ handleOpenModals }) => {
       >
         <DialogTitle display="flex" justifyContent="flex-end">
           <IconButton onClick={toggleNavMenu}>
-            <Close />
+            <CloseRoundedIcon />
           </IconButton>
         </DialogTitle>
         <Grid container justifyContent="center" height="100%">

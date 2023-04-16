@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
       path: '/',
     })
 
-    navigate('/chats')
+    navigate('/feed')
   }
 
   const signOut = () => {
@@ -58,10 +58,11 @@ export const AuthProvider = ({ children }) => {
   const getUserData = async () => ({
     connected: true,
     email: await extractEmail(),
+    firstName: await extractName(),
     id: await extractId(),
     jwtToken: await getJwtToken(),
     lastName: await extractLastName(),
-    name: await extractName(),
+    name: `${await extractName()} ${await extractLastName()}`,
     profilePicture: (await extractProfilePicture()) || '',
     username: await extractUsername(),
     xp: await extractXp(),

@@ -1,17 +1,20 @@
+import { useState } from 'react'
+
 import P from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
-import { Avatar, Button, Fab, Grid, Typography } from '@mui/material'
+import { Button, Fab, Grid, Typography } from '@mui/material'
+
+import { Avatar } from '@atoms/Avatar'
 
 import { useChat } from '@contexts'
-import { getBorder, getLevel } from '@utils/constants/levels'
+import { getLevel } from '@utils/constants/levels'
 
-import { useState } from 'react'
 import { ContextMenu } from './ContextMenu'
 import { useStyles } from './UserButton.styles'
 
 const UserButton = ({ user }) => {
-  const { name, profilePicture, username, xp } = user
+  const { name, username, xp } = user
 
   const {
     chatsData: { friends },
@@ -44,17 +47,10 @@ const UserButton = ({ user }) => {
         container
         justifyContent="center"
         height="100%"
-        py={1}
+        py={2}
       >
         <Grid item xs={2} display="flex" justifyContent="center">
-          <Avatar
-            alt={name}
-            className={classes.avatar}
-            src={profilePicture}
-            sx={{
-              background: `${getBorder(xp)} border-box`,
-            }}
-          />
+          <Avatar user={user} />
         </Grid>
         <Grid container item xs={7} rowSpacing={0}>
           <Grid item xs={12}>
@@ -68,7 +64,7 @@ const UserButton = ({ user }) => {
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography fontWeight="700" noWrap variant="subtitle1">
+            <Typography fontWeight="700" noWrap variant="h6">
               {name}
             </Typography>
           </Grid>
@@ -83,7 +79,7 @@ const UserButton = ({ user }) => {
             </Typography>
           </Grid>
         </Grid>
-        <Grid container item xs={3} rowSpacing={0}>
+        <Grid container item xs={3} rowSpacing={1}>
           <Grid item xs={12} display="flex" justifyContent="center">
             <Typography
               fontWeight="700"

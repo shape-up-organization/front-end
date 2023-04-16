@@ -1,4 +1,25 @@
 {
+  "components": {
+    "molecules": {
+      "cardProfile": {
+        "quest": {
+          "title": "Daily Challenges"
+        },
+        "tooltips": {
+          "goToProfile": "Go to profile"
+        },
+        "xpCard": {
+          "currentLevel": "Level {{level}}",
+          "currentXp": "{{xp}} XP points",
+          "nextLevel": "to level"
+        }
+      },
+      "confirmationModal": {
+        "cancel": "Cancel",
+        "confirm": "Confirm"
+      }
+    }
+  },
   "pages": {
     "error": {
       "alt": {
@@ -6,6 +27,9 @@
       },
       "others": {
         "notFoundPageMessage": "Page not found!"
+      },
+      "tooltip": {
+        "arrowBackButton": "Go back"
       }
     },
     "chat": {
@@ -17,7 +41,7 @@
         "chatNotFoundMessage": "No chat was found!",
         "menuItemAcceptFriendshipRequest": "Accept friendship request",
         "menuItemAddFriend": "Add friend",
-        "messageListTitle": "Messages",
+        "messageListTitle": "Chats",
         "messageInputPlaceholder": "Type a message...",
         "searchChatsPlaceholder": "Search friends...",
         "searchChatsPlaceholderDisabled": "You have no friends yet!"
@@ -34,6 +58,27 @@
           "friends": "Friends",
           "squads": "Squads"
         }
+      }
+    },
+    "feed": {
+      "menu": {
+        "exit": "Exit",
+        "profile": "Profile",
+        "settings": "Settings"
+      },
+      "others": {
+        "confirmationModalMessage": "Are you sure you want to exit the account?",
+        "confirmationModalTitle": "Exit account",
+        "searchPlaceholder": "Search for users..."
+      },
+      "tooltip": {
+        "chats": "Chats",
+        "feed": "Feed",
+        "menu": "Menu",
+        "notifications": "Notifications",
+        "quests": "Quests",
+        "search": "Search",
+        "settings": "Settings"
       }
     },
     "landing": {

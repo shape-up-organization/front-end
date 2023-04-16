@@ -12,7 +12,6 @@ import {
   IconButton,
   Typography,
   useMediaQuery,
-  useTheme,
 } from '@mui/material'
 
 import { Divider } from '@atoms/Divider'
@@ -47,7 +46,7 @@ const Modal = ({
     contentDirection === 'row' ? 'vertical' : 'horizontal'
 
   const { t } = useTranslation()
-  const lessThanSmall = useMediaQuery(useTheme().breakpoints.down('sm'))
+  const lessThanSmall = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const { classes } = useStyles()
 
   return (

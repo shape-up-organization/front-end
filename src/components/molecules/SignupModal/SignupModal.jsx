@@ -21,7 +21,6 @@ import {
   Tooltip,
   Typography,
   useMediaQuery,
-  useTheme,
 } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
@@ -366,7 +365,7 @@ const size = 'large'
 
 const SignupModal = ({ isOpen, handleClose, switchModal }) => {
   const { t } = useTranslation()
-  const lessThanLarge = useMediaQuery(useTheme().breakpoints.down('lg'))
+  const lessThanLarge = useMediaQuery(theme => theme.breakpoints.down('lg'))
 
   return (
     <Modal

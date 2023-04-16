@@ -11,6 +11,7 @@ services:
     environment:
       - MODE="production"
       - VITE_API_URL=${VITE_API_URL}
+      - VITE_ENABLE_WS=${VITE_ENABLE_WS}
     ports:
       - 3000:3000
     networks:

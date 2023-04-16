@@ -7,11 +7,10 @@ services:
       context: ../
       dockerfile: ./docker/Dockerfile.dev
     env_file:
-      - ../.env.development.local
+      - ../env/.env.development.local
     environment:
       - MODE="development"
       - VITE_API_URL=${VITE_API_URL}
-      - VITE_MODE=${VITE_MODE}
     ports:
       - 3000:3000
     networks:

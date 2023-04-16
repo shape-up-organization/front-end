@@ -1,7 +1,8 @@
 import { createContext, useContext, useMemo } from 'react'
 
-import { Buffer } from 'buffer'
 import P from 'prop-types'
+
+import { Buffer } from 'buffer'
 import { Cookies, useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
 
@@ -13,6 +14,7 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate()
 
   const parseJwt = unparsedToken => {
+    if (!unparsedToken) return null
     const base64Payload = unparsedToken.split('.')[1]
     const payload = Buffer.from(base64Payload, 'base64')
     return JSON.parse(payload.toString())
@@ -22,7 +24,8 @@ export const AuthProvider = ({ children }) => {
     setCookie('jwt-token', newJwtToken, {
       path: '/',
     })
-    navigate('/logged')
+
+    navigate('/feed')
   }
 
   const signOut = () => {
@@ -35,16 +38,43 @@ export const AuthProvider = ({ children }) => {
     if (jwtToken === undefined || jwtToken === null) {
       return null
     }
-    return parseJwt(jwtToken)
+    return jwtToken
   }
 
   const isTokenInvalid = async () => {
     const jwtToken = await getJwtToken()
-    if (jwtToken === null || jwtToken.exp < Date.now() / 1000) {
-      return true
+    if (jwtToken) {
+      const parsedJwtToken = parseJwt(jwtToken)
+      if (parsedJwtToken === null || parsedJwtToken.exp < Date.now() / 1000) {
+        return true
+      }
+      return false
     }
-    return false
+    return true
   }
+
+  const getTokenProp = async prop => parseJwt(await getJwtToken())[prop]
+
+  const getUserData = async () => ({
+    connected: true,
+    email: await extractEmail(),
+    firstName: await extractName(),
+    id: await extractId(),
+    jwtToken: await getJwtToken(),
+    lastName: await extractLastName(),
+    name: `${await extractName()} ${await extractLastName()}`,
+    profilePicture: (await extractProfilePicture()) || '',
+    username: await extractUsername(),
+    xp: await extractXp(),
+  })
+
+  const extractProfilePicture = async () => getTokenProp('profilePicture')
+  const extractEmail = async () => getTokenProp('email')
+  const extractId = async () => getTokenProp('id')
+  const extractLastName = async () => getTokenProp('lastName')
+  const extractName = async () => getTokenProp('name')
+  const extractUsername = async () => getTokenProp('username')
+  const extractXp = async () => getTokenProp('xp')
 
   // TODO: Validate with Back-end to revalidate or not here
   // const revalidateToken = async () => {
@@ -57,6 +87,9 @@ export const AuthProvider = ({ children }) => {
 
   const auth = useMemo(
     () => ({
+      getJwtToken,
+      getTokenProp,
+      getUserData,
       isTokenInvalid,
       signIn,
       signOut,
@@ -67,6 +100,8 @@ export const AuthProvider = ({ children }) => {
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>
 }
 
-AuthProvider.propTypes = { children: P.node.isRequired }
+AuthProvider.propTypes = {
+  children: P.node.isRequired,
+}
 
 export const useAuth = () => useContext(AuthContext)

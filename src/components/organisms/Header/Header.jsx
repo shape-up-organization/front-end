@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 
 import P from 'prop-types'
+import { useTranslation } from 'react-i18next'
 
-import Close from '@mui/icons-material/Close'
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import MenuIcon from '@mui/icons-material/Menu'
 import {
   Box,
@@ -13,7 +14,6 @@ import {
   IconButton,
   Typography,
   useMediaQuery,
-  useTheme,
 } from '@mui/material'
 
 import dogPic from '@assets/images/dog.png'
@@ -24,10 +24,12 @@ import { useStyles } from './Header.styles'
 const Header = ({ handleOpenModals }) => {
   const { handleOpenLogin, handleOpenSignup } = handleOpenModals
 
+  const { t } = useTranslation()
+
   const [showDrawer, setShowDrawer] = useState(false)
   const [showMenu, setShowMenu] = useState(false)
 
-  const lessThanMedium = useMediaQuery(useTheme().breakpoints.down('md'))
+  const lessThanMedium = useMediaQuery(theme => theme.breakpoints.down('md'))
   const { classes } = useStyles()
 
   useEffect(() => {
@@ -56,13 +58,7 @@ const Header = ({ handleOpenModals }) => {
       <Grid container item xs={7} sm={5} md={4} lg={3}>
         {showMenu ? (
           <Box display="flex" justifyContent="right" width="100%">
-            <IconButton
-              size="large"
-              aria-label="Abrir menu de navegação"
-              aria-controls="menu-header"
-              aria-haspopup="true"
-              onClick={toggleNavMenu}
-            >
+            <IconButton size="large" onClick={toggleNavMenu}>
               <MenuIcon />
             </IconButton>
           </Box>
@@ -70,12 +66,12 @@ const Header = ({ handleOpenModals }) => {
           <>
             <Grid item xs={6}>
               <Button fullWidth onClick={handleOpenLogin}>
-                Entrar
+                {t('pages.landing.header.buttonSignIn')}
               </Button>
             </Grid>
             <Grid item xs={6}>
               <Button fullWidth onClick={handleOpenSignup} variant="contained">
-                Cadastrar
+                {t('pages.landing.header.buttonSignUp')}
               </Button>
             </Grid>
           </>
@@ -89,7 +85,7 @@ const Header = ({ handleOpenModals }) => {
       >
         <DialogTitle display="flex" justifyContent="flex-end">
           <IconButton onClick={toggleNavMenu}>
-            <Close />
+            <CloseRoundedIcon />
           </IconButton>
         </DialogTitle>
         <Grid container justifyContent="center" height="100%">
@@ -104,7 +100,7 @@ const Header = ({ handleOpenModals }) => {
             <Grid container item direction="column" rowSpacing={2}>
               <Grid item>
                 <Button fullWidth onClick={handleOpenLogin}>
-                  Entrar
+                  {t('pages.landing.header.buttonSignIn')}
                 </Button>
               </Grid>
               <Grid item>
@@ -113,14 +109,14 @@ const Header = ({ handleOpenModals }) => {
                   onClick={handleOpenSignup}
                   variant="contained"
                 >
-                  Cadastrar
+                  {t('pages.landing.header.buttonSignUp')}
                 </Button>
               </Grid>
             </Grid>
             <Grid item>
               <Photo
                 animationSpeed={0}
-                alt="Cachorro fofinho e verde"
+                alt={t('pages.landing.alt.menuGreenDog')}
                 className={classes.dogPic}
                 fit="contain"
                 src={dogPic}

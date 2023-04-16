@@ -21,7 +21,7 @@ const StyledNotistack = styled(MaterialDesignContent)(() => ({
 }))
 
 const CloseSnackbar = ({ snackbarId }) => (
-  <IconButton onClick={() => closeSnackbar(snackbarId)}>
+  <IconButton onClick={() => closeSnackbar(Number(snackbarId))}>
     <Close fontSize="small" />
   </IconButton>
 )
@@ -33,7 +33,7 @@ const HIDE_DURATION = 5000
 const SnackbarProvider = ({ children }) => (
   <SnackbarProviderNOTISTACK
     autoHideDuration={HIDE_DURATION}
-    action={snackbarId => <CloseSnackbar snackbarId={snackbarId} />}
+    action={snackbarId => <CloseSnackbar snackbarId={String(snackbarId)} />}
     Components={{
       success: StyledNotistack,
       error: StyledNotistack,

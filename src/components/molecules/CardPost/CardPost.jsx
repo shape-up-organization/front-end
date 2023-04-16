@@ -1,28 +1,26 @@
+import { Avatar } from '@atoms/Avatar'
+import styled from '@emotion/styled'
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import {
   Card,
-  CardMedia,
+  CardActions,
   CardContent,
   CardHeader,
-  CardActions,
-  Typography,
+  CardMedia,
+  Collapse,
+  Grid,
   IconButton,
   Menu,
-  Grid,
   MenuItem,
-  Collapse,
+  Typography,
 } from '@mui/material'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
-import { useState } from 'react'
-import { AvatarPhoto } from '@atoms/AvatarPhoto'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import styled from '@emotion/styled'
 import P from 'prop-types'
+import { useState } from 'react'
 
 const CardPost = ({
-  altUser,
-  srcUser,
   name,
   date,
   caption,
@@ -59,7 +57,7 @@ const CardPost = ({
       <Grid item xs={12}>
         <Card>
           <CardHeader
-            avatar={<AvatarPhoto alt={altUser} src={srcUser} />}
+            avatar={<Avatar currentUser />}
             action={
               <IconButton aria-label="settings">
                 <MoreHorizIcon onClick={handleClick} />
@@ -116,12 +114,7 @@ const CardPost = ({
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <CardHeader
-              avatar={
-                <AvatarPhoto
-                  alt="oi"
-                  src="https://avesexoticas.org/wp-content/uploads/2017/07/Anas_platyrhynchos_qtl1.jpg"
-                />
-              }
+              avatar={<Avatar currentUser />}
               action={
                 <IconButton aria-label="settings">
                   <MoreHorizIcon onClick={handleClick} />
@@ -149,8 +142,6 @@ const CardPost = ({
   )
 }
 CardPost.propTypes = {
-  altUser: P.string.isRequired,
-  srcUser: P.string.isRequired,
   name: P.string.isRequired,
   date: P.string.isRequired,
   caption: P.string.isRequired,

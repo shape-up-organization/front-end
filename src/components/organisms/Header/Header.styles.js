@@ -6,10 +6,13 @@ export const useStyles = makeStyles()(theme => ({
     maxHeight: '20vh',
   },
   drawerPaper: {
-    width: '48%',
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '48%',
+    },
 
-    [theme.breakpoints.down('sm')]: {
-      width: '80%',
+    [theme.breakpoints.up('md')]: {
+      width: '56%',
     },
   },
 }))

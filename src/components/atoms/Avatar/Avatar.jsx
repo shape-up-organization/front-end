@@ -26,7 +26,7 @@ const Avatar = ({ currentUser, mini, user, ...rest }) => {
       className={classes.avatar}
       src={data.profilePicture}
       sx={{
-        background: `${getBorder(data.xp)} border-box`,
+        background: `${getBorder(Number(data.xp))} border-box`,
       }}
       {...rest}
     />
@@ -39,7 +39,7 @@ Avatar.propTypes = {
   user: P.shape({
     profilePicture: P.string,
     username: P.string,
-    xp: P.number,
+    xp: P.oneOfType([P.string, P.number]),
   }),
 }
 

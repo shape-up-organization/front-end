@@ -15,7 +15,6 @@ const MessagesList = ({ listBottomRef, messages }) => {
   } = useChat()
 
   const getMessageSender = senderName => {
-    console.log(senderName === userData.username)
     if (senderName === userData.username) return userData
     return friends.find(({ username }) => username === senderName)
   }

@@ -71,12 +71,11 @@ export const ChatProvider = ({ children }) => {
 
   const connect = () => {
     if (!stompClient && !chatsData.deprecated) {
+      if (import.meta.env.MODE === 'production') return
+      stompClient.debug = () => {}
       const Sock = new SockJS(`${import.meta.env.VITE_API_URL}/ws`)
       stompClient = over(Sock)
       stompClient.connect({}, () => onConnected(userData.username), onError)
-
-      // if (import.meta.env.MODE === 'production')
-      stompClient.debug = () => {}
     }
   }
 

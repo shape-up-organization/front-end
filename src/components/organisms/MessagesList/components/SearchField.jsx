@@ -19,6 +19,7 @@ const SearchField = () => {
     <TextField
       disabled={disabled}
       fullWidth
+      size="small"
       onChange={handleChange}
       placeholder={
         disabled

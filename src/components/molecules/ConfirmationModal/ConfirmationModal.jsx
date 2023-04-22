@@ -30,7 +30,7 @@ const ConfirmationModal = ({
           <Typography variant="body1">{message}</Typography>
         </DialogContentText>
       </DialogContent>
-      <DialogActions sx={{ pb: 3, px: 6 }}>
+      <DialogActions sx={{ pb: 3, px: 3 }}>
         <Button
           autoFocus
           color="error"
@@ -38,7 +38,7 @@ const ConfirmationModal = ({
           onClick={handleCancel}
           variant="contained"
         >
-          <Typography variant="body1">
+          <Typography fontWeight={700} variant="body2">
             {t('components.molecules.confirmationModal.cancel')}
           </Typography>
         </Button>
@@ -48,7 +48,7 @@ const ConfirmationModal = ({
           onClick={handleConfirm}
           variant="contained"
         >
-          <Typography variant="body1">
+          <Typography fontWeight={700} variant="body2">
             {t('components.molecules.confirmationModal.confirm')}
           </Typography>
         </Button>

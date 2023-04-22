@@ -5,11 +5,15 @@ export const useStyles = makeStyles()(
     drawerPaper: {
       width: '100%',
       [theme.breakpoints.up('sm')]: {
-        width: '48%',
+        width: '72%',
       },
 
       [theme.breakpoints.up('md')]: {
         width: '56%',
+      },
+
+      [theme.breakpoints.up('lg')]: {
+        width: '40%',
       },
     },
   }),

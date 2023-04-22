@@ -12,11 +12,13 @@ import {
 } from '@mui/material'
 
 import notFoundGeneric from '@assets/images/not-found-generic.png'
+import { useChat } from '@contexts'
 
 import { UserButton } from './UserButton'
 
 const UsersList = ({ isLoading, users }) => {
   const { t } = useTranslation()
+  const { userData } = useChat()
 
   if (isLoading || !users.length)
     return (
@@ -53,12 +55,15 @@ const UsersList = ({ isLoading, users }) => {
 
   return (
     <Stack>
-      {users?.map(user => (
-        <Stack key={user.username}>
-          <UserButton user={user} />
-          <Divider />
-        </Stack>
-      ))}
+      {users?.map(
+        user =>
+          user.username !== userData.username && (
+            <Stack key={user.username}>
+              <UserButton user={user} />
+              <Divider />
+            </Stack>
+          )
+      )}
     </Stack>
   )
 }

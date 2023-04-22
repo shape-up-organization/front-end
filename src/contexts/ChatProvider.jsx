@@ -9,6 +9,7 @@ import { useMediaQuery } from '@mui/material'
 import apiFriends from '@api/services/friends'
 import apiPresence from '@api/services/presence'
 import mockedSquads from '@mocks/squads/get'
+import usersGetMock from '@mocks/users/get'
 import { formatLocalDate } from '@utils/helpers/dateTime'
 import { normalize } from '@utils/helpers/strings'
 
@@ -310,6 +311,22 @@ export const ChatProvider = ({ children }) => {
     }))
   }
 
+  const getUserData = async username => {
+    if (username === userData.username) {
+      return { data: userData, status: 'current' }
+    }
+
+    const friendUser = chatsData.friends.find(
+      friend => friend.username === username
+    )
+    if (friendUser) return { data: friendUser, status: 'friend' }
+
+    const user = usersGetMock.data.users.find(
+      userMock => userMock.username === username
+    )
+    return { data: user, status: 'user' }
+  }
+
   const values = useMemo(
     () => ({
       activeChat,
@@ -319,6 +336,7 @@ export const ChatProvider = ({ children }) => {
       displayChat,
       displayMessagesList,
       filterChats,
+      getUserData,
       isLoading,
       loadData,
       openChat,

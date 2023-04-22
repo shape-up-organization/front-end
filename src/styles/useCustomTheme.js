@@ -21,7 +21,8 @@ export const useCustomTheme = () => {
       window.matchMedia &&
       window.matchMedia('(prefers-color-scheme: dark)').matches
     ) {
-      setMode('dark')
+      // setMode('dark')
+      setMode('light')
     }
   }, [])
 

@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }) => {
     name: `${await extractName()} ${await extractLastName()}`,
     profilePicture: (await extractProfilePicture()) || '',
     username: await extractUsername(),
-    xp: await extractXp(),
+    xp: Number(await extractXp()),
   })
 
   const extractProfilePicture = async () => getTokenProp('profilePicture')

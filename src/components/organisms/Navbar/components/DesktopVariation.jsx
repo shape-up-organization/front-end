@@ -20,6 +20,8 @@ import {
   Typography,
 } from '@mui/material'
 
+import { useChat } from '@contexts'
+import { useNavigateSearch } from '@hooks'
 import notificationsMock from '@mocks/notifications/get'
 
 const types = {
@@ -32,6 +34,8 @@ const DesktopVariation = ({ openConfirmationModal }) => {
   const { t } = useTranslation()
   const { pathname } = useLocation()
   const navigate = useNavigate()
+  const navigateSearch = useNavigateSearch()
+  const { userData } = useChat()
 
   const [anchorSettings, setAnchorSettings] = useState(null)
   const [anchorNotifications, setAnchorNotifications] = useState(null)
@@ -71,7 +75,8 @@ const DesktopVariation = ({ openConfirmationModal }) => {
 
   const menuItems = useMemo(() => [
     {
-      onClick: () => navigateToPage('/profile'),
+      onClick: () =>
+        navigateSearch('/profile', { username: userData.username }),
       text: 'pages.feed.menu.profile',
     },
     {

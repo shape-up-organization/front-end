@@ -42,7 +42,7 @@ const ChatsList = () => {
                 {t('pages.chat.others.chatNotFoundMessage')}
               </Typography>
             </Grow>
-            <Box maxWidth={208}>
+            <Box maxWidth={160}>
               <Photo
                 alt={t('pages.chat.alt.notFoundChatImage')}
                 animationSpeed={800}

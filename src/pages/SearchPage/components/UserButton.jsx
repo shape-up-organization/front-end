@@ -3,51 +3,66 @@ import { useState } from 'react'
 import P from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
-import { Button, Fab, Grid, Typography } from '@mui/material'
+import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded'
+import {
+  Box,
+  Button,
+  Fab,
+  Grid,
+  IconButton,
+  Typography,
+  useMediaQuery,
+} from '@mui/material'
 
 import { Avatar } from '@atoms/Avatar'
 
 import { useChat } from '@contexts'
+import { useNavigateSearch } from '@hooks'
 import { getLevel } from '@utils/constants/levels'
 
 import { ContextMenu } from './ContextMenu'
-import { useStyles } from './UserButton.styles'
 
 const UserButton = ({ user }) => {
   const { name, username, xp } = user
 
+  const { t } = useTranslation()
+  const moreThanMedium = useMediaQuery(theme => theme.breakpoints.up('md'))
+  const navigateSearch = useNavigateSearch()
   const {
     chatsData: { friends },
   } = useChat()
-  const { t } = useTranslation()
 
-  const [anchorEl, setAnchorEl] = useState(null)
-
-  const { classes } = useStyles()
+  const [menuAnchorEl, setContextMenuAnchorEl] = useState(null)
 
   const checkIfIsFriend = () =>
     friends.some(friend => friend.username === username)
 
-  const handleCloseMenu = () => setAnchorEl(null)
-
+  const handleCloseContextMenu = () => setContextMenuAnchorEl(null)
   const handleOpenContextMenu = event => {
     event.preventDefault()
-    setAnchorEl(anchorEl ? null : event.currentTarget)
+    setContextMenuAnchorEl(current => (current ? null : event.currentTarget))
+  }
+
+  const handleGoToProfile = () => {
+    if (menuAnchorEl) return
+    navigateSearch('/profile', { username })
   }
 
   return (
-    <Button
-      className={classes.chatButton}
-      fullWidth
-      onClick={handleOpenContextMenu}
-    >
+    <Button component={Box} disableRipple fullWidth sx={{ p: 0 }}>
       <Grid
-        alignItems="center"
-        columnSpacing={1}
         container
-        justifyContent="center"
+        alignItems="center"
+        color="text.primary"
+        component={Button}
+        disableRipple={!!menuAnchorEl}
         height="100%"
+        justifyContent="center"
+        onClick={handleGoToProfile}
+        onContextMenu={handleOpenContextMenu}
         py={2}
+        textAlign="left"
+        textTransform="none"
       >
         <Grid item xs={2} display="flex" justifyContent="center">
           <Avatar user={user} />
@@ -104,10 +119,18 @@ const UserButton = ({ user }) => {
           </Grid>
         </Grid>
       </Grid>
+      {moreThanMedium && (
+        <IconButton
+          onClick={handleOpenContextMenu}
+          sx={{ position: 'absolute', right: 8, top: 8 }}
+        >
+          <MoreHorizRoundedIcon fontSize="small" />
+        </IconButton>
+      )}
       <ContextMenu
-        anchorEl={anchorEl}
-        open={!!anchorEl}
-        handleCloseMenu={handleCloseMenu}
+        anchorEl={menuAnchorEl}
+        handleCloseMenu={handleCloseContextMenu}
+        open={!!menuAnchorEl}
         userSelected={user}
       />
     </Button>

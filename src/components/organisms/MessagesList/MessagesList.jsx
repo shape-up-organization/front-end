@@ -34,8 +34,8 @@ const MessagesList = () => {
         <Tooltip
           sx={{
             bgcolor: 'background.default',
-            mt: 1,
             ml: 1,
+            mt: 1,
             position: 'absolute',
             zIndex: theme.zIndex.appBar,
           }}
@@ -46,7 +46,7 @@ const MessagesList = () => {
           </IconButton>
         </Tooltip>
       </Zoom>
-      <Grid container px={4}>
+      <Grid container px={{ xs: 1, lg: 3, xl: 8 }}>
         <Grid item xs={12} ref={headerRef}>
           <Stack spacing={2}>
             <Typography pt={2} textAlign="center" variant="h5">

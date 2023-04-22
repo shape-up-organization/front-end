@@ -1,112 +1,92 @@
+import { useEffect, useState } from 'react'
+
 import P from 'prop-types'
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import { Card, Grid } from '@mui/material'
-import { useState } from 'react'
-import { CardRanked } from './CardRanked'
-import { CardRankedTop } from './CardRankedTop'
+import { useTranslation } from 'react-i18next'
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props
+import CloseRounded from '@mui/icons-material/CloseRounded'
+import PeopleIcon from '@mui/icons-material/People'
+import PublicIcon from '@mui/icons-material/Public'
+import {
+  Divider,
+  Grid,
+  IconButton,
+  Paper,
+  Stack,
+  Tab,
+  Tabs,
+} from '@mui/material'
+
+import rankingGetTopMock from '@mocks/ranking/getTop'
+
+import { List } from './components/List'
+import { Top } from './components/Top'
+
+const CardRank = ({ handleCloseCard }) => {
+  const { t } = useTranslation()
+
+  const [rankedUsers, setRankedUsers] = useState(null)
+  const [rankTab, setRankTab] = useState('friends')
+
+  const handleChangeTab = (_, newTab) => setRankTab(newTab)
+
+  const getRankedUsers = async () => setRankedUsers(rankingGetTopMock.data)
+
+  useEffect(() => {
+    getRankedUsers()
+  }, [])
 
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
+    <Grid container component={Paper}>
+      {handleCloseCard && (
+        <Grid item xs={12} pl={1} pt={1}>
+          <IconButton onClick={handleCloseCard}>
+            <CloseRounded />
+          </IconButton>
+        </Grid>
       )}
-    </div>
-  )
-}
-
-TabPanel.propTypes = {
-  children: P.string.isRequired,
-  index: P.number.isRequired,
-  value: P.number.isRequired,
-}
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  }
-}
-
-const CardRank = () => {
-  const [value, setValue] = useState(0)
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue)
-  }
-
-  return (
-    <Grid container component={Card} xs={12} justifyContent="space-around">
-      <Grid container item xs={12} padding={2}>
-        <Grid item xs={12} sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange} variant="fullWidth">
-            <Tab label="Global" {...a11yProps(0)} />
-            <Tab label="Amigos" {...a11yProps(1)} />
+      <Grid item xs={12}>
+        <Stack width="100%" px={2} py={handleCloseCard ? 0 : 3} rowGap={2}>
+          <Tabs onChange={handleChangeTab} value={rankTab} variant="fullWidth">
+            <Tab
+              icon={<PeopleIcon />}
+              iconPosition="top"
+              label={t('components.molecules.cardRank.tabs.friends')}
+              value="friends"
+            />
+            <Tab
+              icon={<PublicIcon />}
+              iconPosition="top"
+              label={t('components.molecules.cardRank.tabs.global')}
+              value="global"
+            />
           </Tabs>
-        </Grid>
-        {/* Aba Global */}
-        <Grid container item xs={12} justifyContent="space-around">
-          <TabPanel value={value} index={0}>
-            <CardRankedTop alt="" name="wlad" numRank={2} src="" xp={4000} />
-          </TabPanel>
-          <TabPanel value={value} index={0}>
-            <CardRankedTop alt="" name="wlad" numRank={1} src="" xp={5000} />
-          </TabPanel>
-          <TabPanel value={value} index={0}>
-            <CardRankedTop alt="" name="wlad" numRank={3} src="" xp={3000} />
-          </TabPanel>
-        </Grid>
-
-        <Grid item xs={12}>
-          <TabPanel value={value} index={0}>
-            <CardRanked alt="" name="wlad" numRank={4} src="" xp={2000} />
-          </TabPanel>
-          <TabPanel value={value} index={0}>
-            <CardRanked alt="" name="wlad" numRank={4} src="" xp={2000} />
-          </TabPanel>
-          <TabPanel value={value} index={0}>
-            <CardRanked alt="" name="wlad" numRank={4} src="" xp={2000} />
-          </TabPanel>
-        </Grid>
-        {/* Aba Amigos */}
-        <Grid container item xs={12} justifyContent="space-around">
-          <TabPanel value={value} index={1}>
-            <CardRankedTop alt="" name="wlad" numRank={2} src="" xp={4000} />
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <CardRankedTop alt="" name="wlad" numRank={1} src="" xp={5000} />
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <CardRankedTop alt="" name="wlad" numRank={3} src="" xp={3000} />
-          </TabPanel>
-        </Grid>
-
-        <Grid item xs={12}>
-          <TabPanel value={value} index={1}>
-            <CardRanked alt="" name="wlad" numRank={4} src="" xp={2000} />
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <CardRanked alt="" name="wlad" numRank={4} src="" xp={2000} />
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <CardRanked alt="" name="wlad" numRank={4} src="" xp={2000} />
-          </TabPanel>
-        </Grid>
+          <Grid container item xs={12}>
+            {rankedUsers && (
+              <>
+                <Grid item xs={12}>
+                  <Top rankedTopUsers={rankedUsers?.slice(0, 3)} />
+                </Grid>
+                <Grid item xs={12} pt={2}>
+                  <Divider />
+                </Grid>
+                <Grid item xs={12}>
+                  <List rankedUsers={rankedUsers?.slice(3)} />
+                </Grid>
+              </>
+            )}
+          </Grid>
+        </Stack>
       </Grid>
     </Grid>
   )
 }
+
+CardRank.propTypes = {
+  handleCloseCard: P.func,
+}
+
+CardRank.defaultProps = {
+  handleCloseCard: null,
+}
+
 export { CardRank }

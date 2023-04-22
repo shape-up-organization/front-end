@@ -1,157 +1,112 @@
-import { Avatar } from '@atoms/Avatar'
-import styled from '@emotion/styled'
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
-import {
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  CardMedia,
-  Collapse,
-  Grid,
-  IconButton,
-  Menu,
-  MenuItem,
-  Typography,
-} from '@mui/material'
+import { useEffect, useState } from 'react'
+
 import P from 'prop-types'
-import { useState } from 'react'
+
+import { Grid, Paper, Typography } from '@mui/material'
+
+import { Divider } from '@atoms/Divider'
+import { Photo } from '@atoms/Photo'
+
+import { useChat } from '@contexts'
+import { charactersToLineBreaks } from '@utils/helpers/strings'
+
+import { Footer } from './components/Footer'
+import { UserButton } from './components/UserButton'
 
 const CardPost = ({
-  name,
+  commentsAmount,
   date,
-  caption,
-  srcImagePost,
-  altImagePost,
-  qtdLikes,
-  qtdComent,
+  likes,
+  photos,
+  textContent,
+  user,
+  username,
 }) => {
-  const [anchorEl, setAnchorEl] = useState(null)
-  const open = Boolean(anchorEl)
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
-  const [expanded, setExpanded] = useState(false)
+  const { getUserData } = useChat()
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded)
+  const [userData, setUserData] = useState(user)
+
+  const getUser = async () => {
+    const { data } = await getUserData(username)
+    setUserData(data)
   }
-  const ExpandMore = styled(props => {
-    const { ...other } = props
-    return <IconButton {...other} />
-  })(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  }))
+
+  useEffect(() => {
+    if (!user) getUser()
+  }, [])
+
   return (
-    <Grid container xs={12}>
+    <Grid
+      container
+      component={Paper}
+      justifyContent="center"
+      maxWidth={696}
+      pb={1}
+      rowGap={1}
+    >
       <Grid item xs={12}>
-        <Card>
-          <CardHeader
-            avatar={<Avatar currentUser />}
-            action={
-              <IconButton aria-label="settings">
-                <MoreHorizIcon onClick={handleClick} />
-                <Menu
-                  id="basic-menu"
-                  anchorEl={anchorEl}
-                  open={open}
-                  onClose={handleClose}
-                  MenuListProps={{
-                    'aria-labelledby': 'basic-button',
-                  }}
-                >
-                  <MenuItem onClick={handleClose}>Compartilhar</MenuItem>
-                  <MenuItem onClick={handleClose}>Excluir</MenuItem>
-                </Menu>
-              </IconButton>
-            }
-            title={name}
-            subheader={date}
+        {userData && <UserButton date={date} selected={userData} />}
+      </Grid>
+      {textContent && (
+        <Grid item xs={12} px={{ xs: 2, sm: 4 }}>
+          <Typography
+            color="text.secondary"
+            sx={{ userSelect: 'text', wordBreak: 'break-word' }}
+            variant="body2"
+            whiteSpace="pre-wrap"
+          >
+            {charactersToLineBreaks(textContent)}
+          </Typography>
+        </Grid>
+      )}
+      {photos?.map(({ alt, src }) => (
+        <Grid
+          item
+          key={alt}
+          padding={{ xs: 0, sm: 2 }}
+          display="flex"
+          justifyContent="center"
+        >
+          <Photo
+            sx={{ maxWidth: '464px', maxHeight: '576px' }}
+            src={src}
+            alt={alt}
+            animationSpeed={0}
           />
-          <CardContent>
-            <Typography variant="body2" color="text.secondary">
-              {caption}
-            </Typography>
-          </CardContent>
-          <Grid item padding={2}>
-            <CardMedia
-              component="img"
-              height="194"
-              image={srcImagePost}
-              alt={altImagePost}
-            />
-          </Grid>
-          <CardActions disableSpacing>
-            <IconButton aria-label="add to favorites">
-              <FavoriteBorderIcon />
-              <Typography variant="body2">{qtdLikes}</Typography>
-            </IconButton>
-            <IconButton aria-label="add comment">
-              <ChatBubbleOutlineIcon />
-              <Typography variant="body2">{qtdComent}</Typography>
-            </IconButton>
-            <ExpandMore
-              expand={expanded}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </ExpandMore>
-            <Typography variant="body2">ver comentarios</Typography>
-          </CardActions>
-        </Card>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <CardHeader
-              avatar={<Avatar currentUser />}
-              action={
-                <IconButton aria-label="settings">
-                  <MoreHorizIcon onClick={handleClick} />
-                  <Menu
-                    id="basic-menu"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    MenuListProps={{
-                      'aria-labelledby': 'basic-button',
-                    }}
-                  >
-                    <MenuItem onClick={handleClose}>Compartilhar</MenuItem>
-                    <MenuItem onClick={handleClose}>Excluir</MenuItem>
-                  </Menu>
-                </IconButton>
-              }
-              title="Vitao cantor"
-              subheader="Terça 04/2023"
-            />
-          </CardContent>
-        </Collapse>
+        </Grid>
+      ))}
+      <Grid item xs={0} sm={12}>
+        <Divider />
+      </Grid>
+      <Grid container item px={{ xs: 1, sm: 3 }}>
+        <Footer commentsAmount={commentsAmount} likes={likes} />
       </Grid>
     </Grid>
   )
 }
+
 CardPost.propTypes = {
-  name: P.string.isRequired,
+  commentsAmount: P.number,
   date: P.string.isRequired,
-  caption: P.string.isRequired,
-  srcImagePost: P.string,
-  altImagePost: P.string,
-  qtdLikes: P.number.isRequired,
-  qtdComent: P.number.isRequired,
+  likes: P.number,
+  photos: P.arrayOf(
+    P.shape({
+      alt: P.string.isRequired,
+      src: P.string.isRequired,
+    })
+  ),
+  textContent: P.string,
+  user: P.object,
+  username: P.string,
 }
+
 CardPost.defaultProps = {
-  srcImagePost: '',
-  altImagePost: '',
+  commentsAmount: 0,
+  likes: 0,
+  photos: [],
+  textContent: '',
+  user: null,
+  username: '',
 }
+
 export { CardPost }

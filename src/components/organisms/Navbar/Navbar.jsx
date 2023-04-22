@@ -1,3 +1,6 @@
+import { useState } from 'react'
+
+import P from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -16,17 +19,18 @@ import { ConfirmationModal } from '@molecules/ConfirmationModal'
 
 import { useAuth } from '@contexts'
 
-import { useState } from 'react'
 import { DesktopVariation } from './components/DesktopVariation'
 import { MobileVariation } from './components/MobileVariation'
 
-const Navbar = () => {
+const Navbar = ({ scrollDirection }) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { signOut } = useAuth()
 
-  const lessThanLarge = useMediaQuery(theme => theme.breakpoints.down('lg'))
+  const lessThanExtraLarge = useMediaQuery(theme =>
+    theme.breakpoints.down('xl')
+  )
 
   const [confirmModalOpen, setConfirmModalOpen] = useState(false)
 
@@ -36,12 +40,21 @@ const Navbar = () => {
 
   const handleNavigateToFeed = () => pathname !== 'feed' && navigate('/feed')
 
+  // console.log(scrollRef)
+
   return (
     <>
       <AppBar
         component={Paper}
-        position="sticky"
-        sx={{ bgcolor: theme => theme.palette.background.paper }}
+        position="absolute"
+        sx={{
+          bgcolor: theme => theme.palette.background.paper,
+          top: lessThanExtraLarge && scrollDirection === 'down' ? -88 : 0,
+          transition: theme =>
+            theme.transitions.create('top', {
+              duration: theme.transitions.duration.standard,
+            }),
+        }}
       >
         <Toolbar>
           <Grid container justifyContent="center">
@@ -68,14 +81,14 @@ const Navbar = () => {
                       onClick={() => handleNavigateToFeed()}
                       sx={{ cursor: 'pointer' }}
                       textTransform="none"
-                      variant={lessThanLarge ? 'subtitle2' : 'h5'}
+                      variant={lessThanExtraLarge ? 'subtitle2' : 'h5'}
                     >
                       ShapeUp
                     </Typography>
                   </Tooltip>
                 </Stack>
               </Grid>
-              {lessThanLarge ? (
+              {lessThanExtraLarge ? (
                 <MobileVariation
                   openConfirmationModal={handleOpenConfirmationModal}
                 />
@@ -98,4 +111,13 @@ const Navbar = () => {
     </>
   )
 }
+
+Navbar.propTypes = {
+  scrollDirection: P.string,
+}
+
+Navbar.defaultProps = {
+  scrollDirection: 'up',
+}
+
 export { Navbar }

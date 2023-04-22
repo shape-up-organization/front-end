@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded'
+
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded'
 import FitnessCenterRoundedIcon from '@mui/icons-material/FitnessCenterRounded'
@@ -17,7 +18,6 @@ import SearchIcon from '@mui/icons-material/Search'
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded'
 import {
   Button,
-  Dialog,
   DialogTitle,
   Drawer,
   Grid,
@@ -25,37 +25,40 @@ import {
   Stack,
   Tooltip,
   Typography,
-  useMediaQuery,
 } from '@mui/material'
 
 import { Avatar } from '@atoms/Avatar'
 import { Divider } from '@atoms/Divider'
+import { CardProfile } from '@molecules/CardProfile'
 
 import { useChat } from '@contexts'
+import { useNavigateSearch } from '@hooks'
 
-import { CardProfile } from '@molecules/CardProfile'
+import { CardRank } from '@molecules/CardRank'
 import { useStyles } from './MobileVariation.styles'
+import { SimpleModal } from './SimpleModal'
 
 const MobileVariation = ({ openConfirmationModal }) => {
   const { t } = useTranslation()
   const { pathname } = useLocation()
   const navigate = useNavigate()
+  const navigateSearch = useNavigateSearch()
   const { userData } = useChat()
-  const lessThanSmall = useMediaQuery(theme => theme.breakpoints.down('sm'))
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [isCardProfileOpen, setIsCardProfileOpen] = useState(false)
+  const [openCardProfile, setOpenCardProfile] = useState(false)
+  const [openCardRank, setOpenCardRank] = useState(false)
 
   const { classes } = useStyles()
 
   const handleCloseDrawer = () => setIsDrawerOpen(false)
   const handleOpenDrawer = () => setIsDrawerOpen(true)
 
-  const handleCloseCardProfile = () => setIsCardProfileOpen(false)
-  const handleOpenCardProfile = () => setIsCardProfileOpen(true)
+  const toggleCardProfile = () => setOpenCardProfile(current => !current)
+  const toggleCardRank = () => setOpenCardRank(current => !current)
 
   const handleNavigate = page => {
-    navigate(page)
+    if (pathname !== page) navigate(page)
     handleCloseDrawer()
   }
 
@@ -86,15 +89,25 @@ const MobileVariation = ({ openConfirmationModal }) => {
     <>
       <Grid item xs={4} display="flex" gap={2} justifyContent="center">
         <Tooltip title={t('pages.feed.tooltip.feed')}>
-          <IconButton onClick={handleOpenCardProfile} size="small">
+          <IconButton onClick={toggleCardProfile} size="small">
             <AccountBoxRoundedIcon />
           </IconButton>
         </Tooltip>
+        <SimpleModal
+          open={openCardProfile}
+          Component={CardProfile}
+          handleClose={toggleCardProfile}
+        />
         <Tooltip title={t('pages.feed.tooltip.quests')}>
-          <IconButton onClick={() => {}} size="small">
+          <IconButton onClick={toggleCardRank} size="small">
             <MilitaryTechRoundedIcon />
           </IconButton>
         </Tooltip>
+        <SimpleModal
+          open={openCardRank}
+          Component={CardRank}
+          handleClose={toggleCardRank}
+        />
       </Grid>
       <Grid item xs={4} display="flex" justifyContent="flex-end">
         <Tooltip title={t('pages.feed.tooltip.menu')}>
@@ -128,7 +141,12 @@ const MobileVariation = ({ openConfirmationModal }) => {
                 <Grid container item xs={7} rowGap={1}>
                   <Button
                     fullWidth
-                    onClick={() => handleNavigate('profile')}
+                    onClick={() => {
+                      navigateSearch('/profile', {
+                        username: userData.username,
+                      })
+                      handleCloseDrawer()
+                    }}
                     startIcon={<PersonRoundedIcon />}
                     variant="contained"
                   >
@@ -191,17 +209,6 @@ const MobileVariation = ({ openConfirmationModal }) => {
           </Grid>
         </Grid>
       </Drawer>
-      <Dialog
-        fullScreen={lessThanSmall}
-        onClose={handleCloseCardProfile}
-        open={isCardProfileOpen}
-        sx={{
-          height: theme => `calc(100vh - ${theme.spacing(11)})`,
-          top: theme => theme.spacing(11),
-        }}
-      >
-        <CardProfile handleCloseCardProfile={handleCloseCardProfile} />
-      </Dialog>
     </>
   )
 }

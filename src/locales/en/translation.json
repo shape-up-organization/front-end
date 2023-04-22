@@ -1,6 +1,16 @@
 {
   "components": {
     "molecules": {
+      "cardCreatePost": {
+        "others": {
+          "buttonOpen": "Photo/Video",
+          "modalTitle": "Create your post"
+        },
+        "tooltips": {
+          "backStep": "Go back",
+          "closeModal": "Close"
+        }
+      },
       "cardProfile": {
         "quest": {
           "title": "Daily Challenges"
@@ -14,9 +24,42 @@
           "nextLevel": "to level"
         }
       },
+      "cardRank": {
+        "tabs": {
+          "friends": "Friends",
+          "global": "Global"
+        }
+      },
       "confirmationModal": {
         "cancel": "Cancel",
         "confirm": "Confirm"
+      },
+      "friendshipOptions": {
+        "options": {
+          "acceptFriendshipRequest": "Accept friendship request",
+          "addFriend": "Add friend",
+          "blockUser": "Block",
+          "cancelFriendshipRequest": "Cancel friendship request",
+          "deletePost": "Delete post",
+          "refuseFriendshipRequest": "Refuse friendship request",
+          "removeFriend": "Remove friend",
+          "sharePost": "Share post"
+        },
+        "snackbar": {
+          "acceptFriendshipRequest": "Friendship request accepted, you and {{userFirstName}} are now friends!",
+          "alreadyFriends": "You and {{userFirstName}} are already friends!",
+          "friendshipRequestAlreadyExists": "There is already a friendship request between you and {{userFirstName}}!",
+          "genericErrorAcceptFriendshipRequest": "Ops, there was an error accepting the friendship request, please try again later!",
+          "genericErrorSendFriendshipRequest": "Ops, there was an error sending the friendship request, please try again later!",
+          "sentFriendshipRequest": "Friendship request sent to {{userFirstName}}!",
+          "userNotFound": "User not found!"
+        }
+      },
+      "textArea": {
+        "tooltips": {
+          "emojiPickerButton": "Open emoji picker menu",
+          "scrollToBottom": "Scroll to bottom"
+        }
       }
     }
   },
@@ -50,10 +93,8 @@
         "chatArrowBackButton": "Go back",
         "chatAvatarButton": "Open profile picture",
         "chatMenuButton": "Open chat menu",
-        "emojiPickerButton": "Open emoji picker menu",
         "sendMessageButton": "Send message",
         "scrollToTop": "Scroll to top",
-        "scrollToBottom": "Scroll to bottom",
         "switchChatTypeButton": {
           "friends": "Friends",
           "squads": "Squads"
@@ -69,6 +110,7 @@
       "others": {
         "confirmationModalMessage": "Are you sure you want to exit the account?",
         "confirmationModalTitle": "Exit account",
+        "postInputPlaceholder": "Post your progress...",
         "searchPlaceholder": "Search for users..."
       },
       "tooltip": {
@@ -78,6 +120,7 @@
         "notifications": "Notifications",
         "quests": "Quests",
         "search": "Search",
+        "sendPostButton": "Send post",
         "settings": "Settings"
       }
     },
@@ -199,19 +242,19 @@
         "externalButton": "Sign in with {{provider}}"
       }
     },
+    "profile": {
+      "others": {
+        "editProfile": "Edit profile",
+        "friendsAmount": "{{amount}} friends",
+        "level": "level"
+      }
+    },
     "search": {
       "others": {
         "friendLabel": "Friend",
+        "goToProfile": "Go to profile",
         "levelLabel": "Level",
         "searchPlaceholder": "Search for users..."
-      },
-      "menu": {
-        "acceptFriendshipRequest": "Accept friendship request",
-        "addFriend": "Add friend",
-        "cancelFriendshipRequest": "Cancel friendship request",
-        "goToProfile": "Go to profile",
-        "refuseFriendshipRequest": "Refuse friendship request",
-        "removeFriend": "Remove friend"
       },
       "snackbar": {
         "acceptFriendshipRequest": "Friendship request accepted, you and {{userFirstName}} are now friends!",

@@ -83,9 +83,10 @@ const Header = () => {
           display: 'flex',
           height: '100%',
           width: '100%',
+
           '& .MuiBadge-badge': {
             top: 36,
-            left: 16,
+            left: 20,
           },
         }}
       >

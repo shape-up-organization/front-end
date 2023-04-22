@@ -1,6 +1,16 @@
 {
   "components": {
     "molecules": {
+      "cardCreatePost": {
+        "others": {
+          "buttonOpen": "Foto/Video",
+          "modalTitle": "Crie a sua publicação"
+        },
+        "tooltips": {
+          "backStep": "Voltar",
+          "closeModal": "Fechar"
+        }
+      },
       "cardProfile": {
         "quest": {
           "title": "Desafios Diários"
@@ -14,9 +24,42 @@
           "nextLevel": "para o level"
         }
       },
+      "cardRank": {
+        "tabs": {
+          "friends": "Amigos",
+          "global": "Global"
+        }
+      },
       "confirmationModal": {
         "cancel": "Cancelar",
         "confirm": "Confirmar"
+      },
+      "friendshipOptions": {
+        "options": {
+          "acceptFriendshipRequest": "Aceitar solicitação de amizade",
+          "addFriend": "Adicionar amigo",
+          "blockUser": "Bloquear",
+          "cancelFriendshipRequest": "Cancelar solicitação de amizade",
+          "deletePost": "Excluir postagem",
+          "refuseFriendshipRequest": "Recusar solicitação de amizade",
+          "removeFriend": "Remover amigo",
+          "sharePost": "Compartilhar postagem"
+        },
+        "snackbar": {
+          "acceptFriendshipRequest": "Solicitação aceita, você e {{userFirstName}} agora tem uma amizade!",
+          "alreadyFriends": "Você e {{userFirstName}} já se adicionaram!",
+          "friendshipRequestAlreadyExists": "Já existe uma solicitação de amizade entre você e {{userFirstName}}!",
+          "genericErrorAcceptFriendshipRequest": "Ops, houve algum erro ao aceitar a solicitação de amizade, tente novamente mais tarde!",
+          "genericErrorSendFriendshipRequest": "Ops, houve algum erro ao enviar ao enviar a solicitação de amizade, tente novamente mais tarde!",
+          "sentFriendshipRequest": "Solicitação de amizade enviada para {{userFirstName}}!",
+          "userNotFound": "Usuário não encontrado!"
+        }
+      },
+      "textArea": {
+        "tooltips": {
+          "emojiPickerButton": "Abrir menu de emoji",
+          "scrollToBottom": "Rolar para o final"
+        }
       }
     }
   },
@@ -50,10 +93,8 @@
         "chatArrowBackButton": "Voltar",
         "chatAvatarButton": "Abrir foto de perfil",
         "chatMenuButton": "Abrir menu de chat",
-        "emojiPickerButton": "Abrir menu de emoji",
         "sendMessageButton": "Enviar mensagem",
         "scrollToTop": "Rolar para o topo",
-        "scrollToBottom": "Rolar para o final",
         "switchChatTypeButton": {
           "friends": "Amigos",
           "squads": "Squads"
@@ -69,6 +110,7 @@
       "others": {
         "confirmationModalMessage": "Tem certeza que deseja sair da sua conta e voltar para a tela inicial?",
         "confirmationModalTitle": "Sair da conta",
+        "postInputPlaceholder": "Mostre seu progresso...",
         "searchPlaceholder": "Procure por usuários..."
       },
       "tooltip": {
@@ -78,6 +120,7 @@
         "notifications": "Notificações",
         "quests": "Missões",
         "search": "Pesquisar",
+        "sendPostButton": "Enviar postagem",
         "settings": "Configurações"
       }
     },
@@ -199,28 +242,19 @@
         "externalButton": "Entre com {{provider}}"
       }
     },
+    "profile": {
+      "others": {
+        "editProfile": "Editar perfil",
+        "friendsAmount": "{{amount}} amigos",
+        "level": "nível"
+      }
+    },
     "search": {
       "others": {
         "friendLabel": "Amigo(a)",
+        "goToProfile": "Ir para o perfil",
         "levelLabel": "Nível",
         "searchPlaceholder": "Procure por pessoas..."
-      },
-      "menu": {
-        "acceptFriendshipRequest": "Aceitar solicitação de amizade",
-        "addFriend": "Adicionar amigo",
-        "cancelFriendshipRequest": "Cancelar solicitação de amizade",
-        "goToProfile": "Ir para o perfil",
-        "refuseFriendshipRequest": "Recusar solicitação de amizade",
-        "removeFriend": "Remover amigo"
-      },
-      "snackbar": {
-        "acceptFriendshipRequest": "Solicitação aceita, você e {{userFirstName}} agora são amigos(as)!",
-        "alreadyFriends": "Você e {{userFirstName}} já são amigos(as)!",
-        "friendshipRequestAlreadyExists": "Já existe uma solicitação de amizade entre você e {{userFirstName}}!",
-        "genericErrorAcceptFriendshipRequest": "Ops, houve algum erro ao aceitar a solicitação de amizade, tente novamente mais tarde!",
-        "genericErrorSendFriendshipRequest": "Ops, houve algum erro ao enviar ao enviar a solicitação de amizade, tente novamente mais tarde!",
-        "sentFriendshipRequest": "Solicitação de amizade enviada para {{userFirstName}}!",
-        "userNotFound": "Usuário não encontrado!"
       }
     }
   }

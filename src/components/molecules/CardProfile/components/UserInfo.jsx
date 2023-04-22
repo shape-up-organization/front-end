@@ -1,25 +1,30 @@
+import P from 'prop-types'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
 
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded'
-import { Grid, IconButton, Tooltip, Typography } from '@mui/material'
+import { Grid, IconButton, Paper, Tooltip, Typography } from '@mui/material'
 
 import { Avatar } from '@atoms/Avatar'
 
 import { useChat } from '@contexts'
+import { useNavigateSearch } from '@hooks'
 
-const UserInfo = () => {
+const UserInfo = ({ closeCard }) => {
   const { t } = useTranslation()
-  const navigate = useNavigate()
+  const navigateSearch = useNavigateSearch()
   const { userData } = useChat()
 
-  const handleGoToProfile = () => navigate(`/profile/${userData.username}`)
+  const handleGoToProfile = () => {
+    navigateSearch('/profile', { username: userData.username })
+    if (closeCard) closeCard()
+  }
 
   return (
     <Grid
       container
-      bgcolor="background.paper"
+      bgcolor="background.default"
       borderRadius={theme => theme.shape.borderRadius}
+      component={Paper}
       justifyContent="center"
       px={2}
       py={2}
@@ -55,6 +60,7 @@ const UserInfo = () => {
         justifyContent="flex-end"
       >
         <Tooltip
+          sx={{ mb: '-5px' }}
           title={t('components.molecules.cardProfile.tooltips.goToProfile')}
         >
           <IconButton onClick={handleGoToProfile}>
@@ -64,6 +70,14 @@ const UserInfo = () => {
       </Grid>
     </Grid>
   )
+}
+
+UserInfo.propTypes = {
+  closeCard: P.func,
+}
+
+UserInfo.defaultProps = {
+  closeCard: null,
 }
 
 export { UserInfo }

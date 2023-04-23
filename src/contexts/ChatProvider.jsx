@@ -65,6 +65,15 @@ export const ChatProvider = ({ children }) => {
   }, [chatsData.deprecated])
 
   useEffect(() => {
+    if (activeChat)
+      setActiveChat(
+        chatsData[chatsData.type].find(
+          chat => chat.username === activeChat.username
+        )
+      )
+  }, [chatsData.friends, chatsData.squads])
+
+  useEffect(() => {
     setDisplayChat(!lessThanMedium || !!activeChat)
     setDisplayMessagesList(!lessThanMedium || (lessThanMedium && !activeChat))
     setResponsiveSize(lessThanMedium ? 'mobile' : 'desktop')

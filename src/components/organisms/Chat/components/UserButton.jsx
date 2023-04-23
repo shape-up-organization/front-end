@@ -1,10 +1,18 @@
 import { useState } from 'react'
 
-import P from 'prop-types'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 
+import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded'
 import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded'
-import { Box, Button, Grid, IconButton, Typography } from '@mui/material'
+import {
+  Button,
+  Grid,
+  IconButton,
+  Paper,
+  Tooltip,
+  Typography,
+} from '@mui/material'
 
 import { Avatar } from '@atoms/Avatar'
 
@@ -13,12 +21,12 @@ import { useNavigateSearch } from '@hooks'
 
 import { ContextMenu } from './ContextMenu'
 
-const UserButton = ({ date, selected }) => {
-  const { name, username } = selected
-
+const UserButton = () => {
+  const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   const navigateSearch = useNavigateSearch()
-  const { userData } = useChat()
+  const { activeChat, closeChat, responsiveSize, userData } = useChat()
+  const { name, username } = activeChat
 
   const [menuAnchorEl, setContextMenuAnchorEl] = useState(null)
 
@@ -34,11 +42,12 @@ const UserButton = ({ date, selected }) => {
   }
 
   return (
-    <Button component={Box} disableRipple fullWidth sx={{ p: 0 }}>
+    <Button component={Paper} disableRipple fullWidth sx={{ p: 0 }}>
       <Grid
         container
         alignItems="center"
         color="text.primary"
+        columnGap={{ xs: 1, md: 2, lg: 3, xl: 4 }}
         component={Button}
         disableRipple={!!menuAnchorEl}
         fullWidth
@@ -53,27 +62,54 @@ const UserButton = ({ date, selected }) => {
         textAlign="left"
         textTransform="none"
       >
-        <Grid item xs={3} sm={2} display="flex" justifyContent="center">
-          <Avatar user={selected} />
+        <Grid
+          item
+          xs={3}
+          sm={2}
+          lg={1}
+          display="flex"
+          justifyContent="flex-end"
+        >
+          <Avatar user={activeChat} />
         </Grid>
-        <Grid container item xs={9} sm={10} rowSpacing={0}>
+        <Grid container item xs={8} sm={9} lg={10} rowSpacing={0}>
           <Grid item xs={12}>
-            <Typography fontWeight="700" noWrap variant="subtitle1">
+            <Typography fontWeight="700" noWrap variant="h6">
               {name}
             </Typography>
           </Grid>
-          <Grid item xs={12}>
-            <Typography
-              color="disabled"
-              fontWeight="700"
-              noWrap
-              variant="caption"
-            >
-              {date}
-            </Typography>
-          </Grid>
+          {activeChat.online !== undefined && (
+            <Grid item xs={12} mt={-1}>
+              <Typography
+                color={activeChat.online ? 'primary' : 'error'}
+                fontWeight="700"
+                textAlign="left"
+                textTransform="none"
+                variant="caption"
+              >
+                {activeChat.online ? 'online' : 'offline'}
+              </Typography>
+            </Grid>
+          )}
         </Grid>
       </Grid>
+      {responsiveSize === 'mobile' && (
+        <Tooltip title={t('pages.chat.tooltip.chatArrowBackButton')}>
+          <IconButton
+            onClick={closeChat}
+            sx={{
+              position: 'absolute',
+              left: {
+                xs: 8,
+                sm: 24,
+              },
+              top: 24,
+            }}
+          >
+            <ArrowBackIosRoundedIcon fontSize="small" />
+          </IconButton>
+        </Tooltip>
+      )}
       <IconButton
         onClick={handleOpenContextMenu}
         sx={{ position: 'absolute', right: 24, top: 24 }}
@@ -84,18 +120,10 @@ const UserButton = ({ date, selected }) => {
         anchorEl={menuAnchorEl}
         handleCloseMenu={handleCloseContextMenu}
         open={!!menuAnchorEl}
-        selected={selected}
+        userSelected={activeChat}
       />
     </Button>
   )
-}
-
-UserButton.propTypes = {
-  date: P.string.isRequired,
-  selected: P.shape({
-    name: P.string.isRequired,
-    username: P.string.isRequired,
-  }).isRequired,
 }
 
 export { UserButton }

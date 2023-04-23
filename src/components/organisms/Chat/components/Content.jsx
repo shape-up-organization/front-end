@@ -10,10 +10,10 @@ import { useChat } from '@contexts'
 import { useVisible } from '@hooks'
 import { lineBreaksToCharacters } from '@utils/helpers/strings'
 
-import { Header } from './Header'
 import { MessagesList } from './MessagesList'
 
 import { useStyles } from './Content.styles'
+import { UserButton } from './UserButton'
 
 const Content = () => {
   const { t } = useTranslation()
@@ -84,7 +84,7 @@ const Content = () => {
       p={2}
       pb={{ xs: 5 }}
     >
-      <Header />
+      <UserButton />
       <MessagesList listBottomRef={listBottomRef} messages={messages} />
       <TextArea
         handleSendMessage={handleSendMessage}

@@ -82,6 +82,7 @@
       },
       "others": {
         "chatNotFoundMessage": "No chat was found!",
+        "createSquadButton": "Create squad",
         "menuItemAcceptFriendshipRequest": "Accept friendship request",
         "menuItemAddFriend": "Add friend",
         "messageListTitle": "Chats",

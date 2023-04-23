@@ -52,7 +52,9 @@ const MessagesList = () => {
             <Typography pt={2} textAlign="center" variant="h5">
               {t('pages.chat.others.messageListTitle')}
             </Typography>
-            <SearchField />
+            <Box px={{ xs: 2, sm: 8, md: 4, lg: 8 }} width="100%">
+              <SearchField />
+            </Box>
             <Box>
               <ChatTypeSwitcher />
               <Divider />

@@ -5,8 +5,9 @@ import ContactsRoundedIcon from '@mui/icons-material/ContactsRounded'
 import { Button, Menu, MenuItem, Typography } from '@mui/material'
 
 import { Divider } from '@atoms/Divider'
-import { useNavigateSearch } from '@hooks'
 import { FriendshipOptions } from '@molecules/FriendshipOptions'
+
+import { useNavigateSearch } from '@hooks'
 
 const ContextMenu = ({ anchorEl, handleCloseMenu, open, userSelected }) => {
   const { username } = userSelected

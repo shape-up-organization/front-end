@@ -33,7 +33,7 @@ const CardCreatePost = () => {
       <Stack
         alignItems="center"
         component={Paper}
-        rowGap={3}
+        rowGap={1}
         px={{ xs: 3, xl: 8 }}
         py={3}
         width="100%"
@@ -59,7 +59,7 @@ const CardCreatePost = () => {
           />
         </Box>
         <Divider />
-        <Box>
+        <Box pt={1}>
           <Button
             color="inherit"
             onClick={handleOpenPostModal}

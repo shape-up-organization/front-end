@@ -153,7 +153,7 @@ const TextArea = ({
       </Grid>
       <Fade in={!!bottomVisibility}>
         <Grid item xs={12}>
-          <Grid container>
+          <Grid container mb={2}>
             <Grid item xs={2}>
               <Tooltip
                 placement="bottom-start"

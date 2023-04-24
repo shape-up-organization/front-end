@@ -1,26 +1,29 @@
 import { http } from '@api/lib/http'
 import { tryCatch } from '@api/lib/tryCatch'
 
-const acceptFriendshipRequest = async (jwtToken, username) =>
-  tryCatch(http.post, `/friends/accept-friendship-request/${username}`, null, {
-    headers: {
-      Authorization: `Bearer ${jwtToken}`,
-    },
-  })
+import { withAuth } from '@api/middlewares/withAuth'
+import { withHeaders } from '@api/middlewares/withHeaders'
 
-const getAllFriendship = async jwtToken =>
-  tryCatch(http.get, '/friends/get-all-friendship', {
-    headers: {
-      Authorization: `Bearer ${jwtToken}`,
-    },
-  })
+const route = '/friends'
 
-const sendFriendshipRequest = async (jwtToken, username) =>
-  tryCatch(http.post, `/friends/sent-friendship-request/${username}`, null, {
-    headers: {
-      Authorization: `Bearer ${jwtToken}`,
-    },
-  })
+const acceptFriendshipRequest = async username =>
+  tryCatch(
+    http.post,
+    `${route}/accept-friendship-request/${username}`,
+    null,
+    withHeaders(withAuth())
+  )
+
+const getAllFriendship = async () =>
+  tryCatch(http.get, `${route}/get-all-friendship`, withHeaders(withAuth()))
+
+const sendFriendshipRequest = async username =>
+  tryCatch(
+    http.post,
+    `${route}/sent-friendship-request/${username}`,
+    null,
+    withHeaders(withAuth())
+  )
 
 export default {
   acceptFriendshipRequest,

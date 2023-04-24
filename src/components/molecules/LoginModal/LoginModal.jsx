@@ -103,12 +103,13 @@ const Content = ({ switchModal }) => {
 
   return (
     <Grid
-      component="form"
       container
+      component="form"
       justifyContent="center"
+      noValidate
       onSubmit={handleSubmit(handleLogin)}
-      rowSpacing={2}
       paddingTop={1}
+      rowSpacing={2}
     >
       <Grid item xs={12}>
         <TextField

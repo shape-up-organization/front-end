@@ -1,13 +1,14 @@
-import { Stack } from '@mui/material'
 import { motion } from 'framer-motion'
 import P from 'prop-types'
 
+import { Stack } from '@mui/material'
+
 const AnimatedWrapper = ({ children }) => (
   <motion.div
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    initial={{ opacity: 0 }}
-    transition={{ duration: 0.5 }}
+    animate={{ filter: 'blur(0px)', opacity: 1, scale: 1 }}
+    exit={{ filter: 'blur(0px)', opacity: 1, scale: 1 }}
+    initial={{ filter: 'blur(3px)', opacity: 0, scale: 0.98 }}
+    transition={{ easings: 'easeInOut', duration: 0.2 }}
     style={{
       display: 'flex',
       height: '100%',
@@ -15,7 +16,7 @@ const AnimatedWrapper = ({ children }) => (
       width: '100%',
     }}
   >
-    <Stack height="100%" width="100%" rowGap={4}>
+    <Stack height="100%" rowGap={4} width="100%">
       {children}
     </Stack>
   </motion.div>

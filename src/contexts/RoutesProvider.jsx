@@ -6,6 +6,7 @@ import { ErrorPage } from '@pages/ErrorPage'
 import { FeedPage } from '@pages/FeedPage'
 import { LandingPage } from '@pages/LandingPage'
 import { SearchPage } from '@pages/SearchPage'
+import { SettingsPage } from '@pages/SettingsPage'
 import { UserPage } from '@pages/UserPage'
 
 import { ProtectedLayout } from '@layouts/ProtectedLayout'
@@ -24,6 +25,7 @@ const RoutesProvider = () => (
             <Route path="chats" element={<ChatPage />} />
             <Route path="search" element={<SearchPage />} />
             <Route path="profile" element={<UserPage />} />
+            <Route path="settings" element={<SettingsPage />} />
           </Route>
         </Routes>
       </AnimatePresence>

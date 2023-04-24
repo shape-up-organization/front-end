@@ -46,7 +46,12 @@ const CardUser = ({ user, position }) => {
 
         <Avatar user={user} avatarSize="large" />
         <Typography color="text.primary" variant="body1">
-          <Typography color="error" display="inline" fontWeight={700}>
+          <Typography
+            color="primary"
+            component="span"
+            display="inline"
+            fontWeight={700}
+          >
             {user.xp}
           </Typography>{' '}
           XP

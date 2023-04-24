@@ -257,6 +257,83 @@
         "levelLabel": "Nível",
         "searchPlaceholder": "Procure por pessoas..."
       }
+    },
+    "settings": {
+      "accountOptions": {
+        "address": {
+          "zipCodePlaceholder": "CEP",
+          "cityPlaceholder": "Cidade",
+          "districtPlaceholder": "Bairro",
+          "statePlaceholder": "Estado",
+          "streetPlaceholder": "Rua",
+          "numberPlaceholder": "Número",
+          "complementPlaceholder": "Complemento"
+        },
+        "birth": {
+          "newBirthPlaceholder": "Nova data de nascimento"
+        },
+        "cellPhone": {
+          "newCellPhonePlaceholder": "Novo número"
+        },
+        "confirmationModal": {
+          "message": "Ao deletar sua conta, você perderá todos os seus dados e não poderá recuperá-los.",
+          "title": "Tem certeza que deseja deletar sua conta?"
+        },
+        "email": {
+          "newEmailPlaceholder": "Novo e-mail",
+          "infoText": "Por questões de segurança, será enviado um código para seu número de telefone. Você irá usá-lo na página de confirmação."
+        },
+        "options": {
+          "address": "Alterar endereço",
+          "birth": "Alterar data de nascimento",
+          "cellPhone": "Alterar número de celular",
+          "email": "Alterar E-mail",
+          "password": "Alterar senha"
+        },
+        "others": {
+          "buttonUpdate": "Atualizar",
+          "deleteAccount": "Excluir conta"
+        },
+        "password": {
+          "oldPasswordPlaceholder": "Senha antiga",
+          "newPasswordPlaceholder": "Nova senha",
+          "newPasswordConfirmationPlaceholder": "Confirme a nova senha"
+        },
+        "snackbar": {
+          "addressUpdated": "Endereço atualizado com sucesso!",
+          "genericError": "Ops, houve algum erro inesperado, tente novamente mais tarde!",
+          "invalidAddress": "Endereço inválido!",
+          "successAddress": "Endereço alterado com sucesso!",
+          "successBirth": "Data de nascimento alterada com sucesso!",
+          "successCellPhone": "Número alterado com sucesso!",
+          "successEmail": "E-mail alterado com sucesso!",
+          "successPassword": "Senha alterada com sucesso!",
+          "zipCodeNotFound": "CEP não encontrado!"
+        }
+      },
+      "accordions": [
+        {
+          "title": "Trocar foto",
+          "message": "Acesse a página do seu perfil e clique no botão de editar perfil ao lado direito, irá abrir uma tela onde será possível editar as informações do perfil e trocar sua foto."
+        },
+        {
+          "title": "Trocar senha",
+          "message": "Acesse a página de configurações e clique na aba 'Conta' e depois em 'Alterar Senha', insira a senha antiga e a nova. Caso não lembre mais a senha, aperte em 'esqueci senha', e você receberá um código via SMS, após inserir o código no site, você poderá alterar sua senha."
+        },
+        {
+          "title": "Excluir minha conta",
+          "message": "Para excluir sua conta, acesse a seção 'Conta' nas configurações e selecione a opção 'Excluir conta'. Siga as instruções na tela para confirmar a exclusão da sua conta."
+        }
+      ],
+      "others": {
+        "searchPlaceholder": "Procure por questões..."
+      },
+      "tabs": {
+        "account": "Conta",
+        "customization": "Personalização",
+        "help": "Ajuda",
+        "notifications": "Notificações"
+      }
     }
   }
 }

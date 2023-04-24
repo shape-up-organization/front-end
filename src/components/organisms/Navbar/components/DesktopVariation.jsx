@@ -75,12 +75,17 @@ const DesktopVariation = ({ openConfirmationModal }) => {
 
   const menuItems = useMemo(() => [
     {
-      onClick: () =>
-        navigateSearch('/profile', { username: userData.username }),
+      onClick: () => {
+        handleCloseSettings()
+        navigateSearch('/profile', { username: userData.username })
+      },
       text: 'pages.feed.menu.profile',
     },
     {
-      onClick: () => navigateToPage('/settings'),
+      onClick: () => {
+        handleCloseSettings()
+        navigateToPage('/settings')
+      },
       text: 'pages.feed.menu.settings',
     },
     {
@@ -144,7 +149,11 @@ const DesktopVariation = ({ openConfirmationModal }) => {
           <Tooltip placement="right" title={t('pages.feed.tooltip.settings')}>
             <IconButton onClick={handleOpenSettings}>
               <SettingsRoundedIcon
-                color={openSettings ? 'primary' : 'inherit'}
+                color={
+                  openSettings || pathname === '/settings'
+                    ? 'primary'
+                    : 'inherit'
+                }
                 fontSize="large"
               />
             </IconButton>

@@ -17,7 +17,7 @@ import {
 
 import { ConfirmationModal } from '@molecules/ConfirmationModal'
 
-import { useAuth } from '@contexts'
+import { useAuth, useChat } from '@contexts'
 
 import { DesktopVariation } from './components/DesktopVariation'
 import { MobileVariation } from './components/MobileVariation'
@@ -27,6 +27,7 @@ const Navbar = ({ scrollDirection }) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { signOut } = useAuth()
+  const { updateUserData } = useChat()
 
   const lessThanExtraLarge = useMediaQuery(theme =>
     theme.breakpoints.down('xl')
@@ -40,7 +41,10 @@ const Navbar = ({ scrollDirection }) => {
 
   const handleNavigateToFeed = () => pathname !== 'feed' && navigate('/feed')
 
-  // console.log(scrollRef)
+  const handleDisconnect = () => {
+    updateUserData({ connected: false })
+    signOut()
+  }
 
   return (
     <>
@@ -102,7 +106,7 @@ const Navbar = ({ scrollDirection }) => {
         </Toolbar>
       </AppBar>
       <ConfirmationModal
-        handleConfirm={signOut}
+        handleConfirm={handleDisconnect}
         handleCancel={handleCancelConfirmationModal}
         message={t('pages.feed.others.confirmationModalMessage')}
         open={confirmModalOpen}

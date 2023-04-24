@@ -16,7 +16,7 @@ const ProtectedLayout = () => {
     theme.breakpoints.down('xl')
   )
   const { getUserData, isTokenInvalid, signOut } = useAuth()
-  const { chatsData, loadData, updateOnline, userData } = useChat()
+  const { chatsData, loadData, updateUserData, userData } = useChat()
   const [scrollDirection, currentScrollRef, forceScrollDirection] =
     useScrollDirection()
 
@@ -25,7 +25,7 @@ const ProtectedLayout = () => {
   const verifyAuth = async () => {
     const isInvalid = await isTokenInvalid()
     if (isInvalid) {
-      updateOnline(false)
+      updateUserData({ connected: false })
       signOut()
       setIsLoading(false)
       return
@@ -34,9 +34,7 @@ const ProtectedLayout = () => {
     if (!userData.username) {
       const nextUserData = await getUserData()
       loadData(nextUserData)
-    }
-
-    if (!userData.connected && !chatsData.deprecated) updateOnline(true)
+    } else if (!userData.connected) updateUserData({ connected: true })
 
     setIsLoading(false)
   }

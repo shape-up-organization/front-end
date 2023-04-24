@@ -59,7 +59,7 @@ const PublishStep = ({ images }) => {
               </Carousel>
             </Box>
           </Box>
-          <Box width={lessThanLarge ? '100%' : '32%'}>
+          <Box width={lessThanLarge ? '100%' : '32%'} pb={4}>
             <Box component={Paper} p={2} pb={3}>
               <TextArea
                 handleSendMessage={handleCreatePost}

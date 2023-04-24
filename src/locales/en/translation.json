@@ -266,6 +266,83 @@
         "sentFriendshipRequest": "Friendship request sent to {{newFriendFirstName}}!",
         "userNotFound": "User not found!"
       }
+    },
+    "settings": {
+      "accountOptions": {
+        "address": {
+          "zipCodePlaceholder": "ZIP Code",
+          "cityPlaceholder": "City",
+          "districtPlaceholder": "District",
+          "statePlaceholder": "State",
+          "streetPlaceholder": "Street",
+          "numberPlaceholder": "Number",
+          "complementPlaceholder": "Complement"
+        },
+        "birth": {
+          "newBirthPlaceholder": "New birth date"
+        },
+        "cellPhone": {
+          "newCellPhonePlaceholder": "New phone number"
+        },
+        "confirmationModal": {
+          "message": "This action cannot be undone and you will lose all your data!",
+          "title": "Delete your account?"
+        },
+        "email": {
+          "newEmailPlaceholder": "New e-mail",
+          "infoText": "For security reasons, a code will be sent to your phone number. You will use it on the confirmation page."
+        },
+        "options": {
+          "address": "Change address",
+          "birth": "Change birth date",
+          "cellPhone": "Change phone number",
+          "email": "Change email",
+          "password": "Change password"
+        },
+        "others": {
+          "buttonUpdate": "Update",
+          "deleteAccount": "Delete account"
+        },
+        "password": {
+          "oldPasswordPlaceholder": "Old password",
+          "newPasswordPlaceholder": "New password",
+          "newPasswordConfirmationPlaceholder": "Confirm new password"
+        },
+        "snackbar": {
+          "addressUpdated": "Address updated successfully!",
+          "genericError": "Ops, something went wrong, please try again later!",
+          "invalidAddress": "Invalid address!",
+          "successAddress": "Address changed successfully!",
+          "successBirth": "Birth date changed successfully!",
+          "successCellPhone": "Phone number changed successfully!",
+          "successEmail": "Email changed successfully!",
+          "successPassword": "Password changed successfully!",
+          "zipCodeNotFound": "ZIP Code not found!"
+        }
+      },
+      "accordions": [
+        {
+          "title": "Change profile picture",
+          "message": "Access your profile page and click on the edit profile button on the right side. This will open a screen where you can edit your profile information and change your photo."
+        },
+        {
+          "title": "Change password",
+          "message": "Access the settings page and click on the Account tab, then select Change Password. Enter your old and new passwords. If you don't remember your password, click on 'forgot password' and you will receive a code via SMS. After entering the code on the site, you will be able to change your password."
+        },
+        {
+          "title": "Delete my account",
+          "message": "To delete your account, access the 'Account' section in the settings and select the 'Delete Account' option. Follow the instructions on the screen to confirm the deletion of your account."
+        }
+      ],
+      "others": {
+        "searchPlaceholder": "Search for questions..."
+      },
+      "tabs": {
+        "account": "Account",
+        "customization": "Customization",
+        "help": "Help",
+        "notifications": "Notifications"
+      }
     }
   }
 }

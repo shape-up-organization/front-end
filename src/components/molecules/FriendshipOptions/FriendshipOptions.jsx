@@ -12,7 +12,7 @@ import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded'
 import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded'
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded'
 
-import api from '@api/services/friends'
+import apiFriends from '@api/services/friends'
 import { useChat } from '@contexts'
 import { Options } from '@templates/Options'
 
@@ -36,10 +36,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
 
   const sendFriendship = async menuItem => {
     setMenuItemLoading(menuItem)
-    const response = await api.sendFriendshipRequest(
-      userData.jwtToken,
-      username
-    )
+    const response = await apiFriends.sendFriendshipRequest(username)
     setMenuItemLoading('')
     postAction()
 
@@ -109,10 +106,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
 
   const acceptFriendship = async menuItem => {
     setMenuItemLoading(menuItem)
-    const response = await api.acceptFriendshipRequest(
-      userData.jwtToken,
-      username
-    )
+    const response = await apiFriends.acceptFriendshipRequest(username)
     setMenuItemLoading('')
     postAction()
 

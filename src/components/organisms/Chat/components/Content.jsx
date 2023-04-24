@@ -82,7 +82,7 @@ const Content = () => {
       justifyContent="space-between"
       overflow="auto"
       p={2}
-      pb={{ xs: 5 }}
+      pb={{ xs: 8, md: 4 }}
     >
       <UserButton />
       <MessagesList listBottomRef={listBottomRef} messages={messages} />
@@ -90,6 +90,7 @@ const Content = () => {
         handleSendMessage={handleSendMessage}
         interfaceOptions={{
           alwaysShowBottom: true,
+          isLoading: !userData.connected,
           textAreaProps: {
             maxRows: 3,
           },

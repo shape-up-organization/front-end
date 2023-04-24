@@ -6,11 +6,25 @@ import { withHeaders } from '@api/middlewares/withHeaders'
 
 const route = '/friends'
 
+const deleteFriend = async username =>
+  tryCatch(
+    http.delete,
+    `${route}/delete-friend/${username}`,
+    withHeaders(withAuth())
+  )
+
 const acceptFriendshipRequest = async username =>
   tryCatch(
     http.post,
     `${route}/accept-friendship-request/${username}`,
     null,
+    withHeaders(withAuth())
+  )
+
+const deleteFriendshipRequest = async username =>
+  tryCatch(
+    http.delete,
+    `${route}/delete-friendship-request/${username}`,
     withHeaders(withAuth())
   )
 
@@ -27,6 +41,8 @@ const sendFriendshipRequest = async username =>
 
 export default {
   acceptFriendshipRequest,
+  deleteFriend,
+  deleteFriendshipRequest,
   getAllFriendship,
   sendFriendshipRequest,
 }

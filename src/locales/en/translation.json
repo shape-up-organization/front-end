@@ -48,6 +48,8 @@
         "snackbar": {
           "acceptFriendshipRequest": "Friendship request accepted, you and {{userFirstName}} are now friends!",
           "alreadyFriends": "You and {{userFirstName}} are already friends!",
+          "deleteFriend": "Friendship canceled!",
+          "deleteFriendshipRequest": "Friendship request canceled!",
           "friendshipRequestAlreadyExists": "There is already a friendship request between you and {{userFirstName}}!",
           "genericErrorAcceptFriendshipRequest": "Ops, there was an error accepting the friendship request, please try again later!",
           "genericErrorSendFriendshipRequest": "Ops, there was an error sending the friendship request, please try again later!",
@@ -258,12 +260,7 @@
         "searchPlaceholder": "Search for users..."
       },
       "snackbar": {
-        "acceptFriendshipRequest": "Friendship request accepted, you and {{userFirstName}} are now friends!",
-        "alreadyFriends": "You and {{newFriendFirstName}} are already friends!",
-        "friendshipRequestAlreadyExists": "There is already a friendship request between you and {{newFriendFirstName}}!",
-        "genericErrorAcceptFriendshipRequest": "Ops, there was an error accepting the friendship request, please try again later!",
-        "genericErrorSendFriendshipRequest": "Ops, there was an error sending the friendship request, please try again later!",
-        "sentFriendshipRequest": "Friendship request sent to {{newFriendFirstName}}!",
+        "genericError": "Ops, there was an error searching for users, please try again later!",
         "userNotFound": "User not found!"
       }
     },

@@ -14,6 +14,7 @@ import {
   Stack,
   Tab,
   Tabs,
+  useMediaQuery,
 } from '@mui/material'
 
 import rankingGetTopMock from '@mocks/ranking/getTop'
@@ -23,6 +24,7 @@ import { Top } from './components/Top'
 
 const CardRank = ({ handleCloseCard }) => {
   const { t } = useTranslation()
+  const lessThanSmall = useMediaQuery(theme => theme.breakpoints.down('sm'))
 
   const [rankedUsers, setRankedUsers] = useState(null)
   const [rankTab, setRankTab] = useState('friends')
@@ -36,7 +38,12 @@ const CardRank = ({ handleCloseCard }) => {
   }, [])
 
   return (
-    <Grid container component={Paper}>
+    <Grid
+      container
+      alignItems="flex-start"
+      component={Paper}
+      height={lessThanSmall ? '100%' : 'fit-content'}
+    >
       {handleCloseCard && (
         <Grid item xs={12} pl={1} pt={1}>
           <IconButton onClick={handleCloseCard}>
@@ -45,7 +52,7 @@ const CardRank = ({ handleCloseCard }) => {
         </Grid>
       )}
       <Grid item xs={12}>
-        <Stack width="100%" px={2} py={handleCloseCard ? 0 : 3} rowGap={2}>
+        <Stack width="100%" px={2} py={3} rowGap={2}>
           <Tabs onChange={handleChangeTab} value={rankTab} variant="fullWidth">
             <Tab
               icon={<PeopleIcon />}

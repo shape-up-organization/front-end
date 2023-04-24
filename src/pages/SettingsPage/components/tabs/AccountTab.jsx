@@ -23,11 +23,11 @@ import { ConfirmationModal } from '@molecules/ConfirmationModal'
 import apiProfile from '@api/services/profile'
 import { useAuth } from '@contexts'
 
-import { AddressUpdate } from '../optionsContent/AddressUpdate'
-import { BirthUpdate } from '../optionsContent/BirthUpdate'
-import { CellPhoneUpdate } from '../optionsContent/CellPhoneUpdate'
-import { EmailUpdate } from '../optionsContent/EmailUpdate'
-import { PasswordUpdate } from '../optionsContent/PasswordUpdate'
+import { AddressUpdate } from '../accountOptions/AddressUpdate'
+import { BirthUpdate } from '../accountOptions/BirthUpdate'
+import { CellPhoneUpdate } from '../accountOptions/CellPhoneUpdate'
+import { EmailUpdate } from '../accountOptions/EmailUpdate'
+import { PasswordUpdate } from '../accountOptions/PasswordUpdate'
 
 const options = {
   address: { component: () => <AddressUpdate /> },

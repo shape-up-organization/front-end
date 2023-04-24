@@ -6,9 +6,16 @@ const SimpleModal = ({ Component, handleClose, open }) => {
   const lessThanSmall = useMediaQuery(theme => theme.breakpoints.down('sm'))
 
   return (
-    <Dialog fullScreen={lessThanSmall} onClose={handleClose} open={open}>
+    <Dialog
+      fullScreen={lessThanSmall}
+      sx={{
+        minHeight: '100vh',
+      }}
+      onClose={handleClose}
+      open={open}
+    >
       <Fade in>
-        <Stack width="100%">
+        <Stack width="100%" height="100%">
           <Component handleCloseCard={handleClose} />
         </Stack>
       </Fade>

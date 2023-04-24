@@ -1,6 +1,7 @@
 import { AnimatePresence } from 'framer-motion'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
+import { AboutPage } from '@pages/AboutPage'
 import { ChatPage } from '@pages/ChatPage'
 import { ErrorPage } from '@pages/ErrorPage'
 import { FeedPage } from '@pages/FeedPage'
@@ -20,6 +21,7 @@ const RoutesProvider = () => (
         <Routes>
           <Route path="*" element={<ErrorPage />} />
           <Route index element={<LandingPage />} />
+          <Route path="about" element={<AboutPage />} />
           <Route element={<ProtectedLayout />}>
             <Route path="feed" element={<FeedPage />} />
             <Route path="chats" element={<ChatPage />} />

@@ -8,8 +8,8 @@ import { useMediaQuery } from '@mui/material'
 
 import apiFriends from '@api/services/friends'
 import apiPresence from '@api/services/presence'
+import apiUsers from '@api/services/users'
 import mockedSquads from '@mocks/squads/get'
-import usersGetMock from '@mocks/users/get'
 import { formatLocalDate } from '@utils/helpers/dateTime'
 import { normalizeString } from '@utils/helpers/strings'
 
@@ -30,6 +30,7 @@ export const ChatProvider = ({ children }) => {
     squads: [],
     type: 'friends',
   })
+  const [friendsOnline, setFriendsOnline] = useState({})
   const [isLoading, setIsLoading] = useState(true)
   const [userData, setUserData] = useState({
     connected: false,
@@ -251,21 +252,10 @@ export const ChatProvider = ({ children }) => {
       `${import.meta.env.VITE_API_URL}/presence/stream?userId=${id}`
     ).onmessage = event => {
       const data = JSON.parse(event.data)
-      setChatsData(current => {
-        const newFriends = current.friends.map(newFriend => {
-          if (newFriend.username === friend.username) {
-            return {
-              ...friend,
-              online: data.online,
-            }
-          }
-          return newFriend
-        })
-        return {
-          ...current,
-          friends: newFriends,
-        }
-      })
+      setFriendsOnline(current => ({
+        ...current,
+        [friend.username]: data.online,
+      }))
     }
   }
 
@@ -323,18 +313,16 @@ export const ChatProvider = ({ children }) => {
 
   const getUserData = async username => {
     if (username === userData.username) {
-      return { data: userData, status: 'current' }
+      return { data: userData, relation: 'current', status: 200 }
     }
 
     const friendUser = chatsData.friends.find(
       friend => friend.username === username
     )
-    if (friendUser) return { data: friendUser, status: 'friend' }
+    if (friendUser) return { data: friendUser, relation: 'friend', status: 200 }
 
-    const user = usersGetMock.data.users.find(
-      userMock => userMock.username === username
-    )
-    return { data: user, status: 'user' }
+    const { data, status } = await apiUsers.searchByUsername(username)
+    return { data, relation: 'user', status }
   }
 
   const values = useMemo(
@@ -346,6 +334,7 @@ export const ChatProvider = ({ children }) => {
       displayChat,
       displayMessagesList,
       filterChats,
+      friendsOnline,
       getUserData,
       isLoading,
       loadData,
@@ -356,7 +345,7 @@ export const ChatProvider = ({ children }) => {
       updateUserData,
       userData,
     }),
-    [activeChat, chatsData, isLoading, responsiveSize, userData]
+    [activeChat, chatsData, friendsOnline, isLoading, responsiveSize, userData]
   )
 
   return <ChatContext.Provider value={values}>{children}</ChatContext.Provider>

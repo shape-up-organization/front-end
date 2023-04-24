@@ -66,7 +66,10 @@ const AddressUpdate = () => {
       return
     }
 
-    setAddressByZipCode(response.data)
+    setAddressByZipCode({
+      ...response.data,
+      zipCode: response.data.zipCode.replace(/(\d{5})(\d{3})/, '$1-$2'),
+    })
   }
 
   const checkZipCode = async event => {

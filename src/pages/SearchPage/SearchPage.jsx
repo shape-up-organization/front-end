@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { useSnackbar } from 'notistack'
 import { useTranslation } from 'react-i18next'
 
 import { Box, Grid, Paper, Stack } from '@mui/material'
@@ -8,20 +9,47 @@ import { Divider } from '@atoms/Divider'
 import { SearchField } from '@atoms/SearchField'
 import { AnimatedWrapper } from '@layouts/AnimatedWrapper'
 
-import mockedSearch from '@mocks/users/get'
+import apiUsers from '@api/services/users'
 
 import { UsersList } from './components/UsersList'
 
 const SearchPage = () => {
+  const { enqueueSnackbar } = useSnackbar()
   const { t } = useTranslation()
 
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [search, setSearch] = useState('')
   const [users, setUsers] = useState([])
 
-  useEffect(() => {
-    setUsers(mockedSearch?.data?.users)
+  const searchUsers = async () => {
+    setIsLoading(true)
+
+    const response = await apiUsers.searchByUsername(search)
     setIsLoading(false)
+
+    if (response.status === 404) {
+      setUsers([])
+      return
+    }
+
+    if (response.status !== 200) {
+      enqueueSnackbar(t('pages.search.snackbar.genericError'), {
+        variant: 'error',
+      })
+      setUsers([])
+      return
+    }
+
+    setUsers([response.data])
+  }
+
+  useEffect(() => {
+    if (!search) {
+      setUsers([])
+      return
+    }
+
+    searchUsers()
   }, [search])
 
   return (

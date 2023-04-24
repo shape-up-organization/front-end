@@ -103,7 +103,7 @@ const UserButton = () => {
                 xs: 8,
                 sm: 24,
               },
-              top: 24,
+              top: 18,
             }}
           >
             <ArrowBackIosRoundedIcon fontSize="small" />

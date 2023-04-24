@@ -1,17 +1,8 @@
 import P from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
-import { Photo } from '@atoms/Photo'
-import {
-  Box,
-  CircularProgress,
-  Divider,
-  Grow,
-  Stack,
-  Typography,
-} from '@mui/material'
+import { Divider, Stack, Typography } from '@mui/material'
 
-import notFoundGeneric from '@assets/images/not-found-generic.png'
 import { useChat } from '@contexts'
 
 import { UserButton } from './UserButton'
@@ -20,47 +11,29 @@ const UsersList = ({ isLoading, users }) => {
   const { t } = useTranslation()
   const { userData } = useChat()
 
-  if (isLoading || !users.length)
+  if (isLoading || users.length === 0)
     return (
-      <Stack alignItems="center" justifyContent="center" pt={8} width="100%">
-        {isLoading ? (
-          <Box pt={2}>
-            <CircularProgress />
-          </Box>
-        ) : (
-          <Stack alignItems="center" justifyContent="center" pt={2} spacing={2}>
-            <Grow in timeout={1000} unmountOnExit>
-              <Typography
-                color="primary"
-                fontWeight="900"
-                textAlign="center"
-                textTransform="uppercase"
-                variant="h6"
-              >
-                {t('pages.chat.others.chatNotFoundMessage')}
-              </Typography>
-            </Grow>
-            <Box maxWidth={208}>
-              <Photo
-                alt={t('pages.chat.alt.notFoundChatImage')}
-                animationSpeed={800}
-                src={notFoundGeneric}
-                fit="contain"
-              />
-            </Box>
-          </Stack>
-        )}
+      <Stack alignItems="center" justifyContent="center" py={8} width="100%">
+        <Typography
+          color="primary"
+          fontWeight="900"
+          textAlign="center"
+          textTransform="uppercase"
+          variant="h6"
+        >
+          {t('pages.search.snackbar.userNotFound')}
+        </Typography>
       </Stack>
     )
 
   return (
-    <Stack>
+    <Stack pb={4}>
       {users?.map(
-        user =>
+        (user, index) =>
           user.username !== userData.username && (
             <Stack key={user.username}>
               <UserButton user={user} />
-              <Divider />
+              {index !== users.length - 1 && <Divider />}
             </Stack>
           )
       )}

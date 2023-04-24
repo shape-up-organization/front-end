@@ -34,7 +34,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
   )
   const isUser = useMemo(() => userData.username === username, [username])
 
-  const sendFriendship = async menuItem => {
+  const sendFriendshipRequest = async menuItem => {
     setMenuItemLoading(menuItem)
     const response = await apiFriends.sendFriendshipRequest(username)
     setMenuItemLoading('')
@@ -104,7 +104,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
     )
   }
 
-  const acceptFriendship = async menuItem => {
+  const acceptFriendshipRequest = async menuItem => {
     setMenuItemLoading(menuItem)
     const response = await apiFriends.acceptFriendshipRequest(username)
     setMenuItemLoading('')
@@ -162,19 +162,97 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
     )
   }
 
+  const deleteFriendshipRequest = async menuItem => {
+    setMenuItemLoading(menuItem)
+    const response = await apiFriends.deleteFriendshipRequest(username)
+    setMenuItemLoading('')
+    postAction()
+
+    if (response.status === 404) {
+      enqueueSnackbar(
+        t('components.molecules.friendshipOptions.snackbar.userNotFound', {
+          userFirstName: firstName,
+        }),
+        {
+          variant: 'error',
+        }
+      )
+      return
+    }
+
+    if (response.status !== 204) {
+      enqueueSnackbar(
+        t(
+          'components.molecules.friendshipOptions.snackbar.genericErrorSendFriendshipRequest'
+        ),
+        {
+          variant: 'error',
+        }
+      )
+      return
+    }
+
+    enqueueSnackbar(
+      t(
+        'components.molecules.friendshipOptions.snackbar.deleteFriendshipRequest'
+      ),
+      {
+        variant: 'success',
+      }
+    )
+  }
+
+  const deleteFriend = async menuItem => {
+    setMenuItemLoading(menuItem)
+    const response = await apiFriends.deleteFriend(username)
+    setMenuItemLoading('')
+    postAction()
+
+    if (response.status === 404) {
+      enqueueSnackbar(
+        t('components.molecules.friendshipOptions.snackbar.userNotFound', {
+          userFirstName: firstName,
+        }),
+        {
+          variant: 'error',
+        }
+      )
+      return
+    }
+
+    if (response.status !== 204) {
+      enqueueSnackbar(
+        t(
+          'components.molecules.friendshipOptions.snackbar.genericErrorSendFriendshipRequest'
+        ),
+        {
+          variant: 'error',
+        }
+      )
+      return
+    }
+
+    enqueueSnackbar(
+      t('components.molecules.friendshipOptions.snackbar.deleteFriend'),
+      {
+        variant: 'success',
+      }
+    )
+  }
+
   const menuItems = useMemo(
     () => ({
       acceptFriend: {
         color: 'primary',
         icon: () => <CheckRoundedIcon />,
-        onClick: () => acceptFriendship('acceptFriend'),
+        onClick: () => acceptFriendshipRequest('acceptFriend'),
         text: 'acceptFriendshipRequest',
         variant: 'text',
       },
       addFriend: {
         color: 'primary',
         icon: () => <PersonAddRoundedIcon />,
-        onClick: () => sendFriendship('addFriend'),
+        onClick: () => sendFriendshipRequest('addFriend'),
         text: 'addFriend',
         variant: 'text',
       },
@@ -188,7 +266,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
       cancelFriendshipRequest: {
         color: 'error',
         icon: () => <CancelRoundedIcon />,
-        onClick: () => {},
+        onClick: () => deleteFriendshipRequest('cancelFriendshipRequest'),
         text: 'cancelFriendshipRequest',
         variant: 'text',
       },
@@ -202,14 +280,14 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
       refuseFriendshipRequest: {
         color: 'error',
         icon: () => <CancelRoundedIcon />,
-        onClick: () => {},
+        onClick: () => deleteFriendshipRequest('refuseFriendshipRequest'),
         text: 'refuseFriendshipRequest',
         variant: 'text',
       },
       removeFriend: {
         color: 'error',
         icon: () => <PersonRemoveRoundedIcon />,
-        onClick: () => {},
+        onClick: () => deleteFriend('removeFriend'),
         text: 'removeFriend',
       },
       sharePost: {
@@ -233,6 +311,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
       },
     })
 
+  pushMenuItem('addFriend')
   if (isUser && isPost) {
     pushMenuItem(isPost ? 'deletePost' : 'sharePost')
   } else {

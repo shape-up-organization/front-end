@@ -48,6 +48,8 @@
         "snackbar": {
           "acceptFriendshipRequest": "Solicitação aceita, você e {{userFirstName}} agora tem uma amizade!",
           "alreadyFriends": "Você e {{userFirstName}} já se adicionaram!",
+          "deleteFriend": "Amizade removida!",
+          "deleteFriendshipRequest": "Solicitação de amizade cancelada!",
           "friendshipRequestAlreadyExists": "Já existe uma solicitação de amizade entre você e {{userFirstName}}!",
           "genericErrorAcceptFriendshipRequest": "Ops, houve algum erro ao aceitar a solicitação de amizade, tente novamente mais tarde!",
           "genericErrorSendFriendshipRequest": "Ops, houve algum erro ao enviar ao enviar a solicitação de amizade, tente novamente mais tarde!",
@@ -256,6 +258,10 @@
         "goToProfile": "Ir para o perfil",
         "levelLabel": "Nível",
         "searchPlaceholder": "Procure por pessoas..."
+      },
+      "snackbar": {
+        "genericError": "Ops, houve algum erro ao buscar usuários, tente novamente mais tarde!",
+        "userNotFound": "Usuário não encontrado!"
       }
     },
     "settings": {

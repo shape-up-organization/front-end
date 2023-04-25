@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import P from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
@@ -17,9 +19,16 @@ import { FriendshipOptions } from '@molecules/FriendshipOptions'
 
 import { getLevel } from '@utils/constants/levels'
 
+import { EditModal } from './EditModal'
+
 const UserCard = ({ isCurrentUser, user }) => {
   const { t } = useTranslation()
   const lessThanMedium = useMediaQuery(theme => theme.breakpoints.down('lg'))
+
+  const [openEditModal, setOpenEditModal] = useState(false)
+
+  const handleOpenEditModal = () => setOpenEditModal(true)
+  const handleCloseEditModal = () => setOpenEditModal(false)
 
   return (
     <Grid container item component={Paper} p={{ xs: 2, md: 4 }} gap={2}>
@@ -92,12 +101,17 @@ const UserCard = ({ isCurrentUser, user }) => {
               <FriendshipOptions data={user} />
             </Stack>
           ) : (
-            <Button startIcon={<EditRoundedIcon />} fullWidth>
+            <Button
+              startIcon={<EditRoundedIcon />}
+              fullWidth
+              onClick={handleOpenEditModal}
+            >
               {t('pages.profile.others.editProfile')}
             </Button>
           )}
         </Stack>
       </Grid>
+      <EditModal open={openEditModal} handleClose={handleCloseEditModal} />
     </Grid>
   )
 }

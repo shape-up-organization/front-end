@@ -17,21 +17,19 @@ import { useChat } from '@contexts'
 import { Options } from '@templates/Options'
 
 const FriendshipOptions = ({ isPost, postAction, data }) => {
-  const { firstName, username } = data
+  const {
+    firstName,
+    haveFriendRequest = false,
+    isFriend = false,
+    username,
+  } = data
 
   const { t } = useTranslation()
   const { enqueueSnackbar } = useSnackbar()
-  const {
-    chatsData: { friends },
-    userData,
-  } = useChat()
+  const { updateFriends, userData } = useChat()
 
   const [menuItemLoading, setMenuItemLoading] = useState('')
 
-  const isFriend = useMemo(
-    () => friends.find(friend => friend.username === username),
-    [friends, username]
-  )
   const isUser = useMemo(() => userData.username === username, [username])
 
   const sendFriendshipRequest = async menuItem => {
@@ -160,6 +158,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
         variant: 'success',
       }
     )
+    updateFriends()
   }
 
   const deleteFriendshipRequest = async menuItem => {
@@ -238,6 +237,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
         variant: 'success',
       }
     )
+    updateFriends()
   }
 
   const menuItems = useMemo(
@@ -311,7 +311,6 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
       },
     })
 
-  pushMenuItem('addFriend')
   if (isUser && isPost) {
     pushMenuItem(isPost ? 'deletePost' : 'sharePost')
   } else {
@@ -319,9 +318,8 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
       pushMenuItem('removeFriend')
     } else {
       // TODO: add real check
-      const hasFriendshipRequest = true
       const userWhoSent = false
-      if (!hasFriendshipRequest) {
+      if (!haveFriendRequest) {
         pushMenuItem('addFriend')
       } else if (userWhoSent) {
         pushMenuItem('cancelFriendshipRequest')
@@ -341,6 +339,8 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
 FriendshipOptions.propTypes = {
   data: P.shape({
     firstName: P.string.isRequired,
+    isFriend: P.bool,
+    haveFriendRequest: P.bool,
     username: P.string.isRequired,
   }).isRequired,
   isPost: P.bool,

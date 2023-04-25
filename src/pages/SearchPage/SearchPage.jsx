@@ -27,7 +27,7 @@ const SearchPage = () => {
     const response = await apiUsers.searchByUsername(search)
     setIsLoading(false)
 
-    if (response.status === 404) {
+    if (response.status === 404 || response.status === 204) {
       setUsers([])
       return
     }

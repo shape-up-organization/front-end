@@ -259,13 +259,7 @@ export const ChatProvider = ({ children }) => {
     }
   }
 
-  const loadData = async nextUserData => {
-    await updateUserData(nextUserData)
-
-    await connect()
-
-    setIsLoading(true)
-
+  const updateFriends = async username => {
     const response = await apiFriends.getAllFriendship()
 
     if (response.status === 200) {
@@ -276,12 +270,11 @@ export const ChatProvider = ({ children }) => {
       const newData = {
         ...chatsData,
         friends: response.data
-          ?.filter(friend => friend.username !== nextUserData.username)
+          ?.filter(friend => friend.username !== username || userData.username)
           ?.map(friend => ({
             ...friend,
             name: `${friend.firstName} ${friend.lastName || ''}`,
             messages: [],
-            online: undefined,
           })),
         squads: mockedSquads.data.squads,
         type,
@@ -293,9 +286,16 @@ export const ChatProvider = ({ children }) => {
       setChatsData(newData)
 
       loadTotalNotifications(response.data)
-
-      setIsLoading(false)
     }
+  }
+
+  const loadData = async nextUserData => {
+    await updateUserData(nextUserData)
+    await connect()
+
+    setIsLoading(true)
+    await updateFriends(nextUserData.username)
+    setIsLoading(false)
   }
 
   const loadTotalNotifications = data => {
@@ -342,6 +342,7 @@ export const ChatProvider = ({ children }) => {
       responsiveSize,
       sendPrivateMessage,
       sendPublicMessage,
+      updateFriends,
       updateUserData,
       userData,
     }),

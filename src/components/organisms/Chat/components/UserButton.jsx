@@ -25,7 +25,8 @@ const UserButton = () => {
   const { t } = useTranslation()
   const [searchParams] = useSearchParams()
   const navigateSearch = useNavigateSearch()
-  const { activeChat, closeChat, responsiveSize, userData } = useChat()
+  const { activeChat, closeChat, friendsOnline, responsiveSize, userData } =
+    useChat()
   const { name, username } = activeChat
 
   const [menuAnchorEl, setContextMenuAnchorEl] = useState(null)
@@ -78,16 +79,16 @@ const UserButton = () => {
               {name}
             </Typography>
           </Grid>
-          {activeChat.online !== undefined && (
+          {friendsOnline[username] && (
             <Grid item xs={12} mt={-1}>
               <Typography
-                color={activeChat.online ? 'primary' : 'error'}
+                color={friendsOnline[username] ? 'primary' : 'error'}
                 fontWeight="700"
                 textAlign="left"
                 textTransform="none"
                 variant="caption"
               >
-                {activeChat.online ? 'online' : 'offline'}
+                {friendsOnline[username] ? 'online' : 'offline'}
               </Typography>
             </Grid>
           )}

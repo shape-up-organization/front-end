@@ -12,7 +12,7 @@ export default Object.freeze({
         },
       ],
       textContent:
-        'Tartaruga alorem iaosih jajkxznjasd hakhdjkas Tartaruga\n\n alorem iaosih jajkxznjasd hakhdjkasTartaruga alorem iaosih jajkxznjasd hakhdjkasTartaruga alorem iaosih jajkxznjasd hakhdjkas',
+        'Lorem ipsum dolor sit amet lorem ipsum dolor.\n\nLorem ipsum dolor sit amet lorem ipsum dolor, lorem ipsum dolor sit amet lorem ipsum dolor. Lorem ipsum dolor sit amet lorem ipsum dolor.',
       username: 'testone',
     },
     {
@@ -21,7 +21,7 @@ export default Object.freeze({
       id: 2,
       likes: 3,
       photos: [],
-      textContent: 'Tartaruga alorem iaosih jajkxznjasd hakhdjkas Tartaruga',
+      textContent: 'Lorem ipsum dolor sit amet lorem ipsum dolor.',
       username: 'testtwo',
     },
     {
@@ -32,7 +32,7 @@ export default Object.freeze({
       photos: [
         {
           alt: 'turtle',
-          src: 'https://www.shutterstock.com/image-vector/resolution-icon-high-res-low-260nw-1884016720.jpg',
+          src: 'https://embed-ssl.wistia.com/deliveries/4e64a9ca3ce3c0cf81c97325c9599ebc5537c6f7.webp?image_crop_resized=1080x1350',
         },
       ],
       textContent: '',
@@ -43,7 +43,7 @@ export default Object.freeze({
       date: '13/04/2023',
       id: 4,
       likes: 2,
-      textContent: 'asdasdsa',
+      textContent: 'Lorem ipsum.',
       username: 'johndoe',
     },
   ],

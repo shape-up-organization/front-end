@@ -51,7 +51,10 @@ const ContextMenu = ({ anchorEl, handleCloseMenu, open, userSelected }) => {
         </Typography>
       </MenuItem>
       <Divider />
-      <FriendshipOptions postAction={handleCloseMenu} data={userSelected} />
+      <FriendshipOptions
+        postAction={handleCloseMenu}
+        data={{ ...userSelected, isFriend: true }}
+      />
     </Menu>
   )
 }

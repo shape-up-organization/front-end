@@ -1,1 +1,0 @@
-export { CardNewPost } from './CardNewPost'

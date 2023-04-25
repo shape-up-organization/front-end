@@ -1,5 +1,6 @@
-import { Container, Fade, Grid, Paper } from '@mui/material'
+import { Fade, Grid, Paper } from '@mui/material'
 
+import { AnimatedWrapper } from '@layouts/AnimatedWrapper'
 import { Chat } from '@organisms/Chat'
 import { MessagesList } from '@organisms/MessagesList'
 
@@ -9,8 +10,8 @@ import { useStyles } from './ChatPage.styles'
 
 const sizes = {
   desktop: {
-    messagesList: 4,
-    chat: 8,
+    messagesList: 5,
+    chat: 7,
   },
   mobile: {
     messagesList: 12,
@@ -25,7 +26,7 @@ const ChatPage = () => {
   const { classes } = useStyles()
 
   return (
-    <Container className={classes.container} disableGutters fixed>
+    <AnimatedWrapper>
       <Grid container className={classes.paper} component={Paper}>
         <Fade in={displayMessagesList} unmountOnExit>
           <Grid
@@ -51,7 +52,7 @@ const ChatPage = () => {
           </Grid>
         </Fade>
       </Grid>
-    </Container>
+    </AnimatedWrapper>
   )
 }
 export { ChatPage }

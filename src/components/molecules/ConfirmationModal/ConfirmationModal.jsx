@@ -12,6 +12,7 @@ import {
 } from '@mui/material'
 
 const ConfirmationModal = ({
+  isCritical,
   handleConfirm,
   handleCancel,
   message,
@@ -22,33 +23,33 @@ const ConfirmationModal = ({
 
   return (
     <Dialog open={open} onClose={handleCancel}>
-      <DialogTitle>
+      <DialogTitle component="span">
         <Typography variant="h6">{title}</Typography>
       </DialogTitle>
       <DialogContent>
-        <DialogContentText>
+        <DialogContentText component="span">
           <Typography variant="body1">{message}</Typography>
         </DialogContentText>
       </DialogContent>
-      <DialogActions sx={{ pb: 3, px: 6 }}>
+      <DialogActions sx={{ pb: 3, px: 3 }}>
         <Button
           autoFocus
-          color="error"
+          color={isCritical ? 'primary' : 'error'}
           fullWidth
           onClick={handleCancel}
           variant="contained"
         >
-          <Typography variant="body1">
+          <Typography fontWeight={700} variant="body2">
             {t('components.molecules.confirmationModal.cancel')}
           </Typography>
         </Button>
         <Button
-          color="primary"
+          color={isCritical ? 'error' : 'primary'}
           fullWidth
           onClick={handleConfirm}
           variant="contained"
         >
-          <Typography variant="body1">
+          <Typography fontWeight={700} variant="body2">
             {t('components.molecules.confirmationModal.confirm')}
           </Typography>
         </Button>
@@ -58,11 +59,16 @@ const ConfirmationModal = ({
 }
 
 ConfirmationModal.propTypes = {
+  isCritical: P.bool,
   handleConfirm: P.func.isRequired,
   handleCancel: P.func.isRequired,
   message: P.string.isRequired,
   open: P.bool.isRequired,
   title: P.string.isRequired,
+}
+
+ConfirmationModal.defaultProps = {
+  isCritical: false,
 }
 
 export { ConfirmationModal }

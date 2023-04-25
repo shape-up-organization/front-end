@@ -1,6 +1,16 @@
 {
   "components": {
     "molecules": {
+      "cardCreatePost": {
+        "others": {
+          "buttonOpen": "Foto/Video",
+          "modalTitle": "Crie a sua publicação"
+        },
+        "tooltips": {
+          "backStep": "Voltar",
+          "closeModal": "Fechar"
+        }
+      },
       "cardProfile": {
         "quest": {
           "title": "Desafios Diários"
@@ -14,22 +24,130 @@
           "nextLevel": "para o level"
         }
       },
+      "cardRank": {
+        "tabs": {
+          "friends": "Amigos",
+          "global": "Global"
+        }
+      },
       "confirmationModal": {
         "cancel": "Cancelar",
         "confirm": "Confirmar"
+      },
+      "friendshipOptions": {
+        "options": {
+          "acceptFriendshipRequest": "Aceitar solicitação de amizade",
+          "addFriend": "Adicionar amigo",
+          "blockUser": "Bloquear",
+          "cancelFriendshipRequest": "Cancelar solicitação de amizade",
+          "deletePost": "Excluir postagem",
+          "refuseFriendshipRequest": "Recusar solicitação de amizade",
+          "removeFriend": "Remover amigo",
+          "sharePost": "Compartilhar postagem"
+        },
+        "snackbar": {
+          "acceptFriendshipRequest": "Solicitação aceita, você e {{userFirstName}} agora tem uma amizade!",
+          "alreadyFriends": "Você e {{userFirstName}} já se adicionaram!",
+          "deleteFriend": "Amizade removida!",
+          "deleteFriendshipRequest": "Solicitação de amizade cancelada!",
+          "friendshipRequestAlreadyExists": "Já existe uma solicitação de amizade entre você e {{userFirstName}}!",
+          "genericErrorAcceptFriendshipRequest": "Ops, houve algum erro ao aceitar a solicitação de amizade, tente novamente mais tarde!",
+          "genericErrorSendFriendshipRequest": "Ops, houve algum erro ao enviar ao enviar a solicitação de amizade, tente novamente mais tarde!",
+          "sentFriendshipRequest": "Solicitação de amizade enviada para {{userFirstName}}!",
+          "userNotFound": "Usuário não encontrado!"
+        }
+      },
+      "textArea": {
+        "tooltips": {
+          "emojiPickerButton": "Abrir menu de emoji",
+          "scrollToBottom": "Rolar para o final"
+        }
       }
     }
   },
   "pages": {
-    "error": {
-      "alt": {
-        "notFoundPageImageAlt": "Mulher com uma lupa e um texto escrito atrás dela de 'página não encontrada'"
+    "help": {
+      "aboutUs": {
+        "altImage": "Pessoas se exercitando",
+        "buttonJoin": "Junte-se a nós!",
+        "texts": {
+          "1": "Somos uma rede social gamificada voltada à prática de exercícios, onde você pode montar seus treinos, organizar seus eventos com a galera enquanto compartilha seu progresso e ganha xp!",
+          "2": "A ShapeUp nasceu da ideia de incentivar as pessoas a continuarem se exercitando, criando uma comunidade que inspira com seu progresso e mudança de vida!"
+        }
       },
-      "others": {
-        "notFoundPageMessage": "Página não encontrada!"
+      "privacyPolicy": {
+        "accordions": [
+          {
+            "title": "Coleta de informações",
+            "message": "Podemos coletar as seguintes informações pessoais quando você usa nossos serviços:\n\na) Informações de contato, como nome completo, endereço de e-mail e número de telefone;\nb) Informações de perfil, como foto de perfil, data de nascimento, sexo, localização e outras informações de perfil que você optar por compartilhar;\nc) Informações sobre sua atividade em nossa rede social, incluindo suas postagens, comentários e interações com outros usuários;\nd) Informações sobre o dispositivo que você usa para acessar nossos serviços, como modelo de dispositivo, sistema operacional e endereço IP."
+          },
+          {
+            "title": "Uso de informações",
+            "message": "Usamos suas informações pessoais para fornecer e melhorar nossos serviços, incluindo:\n\na) Personalizar sua experiência na nossa plataforma;\nb) Fornecer serviços de suporte ao cliente;\nc) Enviar comunicações relevantes, como atualizações de serviços e promoções;\nd) Realizar análises de dados para melhorar nossos serviços e entender as necessidades dos nossos usuários."
+          },
+          {
+            "title": "Divulgação de informações",
+            "message": "Não compartilhamos suas informações pessoais com terceiros, exceto nas seguintes circunstâncias:\na) Quando somos obrigados por lei a divulgar suas informações;\nb) Quando acreditamos que a divulgação é necessária para proteger nossos direitos legais ou de terceiros;\nc) Quando fornecemos informações para fornecedores de serviços que nos ajudam a fornecer nossos serviços."
+          },
+          {
+            "title": "Proteção de informações",
+            "message": "Tomamos medidas para proteger suas informações pessoais contra perda, uso indevido, acesso não autorizado, divulgação ou alteração."
+          },
+          {
+            "title": "Política de cookies",
+            "message": "Usamos cookies para melhorar sua experiência na nossa plataforma. Os cookies nos permitem lembrar suas preferências e personalizar sua experiência. Você pode desativar os cookies no seu navegador, mas isso pode afetar sua experiência na nossa plataforma."
+          },
+          {
+            "title": "Direitos de privacidade",
+            "message": "Você tem direito a acessar, corrigir e excluir suas informações pessoais, e temos o direito de excluir algum tipo de publicação caso viole algum termo."
+          },
+          {
+            "title": "Alterações na política de privacidade",
+            "message": "Podemos modificar esta Política de Privacidade a qualquer momento, e você será notificado de quaisquer mudanças significativas. Se você continuar a usar nossos serviços após a modificação desta Política de Privacidade, isso será considerado como sua aceitação das novas disposições.\n\nContate-nos se necessário:\nshapeup@gmail.com"
+          }
+        ]
       },
-      "tooltip": {
-        "arrowBackButton": "Voltar"
+      "tabs": {
+        "aboutUs": "Sobre nós",
+        "team": "Equipe",
+        "termsOfUse": "Termos de uso",
+        "privacyPolicy": "Política de privacidade"
+      },
+      "termsOfUse": {
+        "accordions": [
+          {
+            "title": "Uso da plataforma",
+            "message": "Você é responsável pelo uso adequado da nossa plataforma e deve cumprir todas as leis e regulamentos aplicáveis. Ao usar nossos serviços, você concorda em não:\n\na) Postar conteúdo ilegal, difamatório, ofensivo, obsceno, ameaçador ou abusivo;\nb) Realizar atividades fraudulentas, como phishing ou fraude de identidade;\nc) Cometer atos que possam prejudicar a plataforma ou outros usuários, como o uso de malware ou spam;\nd) Violar os direitos de propriedade intelectual de terceiros;\ne) Acessar ou tentar acessar a plataforma por qualquer meio que não seja através das interfaces fornecidas pela nossa rede social."
+          },
+          {
+            "title": "Conta de usuário",
+            "message": "Você deve ter uma conta para usar nossos serviços. Ao criar uma conta, você concorda em fornecer informações precisas e atualizadas, e a mantê-las atualizadas. Você também concorda em proteger sua conta e manter sua senha segura. Não permitiremos o compartilhamento de contas ou o uso de contas por outras pessoas."
+          },
+          {
+            "title": "Propriedade de conteúdo",
+            "message": "Você mantém a propriedade do conteúdo que posta em nossa plataforma, mas concede à nossa rede social uma licença global, irrevogável e não exclusiva para usar, reproduzir, modificar, publicar e distribuir o conteúdo em nossa plataforma."
+          },
+          {
+            "title": "Modificações nos termos de uso",
+            "message": "Podemos modificar estes termos de uso a qualquer momento, e você será notificado de quaisquer mudanças significativas. Se você continuar a usar nossos serviços após a modificação dos termos de uso, isso será considerado como sua aceitação dos novos termos."
+          },
+          {
+            "title": "Encerramento de conta",
+            "message": "Podemos encerrar sua conta a qualquer momento, por qualquer motivo, sem aviso prévio. Você pode encerrar sua conta a qualquer momento, seguindo as instruções em nossa plataforma."
+          },
+          {
+            "title": "Limitação de responsabilidade",
+            "message": "Não somos responsáveis por quaisquer danos, diretos ou indiretos, resultantes do uso da nossa plataforma, incluindo danos decorrentes de erros, omissões ou interrupções de serviços."
+          },
+          {
+            "title": "Lei aplicável e jurisdição",
+            "message": "Estes termos de uso são regidos pelas leis do país onde nossa rede social está sediada, e quaisquer disputas serão resolvidas exclusivamente pelos tribunais desse país.\n\nAo usar nossos serviços, você concorda em cumprir estes termos de uso. Se você tiver alguma dúvida sobre estes termos, entre em contato conosco."
+          },
+          {
+            "title": "Privacidade",
+            "message": "Coletamos e usamos as informações de acordo com nossa política de privacidade.\n\nContate-nos se necessário:\nshapeup@gmail.com"
+          }
+        ]
       }
     },
     "chat": {
@@ -39,6 +157,7 @@
       },
       "others": {
         "chatNotFoundMessage": "Nenhum chat foi encontrado!",
+        "createSquadButton": "Criar squad",
         "menuItemAcceptFriendshipRequest": "Aceitar solicitação de amizade",
         "menuItemAddFriend": "Adicionar amigo",
         "messageListTitle": "Conversas",
@@ -50,14 +169,23 @@
         "chatArrowBackButton": "Voltar",
         "chatAvatarButton": "Abrir foto de perfil",
         "chatMenuButton": "Abrir menu de chat",
-        "emojiPickerButton": "Abrir menu de emoji",
         "sendMessageButton": "Enviar mensagem",
         "scrollToTop": "Rolar para o topo",
-        "scrollToBottom": "Rolar para o final",
         "switchChatTypeButton": {
           "friends": "Amigos",
           "squads": "Squads"
         }
+      }
+    },
+    "error": {
+      "alt": {
+        "notFoundPageImageAlt": "Mulher com uma lupa e um texto escrito atrás dela de 'página não encontrada'"
+      },
+      "others": {
+        "notFoundPageMessage": "Página não encontrada!"
+      },
+      "tooltip": {
+        "arrowBackButton": "Voltar"
       }
     },
     "feed": {
@@ -69,6 +197,7 @@
       "others": {
         "confirmationModalMessage": "Tem certeza que deseja sair da sua conta e voltar para a tela inicial?",
         "confirmationModalTitle": "Sair da conta",
+        "postInputPlaceholder": "Mostre seu progresso...",
         "searchPlaceholder": "Procure por usuários..."
       },
       "tooltip": {
@@ -78,6 +207,7 @@
         "notifications": "Notificações",
         "quests": "Missões",
         "search": "Pesquisar",
+        "sendPostButton": "Enviar postagem",
         "settings": "Configurações"
       }
     },
@@ -112,8 +242,8 @@
       },
       "footer": {
         "linkAbout": "Sobre",
-        "linkHelp": "Ajuda",
-        "linkPrivacy": "Privacidade"
+        "linkPrivacy": "Privacidade",
+        "linkTermsOfUse": "Termos de uso"
       },
       "login": {
         "others": {
@@ -199,28 +329,100 @@
         "externalButton": "Entre com {{provider}}"
       }
     },
+    "profile": {
+      "others": {
+        "editProfile": "Editar perfil",
+        "friendsAmount": "{{amount}} amigos",
+        "level": "nível"
+      }
+    },
     "search": {
       "others": {
         "friendLabel": "Amigo(a)",
+        "goToProfile": "Ir para o perfil",
         "levelLabel": "Nível",
         "searchPlaceholder": "Procure por pessoas..."
       },
-      "menu": {
-        "acceptFriendshipRequest": "Aceitar solicitação de amizade",
-        "addFriend": "Adicionar amigo",
-        "cancelFriendshipRequest": "Cancelar solicitação de amizade",
-        "goToProfile": "Ir para o perfil",
-        "refuseFriendshipRequest": "Recusar solicitação de amizade",
-        "removeFriend": "Remover amigo"
-      },
       "snackbar": {
-        "acceptFriendshipRequest": "Solicitação aceita, você e {{userFirstName}} agora são amigos(as)!",
-        "alreadyFriends": "Você e {{userFirstName}} já são amigos(as)!",
-        "friendshipRequestAlreadyExists": "Já existe uma solicitação de amizade entre você e {{userFirstName}}!",
-        "genericErrorAcceptFriendshipRequest": "Ops, houve algum erro ao aceitar a solicitação de amizade, tente novamente mais tarde!",
-        "genericErrorSendFriendshipRequest": "Ops, houve algum erro ao enviar ao enviar a solicitação de amizade, tente novamente mais tarde!",
-        "sentFriendshipRequest": "Solicitação de amizade enviada para {{userFirstName}}!",
+        "genericError": "Ops, houve algum erro ao buscar usuários, tente novamente mais tarde!",
         "userNotFound": "Usuário não encontrado!"
+      }
+    },
+    "settings": {
+      "accountOptions": {
+        "address": {
+          "zipCodePlaceholder": "CEP",
+          "cityPlaceholder": "Cidade",
+          "districtPlaceholder": "Bairro",
+          "statePlaceholder": "Estado",
+          "streetPlaceholder": "Rua",
+          "numberPlaceholder": "Número",
+          "complementPlaceholder": "Complemento"
+        },
+        "birth": {
+          "newBirthPlaceholder": "Nova data de nascimento"
+        },
+        "cellPhone": {
+          "newCellPhonePlaceholder": "Novo número"
+        },
+        "confirmationModal": {
+          "message": "Ao deletar sua conta, você perderá todos os seus dados e não poderá recuperá-los.",
+          "title": "Tem certeza que deseja deletar sua conta?"
+        },
+        "email": {
+          "newEmailPlaceholder": "Novo e-mail",
+          "infoText": "Por questões de segurança, será enviado um código para seu número de telefone. Você irá usá-lo na página de confirmação."
+        },
+        "options": {
+          "address": "Alterar endereço",
+          "birth": "Alterar data de nascimento",
+          "cellPhone": "Alterar número de celular",
+          "email": "Alterar E-mail",
+          "password": "Alterar senha"
+        },
+        "others": {
+          "buttonUpdate": "Atualizar",
+          "deleteAccount": "Excluir conta"
+        },
+        "password": {
+          "oldPasswordPlaceholder": "Senha antiga",
+          "newPasswordPlaceholder": "Nova senha",
+          "newPasswordConfirmationPlaceholder": "Confirme a nova senha"
+        },
+        "snackbar": {
+          "addressUpdated": "Endereço atualizado com sucesso!",
+          "genericError": "Ops, houve algum erro inesperado, tente novamente mais tarde!",
+          "invalidAddress": "Endereço inválido!",
+          "successAddress": "Endereço alterado com sucesso!",
+          "successBirth": "Data de nascimento alterada com sucesso!",
+          "successCellPhone": "Número alterado com sucesso!",
+          "successEmail": "E-mail alterado com sucesso!",
+          "successPassword": "Senha alterada com sucesso!",
+          "zipCodeNotFound": "CEP não encontrado!"
+        }
+      },
+      "accordions": [
+        {
+          "title": "Trocar foto",
+          "message": "Acesse a página do seu perfil e clique no botão de editar perfil ao lado direito, irá abrir uma tela onde será possível editar as informações do perfil e trocar sua foto."
+        },
+        {
+          "title": "Trocar senha",
+          "message": "Acesse a página de configurações e clique na aba 'Conta' e depois em 'Alterar Senha', insira a senha antiga e a nova. Caso não lembre mais a senha, aperte em 'esqueci senha', e você receberá um código via SMS, após inserir o código no site, você poderá alterar sua senha."
+        },
+        {
+          "title": "Excluir minha conta",
+          "message": "Para excluir sua conta, acesse a seção 'Conta' nas configurações e selecione a opção 'Excluir conta'. Siga as instruções na tela para confirmar a exclusão da sua conta."
+        }
+      ],
+      "others": {
+        "searchPlaceholder": "Procure por questões..."
+      },
+      "tabs": {
+        "account": "Conta",
+        "customization": "Personalização",
+        "help": "Ajuda",
+        "notifications": "Notificações"
       }
     }
   }

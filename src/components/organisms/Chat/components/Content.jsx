@@ -1,18 +1,22 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
+
+import { useTranslation } from 'react-i18next'
 
 import { Stack } from '@mui/material'
+
+import { TextArea } from '@molecules/TextArea'
 
 import { useChat } from '@contexts'
 import { useVisible } from '@hooks'
 import { lineBreaksToCharacters } from '@utils/helpers/strings'
 
-import { Footer } from './Footer'
-import { Header } from './Header'
 import { MessagesList } from './MessagesList'
 
 import { useStyles } from './Content.styles'
+import { UserButton } from './UserButton'
 
 const Content = () => {
+  const { t } = useTranslation()
   const {
     activeChat,
     chatsData,
@@ -22,15 +26,11 @@ const Content = () => {
   } = useChat()
   const [listBottomRef, isListBottomVisible] = useVisible()
 
-  const [emojiPickerAnchorEl, setEmojiPickerAnchorEl] = useState(null)
   const [isScrollingDown, setIsScrollingDown] = useState(true)
   const [messages, setMessages] = useState([])
   const [messageText, setMessageText] = useState('')
 
-  const emojiButtonRef = useRef(null)
   const { classes } = useStyles()
-
-  const emojiPickerOpen = Boolean(emojiPickerAnchorEl)
 
   useEffect(() => {
     setIsScrollingDown(false)
@@ -49,31 +49,6 @@ const Content = () => {
     }
     handleScrollToBottom()
   }, [chatsData, messages])
-
-  const handleChangeMessageText = ({ target: { value } }) =>
-    setMessageText(value)
-
-  const handleCloseEmojiPicker = () => setEmojiPickerAnchorEl(null)
-
-  const handleKeyPress = event => {
-    if (event.key === 'Enter') {
-      event.preventDefault()
-      if (event.shiftKey) {
-        setMessageText(`${messageText}\n`)
-        return
-      }
-
-      if (event.ctrlKey) {
-        emojiButtonRef.current.click()
-        return
-      }
-
-      handleSendMessage()
-    }
-  }
-
-  const handleOpenEmojiPicker = event =>
-    setEmojiPickerAnchorEl(event.currentTarget)
 
   const handleScrollToBottom = () => {
     setIsScrollingDown(true)
@@ -100,11 +75,6 @@ const Content = () => {
     }
   }
 
-  const handleSelectEmoji = emoji => {
-    setMessageText(messageText + emoji.native)
-    handleCloseEmojiPicker()
-  }
-
   return (
     <Stack
       className={classes.content}
@@ -112,23 +82,29 @@ const Content = () => {
       justifyContent="space-between"
       overflow="auto"
       p={2}
+      pb={{ xs: 8, md: 4 }}
     >
-      <Header />
+      <UserButton />
       <MessagesList listBottomRef={listBottomRef} messages={messages} />
-      <Footer
-        emojiButtonRef={emojiButtonRef}
-        emojiPickerAnchorEl={emojiPickerAnchorEl}
-        emojiPickerOpen={emojiPickerOpen}
-        handleChangeMessageText={handleChangeMessageText}
-        handleCloseEmojiPicker={handleCloseEmojiPicker}
-        handleKeyPress={handleKeyPress}
-        handleOpenEmojiPicker={handleOpenEmojiPicker}
-        handleSelectEmoji={handleSelectEmoji}
+      <TextArea
         handleSendMessage={handleSendMessage}
-        handleScrollToBottom={handleScrollToBottom}
-        isListBottomVisible={isListBottomVisible}
-        isScrollingDown={isScrollingDown}
-        messageText={messageText}
+        interfaceOptions={{
+          alwaysShowBottom: true,
+          isLoading: !userData.connected,
+          textAreaProps: {
+            maxRows: 3,
+          },
+        }}
+        messageState={[messageText, setMessageText]}
+        scrollRelated={{
+          handleScrollToBottom,
+          isListBottomVisible,
+          isScrollingDown,
+        }}
+        texts={{
+          sendButton: t('pages.chat.tooltip.sendMessageButton'),
+          inputPlaceholder: t('pages.chat.others.messageInputPlaceholder'),
+        }}
       />
     </Stack>
   )

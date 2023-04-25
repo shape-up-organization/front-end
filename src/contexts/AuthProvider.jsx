@@ -33,16 +33,16 @@ export const AuthProvider = ({ children }) => {
     navigate('/', { replace: true })
   }
 
-  const getJwtToken = async () => {
-    const jwtToken = await cookies.get('jwt-token')
+  const getJwtToken = () => {
+    const jwtToken = cookies.get('jwt-token')
     if (jwtToken === undefined || jwtToken === null) {
       return null
     }
     return jwtToken
   }
 
-  const isTokenInvalid = async () => {
-    const jwtToken = await getJwtToken()
+  const isTokenInvalid = () => {
+    const jwtToken = getJwtToken()
     if (jwtToken) {
       const parsedJwtToken = parseJwt(jwtToken)
       if (parsedJwtToken === null || parsedJwtToken.exp < Date.now() / 1000) {
@@ -53,28 +53,27 @@ export const AuthProvider = ({ children }) => {
     return true
   }
 
-  const getTokenProp = async prop => parseJwt(await getJwtToken())[prop]
+  const getTokenProp = prop => parseJwt(getJwtToken())[prop]
 
-  const getUserData = async () => ({
-    connected: true,
-    email: await extractEmail(),
-    firstName: await extractName(),
-    id: await extractId(),
-    jwtToken: await getJwtToken(),
-    lastName: await extractLastName(),
-    name: `${await extractName()} ${await extractLastName()}`,
-    profilePicture: (await extractProfilePicture()) || '',
-    username: await extractUsername(),
-    xp: await extractXp(),
+  const getUserData = () => ({
+    email: extractEmail(),
+    firstName: extractName(),
+    id: extractId(),
+    jwtToken: getJwtToken(),
+    lastName: extractLastName(),
+    name: `${extractName()} ${extractLastName()}`,
+    profilePicture: extractProfilePicture() || '',
+    username: extractUsername(),
+    xp: Number(extractXp()),
   })
 
-  const extractProfilePicture = async () => getTokenProp('profilePicture')
-  const extractEmail = async () => getTokenProp('email')
-  const extractId = async () => getTokenProp('id')
-  const extractLastName = async () => getTokenProp('lastName')
-  const extractName = async () => getTokenProp('name')
-  const extractUsername = async () => getTokenProp('username')
-  const extractXp = async () => getTokenProp('xp')
+  const extractProfilePicture = () => getTokenProp('profilePicture')
+  const extractEmail = () => getTokenProp('email')
+  const extractId = () => getTokenProp('id')
+  const extractLastName = () => getTokenProp('lastName')
+  const extractName = () => getTokenProp('name')
+  const extractUsername = () => getTokenProp('username')
+  const extractXp = () => getTokenProp('xp')
 
   // TODO: Validate with Back-end to revalidate or not here
   // const revalidateToken = async () => {

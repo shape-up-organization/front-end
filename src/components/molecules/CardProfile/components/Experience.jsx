@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import { Grid, Typography } from '@mui/material'
+import { Grid, Paper, Typography } from '@mui/material'
 
 import { ProgressBar } from '@atoms/ProgressBar'
 
@@ -25,8 +25,9 @@ const Experience = () => {
   return (
     <Grid
       container
-      bgcolor="background.paper"
+      bgcolor="background.default"
       borderRadius={theme => theme.shape.borderRadius}
+      component={Paper}
       justifyContent="center"
       px={4}
       py={2}

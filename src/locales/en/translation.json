@@ -1,6 +1,16 @@
 {
   "components": {
     "molecules": {
+      "cardCreatePost": {
+        "others": {
+          "buttonOpen": "Photo/Video",
+          "modalTitle": "Create your post"
+        },
+        "tooltips": {
+          "backStep": "Go back",
+          "closeModal": "Close"
+        }
+      },
       "cardProfile": {
         "quest": {
           "title": "Daily Challenges"
@@ -14,22 +24,130 @@
           "nextLevel": "to level"
         }
       },
+      "cardRank": {
+        "tabs": {
+          "friends": "Friends",
+          "global": "Global"
+        }
+      },
       "confirmationModal": {
         "cancel": "Cancel",
         "confirm": "Confirm"
+      },
+      "friendshipOptions": {
+        "options": {
+          "acceptFriendshipRequest": "Accept friendship request",
+          "addFriend": "Add friend",
+          "blockUser": "Block",
+          "cancelFriendshipRequest": "Cancel friendship request",
+          "deletePost": "Delete post",
+          "refuseFriendshipRequest": "Refuse friendship request",
+          "removeFriend": "Remove friend",
+          "sharePost": "Share post"
+        },
+        "snackbar": {
+          "acceptFriendshipRequest": "Friendship request accepted, you and {{userFirstName}} are now friends!",
+          "alreadyFriends": "You and {{userFirstName}} are already friends!",
+          "deleteFriend": "Friendship canceled!",
+          "deleteFriendshipRequest": "Friendship request canceled!",
+          "friendshipRequestAlreadyExists": "There is already a friendship request between you and {{userFirstName}}!",
+          "genericErrorAcceptFriendshipRequest": "Ops, there was an error accepting the friendship request, please try again later!",
+          "genericErrorSendFriendshipRequest": "Ops, there was an error sending the friendship request, please try again later!",
+          "sentFriendshipRequest": "Friendship request sent to {{userFirstName}}!",
+          "userNotFound": "User not found!"
+        }
+      },
+      "textArea": {
+        "tooltips": {
+          "emojiPickerButton": "Open emoji picker menu",
+          "scrollToBottom": "Scroll to bottom"
+        }
       }
     }
   },
   "pages": {
-    "error": {
-      "alt": {
-        "notFoundPageImage": "Woman with a magnifying glass and an error text written behind her 'page not found'"
+    "help": {
+      "aboutUs": {
+        "altImage": "People exercising",
+        "buttonJoin": "Join us",
+        "texts": {
+          "1": "We are a gamified social network focused on exercising, where you can create your own workouts, organize events with your friends while sharing your progress and earning xp!",
+          "2": "ShapeUp was born from the idea of encouraging people to continue exercising, creating a community that inspires with their progress and life change!"
+        }
       },
-      "others": {
-        "notFoundPageMessage": "Page not found!"
+      "privacyPolicy": {
+        "accordions": [
+          {
+            "title": "Information Collection",
+            "message": "We may collect the following personal information when you use our services:\n\na) Contact information such as full name, email address, and phone number;\nb) Profile information such as profile picture, date of birth, gender, location, and other profile information you choose to share;\nc) Information about your activity on our social network, including your posts, comments, and interactions with other users;\nd) Information about the device you use to access our services, such as device model, operating system, and IP address."
+          },
+          {
+            "title": "Use of Information",
+            "message": "We use your personal information to provide and improve our services, including:\n\na) Personalizing your experience on our platform;\nb) Providing customer support services;\nc) Sending relevant communications, such as service updates and promotions;\nd) Conducting data analysis to improve our services and understand our users' needs."
+          },
+          {
+            "title": "Information Disclosure",
+            "message": "We do not share your personal information with third parties except in the following circumstances:\na) When we are required by law to disclose your information;\nb) When we believe that disclosure is necessary to protect our legal rights or those of third parties;\nc) When we provide information to service providers who help us provide our services."
+          },
+          {
+            "title": "Information Protection",
+            "message": "We take measures to protect your personal information against loss, misuse, unauthorized access, disclosure, or alteration."
+          },
+          {
+            "title": "Cookie Policy",
+            "message": "We use cookies to enhance your experience on our platform. Cookies allow us to remember your preferences and personalize your experience. You can disable cookies in your browser, but this may affect your experience on our platform."
+          },
+          {
+            "title": "Privacy Rights",
+            "message": "You have the right to access, correct, and delete your personal information, and we have the right to delete any type of publication that violates any terms."
+          },
+          {
+            "title": "Changes to the Privacy Policy",
+            "message": "We may modify this Privacy Policy at any time, and you will be notified of any significant changes. If you continue to use our services after the modification of this Privacy Policy, it will be considered as your acceptance of the new provisions.\n\nContact us if necessary:\nshapeup@gmail.com"
+          }
+        ]
       },
-      "tooltip": {
-        "arrowBackButton": "Go back"
+      "tabs": {
+        "aboutUs": "About us",
+        "team": "Team",
+        "termsOfUse": "Terms of use",
+        "privacyPolicy": "Privacy policy"
+      },
+      "termsOfUse": {
+        "accordions": [
+          {
+            "title": "Use of the platform",
+            "message": "You are responsible for the proper use of our platform and must comply with all applicable laws and regulations. By using our services, you agree not to:\n\na) Post illegal, defamatory, offensive, obscene, threatening, or abusive content;\nb) Engage in fraudulent activities, such as phishing or identity fraud;\nc) Commit acts that may harm the platform or other users, such as using malware or spam;\nd) Infringe on the intellectual property rights of third parties;\ne) Access or attempt to access the platform by any means other than through the interfaces provided by our social network."
+          },
+          {
+            "title": "User account",
+            "message": "You must have an account to use our services. By creating an account, you agree to provide accurate and up-to-date information and to keep it up to date. You also agree to protect your account and keep your password secure. We will not allow account sharing or the use of accounts by other people."
+          },
+          {
+            "title": "Content ownership",
+            "message": "You retain ownership of the content you post on our platform, but grant our social network a global, irrevocable, non-exclusive license to use, reproduce, modify, publish, and distribute the content on our platform."
+          },
+          {
+            "title": "Modifications to the terms of use",
+            "message": "We may modify these terms of use at any time, and you will be notified of any significant changes. If you continue to use our services after the modification of the terms of use, this will be considered as your acceptance of the new terms."
+          },
+          {
+            "title": "Account termination",
+            "message": "We may terminate your account at any time, for any reason, without notice. You may terminate your account at any time by following the instructions on our platform."
+          },
+          {
+            "title": "Limitation of liability",
+            "message": "We are not responsible for any direct or indirect damages resulting from the use of our platform, including damages resulting from errors, omissions, or interruptions of services."
+          },
+          {
+            "title": "Applicable law and jurisdiction",
+            "message": "These terms of use are governed by the laws of the country where our social network is headquartered, and any disputes will be exclusively resolved by the courts of that country.\n\nBy using our services, you agree to comply with these terms of use. If you have any questions about these terms, please contact us."
+          },
+          {
+            "title": "Privacy",
+            "message": "We collect and use information in accordance with our privacy policy.\n\nContact us if needed:\nshapeup@gmail.com"
+          }
+        ]
       }
     },
     "chat": {
@@ -39,6 +157,7 @@
       },
       "others": {
         "chatNotFoundMessage": "No chat was found!",
+        "createSquadButton": "Create squad",
         "menuItemAcceptFriendshipRequest": "Accept friendship request",
         "menuItemAddFriend": "Add friend",
         "messageListTitle": "Chats",
@@ -50,14 +169,23 @@
         "chatArrowBackButton": "Go back",
         "chatAvatarButton": "Open profile picture",
         "chatMenuButton": "Open chat menu",
-        "emojiPickerButton": "Open emoji picker menu",
         "sendMessageButton": "Send message",
         "scrollToTop": "Scroll to top",
-        "scrollToBottom": "Scroll to bottom",
         "switchChatTypeButton": {
           "friends": "Friends",
           "squads": "Squads"
         }
+      }
+    },
+    "error": {
+      "alt": {
+        "notFoundPageImage": "Woman with a magnifying glass and an error text written behind her 'page not found'"
+      },
+      "others": {
+        "notFoundPageMessage": "Page not found!"
+      },
+      "tooltip": {
+        "arrowBackButton": "Go back"
       }
     },
     "feed": {
@@ -69,6 +197,7 @@
       "others": {
         "confirmationModalMessage": "Are you sure you want to exit the account?",
         "confirmationModalTitle": "Exit account",
+        "postInputPlaceholder": "Post your progress...",
         "searchPlaceholder": "Search for users..."
       },
       "tooltip": {
@@ -78,6 +207,7 @@
         "notifications": "Notifications",
         "quests": "Quests",
         "search": "Search",
+        "sendPostButton": "Send post",
         "settings": "Settings"
       }
     },
@@ -112,8 +242,8 @@
       },
       "footer": {
         "linkAbout": "About",
-        "linkHelp": "Help",
-        "linkPrivacy": "Privacy"
+        "linkPrivacy": "Privacy",
+        "linkTermsOfUse": "Terms of use"
       },
       "login": {
         "others": {
@@ -199,28 +329,100 @@
         "externalButton": "Sign in with {{provider}}"
       }
     },
+    "profile": {
+      "others": {
+        "editProfile": "Edit profile",
+        "friendsAmount": "{{amount}} friends",
+        "level": "level"
+      }
+    },
     "search": {
       "others": {
         "friendLabel": "Friend",
+        "goToProfile": "Go to profile",
         "levelLabel": "Level",
         "searchPlaceholder": "Search for users..."
       },
-      "menu": {
-        "acceptFriendshipRequest": "Accept friendship request",
-        "addFriend": "Add friend",
-        "cancelFriendshipRequest": "Cancel friendship request",
-        "goToProfile": "Go to profile",
-        "refuseFriendshipRequest": "Refuse friendship request",
-        "removeFriend": "Remove friend"
-      },
       "snackbar": {
-        "acceptFriendshipRequest": "Friendship request accepted, you and {{userFirstName}} are now friends!",
-        "alreadyFriends": "You and {{newFriendFirstName}} are already friends!",
-        "friendshipRequestAlreadyExists": "There is already a friendship request between you and {{newFriendFirstName}}!",
-        "genericErrorAcceptFriendshipRequest": "Ops, there was an error accepting the friendship request, please try again later!",
-        "genericErrorSendFriendshipRequest": "Ops, there was an error sending the friendship request, please try again later!",
-        "sentFriendshipRequest": "Friendship request sent to {{newFriendFirstName}}!",
+        "genericError": "Ops, there was an error searching for users, please try again later!",
         "userNotFound": "User not found!"
+      }
+    },
+    "settings": {
+      "accountOptions": {
+        "address": {
+          "zipCodePlaceholder": "ZIP Code",
+          "cityPlaceholder": "City",
+          "districtPlaceholder": "District",
+          "statePlaceholder": "State",
+          "streetPlaceholder": "Street",
+          "numberPlaceholder": "Number",
+          "complementPlaceholder": "Complement"
+        },
+        "birth": {
+          "newBirthPlaceholder": "New birth date"
+        },
+        "cellPhone": {
+          "newCellPhonePlaceholder": "New phone number"
+        },
+        "confirmationModal": {
+          "message": "This action cannot be undone and you will lose all your data!",
+          "title": "Delete your account?"
+        },
+        "email": {
+          "newEmailPlaceholder": "New e-mail",
+          "infoText": "For security reasons, a code will be sent to your phone number. You will use it on the confirmation page."
+        },
+        "options": {
+          "address": "Change address",
+          "birth": "Change birth date",
+          "cellPhone": "Change phone number",
+          "email": "Change email",
+          "password": "Change password"
+        },
+        "others": {
+          "buttonUpdate": "Update",
+          "deleteAccount": "Delete account"
+        },
+        "password": {
+          "oldPasswordPlaceholder": "Old password",
+          "newPasswordPlaceholder": "New password",
+          "newPasswordConfirmationPlaceholder": "Confirm new password"
+        },
+        "snackbar": {
+          "addressUpdated": "Address updated successfully!",
+          "genericError": "Ops, something went wrong, please try again later!",
+          "invalidAddress": "Invalid address!",
+          "successAddress": "Address changed successfully!",
+          "successBirth": "Birth date changed successfully!",
+          "successCellPhone": "Phone number changed successfully!",
+          "successEmail": "Email changed successfully!",
+          "successPassword": "Password changed successfully!",
+          "zipCodeNotFound": "ZIP Code not found!"
+        }
+      },
+      "accordions": [
+        {
+          "title": "Change profile picture",
+          "message": "Access your profile page and click on the edit profile button on the right side. This will open a screen where you can edit your profile information and change your photo."
+        },
+        {
+          "title": "Change password",
+          "message": "Access the settings page and click on the Account tab, then select Change Password. Enter your old and new passwords. If you don't remember your password, click on 'forgot password' and you will receive a code via SMS. After entering the code on the site, you will be able to change your password."
+        },
+        {
+          "title": "Delete my account",
+          "message": "To delete your account, access the 'Account' section in the settings and select the 'Delete Account' option. Follow the instructions on the screen to confirm the deletion of your account."
+        }
+      ],
+      "others": {
+        "searchPlaceholder": "Search for questions..."
+      },
+      "tabs": {
+        "account": "Account",
+        "customization": "Customization",
+        "help": "Help",
+        "notifications": "Notifications"
       }
     }
   }

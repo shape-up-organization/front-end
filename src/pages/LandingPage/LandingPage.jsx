@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { Grid, useMediaQuery } from '@mui/material'
 
+import { AnimatedWrapper } from '@layouts/AnimatedWrapper'
 import { LoginModal } from '@molecules/LoginModal'
 import { SignupModal } from '@molecules/SignupModal'
 import { Banner } from '@organisms/Banner'
@@ -25,7 +26,7 @@ const LandingPage = () => {
   }
 
   return (
-    <>
+    <AnimatedWrapper>
       <Grid container justifyContent="center" minHeight="100vh">
         <Grid item xs={10}>
           <Header handleOpenModals={handleOpenModals} />
@@ -69,7 +70,7 @@ const LandingPage = () => {
         }
         switchModal={switchModal}
       />
-    </>
+    </AnimatedWrapper>
   )
 }
 

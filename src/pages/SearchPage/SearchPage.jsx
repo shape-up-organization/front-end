@@ -1,42 +1,61 @@
 import { useEffect, useState } from 'react'
 
+import { useSnackbar } from 'notistack'
 import { useTranslation } from 'react-i18next'
 
-import { Container, Grid, Paper, Stack } from '@mui/material'
+import { Box, Grid, Paper, Stack } from '@mui/material'
 
 import { Divider } from '@atoms/Divider'
 import { SearchField } from '@atoms/SearchField'
+import { AnimatedWrapper } from '@layouts/AnimatedWrapper'
 
-import mockedSearch from '@mocks/users/get'
+import apiUsers from '@api/services/users'
 
 import { UsersList } from './components/UsersList'
 
 const SearchPage = () => {
+  const { enqueueSnackbar } = useSnackbar()
   const { t } = useTranslation()
 
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(false)
   const [search, setSearch] = useState('')
   const [users, setUsers] = useState([])
 
-  useEffect(() => {
-    setUsers(mockedSearch?.data?.users)
+  const searchUsers = async () => {
+    setIsLoading(true)
+
+    const response = await apiUsers.searchByUsername(search)
     setIsLoading(false)
+
+    if (response.status === 404) {
+      setUsers([])
+      return
+    }
+
+    if (response.status !== 200) {
+      enqueueSnackbar(t('pages.search.snackbar.genericError'), {
+        variant: 'error',
+      })
+      setUsers([])
+      return
+    }
+
+    setUsers([response.data])
+  }
+
+  useEffect(() => {
+    if (!search) {
+      setUsers([])
+      return
+    }
+
+    searchUsers()
   }, [search])
 
   return (
-    <Container sx={{ height: '100%' }} disableGutters fixed>
-      <Stack
-        alignItems="center"
-        component={Paper}
-        height="100%"
-        justifyContent="start"
-        overflow="auto"
-        px={8}
-        py={4}
-        spacing={4}
-        width="100%"
-      >
-        <Grid container justifyContent="center">
+    <AnimatedWrapper>
+      <Stack component={Paper} rowGap={4}>
+        <Grid container justifyContent="center" pt={4} px={4}>
           <Grid item xs={12} sm={10} md={8}>
             <SearchField
               placeholder={t('pages.search.others.searchPlaceholder')}
@@ -45,10 +64,10 @@ const SearchPage = () => {
             />
           </Grid>
         </Grid>
+        <Box px={4}>
+          <Divider />
+        </Box>
         <Grid container justifyContent="center">
-          <Grid item xs={12}>
-            <Divider />
-          </Grid>
           <Grid
             item
             xs={12}
@@ -62,7 +81,7 @@ const SearchPage = () => {
           </Grid>
         </Grid>
       </Stack>
-    </Container>
+    </AnimatedWrapper>
   )
 }
 export { SearchPage }

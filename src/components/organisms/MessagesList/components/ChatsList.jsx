@@ -17,7 +17,7 @@ import notFoundGeneric from '@assets/images/not-found-generic.png'
 import { ChatButton } from './ChatButton'
 
 const ChatsList = () => {
-  const { chatsData, isLoading } = useChat()
+  const { chatsData, isLoading, friendsOnline } = useChat()
   const friends = chatsData?.filteredChats ?? chatsData[chatsData.type]
 
   const { t } = useTranslation()
@@ -42,7 +42,7 @@ const ChatsList = () => {
                 {t('pages.chat.others.chatNotFoundMessage')}
               </Typography>
             </Grow>
-            <Box maxWidth={208}>
+            <Box maxWidth={160}>
               <Photo
                 alt={t('pages.chat.alt.notFoundChatImage')}
                 animationSpeed={800}
@@ -59,7 +59,7 @@ const ChatsList = () => {
     <Stack>
       {friends?.map(friend => (
         <Stack key={friend.username}>
-          <ChatButton data={friend} online={friend.online} />
+          <ChatButton data={friend} online={friendsOnline[friend.username]} />
           <Divider />
         </Stack>
       ))}

@@ -46,7 +46,6 @@ const ChatButton = ({ data, online }) => {
     <Button className={classes.chatButton} fullWidth onClick={handleSelectChat}>
       <Grid
         alignItems="center"
-        columnSpacing={1}
         container
         justifyContent="center"
         height="100%"

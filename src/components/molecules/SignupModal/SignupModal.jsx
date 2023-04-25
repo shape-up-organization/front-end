@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useSnackbar } from 'notistack'
 import P from 'prop-types'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { useTranslation } from 'react-i18next'
 
 import Visibility from '@mui/icons-material/Visibility'
@@ -13,17 +13,15 @@ import {
   Checkbox,
   CircularProgress,
   FormControlLabel,
-  FormHelperText,
   Grid,
-  Grow,
   IconButton,
   InputAdornment,
   Tooltip,
   Typography,
   useMediaQuery,
 } from '@mui/material'
-import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 
+import { DatePicker } from '@atoms/DatePicker'
 import { LinkButton } from '@atoms/LinkButton'
 import { TextButton } from '@atoms/TextButton'
 import { TextField } from '@atoms/TextField'
@@ -31,6 +29,7 @@ import { Modal } from '@templates/Modal'
 
 import api from '@api/services/auth'
 import { masks } from '@utils/constants/masks'
+
 import { schema } from './schema'
 
 const Content = ({ switchModal }) => {
@@ -112,13 +111,13 @@ const Content = ({ switchModal }) => {
 
   return (
     <Grid
-      component="form"
       container
+      component="form"
       justifyContent="center"
       noValidate
       onSubmit={handleSubmit(handleSignup)}
-      spacing={2}
       paddingTop={1}
+      spacing={2}
     >
       <Grid item xs={12} sm={6}>
         <TextField
@@ -171,65 +170,13 @@ const Content = ({ switchModal }) => {
         />
       </Grid>
       <Grid item xs={12} sm={6}>
-        <Controller
+        <DatePicker
+          autoFocus
           control={control}
-          defaultValue={null}
+          errors={errors}
+          label={t('pages.landing.signup.label.birthDate')}
           name="birth"
-          rules={{
-            required: true,
-          }}
-          render={({ field: { ref, ...field } }) => {
-            const getErrorColor = cssRule =>
-              errors.birth?.message || errors.birth?.birth?.message
-                ? {
-                    [cssRule]: theme => {
-                      const errorColor = theme.palette.error.main
-                      return `${errorColor} !important`
-                    },
-                  }
-                : {}
-
-            return (
-              <DatePicker
-                format={masks.DATES[i18n.resolvedLanguage]}
-                inputRef={ref}
-                label={t('pages.landing.signup.label.birthDate')}
-                maxDate={new Date()}
-                sx={{
-                  width: '100%',
-
-                  '& .MuiButtonBase-root': {
-                    marginRight: 0,
-                  },
-                  '& .MuiInputLabel-root': {
-                    ...getErrorColor('color'),
-                  },
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    ...getErrorColor('borderColor'),
-                  },
-                }}
-                {...field}
-              />
-            )
-          }}
         />
-        <FormHelperText component="span">
-          <Grow
-            in={!!errors.birth?.message || !!errors.birth?.birth?.message}
-            unmountOnExit
-          >
-            <Typography
-              color="error"
-              component="p"
-              fontWeight={500}
-              gutterBottom
-              sx={{ padding: theme => theme.spacing(1, 2) }}
-              variant="caption"
-            >
-              {errors.birth?.message || errors.birth?.birth?.message || ''}
-            </Typography>
-          </Grow>
-        </FormHelperText>
       </Grid>
       <Grid item xs={12} sm={6}>
         <TextField
@@ -318,11 +265,25 @@ const Content = ({ switchModal }) => {
           label={
             <Typography fontWeight="bold" variant="subtitle2">
               {t('pages.landing.signup.others.checkbox.1')}
-              <LinkButton internal="terms-of-use">
+              <LinkButton
+                internal="/help"
+                internalOptions={{
+                  state: {
+                    section: 'termsOfUse',
+                  },
+                }}
+              >
                 {t('pages.landing.signup.others.checkbox.2')}
               </LinkButton>
               {t('pages.landing.signup.others.checkbox.3')}
-              <LinkButton internal="privacy-policies">
+              <LinkButton
+                internal="/help"
+                internalOptions={{
+                  state: {
+                    section: 'privacyPolicy',
+                  },
+                }}
+              >
                 {t('pages.landing.signup.others.checkbox.4')}
               </LinkButton>
             </Typography>

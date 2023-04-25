@@ -25,39 +25,6 @@ const base = {
   typography: {
     fontFamily: ['Ubuntu', 'Helvetica', 'Arial', 'sans-serif'].join(','),
   },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: {
-        body: {
-          scrollbarColor: '#6b6b6b #2b2b2b',
-          '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
-            backgroundColor: '#2b2b2b',
-            width: 4,
-          },
-          '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
-            borderRadius: 8,
-            backgroundColor: '#6b6b6b',
-            minHeight: 24,
-          },
-          '&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus':
-            {
-              backgroundColor: '#959595',
-            },
-          '&::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active':
-            {
-              backgroundColor: '#959595',
-            },
-          '&::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover':
-            {
-              backgroundColor: '#959595',
-            },
-          '&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner': {
-            backgroundColor: '#2b2b2b',
-          },
-        },
-      },
-    },
-  },
 }
 
 const light = {
@@ -69,30 +36,12 @@ const light = {
     background: {
       default: '#F1F1F1',
       paper: '#FAFAFA',
+      body: '#F1F1F1',
     },
     chat: {
       backgroundHeader: '#F2FFFA',
     },
     disabled: '#808080',
-  },
-  components: {
-    ...base.components,
-    MuiCssBaseline: {
-      ...base.components.MuiCssBaseline,
-      styleOverrides: {
-        ...base.components.MuiCssBaseline.styleOverrides,
-        body: {
-          ...base.components.MuiCssBaseline.styleOverrides.body,
-          scrollbarColor: '#6b6b6b #2b2b2b',
-          '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
-            ...base.components.MuiCssBaseline.styleOverrides.body[
-              '&::-webkit-scrollbar, & *::-webkit-scrollbar'
-            ],
-            backgroundColor: '#808080',
-          },
-        },
-      },
-    },
   },
 }
 
@@ -105,30 +54,12 @@ const dark = {
     background: {
       default: '#2B2B2B',
       paper: '#181818',
+      body: '#353535',
     },
     chat: {
       backgroundHeader: '#181c18',
     },
     disabled: '#b1b1b1',
-  },
-  components: {
-    ...base.components,
-    MuiCssBaseline: {
-      ...base.components.MuiCssBaseline,
-      styleOverrides: {
-        ...base.components.MuiCssBaseline.styleOverrides,
-        body: {
-          ...base.components.MuiCssBaseline.styleOverrides.body,
-          scrollbarColor: '#6b6b6b #2b2b2b',
-          '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
-            ...base.components.MuiCssBaseline.styleOverrides.body[
-              '&::-webkit-scrollbar, & *::-webkit-scrollbar'
-            ],
-            backgroundColor: '#b1b1b1',
-          },
-        },
-      },
-    },
   },
 }
 

@@ -51,9 +51,16 @@ const MessagesList = ({ listBottomRef, messages }) => {
                       horizontal: 'left',
                     }
               }
-              badgeContent={<Avatar mini user={getMessageSender(senderName)} />}
+              badgeContent={
+                <Avatar avatarSize="mini" user={getMessageSender(senderName)} />
+              }
               component="div"
               overlap="rectangular"
+              sx={{
+                justifyContent:
+                  senderName === userData.username ? 'flex-end' : 'flex-start',
+                width: '100%',
+              }}
               variant="standard"
             >
               <Box
@@ -69,7 +76,7 @@ const MessagesList = ({ listBottomRef, messages }) => {
                 }}
               >
                 <Typography
-                  sx={{ userSelect: 'text' }}
+                  sx={{ userSelect: 'text', wordBreak: 'break-word' }}
                   variant="body1"
                   whiteSpace="pre-wrap"
                 >

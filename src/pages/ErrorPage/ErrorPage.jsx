@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
 import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded'
 import {
@@ -11,16 +12,16 @@ import {
 } from '@mui/material'
 
 import { Photo } from '@atoms/Photo'
+import { AnimatedWrapper } from '@layouts/AnimatedWrapper'
 
 import notFoundWithNumber from '@assets/images/not-found-with-number.png'
-import { useNavigate } from 'react-router-dom'
 
 const ErrorPage = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
 
   return (
-    <>
+    <AnimatedWrapper>
       <Box left={16} position="absolute" top={16}>
         <Tooltip title={t('pages.error.tooltip.arrowBackButton')}>
           <IconButton onClick={() => navigate(-1)}>
@@ -57,7 +58,7 @@ const ErrorPage = () => {
           />
         </Stack>
       </Stack>
-    </>
+    </AnimatedWrapper>
   )
 }
 

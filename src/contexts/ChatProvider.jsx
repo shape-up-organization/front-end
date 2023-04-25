@@ -8,9 +8,10 @@ import { useMediaQuery } from '@mui/material'
 
 import apiFriends from '@api/services/friends'
 import apiPresence from '@api/services/presence'
+import apiUsers from '@api/services/users'
 import mockedSquads from '@mocks/squads/get'
 import { formatLocalDate } from '@utils/helpers/dateTime'
-import { normalize } from '@utils/helpers/strings'
+import { normalizeString } from '@utils/helpers/strings'
 
 const ChatContext = createContext()
 let stompClient = null
@@ -29,9 +30,11 @@ export const ChatProvider = ({ children }) => {
     squads: [],
     type: 'friends',
   })
+  const [friendsOnline, setFriendsOnline] = useState({})
   const [isLoading, setIsLoading] = useState(true)
   const [userData, setUserData] = useState({
     connected: false,
+    onChat: false,
     profilePicture: null,
     username: null,
   })
@@ -48,15 +51,22 @@ export const ChatProvider = ({ children }) => {
     lessThanMedium ? 'mobile' : 'desktop'
   )
 
+  const beOnline = async () => {
+    window.onbeforeunload = async () => {
+      await apiPresence.markOffline(userData.id)
+      updateUserData({ connected: false })
+    }
+    await apiPresence.markOnline(userData.id)
+  }
+
+  const beOffline = async () => apiPresence.markOffline(userData.id)
+
   useEffect(() => {
     if (userData.connected) {
-      window.onbeforeunload = async () => {
-        await apiPresence.markOffline(userData.id)
-        updateUserData({ ...userData, connected: false })
-      }
-
-      connect(userData.username)
+      beOnline()
+      return
     }
+    beOffline()
   }, [userData.connected])
 
   useEffect(() => {
@@ -64,24 +74,35 @@ export const ChatProvider = ({ children }) => {
   }, [chatsData.deprecated])
 
   useEffect(() => {
+    if (activeChat)
+      setActiveChat(
+        chatsData[chatsData.type].find(
+          chat => chat.username === activeChat.username
+        )
+      )
+  }, [chatsData.friends, chatsData.squads])
+
+  useEffect(() => {
     setDisplayChat(!lessThanMedium || !!activeChat)
     setDisplayMessagesList(!lessThanMedium || (lessThanMedium && !activeChat))
     setResponsiveSize(lessThanMedium ? 'mobile' : 'desktop')
   }, [lessThanMedium])
 
-  const connect = () => {
+  const connect = async () => {
     if (!stompClient && !chatsData.deprecated) {
       if (import.meta.env.VITE_ENABLE_WS !== 'true') return
       const Sock = new SockJS(`${import.meta.env.VITE_API_URL}/ws`)
       stompClient = over(Sock)
-      stompClient.connect({}, () => onConnected(userData.username), onError)
-
       stompClient.debug = () => {}
+      await stompClient.connect(
+        {},
+        () => onConnected(userData.username),
+        onError
+      )
     }
   }
 
   const onConnected = async username => {
-    await apiPresence.markOnline(userData.id)
     stompClient.subscribe('/chatroom/public', onPublicMessage)
     stompClient.subscribe(`/user/${username}/private`, onPrivateMessage)
 
@@ -122,7 +143,7 @@ export const ChatProvider = ({ children }) => {
     const payload = JSON.parse(body)
     switch (payload.status) {
       case 'JOIN':
-        console.log('JOINING PUBLIC')
+        updateUserData({ connected: true })
         break
       case 'MESSAGE':
         addMessageToChat(
@@ -166,17 +187,8 @@ export const ChatProvider = ({ children }) => {
     }
   }
 
-  const updateUserData = async data => setUserData(data)
-
-  const updateOnline = async connected => {
-    if (connected) {
-      updateUserData(current => ({ ...current, connected }))
-      await apiPresence.markOnline(userData.id)
-      return
-    }
-    await apiPresence.markOffline(userData.id)
-    updateUserData({ connected: false })
-  }
+  const updateUserData = async data =>
+    setUserData(current => ({ ...current, ...data }))
 
   const addMessageToChat = (payload, type, status) => {
     const { date, message, senderName, receiverName } = payload
@@ -228,7 +240,7 @@ export const ChatProvider = ({ children }) => {
       filteredChats:
         value !== ''
           ? chatsData[chatsData.type]?.filter(chat =>
-              normalize(chat.name).includes(normalize(value))
+              normalizeString(chat.name).includes(normalizeString(value))
             )
           : null,
     }))
@@ -240,60 +252,49 @@ export const ChatProvider = ({ children }) => {
       `${import.meta.env.VITE_API_URL}/presence/stream?userId=${id}`
     ).onmessage = event => {
       const data = JSON.parse(event.data)
-      setChatsData(current => {
-        const newFriends = current.friends.map(newFriend => {
-          if (newFriend.username === friend.username) {
-            return {
-              ...friend,
-              online: data.online,
-            }
-          }
-          return newFriend
-        })
-        return {
-          ...current,
-          friends: newFriends,
-        }
-      })
+      setFriendsOnline(current => ({
+        ...current,
+        [friend.username]: data.online,
+      }))
     }
   }
 
   const loadData = async nextUserData => {
-    updateUserData(nextUserData)
+    await updateUserData(nextUserData)
 
-    if (chatsData.deprecated) {
-      setIsLoading(true)
+    await connect()
 
-      const response = await apiFriends.getAllFriendship(nextUserData.jwtToken)
+    setIsLoading(true)
 
-      if (response.status === 200) {
-        let type = null
-        if (response.data?.length > 0) type = 'friends'
-        else if (mockedSquads.data.squads?.length > 0) type = 'squads'
+    const response = await apiFriends.getAllFriendship()
 
-        const newData = {
-          ...chatsData,
-          friends: response.data
-            ?.filter(friend => friend.username !== nextUserData.username)
-            ?.map(friend => ({
-              ...friend,
-              name: `${friend.firstName} ${friend.lastName || ''}`,
-              messages: [],
-              online: undefined,
-            })),
-          squads: mockedSquads.data.squads,
-          type,
-          deprecated: false,
-        }
+    if (response.status === 200) {
+      let type = null
+      if (response.data?.length > 0) type = 'friends'
+      else if (mockedSquads.data.squads?.length > 0) type = 'squads'
 
-        newData.friends.forEach(friend => createOnlineEventSource(friend))
-
-        setChatsData(newData)
-
-        loadTotalNotifications(response.data)
-
-        setIsLoading(false)
+      const newData = {
+        ...chatsData,
+        friends: response.data
+          ?.filter(friend => friend.username !== nextUserData.username)
+          ?.map(friend => ({
+            ...friend,
+            name: `${friend.firstName} ${friend.lastName || ''}`,
+            messages: [],
+            online: undefined,
+          })),
+        squads: mockedSquads.data.squads,
+        type,
+        deprecated: false,
       }
+
+      newData.friends.forEach(friend => createOnlineEventSource(friend))
+
+      setChatsData(newData)
+
+      loadTotalNotifications(response.data)
+
+      setIsLoading(false)
     }
   }
 
@@ -310,6 +311,20 @@ export const ChatProvider = ({ children }) => {
     }))
   }
 
+  const getUserData = async username => {
+    if (username === userData.username) {
+      return { data: userData, relation: 'current', status: 200 }
+    }
+
+    const friendUser = chatsData.friends.find(
+      friend => friend.username === username
+    )
+    if (friendUser) return { data: friendUser, relation: 'friend', status: 200 }
+
+    const { data, status } = await apiUsers.searchByUsername(username)
+    return { data, relation: 'user', status }
+  }
+
   const values = useMemo(
     () => ({
       activeChat,
@@ -319,16 +334,18 @@ export const ChatProvider = ({ children }) => {
       displayChat,
       displayMessagesList,
       filterChats,
+      friendsOnline,
+      getUserData,
       isLoading,
       loadData,
       openChat,
       responsiveSize,
       sendPrivateMessage,
       sendPublicMessage,
-      updateOnline,
+      updateUserData,
       userData,
     }),
-    [activeChat, chatsData, isLoading, responsiveSize, userData]
+    [activeChat, chatsData, friendsOnline, isLoading, responsiveSize, userData]
   )
 
   return <ChatContext.Provider value={values}>{children}</ChatContext.Provider>

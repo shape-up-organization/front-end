@@ -20,6 +20,17 @@ const BORDERS = {
 }
 Object.freeze(BORDERS)
 
+const CONTRAST_COLORS = {
+  1: '#000',
+  2: '#000',
+  3: '#000',
+  4: '#fff',
+  5: '#fff',
+  6: '#fff',
+  7: '#fff',
+}
+Object.freeze(CONTRAST_COLORS)
+
 const getLevel = xp => {
   if (xp < 0) return 1
   return (
@@ -29,6 +40,8 @@ const getLevel = xp => {
 }
 
 const getBorder = xp => BORDERS[getLevel(xp)]
+
+const getContrastColor = xp => CONTRAST_COLORS[getLevel(xp)]
 
 const getProgress = xp => {
   const level = getLevel(xp)
@@ -44,4 +57,11 @@ const getXpToNextLevel = xp => {
   return max - xp
 }
 
-export { getBorder, getLevel, getNextLevel, getProgress, getXpToNextLevel }
+export {
+  getBorder,
+  getContrastColor,
+  getLevel,
+  getNextLevel,
+  getProgress,
+  getXpToNextLevel,
+}

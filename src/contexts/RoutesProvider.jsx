@@ -1,10 +1,10 @@
 import { AnimatePresence } from 'framer-motion'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
-import { AboutPage } from '@pages/AboutPage'
 import { ChatPage } from '@pages/ChatPage'
 import { ErrorPage } from '@pages/ErrorPage'
 import { FeedPage } from '@pages/FeedPage'
+import { HelpPage } from '@pages/HelpPage'
 import { LandingPage } from '@pages/LandingPage'
 import { SearchPage } from '@pages/SearchPage'
 import { SettingsPage } from '@pages/SettingsPage'
@@ -21,7 +21,7 @@ const RoutesProvider = () => (
         <Routes>
           <Route path="*" element={<ErrorPage />} />
           <Route index element={<LandingPage />} />
-          <Route path="about" element={<AboutPage />} />
+          <Route path="help" element={<HelpPage />} />
           <Route element={<ProtectedLayout />}>
             <Route path="feed" element={<FeedPage />} />
             <Route path="chats" element={<ChatPage />} />

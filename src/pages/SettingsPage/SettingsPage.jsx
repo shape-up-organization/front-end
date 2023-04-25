@@ -49,28 +49,35 @@ const SettingsPage = () => {
         columnGap={6}
         justifyContent="center"
         height="100%"
-        overflow="hidden"
+        overflow="auto"
       >
-        <Grid item xs={12} md={3} xl={2} zIndex={theme => theme.zIndex.fab}>
+        <Grid
+          item
+          xs={12}
+          md={4}
+          lg={3}
+          xl={2}
+          zIndex={theme => theme.zIndex.fab}
+        >
           <Tabs
+            allowScrollButtonsMobile
             component={Paper}
             onChange={handleChangeTab}
             orientation={lessThanMedium ? 'horizontal' : 'vertical'}
             scrollButtons="auto"
-            allowScrollButtonsMobile
-            value={settingsTab}
-            variant={lessThanMedium ? 'scrollable' : 'fullWidth'}
+            sx={{
+              borderRadius: theme => theme.shape.borderRadius,
+              borderBottomLeftRadius: lessThanMedium && 0,
+              borderBottomRightRadius: lessThanMedium && 0,
+            }}
             TabIndicatorProps={{
               sx: {
                 left: 0,
                 width: 4,
               },
             }}
-            sx={{
-              borderRadius: theme => theme.shape.borderRadius,
-              borderBottomLeftRadius: lessThanMedium && 0,
-              borderBottomRightRadius: lessThanMedium && 0,
-            }}
+            value={settingsTab}
+            variant={lessThanMedium ? 'scrollable' : 'fullWidth'}
           >
             {Object.keys(settingsTabElements).map(tab => (
               <Tab
@@ -89,15 +96,10 @@ const SettingsPage = () => {
         <Grid
           item
           xs={12}
-          md={8}
+          md={7}
+          lg={8}
           xl={9}
           borderRadius={theme => theme.shape.borderRadius}
-          height="100%"
-          overflow="auto"
-          sx={{
-            borderTopLeftRadius: lessThanMedium && 0,
-            borderTopRightRadius: lessThanMedium && 0,
-          }}
         >
           {settingsTabElements[settingsTab].component()}
         </Grid>

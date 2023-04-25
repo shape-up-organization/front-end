@@ -50,7 +50,7 @@ const Accordion = ({ message, title }) => (
         px: 3,
       }}
     >
-      <Typography>{message}</Typography>
+      <Typography sx={{ whiteSpace: 'pre-wrap' }}>{message}</Typography>
     </AccordionDetails>
   </AccordionMUI>
 )

@@ -1,3 +1,0 @@
-const AboutPage = () => {}
-
-export { AboutPage }

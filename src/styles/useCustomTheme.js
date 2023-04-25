@@ -22,7 +22,6 @@ export const useCustomTheme = () => {
       window.matchMedia('(prefers-color-scheme: dark)').matches
     ) {
       setMode('dark')
-      // setMode('light')
     }
   }, [])
 

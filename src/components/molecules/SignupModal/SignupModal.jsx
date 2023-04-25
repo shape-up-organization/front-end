@@ -265,11 +265,25 @@ const Content = ({ switchModal }) => {
           label={
             <Typography fontWeight="bold" variant="subtitle2">
               {t('pages.landing.signup.others.checkbox.1')}
-              <LinkButton internal="terms-of-use">
+              <LinkButton
+                internal="/help"
+                internalOptions={{
+                  state: {
+                    section: 'termsOfUse',
+                  },
+                }}
+              >
                 {t('pages.landing.signup.others.checkbox.2')}
               </LinkButton>
               {t('pages.landing.signup.others.checkbox.3')}
-              <LinkButton internal="privacy-policies">
+              <LinkButton
+                internal="/help"
+                internalOptions={{
+                  state: {
+                    section: 'privacyPolicy',
+                  },
+                }}
+              >
                 {t('pages.landing.signup.others.checkbox.4')}
               </LinkButton>
             </Typography>

@@ -66,15 +66,88 @@
     }
   },
   "pages": {
-    "error": {
-      "alt": {
-        "notFoundPageImage": "Woman with a magnifying glass and an error text written behind her 'page not found'"
+    "help": {
+      "aboutUs": {
+        "altImage": "People exercising",
+        "buttonJoin": "Join us",
+        "texts": {
+          "1": "We are a gamified social network focused on exercising, where you can create your own workouts, organize events with your friends while sharing your progress and earning xp!",
+          "2": "ShapeUp was born from the idea of encouraging people to continue exercising, creating a community that inspires with their progress and life change!"
+        }
       },
-      "others": {
-        "notFoundPageMessage": "Page not found!"
+      "privacyPolicy": {
+        "accordions": [
+          {
+            "title": "Information Collection",
+            "message": "We may collect the following personal information when you use our services:\n\na) Contact information such as full name, email address, and phone number;\nb) Profile information such as profile picture, date of birth, gender, location, and other profile information you choose to share;\nc) Information about your activity on our social network, including your posts, comments, and interactions with other users;\nd) Information about the device you use to access our services, such as device model, operating system, and IP address."
+          },
+          {
+            "title": "Use of Information",
+            "message": "We use your personal information to provide and improve our services, including:\n\na) Personalizing your experience on our platform;\nb) Providing customer support services;\nc) Sending relevant communications, such as service updates and promotions;\nd) Conducting data analysis to improve our services and understand our users' needs."
+          },
+          {
+            "title": "Information Disclosure",
+            "message": "We do not share your personal information with third parties except in the following circumstances:\na) When we are required by law to disclose your information;\nb) When we believe that disclosure is necessary to protect our legal rights or those of third parties;\nc) When we provide information to service providers who help us provide our services."
+          },
+          {
+            "title": "Information Protection",
+            "message": "We take measures to protect your personal information against loss, misuse, unauthorized access, disclosure, or alteration."
+          },
+          {
+            "title": "Cookie Policy",
+            "message": "We use cookies to enhance your experience on our platform. Cookies allow us to remember your preferences and personalize your experience. You can disable cookies in your browser, but this may affect your experience on our platform."
+          },
+          {
+            "title": "Privacy Rights",
+            "message": "You have the right to access, correct, and delete your personal information, and we have the right to delete any type of publication that violates any terms."
+          },
+          {
+            "title": "Changes to the Privacy Policy",
+            "message": "We may modify this Privacy Policy at any time, and you will be notified of any significant changes. If you continue to use our services after the modification of this Privacy Policy, it will be considered as your acceptance of the new provisions.\n\nContact us if necessary:\nshapeup@gmail.com"
+          }
+        ]
       },
-      "tooltip": {
-        "arrowBackButton": "Go back"
+      "tabs": {
+        "aboutUs": "About us",
+        "team": "Team",
+        "termsOfUse": "Terms of use",
+        "privacyPolicy": "Privacy policy"
+      },
+      "termsOfUse": {
+        "accordions": [
+          {
+            "title": "Use of the platform",
+            "message": "You are responsible for the proper use of our platform and must comply with all applicable laws and regulations. By using our services, you agree not to:\n\na) Post illegal, defamatory, offensive, obscene, threatening, or abusive content;\nb) Engage in fraudulent activities, such as phishing or identity fraud;\nc) Commit acts that may harm the platform or other users, such as using malware or spam;\nd) Infringe on the intellectual property rights of third parties;\ne) Access or attempt to access the platform by any means other than through the interfaces provided by our social network."
+          },
+          {
+            "title": "User account",
+            "message": "You must have an account to use our services. By creating an account, you agree to provide accurate and up-to-date information and to keep it up to date. You also agree to protect your account and keep your password secure. We will not allow account sharing or the use of accounts by other people."
+          },
+          {
+            "title": "Content ownership",
+            "message": "You retain ownership of the content you post on our platform, but grant our social network a global, irrevocable, non-exclusive license to use, reproduce, modify, publish, and distribute the content on our platform."
+          },
+          {
+            "title": "Modifications to the terms of use",
+            "message": "We may modify these terms of use at any time, and you will be notified of any significant changes. If you continue to use our services after the modification of the terms of use, this will be considered as your acceptance of the new terms."
+          },
+          {
+            "title": "Account termination",
+            "message": "We may terminate your account at any time, for any reason, without notice. You may terminate your account at any time by following the instructions on our platform."
+          },
+          {
+            "title": "Limitation of liability",
+            "message": "We are not responsible for any direct or indirect damages resulting from the use of our platform, including damages resulting from errors, omissions, or interruptions of services."
+          },
+          {
+            "title": "Applicable law and jurisdiction",
+            "message": "These terms of use are governed by the laws of the country where our social network is headquartered, and any disputes will be exclusively resolved by the courts of that country.\n\nBy using our services, you agree to comply with these terms of use. If you have any questions about these terms, please contact us."
+          },
+          {
+            "title": "Privacy",
+            "message": "We collect and use information in accordance with our privacy policy.\n\nContact us if needed:\nshapeup@gmail.com"
+          }
+        ]
       }
     },
     "chat": {
@@ -102,6 +175,17 @@
           "friends": "Friends",
           "squads": "Squads"
         }
+      }
+    },
+    "error": {
+      "alt": {
+        "notFoundPageImage": "Woman with a magnifying glass and an error text written behind her 'page not found'"
+      },
+      "others": {
+        "notFoundPageMessage": "Page not found!"
+      },
+      "tooltip": {
+        "arrowBackButton": "Go back"
       }
     },
     "feed": {
@@ -158,8 +242,8 @@
       },
       "footer": {
         "linkAbout": "About",
-        "linkHelp": "Help",
-        "linkPrivacy": "Privacy"
+        "linkPrivacy": "Privacy",
+        "linkTermsOfUse": "Terms of use"
       },
       "login": {
         "others": {

@@ -66,15 +66,88 @@
     }
   },
   "pages": {
-    "error": {
-      "alt": {
-        "notFoundPageImageAlt": "Mulher com uma lupa e um texto escrito atrás dela de 'página não encontrada'"
+    "help": {
+      "aboutUs": {
+        "altImage": "Pessoas se exercitando",
+        "buttonJoin": "Junte-se a nós!",
+        "texts": {
+          "1": "Somos uma rede social gamificada voltada à prática de exercícios, onde você pode montar seus treinos, organizar seus eventos com a galera enquanto compartilha seu progresso e ganha xp!",
+          "2": "A ShapeUp nasceu da ideia de incentivar as pessoas a continuarem se exercitando, criando uma comunidade que inspira com seu progresso e mudança de vida!"
+        }
       },
-      "others": {
-        "notFoundPageMessage": "Página não encontrada!"
+      "privacyPolicy": {
+        "accordions": [
+          {
+            "title": "Coleta de informações",
+            "message": "Podemos coletar as seguintes informações pessoais quando você usa nossos serviços:\n\na) Informações de contato, como nome completo, endereço de e-mail e número de telefone;\nb) Informações de perfil, como foto de perfil, data de nascimento, sexo, localização e outras informações de perfil que você optar por compartilhar;\nc) Informações sobre sua atividade em nossa rede social, incluindo suas postagens, comentários e interações com outros usuários;\nd) Informações sobre o dispositivo que você usa para acessar nossos serviços, como modelo de dispositivo, sistema operacional e endereço IP."
+          },
+          {
+            "title": "Uso de informações",
+            "message": "Usamos suas informações pessoais para fornecer e melhorar nossos serviços, incluindo:\n\na) Personalizar sua experiência na nossa plataforma;\nb) Fornecer serviços de suporte ao cliente;\nc) Enviar comunicações relevantes, como atualizações de serviços e promoções;\nd) Realizar análises de dados para melhorar nossos serviços e entender as necessidades dos nossos usuários."
+          },
+          {
+            "title": "Divulgação de informações",
+            "message": "Não compartilhamos suas informações pessoais com terceiros, exceto nas seguintes circunstâncias:\na) Quando somos obrigados por lei a divulgar suas informações;\nb) Quando acreditamos que a divulgação é necessária para proteger nossos direitos legais ou de terceiros;\nc) Quando fornecemos informações para fornecedores de serviços que nos ajudam a fornecer nossos serviços."
+          },
+          {
+            "title": "Proteção de informações",
+            "message": "Tomamos medidas para proteger suas informações pessoais contra perda, uso indevido, acesso não autorizado, divulgação ou alteração."
+          },
+          {
+            "title": "Política de cookies",
+            "message": "Usamos cookies para melhorar sua experiência na nossa plataforma. Os cookies nos permitem lembrar suas preferências e personalizar sua experiência. Você pode desativar os cookies no seu navegador, mas isso pode afetar sua experiência na nossa plataforma."
+          },
+          {
+            "title": "Direitos de privacidade",
+            "message": "Você tem direito a acessar, corrigir e excluir suas informações pessoais, e temos o direito de excluir algum tipo de publicação caso viole algum termo."
+          },
+          {
+            "title": "Alterações na política de privacidade",
+            "message": "Podemos modificar esta Política de Privacidade a qualquer momento, e você será notificado de quaisquer mudanças significativas. Se você continuar a usar nossos serviços após a modificação desta Política de Privacidade, isso será considerado como sua aceitação das novas disposições.\n\nContate-nos se necessário:\nshapeup@gmail.com"
+          }
+        ]
       },
-      "tooltip": {
-        "arrowBackButton": "Voltar"
+      "tabs": {
+        "aboutUs": "Sobre nós",
+        "team": "Equipe",
+        "termsOfUse": "Termos de uso",
+        "privacyPolicy": "Política de privacidade"
+      },
+      "termsOfUse": {
+        "accordions": [
+          {
+            "title": "Uso da plataforma",
+            "message": "Você é responsável pelo uso adequado da nossa plataforma e deve cumprir todas as leis e regulamentos aplicáveis. Ao usar nossos serviços, você concorda em não:\n\na) Postar conteúdo ilegal, difamatório, ofensivo, obsceno, ameaçador ou abusivo;\nb) Realizar atividades fraudulentas, como phishing ou fraude de identidade;\nc) Cometer atos que possam prejudicar a plataforma ou outros usuários, como o uso de malware ou spam;\nd) Violar os direitos de propriedade intelectual de terceiros;\ne) Acessar ou tentar acessar a plataforma por qualquer meio que não seja através das interfaces fornecidas pela nossa rede social."
+          },
+          {
+            "title": "Conta de usuário",
+            "message": "Você deve ter uma conta para usar nossos serviços. Ao criar uma conta, você concorda em fornecer informações precisas e atualizadas, e a mantê-las atualizadas. Você também concorda em proteger sua conta e manter sua senha segura. Não permitiremos o compartilhamento de contas ou o uso de contas por outras pessoas."
+          },
+          {
+            "title": "Propriedade de conteúdo",
+            "message": "Você mantém a propriedade do conteúdo que posta em nossa plataforma, mas concede à nossa rede social uma licença global, irrevogável e não exclusiva para usar, reproduzir, modificar, publicar e distribuir o conteúdo em nossa plataforma."
+          },
+          {
+            "title": "Modificações nos termos de uso",
+            "message": "Podemos modificar estes termos de uso a qualquer momento, e você será notificado de quaisquer mudanças significativas. Se você continuar a usar nossos serviços após a modificação dos termos de uso, isso será considerado como sua aceitação dos novos termos."
+          },
+          {
+            "title": "Encerramento de conta",
+            "message": "Podemos encerrar sua conta a qualquer momento, por qualquer motivo, sem aviso prévio. Você pode encerrar sua conta a qualquer momento, seguindo as instruções em nossa plataforma."
+          },
+          {
+            "title": "Limitação de responsabilidade",
+            "message": "Não somos responsáveis por quaisquer danos, diretos ou indiretos, resultantes do uso da nossa plataforma, incluindo danos decorrentes de erros, omissões ou interrupções de serviços."
+          },
+          {
+            "title": "Lei aplicável e jurisdição",
+            "message": "Estes termos de uso são regidos pelas leis do país onde nossa rede social está sediada, e quaisquer disputas serão resolvidas exclusivamente pelos tribunais desse país.\n\nAo usar nossos serviços, você concorda em cumprir estes termos de uso. Se você tiver alguma dúvida sobre estes termos, entre em contato conosco."
+          },
+          {
+            "title": "Privacidade",
+            "message": "Coletamos e usamos as informações de acordo com nossa política de privacidade.\n\nContate-nos se necessário:\nshapeup@gmail.com"
+          }
+        ]
       }
     },
     "chat": {
@@ -102,6 +175,17 @@
           "friends": "Amigos",
           "squads": "Squads"
         }
+      }
+    },
+    "error": {
+      "alt": {
+        "notFoundPageImageAlt": "Mulher com uma lupa e um texto escrito atrás dela de 'página não encontrada'"
+      },
+      "others": {
+        "notFoundPageMessage": "Página não encontrada!"
+      },
+      "tooltip": {
+        "arrowBackButton": "Voltar"
       }
     },
     "feed": {
@@ -158,8 +242,8 @@
       },
       "footer": {
         "linkAbout": "Sobre",
-        "linkHelp": "Ajuda",
-        "linkPrivacy": "Privacidade"
+        "linkPrivacy": "Privacidade",
+        "linkTermsOfUse": "Termos de uso"
       },
       "login": {
         "others": {

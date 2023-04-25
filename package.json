@@ -25,8 +25,8 @@
   "dependencies": {
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
     "@hookform/resolvers": "^2.9.11",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.12",
@@ -36,6 +36,7 @@
     "@uppy/file-input": "^3.0.2",
     "@uppy/image-editor": "^2.1.2",
     "@uppy/locales": "^3.2.0",
+    "@uppy/progress-bar": "^3.0.2",
     "@uppy/react": "^3.1.2",
     "@uppy/webcam": "^3.3.1",
     "@vitejs/plugin-react": "^3.1.0",

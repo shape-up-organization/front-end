@@ -71,7 +71,7 @@ const AccountTab = () => {
 
   return (
     <AnimatedWrapper>
-      <Stack component={Paper} rowGap={4} p={{ xs: 4, md: 8 }} pb={{ xs: 8 }}>
+      <Stack component={Paper} rowGap={4} p={{ xs: 4, md: 8 }} pb={0}>
         <Stack
           alignItems="center"
           columnGap={1}
@@ -123,9 +123,9 @@ const AccountTab = () => {
             ))}
             <Stack
               alignItems="center"
-              px={{ xs: 0, md: 8, lg: 24, xl: 40 }}
-              py={4}
-              pb={8}
+              px={{ xs: 0, md: 8, lg: 20, xl: 40 }}
+              pb={2}
+              pt={{ xs: 4, md: 8 }}
               width="100%"
             >
               <Button

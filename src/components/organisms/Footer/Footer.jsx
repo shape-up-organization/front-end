@@ -12,7 +12,7 @@ const Footer = ({ showCircles }) => {
   return (
     <>
       <Grid item>
-        <LinkButton internal="about">
+        <LinkButton internal="help">
           {t('pages.landing.footer.linkAbout')}
         </LinkButton>
       </Grid>
@@ -23,8 +23,15 @@ const Footer = ({ showCircles }) => {
         />
       )}
       <Grid item>
-        <LinkButton internal="privacy-policies">
-          {t('pages.landing.footer.linkPrivacy')}
+        <LinkButton
+          internal="/help"
+          internalOptions={{
+            state: {
+              section: 'termsOfUse',
+            },
+          }}
+        >
+          {t('pages.landing.footer.linkTermsOfUse')}
         </LinkButton>
       </Grid>
       {showCircles && (
@@ -34,8 +41,15 @@ const Footer = ({ showCircles }) => {
         />
       )}
       <Grid item>
-        <LinkButton internal="help">
-          {t('pages.landing.footer.linkHelp')}
+        <LinkButton
+          internal="/help"
+          internalOptions={{
+            state: {
+              section: 'privacyPolicy',
+            },
+          }}
+        >
+          {t('pages.landing.footer.linkPrivacy')}
         </LinkButton>
       </Grid>
     </>

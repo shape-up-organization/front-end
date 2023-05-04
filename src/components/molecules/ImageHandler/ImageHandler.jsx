@@ -13,6 +13,7 @@ import '@uppy/image-editor/dist/style.min.css'
 import enLocale from '@uppy/locales/lib/en_US'
 import ptLocale from '@uppy/locales/lib/pt_BR'
 import { Dashboard } from '@uppy/react'
+import ThumbnailGenerator from '@uppy/thumbnail-generator'
 import Webcam from '@uppy/webcam'
 import '@uppy/webcam/dist/style.min.css'
 
@@ -21,6 +22,7 @@ import { useStyles } from './ImageHandler.styles'
 const uppy = new Uppy()
   .use(ImageEditor, {
     id: 'ImageEditor',
+    quality: 0.6,
     cropperOptions: {
       background: false,
       responsive: true,
@@ -43,13 +45,21 @@ const uppy = new Uppy()
     modes: ['picture'],
     mobileNativeCamera: true,
   })
+  .use(ThumbnailGenerator, {
+    thumbnailWidth: 200,
+    thumbnailHeight: 200,
+  })
 
 const locales = {
   en: enLocale,
   pt: ptLocale,
 }
 
-const ImageHandler = ({ updateFilesArray }) => {
+const ImageHandler = ({
+  maxNumberOfFiles,
+  startupImages,
+  updateFilesArray,
+}) => {
   const theme = useTheme()
   const { i18n } = useTranslation()
 
@@ -57,9 +67,21 @@ const ImageHandler = ({ updateFilesArray }) => {
 
   useEffect(() => {
     uppy.setOptions({
+      restrictions: {
+        maxNumberOfFiles,
+      },
       locale: locales[i18n.resolvedLanguage],
     })
     uppy.on('upload', () => updateFilesArray(uppy.getFiles()))
+
+    if (!startupImages) return
+    uppy.addFiles(
+      startupImages?.map(image => ({
+        name: image?.name || 'picture',
+        type: image?.type,
+        data: image,
+      }))
+    )
   }, [])
 
   return (
@@ -67,7 +89,12 @@ const ImageHandler = ({ updateFilesArray }) => {
       <Box className={classes.root} height="100%" width="100%">
         <Dashboard
           height="100%"
-          plugins={['ImageEditor', 'Webcam']}
+          plugins={[
+            'ImageEditor',
+            'Compressor',
+            'Webcam',
+            'ThumbnailGenerator',
+          ]}
           proudlyDisplayPoweredByUppy={false}
           theme={theme.palette.mode}
           uppy={uppy}
@@ -79,7 +106,14 @@ const ImageHandler = ({ updateFilesArray }) => {
 }
 
 ImageHandler.propTypes = {
+  maxNumberOfFiles: P.number,
+  startupImages: P.arrayOf(P.object),
   updateFilesArray: P.func.isRequired,
+}
+
+ImageHandler.defaultProps = {
+  maxNumberOfFiles: 1,
+  startupImages: [],
 }
 
 export { ImageHandler }

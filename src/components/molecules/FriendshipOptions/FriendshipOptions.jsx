@@ -17,12 +17,7 @@ import { useChat } from '@contexts'
 import { Options } from '@templates/Options'
 
 const FriendshipOptions = ({ isPost, postAction, data }) => {
-  const {
-    firstName,
-    haveFriendRequest = false,
-    isFriend = false,
-    username,
-  } = data
+  const { name, haveFriendRequest = false, isFriend = false, username } = data
 
   const { t } = useTranslation()
   const { enqueueSnackbar } = useSnackbar()
@@ -41,7 +36,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
     if (isFriend) {
       enqueueSnackbar(
         t('components.molecules.friendshipOptions.snackbar.alreadyFriends', {
-          userFirstName: firstName,
+          userFirstName: name,
         }),
         {
           variant: 'error',
@@ -53,7 +48,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
     if (response.status === 404) {
       enqueueSnackbar(
         t('components.molecules.friendshipOptions.snackbar.userNotFound', {
-          userFirstName: firstName,
+          userFirstName: name,
         }),
         {
           variant: 'error',
@@ -67,7 +62,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
         t(
           'components.molecules.friendshipOptions.snackbar.friendshipRequestAlreadyExists',
           {
-            userFirstName: firstName,
+            userFirstName: name,
           }
         ),
         {
@@ -93,7 +88,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
       t(
         'components.molecules.friendshipOptions.snackbar.sentFriendshipRequest',
         {
-          userFirstName: firstName,
+          userFirstName: name,
         }
       ),
       {
@@ -111,7 +106,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
     if (response.status === 404) {
       enqueueSnackbar(
         t('components.molecules.friendshipOptions.snackbar.userNotFound', {
-          userFirstName: firstName,
+          userFirstName: name,
         }),
         {
           variant: 'error',
@@ -125,7 +120,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
         t(
           'components.molecules.friendshipOptions.snackbar.friendshipRequestAlreadyExists',
           {
-            userFirstName: firstName,
+            userFirstName: name,
           }
         ),
         {
@@ -151,7 +146,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
       t(
         'components.molecules.friendshipOptions.snackbar.acceptFriendshipRequest',
         {
-          userFirstName: firstName,
+          userFirstName: name,
         }
       ),
       {
@@ -170,7 +165,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
     if (response.status === 404) {
       enqueueSnackbar(
         t('components.molecules.friendshipOptions.snackbar.userNotFound', {
-          userFirstName: firstName,
+          userFirstName: name,
         }),
         {
           variant: 'error',
@@ -210,7 +205,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
     if (response.status === 404) {
       enqueueSnackbar(
         t('components.molecules.friendshipOptions.snackbar.userNotFound', {
-          userFirstName: firstName,
+          userFirstName: name,
         }),
         {
           variant: 'error',
@@ -338,7 +333,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
 
 FriendshipOptions.propTypes = {
   data: P.shape({
-    firstName: P.string.isRequired,
+    name: P.string.isRequired,
     isFriend: P.bool,
     haveFriendRequest: P.bool,
     username: P.string.isRequired,

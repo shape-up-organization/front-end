@@ -4,7 +4,7 @@ import { useSnackbar } from 'notistack'
 import { useTranslation } from 'react-i18next'
 import { useSearchParams } from 'react-router-dom'
 
-import { Grid } from '@mui/material'
+import { Grid, Stack } from '@mui/material'
 
 import { AnimatedWrapper } from '@layouts/AnimatedWrapper'
 import { CardCreatePost } from '@molecules/CardCreatePost'
@@ -27,27 +27,27 @@ const UserPage = () => {
 
   const getData = async () => {
     const paramUsername = searchParams.get('username')
-    const [userData, postsData] = await Promise.all([
+    const [userPageData, postsData] = await Promise.all([
       getUserData(paramUsername),
       postsGetMock.data.filter(post => post.username === paramUsername),
     ])
 
-    if (userData.status === 404) {
+    if (userPageData.status === 404) {
       enqueueSnackbar(t('pages.search.snackbar.userNotFound'), {
         variant: 'error',
       })
       return
     }
 
-    if (userData.status !== 200) {
+    if (userPageData.status !== 200) {
       enqueueSnackbar(t('pages.search.snackbar.genericError'), {
         variant: 'error',
       })
       return
     }
 
-    setUser(userData.data)
-    setIsCurrentUser(userData.relation === 'current')
+    setUser(userPageData.data)
+    setIsCurrentUser(userPageData.relation === 'current')
     setPosts(postsData)
   }
 
@@ -59,44 +59,50 @@ const UserPage = () => {
 
   return (
     <AnimatedWrapper>
-      {user && (
-        <>
-          <UserCard isCurrentUser={isCurrentUser} user={user} />
-          <Grid container justifyContent="center" rowGap={4}>
-            {isCurrentUser && (
-              <Grid
-                item
-                xs={12}
-                lg={9}
-                xl={6}
-                display="center"
-                justifyContent="center"
-              >
-                <CardCreatePost />
-              </Grid>
-            )}
-            {posts?.map(post => (
-              <Grid
-                item
-                xs={12}
-                lg={10}
-                key={post.id}
-                display="center"
-                justifyContent="center"
-              >
-                <CardPost
-                  commentsAmount={post.commentsAmount}
-                  date={post.date}
-                  likes={post.likes}
-                  photos={post.photos}
-                  textContent={post.textContent}
-                  user={user}
-                />
-              </Grid>
-            ))}
-          </Grid>
-        </>
-      )}
+      <Stack rowGap={4}>
+        {user && (
+          <>
+            <UserCard
+              handleReload={getData}
+              isCurrentUser={isCurrentUser}
+              user={user}
+            />
+            <Grid container justifyContent="center" rowGap={4}>
+              {isCurrentUser && (
+                <Grid
+                  item
+                  xs={12}
+                  lg={9}
+                  xl={6}
+                  display="center"
+                  justifyContent="center"
+                >
+                  <CardCreatePost />
+                </Grid>
+              )}
+              {posts?.map(post => (
+                <Grid
+                  item
+                  xs={12}
+                  lg={10}
+                  key={post.id}
+                  display="center"
+                  justifyContent="center"
+                >
+                  <CardPost
+                    commentsAmount={post.commentsAmount}
+                    date={post.date}
+                    likes={post.likes}
+                    photos={post.photos}
+                    textContent={post.textContent}
+                    user={user}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          </>
+        )}
+      </Stack>
     </AnimatedWrapper>
   )
 }

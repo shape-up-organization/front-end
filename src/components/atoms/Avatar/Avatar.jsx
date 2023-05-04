@@ -13,9 +13,7 @@ const Avatar = ({ avatarSize, currentUser, user, ...rest }) => {
   const { classes } = useStyles({ avatarSize })
 
   const data = {
-    profilePicture:
-      (currentUser ? userData.profilePicture : user.profilePicture) ||
-      defaultUser,
+    profilePicture: currentUser ? userData.profilePicture : user.profilePicture,
     username: currentUser ? userData.username : user.username,
     xp: currentUser ? userData.xp : user.xp,
   }
@@ -24,7 +22,7 @@ const Avatar = ({ avatarSize, currentUser, user, ...rest }) => {
     <AvatarMUI
       alt={data.username}
       className={classes.avatar}
-      src={data.profilePicture}
+      src={data.profilePicture || defaultUser}
       sx={{
         background: `${getBorder(Number(data.xp))} border-box`,
       }}

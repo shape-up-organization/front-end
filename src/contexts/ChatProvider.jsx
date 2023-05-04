@@ -312,17 +312,20 @@ export const ChatProvider = ({ children }) => {
   }
 
   const getUserData = async username => {
-    if (username === userData.username) {
-      return { data: userData, relation: 'current', status: 200 }
-    }
-
     const friendUser = chatsData.friends.find(
       friend => friend.username === username
     )
-    if (friendUser) return { data: friendUser, relation: 'friend', status: 200 }
+
+    let relation = 'user'
+    if (username === userData.username) {
+      relation = 'current'
+    }
+    if (friendUser) {
+      relation = 'friend'
+    }
 
     const { data, status } = await apiUsers.searchByUsername(username)
-    return { data, relation: 'user', status }
+    return { data, relation, status }
   }
 
   const values = useMemo(

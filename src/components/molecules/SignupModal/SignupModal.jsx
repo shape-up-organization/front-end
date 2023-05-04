@@ -27,7 +27,7 @@ import { TextButton } from '@atoms/TextButton'
 import { TextField } from '@atoms/TextField'
 import { Modal } from '@templates/Modal'
 
-import api from '@api/services/auth'
+import apiAuth from '@api/services/auth'
 import { masks } from '@utils/constants/masks'
 
 import { schema } from './schema'
@@ -61,7 +61,7 @@ const Content = ({ switchModal }) => {
       birth: values.birth,
     }
 
-    const response = await api.register(payload)
+    const response = await apiAuth.register(payload)
     setIsButtonLoading(false)
 
     if (response.status === 409) {
@@ -94,7 +94,7 @@ const Content = ({ switchModal }) => {
   const handleOnBlurUsername = async event => {
     const { value } = event.target
     if (value === '') return
-    const response = await api.validateUsername(value)
+    const response = await apiAuth.validateUsername(value)
     if (response.status === 409) {
       setError('username', {
         type: 'onBlur',

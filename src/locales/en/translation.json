@@ -330,10 +330,23 @@
       }
     },
     "profile": {
+      "buttons": {
+        "save": "Save"
+      },
       "others": {
         "editProfile": "Edit profile",
         "friendsAmount": "{{amount}} friends",
         "level": "level"
+      },
+      "placeholders": {
+        "biography": "Biography",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "username": "Username"
+      },
+      "snackbar": {
+        "genericError": "Ops, there was an error updating your profile, please try again later!",
+        "editSuccessfully": "Profile updated successfully!"
       }
     },
     "search": {

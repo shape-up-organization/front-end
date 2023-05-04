@@ -23,7 +23,7 @@ import { getLevel } from '@utils/constants/levels'
 import { ContextMenu } from './ContextMenu'
 
 const UserButton = ({ user }) => {
-  const { name, username, xp } = user
+  const { name, lastName, username, xp } = user
 
   const { t } = useTranslation()
   const moreThanMedium = useMediaQuery(theme => theme.breakpoints.up('md'))
@@ -80,7 +80,7 @@ const UserButton = ({ user }) => {
           </Grid>
           <Grid item xs={12}>
             <Typography fontWeight="700" noWrap variant="h6">
-              {name}
+              {name} {lastName}
             </Typography>
           </Grid>
           <Grid item xs={9}>
@@ -140,6 +140,7 @@ const UserButton = ({ user }) => {
 UserButton.propTypes = {
   user: P.shape({
     name: P.string.isRequired,
+    lastName: P.string.isRequired,
     profilePicture: P.string.isRequired,
     username: P.string.isRequired,
     xp: P.number.isRequired,

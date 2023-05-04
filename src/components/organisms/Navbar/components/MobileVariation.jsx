@@ -177,7 +177,7 @@ const MobileVariation = ({ openConfirmationModal }) => {
                       textAlign="center"
                       variant="body2"
                     >
-                      {userData.firstName}
+                      {userData.name}
                     </Typography>
                     <Typography
                       color="primary"

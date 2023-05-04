@@ -21,7 +21,7 @@ import { getLevel } from '@utils/constants/levels'
 
 import { EditModal } from './EditModal'
 
-const UserCard = ({ isCurrentUser, user }) => {
+const UserCard = ({ handleReload, isCurrentUser, user }) => {
   const { t } = useTranslation()
   const lessThanMedium = useMediaQuery(theme => theme.breakpoints.down('lg'))
 
@@ -58,7 +58,7 @@ const UserCard = ({ isCurrentUser, user }) => {
           justifyContent="flex-end"
         >
           <Typography fontWeight={700} variant="h5">
-            {user?.name}
+            {user?.name} {user?.lastName}
           </Typography>
           <Typography
             color="disabled"
@@ -72,7 +72,7 @@ const UserCard = ({ isCurrentUser, user }) => {
           </Typography>
           <Divider />
           <Typography pt={1} variant="body1">
-            {user?.bio}
+            {user?.biography}
           </Typography>
         </Grid>
       </Grid>
@@ -96,11 +96,7 @@ const UserCard = ({ isCurrentUser, user }) => {
             </Typography>
             <Typography variant="h3">{getLevel(user?.xp)}</Typography>
           </Stack>
-          {!isCurrentUser && user?.firstName ? (
-            <Stack rowGap={1}>
-              <FriendshipOptions data={user} />
-            </Stack>
-          ) : (
+          {isCurrentUser ? (
             <Button
               startIcon={<EditRoundedIcon />}
               fullWidth
@@ -108,19 +104,28 @@ const UserCard = ({ isCurrentUser, user }) => {
             >
               {t('pages.profile.others.editProfile')}
             </Button>
+          ) : (
+            <Stack rowGap={1}>
+              <FriendshipOptions data={user} />
+            </Stack>
           )}
         </Stack>
       </Grid>
-      <EditModal open={openEditModal} handleClose={handleCloseEditModal} />
+      <EditModal
+        open={openEditModal}
+        handleClose={handleCloseEditModal}
+        handleReload={handleReload}
+      />
     </Grid>
   )
 }
 
 UserCard.propTypes = {
+  handleReload: P.func.isRequired,
   isCurrentUser: P.bool,
   user: P.shape({
     avatar: P.string,
-    bio: P.string,
+    biography: P.string,
     firstName: P.string,
     lastName: P.string,
     name: P.string,

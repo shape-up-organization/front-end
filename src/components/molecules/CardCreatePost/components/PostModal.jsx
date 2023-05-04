@@ -38,7 +38,9 @@ const PostModal = ({ handleClose, open }) => {
   }
 
   const postStepElements = {
-    1: () => <ImageHandler updateFilesArray={updateFilesArray} />,
+    1: () => (
+      <ImageHandler maxNumberOfFiles={3} updateFilesArray={updateFilesArray} />
+    ),
     2: () => <PublishStep backStep={backStep} images={imagesFiles} />,
   }
 

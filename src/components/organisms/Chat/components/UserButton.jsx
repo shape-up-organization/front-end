@@ -42,6 +42,10 @@ const UserButton = () => {
     navigateSearch('/profile', { username })
   }
 
+  const openSquad = () => {
+    console.log('open squad', activeChat)
+  }
+
   return (
     <Button component={Paper} disableRipple fullWidth sx={{ p: 0 }}>
       <Grid
@@ -54,7 +58,10 @@ const UserButton = () => {
         fullWidth
         height="100%"
         onClick={
-          searchParams.get('username') === userData.username
+          // eslint-disable-next-line no-nested-ternary
+          activeChat.chatType === 'squads'
+            ? openSquad
+            : searchParams.get('username') === userData.username
             ? () => {}
             : handleGoToProfile
         }

@@ -210,7 +210,7 @@ export const ChatProvider = ({ children }) => {
     setChatsData(current => ({ ...current, [type]: newChat }))
   }
 
-  const openChat = username => {
+  const openChat = (username, chatType) => {
     const newChat = chatsData[chatsData.type]?.find(
       chat => chat.username === username
     )
@@ -219,7 +219,7 @@ export const ChatProvider = ({ children }) => {
         setDisplayChat(true)
         setDisplayMessagesList(false)
       }
-      setActiveChat(newChat)
+      setActiveChat({ ...newChat, chatType })
     }
   }
 

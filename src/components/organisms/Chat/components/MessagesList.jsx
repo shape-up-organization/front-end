@@ -1,10 +1,19 @@
 import P from 'prop-types'
 
-import { Badge, Box, Grow, List, ListItem, Typography } from '@mui/material'
+import {
+  Badge,
+  Box,
+  Grow,
+  List,
+  ListItem,
+  Stack,
+  Typography,
+} from '@mui/material'
 
 import { Avatar } from '@atoms/Avatar'
 
 import { useChat } from '@contexts'
+import { getBorder } from '@utils/constants/levels'
 import { reformatSimpleTime } from '@utils/helpers/dateTime'
 import { charactersToLineBreaks } from '@utils/helpers/strings'
 
@@ -27,7 +36,7 @@ const MessagesList = ({ listBottomRef, messages }) => {
         px: 2,
       }}
     >
-      {messages?.map(({ date, message, senderName }) => (
+      {messages?.map(({ date, message, senderName }, index) => (
         <Grow in key={date} unmountOnExit>
           <ListItem
             key={date}
@@ -52,7 +61,38 @@ const MessagesList = ({ listBottomRef, messages }) => {
                     }
               }
               badgeContent={
-                <Avatar avatarSize="mini" user={getMessageSender(senderName)} />
+                messages[index - 1]?.senderName !== senderName && (
+                  <Stack
+                    direction={
+                      senderName === userData.username ? 'row-reverse' : 'row'
+                    }
+                    justifyContent="flex-start"
+                    maxWidth={24}
+                    gap={1}
+                  >
+                    <Avatar
+                      avatarSize="mini"
+                      user={getMessageSender(senderName)}
+                    />
+                    {senderName !== userData.username && (
+                      <Typography
+                        fontWeight={500}
+                        mb={1}
+                        sx={{
+                          background: getBorder(
+                            getMessageSender(senderName)?.xp
+                          ),
+                          WebkitBackgroundClip: 'text',
+                          WebkitTextFillColor: 'transparent',
+                          userSelect: 'text',
+                        }}
+                        variant="body2"
+                      >
+                        {senderName}
+                      </Typography>
+                    )}
+                  </Stack>
+                )
               }
               component="div"
               overlap="rectangular"

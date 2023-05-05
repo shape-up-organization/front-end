@@ -8,6 +8,7 @@ import BlockRoundedIcon from '@mui/icons-material/BlockRounded'
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded'
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded'
+import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded'
 import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded'
 import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded'
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded'
@@ -17,7 +18,13 @@ import { useChat } from '@contexts'
 import { Options } from '@templates/Options'
 
 const FriendshipOptions = ({ isPost, postAction, data }) => {
-  const { name, haveFriendRequest = false, isFriend = false, username } = data
+  const {
+    name,
+    haveFriendRequest = false,
+    isFriend = false,
+    isSquad = false,
+    username,
+  } = data
 
   const { t } = useTranslation()
   const { enqueueSnackbar } = useSnackbar()
@@ -272,6 +279,13 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
         text: 'deletePost',
         variant: 'contained',
       },
+      quitSquad: {
+        color: 'error',
+        icon: () => <ExitToAppRoundedIcon />,
+        onClick: () => {},
+        text: 'quitSquad',
+        variant: 'contained',
+      },
       refuseFriendshipRequest: {
         color: 'error',
         icon: () => <CancelRoundedIcon />,
@@ -306,7 +320,9 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
       },
     })
 
-  if (isUser && isPost) {
+  if (isSquad) {
+    pushMenuItem('quitSquad')
+  } else if (isUser && isPost) {
     pushMenuItem(isPost ? 'deletePost' : 'sharePost')
   } else {
     if (isFriend) {
@@ -335,6 +351,7 @@ FriendshipOptions.propTypes = {
   data: P.shape({
     name: P.string.isRequired,
     isFriend: P.bool,
+    isSquad: P.bool,
     haveFriendRequest: P.bool,
     username: P.string.isRequired,
   }).isRequired,

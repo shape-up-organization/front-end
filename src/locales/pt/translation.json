@@ -41,6 +41,7 @@
           "blockUser": "Bloquear",
           "cancelFriendshipRequest": "Cancelar solicitação de amizade",
           "deletePost": "Excluir postagem",
+          "quitSquad": "Sair do squad",
           "refuseFriendshipRequest": "Recusar solicitação de amizade",
           "removeFriend": "Remover amigo",
           "sharePost": "Compartilhar postagem"
@@ -164,6 +165,13 @@
         "messageInputPlaceholder": "Digite uma mensagem...",
         "searchChatsPlaceholder": "Procure por amigos...",
         "searchChatsPlaceholderDisabled": "Sem amigos ainda..."
+      },
+      "squadModal": {
+        "addPicture": "Adicionar foto",
+        "createButton": "Criar",
+        "modalTitle": "Criar Squad",
+        "removePicture": "Remover foto",
+        "squadNamePlaceholder": "Nome do squad"
       },
       "tooltip": {
         "chatArrowBackButton": "Voltar",

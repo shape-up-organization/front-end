@@ -18,11 +18,11 @@ import { ChatButton } from './ChatButton'
 
 const ChatsList = () => {
   const { chatsData, isLoading, friendsOnline } = useChat()
-  const friends = chatsData?.filteredChats ?? chatsData[chatsData.type]
+  const chats = chatsData?.filteredChats ?? chatsData[chatsData.type]
 
   const { t } = useTranslation()
 
-  if (isLoading || chatsData.deprecated || !friends?.length)
+  if (isLoading || chatsData.deprecated || !chats?.length)
     return (
       <Stack alignItems="center">
         {isLoading ? (
@@ -57,9 +57,17 @@ const ChatsList = () => {
 
   return (
     <Stack>
-      {friends?.map(friend => (
-        <Stack key={friend.username}>
-          <ChatButton data={friend} online={friendsOnline[friend.username]} />
+      {chats?.map(chatData => (
+        <Stack key={chatData.username}>
+          <ChatButton
+            data={chatData}
+            chatType={chatsData.type}
+            online={
+              chatsData.type === 'friends'
+                ? friendsOnline[chatData.username]
+                : null
+            }
+          />
           <Divider />
         </Stack>
       ))}

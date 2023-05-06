@@ -10,6 +10,7 @@ import { Photo } from '@atoms/Photo'
 import { useChat } from '@contexts'
 import { charactersToLineBreaks } from '@utils/helpers/strings'
 
+import { Carousel } from '@molecules/Carousel'
 import { Footer } from './components/Footer'
 import { UserButton } from './components/UserButton'
 
@@ -59,22 +60,26 @@ const CardPost = ({
           </Typography>
         </Grid>
       )}
-      {photos?.map(({ alt, src }) => (
+      {photos.length > 0 && (
         <Grid
           item
-          key={alt}
-          padding={{ xs: 0, sm: 2 }}
           display="flex"
           justifyContent="center"
+          padding={{ xs: 0, sm: 2 }}
+          width="100%"
         >
-          <Photo
-            sx={{ maxWidth: '464px', maxHeight: '576px' }}
-            src={src}
-            alt={alt}
-            animationSpeed={0}
-          />
+          <Carousel>
+            {photos?.map(({ alt, src }) => (
+              <Photo
+                sx={{ maxWidth: 464, maxHeight: 576 }}
+                src={src}
+                alt={alt}
+                animationSpeed={0}
+              />
+            ))}
+          </Carousel>
         </Grid>
-      ))}
+      )}
       <Grid item xs={0} sm={12}>
         <Divider />
       </Grid>

@@ -47,6 +47,7 @@ const PostModal = ({ handleClose, open }) => {
   return (
     <Dialog
       fullScreen={lessThanSmall}
+      fullWidth
       open={open}
       onClose={handleClose}
       maxWidth="xl"
@@ -62,7 +63,7 @@ const PostModal = ({ handleClose, open }) => {
           component={Paper}
           height={lessThanSmall ? '100vh' : '80vh'}
           alignItems="center"
-          width={lessThanSmall ? '100vw' : '80vw'}
+          // width={lessThanSmall ? '100vw' : '80vw'}
         >
           <Stack
             width="100%"

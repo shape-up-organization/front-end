@@ -41,10 +41,12 @@ const devs = [
 const TeamTab = () => (
   <AnimatedWrapper>
     <Stack
+      alignContent="center"
       columnGap={{ xs: 32 }}
       direction="row"
       flexWrap="wrap-reverse"
       justifyContent="center"
+      minHeight="100%"
       pb={4}
       rowGap={{ xs: 4, md: 8 }}
       width="100%"

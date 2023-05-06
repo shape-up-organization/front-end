@@ -4,7 +4,6 @@ import P from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
 import AddAPhotoRoundedIcon from '@mui/icons-material/AddAPhotoRounded'
-import Close from '@mui/icons-material/Close'
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded'
 import {
   Avatar as AvatarMUI,
@@ -13,8 +12,6 @@ import {
   Button,
   Checkbox,
   Dialog,
-  DialogContent,
-  DialogTitle,
   FormControlLabel,
   IconButton,
   Stack,
@@ -28,16 +25,15 @@ import { Avatar } from '@atoms/Avatar'
 import { Divider } from '@atoms/Divider'
 import { useChat } from '@contexts'
 import { ImageHandler } from '@molecules/ImageHandler'
-import { useStyles } from './SquadModal.styles'
+import { SimpleModal } from '@templates/Modal'
 
-const SquadModal = ({ handleClose, open }) => {
+const Content = () => {
   const { t } = useTranslation()
   const isLessThanMedium = useMediaQuery(theme => theme.breakpoints.down('md'))
   const isLessThanSm = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const {
     chatsData: { friends },
   } = useChat()
-  const { classes } = useStyles()
 
   const [squadName, setSquadName] = useState('')
   const [friendsAdded, setFriendsAdded] = useState([])
@@ -77,132 +73,116 @@ const SquadModal = ({ handleClose, open }) => {
   }
 
   return (
-    <Dialog
-      fullScreen={isLessThanMedium}
-      fullWidth
-      maxWidth="sm"
-      onClose={handleClose}
-      open={open}
-    >
-      <DialogTitle align="center" justifyContent="center">
-        <Typography
-          color="primary"
-          component="p"
-          fontWeight="bold"
-          variant="h6"
-        >
-          {t('pages.chat.squadModal.modalTitle')}
-        </Typography>
-        <IconButton
-          className={classes.closeIcon}
-          onClick={handleClose}
-          sx={{ position: 'absolute' }}
-        >
-          <Close />
-        </IconButton>
-      </DialogTitle>
-      <DialogContent>
-        <Stack alignItems="center" py={1} rowGap={2}>
-          <Stack alignItems="center" columnGap={2} direction="row" width="100%">
-            {squadPicture ? (
-              <Badge
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-                badgeContent={
-                  <Tooltip title={t('pages.chat.squadModal.removePicture')}>
-                    <IconButton
-                      onClick={() => setSquadPicture(null)}
-                      size="small"
-                    >
-                      <RemoveCircleRoundedIcon color="error" fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
-                }
-                overlap="circular"
-                sx={{
-                  zIndex: 3000,
-                }}
-              >
-                <AvatarMUI src={URL.createObjectURL(squadPicture)} />
-              </Badge>
-            ) : (
-              <Tooltip label={t('pages.chat.squadModal.addPicture')}>
-                <IconButton onClick={handleOpenImageHandler}>
-                  <AddAPhotoRoundedIcon />
+    <Stack alignItems="center" px={4} py={2} rowGap={2}>
+      <Stack alignItems="center" columnGap={2} direction="row">
+        {squadPicture ? (
+          <Badge
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            badgeContent={
+              <Tooltip title={t('pages.chat.squadModal.removePicture')}>
+                <IconButton onClick={() => setSquadPicture(null)} size="small">
+                  <RemoveCircleRoundedIcon color="error" fontSize="small" />
                 </IconButton>
               </Tooltip>
-            )}
-            <Dialog
-              open={openImageModal}
-              onClose={handleCloseImageHandler}
-              fullScreen={isLessThanSm}
-            >
-              <Box
-                height="100vh"
-                maxHeight={isLessThanSm ? '100vh' : 300}
-                width={isLessThanSm ? '100vw' : 512}
-              >
-                <ImageHandler updateFilesArray={uploadSquadPicture} />
-              </Box>
-            </Dialog>
-            <TextField
-              fullWidth
-              label={t('pages.chat.squadModal.squadNamePlaceholder')}
-              onChange={handleChangeSquadName}
-              size={isLessThanMedium ? 'small' : 'medium'}
-              value={squadName}
-            />
-          </Stack>
-          <Divider />
-          <Stack
-            bgcolor="background.default"
-            borderRadius={theme => theme.shape.borderRadius}
-            height={336}
-            overflow="auto"
-            px={3}
-            py={1}
-            width="100%"
+            }
+            overlap="circular"
+            sx={{
+              zIndex: 3000,
+            }}
           >
-            {friends.map((friend, index) => (
-              <Box key={friend.username}>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      onChange={() => handleToggleFriend(friend.username)}
-                      size="small"
-                    />
-                  }
-                  label={
-                    <Stack
-                      alignItems="center"
-                      columnGap={2}
-                      direction="row"
-                      px={1}
-                    >
-                      <Avatar user={friend} />
-                      <Typography variant="body2">{friend.name}</Typography>
-                    </Stack>
-                  }
-                  sx={{ px: 2, py: 1 }}
+            <AvatarMUI src={URL.createObjectURL(squadPicture)} />
+          </Badge>
+        ) : (
+          <Tooltip label={t('pages.chat.squadModal.addPicture')}>
+            <IconButton onClick={handleOpenImageHandler}>
+              <AddAPhotoRoundedIcon />
+            </IconButton>
+          </Tooltip>
+        )}
+        <Dialog
+          open={openImageModal}
+          onClose={handleCloseImageHandler}
+          fullScreen={isLessThanSm}
+        >
+          <Box
+            height="100vh"
+            maxHeight={isLessThanSm ? '100vh' : 300}
+            width={isLessThanSm ? '100vw' : 512}
+          >
+            <ImageHandler updateFilesArray={uploadSquadPicture} />
+          </Box>
+        </Dialog>
+        <TextField
+          fullWidth
+          label={t('pages.chat.squadModal.squadNamePlaceholder')}
+          onChange={handleChangeSquadName}
+          size={isLessThanMedium ? 'small' : 'medium'}
+          value={squadName}
+        />
+      </Stack>
+      <Divider />
+      <Stack
+        bgcolor="background.default"
+        borderRadius={theme => theme.shape.borderRadius}
+        height={336}
+        overflow="auto"
+        px={3}
+        py={1}
+        width="100%"
+      >
+        {friends.map((friend, index) => (
+          <Box key={friend.username}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  onChange={() => handleToggleFriend(friend.username)}
+                  size="small"
                 />
-                {index !== friends.length - 1 && <Divider />}
-              </Box>
-            ))}
-          </Stack>
-          <Button
-            disabled={!squadName}
-            fullWidth
-            sx={{ maxWidth: 272, py: 1 }}
-            onClick={handleCreateSquad}
-            variant="contained"
-          >
-            {t('pages.chat.squadModal.createButton')}
-          </Button>
-        </Stack>
-      </DialogContent>
-    </Dialog>
+              }
+              label={
+                <Stack
+                  alignItems="center"
+                  columnGap={2}
+                  direction="row"
+                  px={1}
+                  width="100%"
+                >
+                  <Avatar user={friend} />
+                  <Typography variant="body2">{friend.name}</Typography>
+                </Stack>
+              }
+              sx={{ px: 2, py: 1, width: '100%' }}
+            />
+            {index !== friends.length - 1 && <Divider />}
+          </Box>
+        ))}
+      </Stack>
+      <Button
+        disabled={!squadName}
+        fullWidth
+        sx={{ maxWidth: 272, py: 1 }}
+        onClick={handleCreateSquad}
+        variant="contained"
+      >
+        {t('pages.chat.squadModal.createButton')}
+      </Button>
+    </Stack>
+  )
+}
+
+const SquadModal = ({ handleClose, open }) => {
+  const { t } = useTranslation()
+
+  return (
+    <SimpleModal
+      Component={Content}
+      handleClose={handleClose}
+      open={open}
+      title={t('pages.chat.squadModal.modalTitle')}
+    />
   )
 }
 

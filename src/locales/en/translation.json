@@ -214,9 +214,11 @@
         "menu": "Menu",
         "notifications": "Notifications",
         "quests": "Quests",
+        "rank": "Rank",
         "search": "Search",
         "sendPostButton": "Send post",
-        "settings": "Settings"
+        "settings": "Settings",
+        "summary": "Summary"
       }
     },
     "landing": {

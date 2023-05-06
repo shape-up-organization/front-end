@@ -87,7 +87,7 @@ const MobileVariation = ({ openConfirmationModal }) => {
   return (
     <>
       <Grid item xs={4} display="flex" gap={2} justifyContent="center">
-        <Tooltip title={t('pages.feed.tooltip.feed')}>
+        <Tooltip title={t('pages.feed.tooltip.summary')}>
           <IconButton onClick={toggleCardProfile} size="small">
             <AccountBoxRoundedIcon />
           </IconButton>
@@ -96,8 +96,9 @@ const MobileVariation = ({ openConfirmationModal }) => {
           open={openCardProfile}
           Component={CardProfile}
           handleClose={toggleCardProfile}
+          title={t('pages.feed.tooltip.summary')}
         />
-        <Tooltip title={t('pages.feed.tooltip.quests')}>
+        <Tooltip title={t('pages.feed.tooltip.rank')}>
           <IconButton onClick={toggleCardRank} size="small">
             <MilitaryTechRoundedIcon />
           </IconButton>
@@ -106,6 +107,7 @@ const MobileVariation = ({ openConfirmationModal }) => {
           open={openCardRank}
           Component={CardRank}
           handleClose={toggleCardRank}
+          title={t('pages.feed.tooltip.rank')}
         />
       </Grid>
       <Grid item xs={4} display="flex" justifyContent="flex-end">

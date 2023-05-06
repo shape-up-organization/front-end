@@ -1,9 +1,28 @@
 import P from 'prop-types'
 
-import { Dialog, Fade, Stack, useMediaQuery } from '@mui/material'
+import Close from '@mui/icons-material/Close'
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Fade,
+  IconButton,
+  Stack,
+  Typography,
+  useMediaQuery,
+} from '@mui/material'
 
-const SimpleModal = ({ Component, componentArgs, handleClose, open }) => {
+import { useStyles } from './Modal.styles'
+
+const SimpleModal = ({
+  Component,
+  componentArgs,
+  handleClose,
+  open,
+  title,
+}) => {
   const lessThanSmall = useMediaQuery(theme => theme.breakpoints.down('sm'))
+  const { classes } = useStyles()
 
   return (
     <Dialog
@@ -14,10 +33,35 @@ const SimpleModal = ({ Component, componentArgs, handleClose, open }) => {
       onClose={handleClose}
       open={open}
     >
+      {title && (
+        <DialogTitle
+          align="center"
+          bgcolor="background.default"
+          justifyContent="center"
+        >
+          <Typography
+            color="primary"
+            component="p"
+            fontWeight="bold"
+            variant="h6"
+          >
+            {title}
+          </Typography>
+          <IconButton
+            className={classes.closeIcon}
+            onClick={handleClose}
+            sx={{ position: 'absolute' }}
+          >
+            <Close />
+          </IconButton>
+        </DialogTitle>
+      )}
       <Fade in>
-        <Stack width="100%" height="100%">
-          <Component {...componentArgs} />
-        </Stack>
+        <DialogContent sx={{ p: 0 }}>
+          <Stack width="100%">
+            <Component {...componentArgs} />
+          </Stack>
+        </DialogContent>
       </Fade>
     </Dialog>
   )
@@ -28,11 +72,13 @@ SimpleModal.propTypes = {
   componentArgs: P.object,
   handleClose: P.func.isRequired,
   open: P.bool,
+  title: P.string,
 }
 
 SimpleModal.defaultProps = {
   componentArgs: {},
   open: false,
+  title: '',
 }
 
 export { SimpleModal }

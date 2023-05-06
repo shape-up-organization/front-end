@@ -214,9 +214,11 @@
         "menu": "Menu",
         "notifications": "Notificações",
         "quests": "Missões",
+        "rank": "Rank",
         "search": "Pesquisar",
         "sendPostButton": "Enviar postagem",
-        "settings": "Configurações"
+        "settings": "Configurações",
+        "summary": "Resumo"
       }
     },
     "landing": {

@@ -22,12 +22,20 @@ const SearchPage = () => {
   const [users, setUsers] = useState([])
 
   const searchUsers = async () => {
+    if (search === '@') return
     setIsLoading(true)
 
-    const response = await apiUsers.searchByUsername(search)
+    let response
+    if (search.startsWith('@')) {
+      response = await apiUsers.searchByUsername(search.slice(1))
+    } else {
+      response = await apiUsers.searchByName(search)
+    }
+
+    console.log(response)
     setIsLoading(false)
 
-    if (response.status === 404) {
+    if (response.status === 404 || response.status === 204) {
       setUsers([])
       return
     }
@@ -40,7 +48,7 @@ const SearchPage = () => {
       return
     }
 
-    setUsers([response.data])
+    setUsers(response.data)
   }
 
   useEffect(() => {

@@ -8,6 +8,7 @@ import BlockRoundedIcon from '@mui/icons-material/BlockRounded'
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded'
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded'
+import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded'
 import PersonAddRoundedIcon from '@mui/icons-material/PersonAddRounded'
 import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded'
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded'
@@ -17,21 +18,21 @@ import { useChat } from '@contexts'
 import { Options } from '@templates/Options'
 
 const FriendshipOptions = ({ isPost, postAction, data }) => {
-  const { firstName, username } = data
+  const {
+    name,
+    haveFriendRequest = false,
+    userSenderFriendshipRequest,
+    isFriend = false,
+    isSquad = false,
+    username,
+  } = data
 
   const { t } = useTranslation()
   const { enqueueSnackbar } = useSnackbar()
-  const {
-    chatsData: { friends },
-    userData,
-  } = useChat()
+  const { updateFriends, userData } = useChat()
 
   const [menuItemLoading, setMenuItemLoading] = useState('')
 
-  const isFriend = useMemo(
-    () => friends.find(friend => friend.username === username),
-    [friends, username]
-  )
   const isUser = useMemo(() => userData.username === username, [username])
 
   const sendFriendshipRequest = async menuItem => {
@@ -43,7 +44,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
     if (isFriend) {
       enqueueSnackbar(
         t('components.molecules.friendshipOptions.snackbar.alreadyFriends', {
-          userFirstName: firstName,
+          userFirstName: name,
         }),
         {
           variant: 'error',
@@ -55,7 +56,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
     if (response.status === 404) {
       enqueueSnackbar(
         t('components.molecules.friendshipOptions.snackbar.userNotFound', {
-          userFirstName: firstName,
+          userFirstName: name,
         }),
         {
           variant: 'error',
@@ -69,7 +70,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
         t(
           'components.molecules.friendshipOptions.snackbar.friendshipRequestAlreadyExists',
           {
-            userFirstName: firstName,
+            userFirstName: name,
           }
         ),
         {
@@ -95,7 +96,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
       t(
         'components.molecules.friendshipOptions.snackbar.sentFriendshipRequest',
         {
-          userFirstName: firstName,
+          userFirstName: name,
         }
       ),
       {
@@ -113,7 +114,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
     if (response.status === 404) {
       enqueueSnackbar(
         t('components.molecules.friendshipOptions.snackbar.userNotFound', {
-          userFirstName: firstName,
+          userFirstName: name,
         }),
         {
           variant: 'error',
@@ -127,7 +128,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
         t(
           'components.molecules.friendshipOptions.snackbar.friendshipRequestAlreadyExists',
           {
-            userFirstName: firstName,
+            userFirstName: name,
           }
         ),
         {
@@ -153,13 +154,14 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
       t(
         'components.molecules.friendshipOptions.snackbar.acceptFriendshipRequest',
         {
-          userFirstName: firstName,
+          userFirstName: name,
         }
       ),
       {
         variant: 'success',
       }
     )
+    updateFriends()
   }
 
   const deleteFriendshipRequest = async menuItem => {
@@ -171,7 +173,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
     if (response.status === 404) {
       enqueueSnackbar(
         t('components.molecules.friendshipOptions.snackbar.userNotFound', {
-          userFirstName: firstName,
+          userFirstName: name,
         }),
         {
           variant: 'error',
@@ -211,7 +213,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
     if (response.status === 404) {
       enqueueSnackbar(
         t('components.molecules.friendshipOptions.snackbar.userNotFound', {
-          userFirstName: firstName,
+          userFirstName: name,
         }),
         {
           variant: 'error',
@@ -238,6 +240,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
         variant: 'success',
       }
     )
+    updateFriends()
   }
 
   const menuItems = useMemo(
@@ -277,6 +280,13 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
         text: 'deletePost',
         variant: 'contained',
       },
+      quitSquad: {
+        color: 'error',
+        icon: () => <ExitToAppRoundedIcon />,
+        onClick: () => {},
+        text: 'quitSquad',
+        variant: 'contained',
+      },
       refuseFriendshipRequest: {
         color: 'error',
         icon: () => <CancelRoundedIcon />,
@@ -311,24 +321,20 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
       },
     })
 
-  pushMenuItem('addFriend')
-  if (isUser && isPost) {
+  if (isSquad) {
+    pushMenuItem('quitSquad')
+  } else if (isUser && isPost) {
     pushMenuItem(isPost ? 'deletePost' : 'sharePost')
   } else {
     if (isFriend) {
       pushMenuItem('removeFriend')
+    } else if (!haveFriendRequest) {
+      pushMenuItem('addFriend')
+    } else if (userSenderFriendshipRequest === userData.username) {
+      pushMenuItem('cancelFriendshipRequest')
     } else {
-      // TODO: add real check
-      const hasFriendshipRequest = true
-      const userWhoSent = false
-      if (!hasFriendshipRequest) {
-        pushMenuItem('addFriend')
-      } else if (userWhoSent) {
-        pushMenuItem('cancelFriendshipRequest')
-      } else {
-        pushMenuItem('acceptFriend')
-        pushMenuItem('refuseFriendshipRequest')
-      }
+      pushMenuItem('acceptFriend')
+      pushMenuItem('refuseFriendshipRequest')
     }
     pushMenuItem('blockUser')
   }
@@ -340,8 +346,12 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
 
 FriendshipOptions.propTypes = {
   data: P.shape({
-    firstName: P.string.isRequired,
-    username: P.string.isRequired,
+    name: P.string,
+    isFriend: P.bool,
+    isSquad: P.bool,
+    haveFriendRequest: P.bool,
+    username: P.string,
+    userSenderFriendshipRequest: P.string,
   }).isRequired,
   isPost: P.bool,
   postAction: P.func,

@@ -14,7 +14,7 @@ import { useNavigateSearch } from '@hooks'
 import { ContextMenu } from './ContextMenu'
 
 const UserButton = ({ date, selected }) => {
-  const { name, username } = selected
+  const { name, lastName, username } = selected
 
   const [searchParams] = useSearchParams()
   const navigateSearch = useNavigateSearch()
@@ -59,7 +59,7 @@ const UserButton = ({ date, selected }) => {
         <Grid container item xs={9} sm={10} rowSpacing={0}>
           <Grid item xs={12}>
             <Typography fontWeight="700" noWrap variant="subtitle1">
-              {name}
+              {`${name} ${lastName}`}
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -94,6 +94,7 @@ UserButton.propTypes = {
   date: P.string.isRequired,
   selected: P.shape({
     name: P.string.isRequired,
+    lastName: P.string.isRequired,
     username: P.string.isRequired,
   }).isRequired,
 }

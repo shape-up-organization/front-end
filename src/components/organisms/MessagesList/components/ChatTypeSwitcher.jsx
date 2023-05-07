@@ -18,7 +18,7 @@ import { Divider } from '@atoms/Divider'
 
 import { useChat } from '@contexts'
 
-import { SquadModal } from './SquadModal'
+import { CreateSquadModal } from './CreateSquadModal'
 
 const ChatTypeSwitcher = () => {
   const { t } = useTranslation()
@@ -114,7 +114,10 @@ const ChatTypeSwitcher = () => {
           </Button>
         </Box>
       )}
-      <SquadModal handleClose={handleCloseSquadModal} open={isSquadModalOpen} />
+      <CreateSquadModal
+        handleClose={handleCloseSquadModal}
+        open={isSquadModalOpen}
+      />
     </Stack>
   )
 }

@@ -210,7 +210,7 @@ export const ChatProvider = ({ children }) => {
     setChatsData(current => ({ ...current, [type]: newChat }))
   }
 
-  const openChat = username => {
+  const openChat = (username, chatType) => {
     const newChat = chatsData[chatsData.type]?.find(
       chat => chat.username === username
     )
@@ -219,7 +219,7 @@ export const ChatProvider = ({ children }) => {
         setDisplayChat(true)
         setDisplayMessagesList(false)
       }
-      setActiveChat(newChat)
+      setActiveChat({ ...newChat, chatType })
     }
   }
 
@@ -259,13 +259,7 @@ export const ChatProvider = ({ children }) => {
     }
   }
 
-  const loadData = async nextUserData => {
-    await updateUserData(nextUserData)
-
-    await connect()
-
-    setIsLoading(true)
-
+  const updateFriends = async username => {
     const response = await apiFriends.getAllFriendship()
 
     if (response.status === 200) {
@@ -276,12 +270,11 @@ export const ChatProvider = ({ children }) => {
       const newData = {
         ...chatsData,
         friends: response.data
-          ?.filter(friend => friend.username !== nextUserData.username)
+          ?.filter(friend => friend.username !== username || userData.username)
           ?.map(friend => ({
             ...friend,
             name: `${friend.firstName} ${friend.lastName || ''}`,
             messages: [],
-            online: undefined,
           })),
         squads: mockedSquads.data.squads,
         type,
@@ -293,9 +286,16 @@ export const ChatProvider = ({ children }) => {
       setChatsData(newData)
 
       loadTotalNotifications(response.data)
-
-      setIsLoading(false)
     }
+  }
+
+  const loadData = async nextUserData => {
+    await updateUserData(nextUserData)
+    await connect()
+
+    setIsLoading(true)
+    await updateFriends(nextUserData.username)
+    setIsLoading(false)
   }
 
   const loadTotalNotifications = data => {
@@ -312,17 +312,20 @@ export const ChatProvider = ({ children }) => {
   }
 
   const getUserData = async username => {
-    if (username === userData.username) {
-      return { data: userData, relation: 'current', status: 200 }
-    }
-
     const friendUser = chatsData.friends.find(
       friend => friend.username === username
     )
-    if (friendUser) return { data: friendUser, relation: 'friend', status: 200 }
 
-    const { data, status } = await apiUsers.searchByUsername(username)
-    return { data, relation: 'user', status }
+    let relation = 'user'
+    if (username === userData.username) {
+      relation = 'current'
+    }
+    if (friendUser) {
+      relation = 'friend'
+    }
+
+    const { data, status } = await apiUsers.getByUsername(username)
+    return { data, relation, status }
   }
 
   const values = useMemo(
@@ -342,6 +345,7 @@ export const ChatProvider = ({ children }) => {
       responsiveSize,
       sendPrivateMessage,
       sendPublicMessage,
+      updateFriends,
       updateUserData,
       userData,
     }),

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import P from 'prop-types'
 
-import { Grid, Paper, Typography } from '@mui/material'
+import { Box, Grid, Paper, Typography, useMediaQuery } from '@mui/material'
 
 import { Divider } from '@atoms/Divider'
 import { Photo } from '@atoms/Photo'
@@ -10,18 +10,21 @@ import { Photo } from '@atoms/Photo'
 import { useChat } from '@contexts'
 import { charactersToLineBreaks } from '@utils/helpers/strings'
 
+import { Carousel } from '@molecules/Carousel'
 import { Footer } from './components/Footer'
 import { UserButton } from './components/UserButton'
 
 const CardPost = ({
   commentsAmount,
   date,
+  id,
   likes,
   photos,
   textContent,
   user,
   username,
 }) => {
+  const isLessThanSmall = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const { getUserData } = useChat()
 
   const [userData, setUserData] = useState(user)
@@ -59,27 +62,57 @@ const CardPost = ({
           </Typography>
         </Grid>
       )}
-      {photos?.map(({ alt, src }) => (
+      {photos?.length > 0 && (
         <Grid
           item
-          key={alt}
-          padding={{ xs: 0, sm: 2 }}
           display="flex"
+          height="100%"
           justifyContent="center"
+          padding={{
+            xs: 0,
+            sm: 2,
+            maxHeight: isLessThanSmall ? 320 : 576,
+          }}
+          width="100%"
         >
-          <Photo
-            sx={{ maxWidth: '464px', maxHeight: '576px' }}
-            src={src}
-            alt={alt}
-            animationSpeed={0}
-          />
+          <Box
+            boxShadow="none"
+            component={Paper}
+            height="100%"
+            p={2}
+            width="100%"
+          >
+            <Carousel>
+              {photos.map(({ alt, src }) => (
+                <Photo
+                  key={alt}
+                  alt={alt}
+                  animationSpeed={0}
+                  src={src}
+                  style={{
+                    objectFit: 'contain',
+                    width: '100%',
+                    height: '100%',
+                  }}
+                />
+              ))}
+            </Carousel>
+          </Box>
         </Grid>
-      ))}
-      <Grid item xs={0} sm={12}>
+      )}
+      <Grid item xs={12}>
         <Divider />
       </Grid>
       <Grid container item px={{ xs: 1, sm: 3 }}>
-        <Footer commentsAmount={commentsAmount} likes={likes} />
+        <Footer
+          commentsAmount={commentsAmount}
+          likes={likes}
+          postData={{
+            id,
+            photos,
+            textContent,
+          }}
+        />
       </Grid>
     </Grid>
   )
@@ -88,6 +121,7 @@ const CardPost = ({
 CardPost.propTypes = {
   commentsAmount: P.number,
   date: P.string.isRequired,
+  id: P.string.isRequired,
   likes: P.number,
   photos: P.arrayOf(
     P.shape({

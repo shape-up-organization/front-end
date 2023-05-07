@@ -53,27 +53,26 @@ export const AuthProvider = ({ children }) => {
     return true
   }
 
+  const updateJwtToken = async newJwtToken => {
+    setCookie('jwt-token', newJwtToken, {
+      path: '/',
+    })
+  }
+
   const getTokenProp = prop => parseJwt(getJwtToken())[prop]
 
   const getUserData = () => ({
-    email: extractEmail(),
-    firstName: extractName(),
-    id: extractId(),
+    biography: getTokenProp('biography') || '',
+    email: getTokenProp('email'),
+    name: getTokenProp('name'),
+    id: getTokenProp('id'),
     jwtToken: getJwtToken(),
-    lastName: extractLastName(),
-    name: `${extractName()} ${extractLastName()}`,
-    profilePicture: extractProfilePicture() || '',
-    username: extractUsername(),
-    xp: Number(extractXp()),
+    fullName: getTokenProp('fullName'),
+    lastName: getTokenProp('lastName'),
+    profilePicture: getTokenProp('profilePicture'),
+    username: getTokenProp('username'),
+    xp: Number(getTokenProp('xp')),
   })
-
-  const extractProfilePicture = () => getTokenProp('profilePicture')
-  const extractEmail = () => getTokenProp('email')
-  const extractId = () => getTokenProp('id')
-  const extractLastName = () => getTokenProp('lastName')
-  const extractName = () => getTokenProp('name')
-  const extractUsername = () => getTokenProp('username')
-  const extractXp = () => getTokenProp('xp')
 
   // TODO: Validate with Back-end to revalidate or not here
   // const revalidateToken = async () => {
@@ -92,6 +91,7 @@ export const AuthProvider = ({ children }) => {
       isTokenInvalid,
       signIn,
       signOut,
+      updateJwtToken,
     }),
     []
   )

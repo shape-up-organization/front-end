@@ -41,6 +41,7 @@
           "blockUser": "Bloquear",
           "cancelFriendshipRequest": "Cancelar solicitação de amizade",
           "deletePost": "Excluir postagem",
+          "quitSquad": "Sair do squad",
           "refuseFriendshipRequest": "Recusar solicitação de amizade",
           "removeFriend": "Remover amigo",
           "sharePost": "Compartilhar postagem"
@@ -165,6 +166,17 @@
         "searchChatsPlaceholder": "Procure por amigos...",
         "searchChatsPlaceholderDisabled": "Sem amigos ainda..."
       },
+      "squadModal": {
+        "addPicture": "Adicionar foto",
+        "createButton": "Criar",
+        "modalTitle": "Criar Squad",
+        "modalViewTitle": "Detalhes do Squad",
+        "promoteMember": "Promover membro",
+        "removeMember": "Remover membro",
+        "removeMemberAdmin": "Remover privilégios de admin",
+        "removePicture": "Remover foto",
+        "squadNamePlaceholder": "Nome do squad"
+      },
       "tooltip": {
         "chatArrowBackButton": "Voltar",
         "chatAvatarButton": "Abrir foto de perfil",
@@ -195,10 +207,14 @@
         "settings": "Configurações"
       },
       "others": {
+        "comments": "comentários",
+        "commentInputPlaceholder": "Escreva um comentário...",
         "confirmationModalMessage": "Tem certeza que deseja sair da sua conta e voltar para a tela inicial?",
         "confirmationModalTitle": "Sair da conta",
+        "noComments": "Nenhum comentário ainda...",
         "postInputPlaceholder": "Mostre seu progresso...",
-        "searchPlaceholder": "Procure por usuários..."
+        "searchPlaceholder": "Procure por usuários...",
+        "sendCommentButton": "Enviar comentário"
       },
       "tooltip": {
         "chats": "Conversas",
@@ -206,9 +222,11 @@
         "menu": "Menu",
         "notifications": "Notificações",
         "quests": "Missões",
+        "rank": "Rank",
         "search": "Pesquisar",
         "sendPostButton": "Enviar postagem",
-        "settings": "Configurações"
+        "settings": "Configurações",
+        "summary": "Resumo"
       }
     },
     "landing": {
@@ -330,10 +348,23 @@
       }
     },
     "profile": {
+      "buttons": {
+        "save": "Salvar"
+      },
       "others": {
         "editProfile": "Editar perfil",
         "friendsAmount": "{{amount}} amigos",
         "level": "nível"
+      },
+      "placeholders": {
+        "biography": "Biografia",
+        "firstName": "Nome",
+        "lastName": "Sobrenome",
+        "username": "Usuário"
+      },
+      "snackbar": {
+        "genericError": "Ops, houve algum erro ao atualizar seu perfil, tente novamente mais tarde!",
+        "editSuccessfully": "Perfil atualizado com sucesso!"
       }
     },
     "search": {

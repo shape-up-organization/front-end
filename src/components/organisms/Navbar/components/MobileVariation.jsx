@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded'
-
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
 import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded'
 import FitnessCenterRoundedIcon from '@mui/icons-material/FitnessCenterRounded'
@@ -30,13 +29,13 @@ import {
 import { Avatar } from '@atoms/Avatar'
 import { Divider } from '@atoms/Divider'
 import { CardProfile } from '@molecules/CardProfile'
+import { CardRank } from '@molecules/CardRank'
+import { SimpleModal } from '@templates/Modal'
 
 import { useChat } from '@contexts'
 import { useNavigateSearch } from '@hooks'
 
-import { CardRank } from '@molecules/CardRank'
 import { useStyles } from './MobileVariation.styles'
-import { SimpleModal } from './SimpleModal'
 
 const MobileVariation = ({ openConfirmationModal }) => {
   const { t } = useTranslation()
@@ -88,7 +87,7 @@ const MobileVariation = ({ openConfirmationModal }) => {
   return (
     <>
       <Grid item xs={4} display="flex" gap={2} justifyContent="center">
-        <Tooltip title={t('pages.feed.tooltip.feed')}>
+        <Tooltip title={t('pages.feed.tooltip.summary')}>
           <IconButton onClick={toggleCardProfile} size="small">
             <AccountBoxRoundedIcon />
           </IconButton>
@@ -97,8 +96,9 @@ const MobileVariation = ({ openConfirmationModal }) => {
           open={openCardProfile}
           Component={CardProfile}
           handleClose={toggleCardProfile}
+          title={t('pages.feed.tooltip.summary')}
         />
-        <Tooltip title={t('pages.feed.tooltip.quests')}>
+        <Tooltip title={t('pages.feed.tooltip.rank')}>
           <IconButton onClick={toggleCardRank} size="small">
             <MilitaryTechRoundedIcon />
           </IconButton>
@@ -107,6 +107,7 @@ const MobileVariation = ({ openConfirmationModal }) => {
           open={openCardRank}
           Component={CardRank}
           handleClose={toggleCardRank}
+          title={t('pages.feed.tooltip.rank')}
         />
       </Grid>
       <Grid item xs={4} display="flex" justifyContent="flex-end">
@@ -178,7 +179,7 @@ const MobileVariation = ({ openConfirmationModal }) => {
                       textAlign="center"
                       variant="body2"
                     >
-                      {userData.firstName}
+                      {userData.name}
                     </Typography>
                     <Typography
                       color="primary"

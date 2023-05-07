@@ -51,7 +51,10 @@ const ContextMenu = ({ anchorEl, handleCloseMenu, open, userSelected }) => {
         </Typography>
       </MenuItem>
       <Divider />
-      <FriendshipOptions postAction={handleCloseMenu} data={userSelected} />
+      <FriendshipOptions
+        postAction={handleCloseMenu}
+        data={{ ...userSelected, ...userSelected.friendshipStatus }}
+      />
     </Menu>
   )
 }
@@ -63,6 +66,7 @@ ContextMenu.propTypes = {
   userSelected: P.shape({
     firstName: P.string.isRequired,
     username: P.string.isRequired,
+    friendshipStatus: P.object.isRequired,
   }).isRequired,
 }
 

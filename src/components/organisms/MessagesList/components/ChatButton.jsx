@@ -16,7 +16,7 @@ import { charactersToLineBreaks } from '@utils/helpers/strings'
 
 import { useStyles } from './ChatButton.styles'
 
-const ChatButton = ({ data, online }) => {
+const ChatButton = ({ chatType, data, online }) => {
   const { messages, name, unreadMessages = 0, username } = data
   const { activeChat, openChat, userData } = useChat()
 
@@ -24,7 +24,7 @@ const ChatButton = ({ data, online }) => {
 
   const handleSelectChat = () => {
     if (activeChat?.username === username) return
-    openChat(username)
+    openChat(username, chatType)
   }
 
   const mountLastMessage = () => {
@@ -59,7 +59,8 @@ const ChatButton = ({ data, online }) => {
               horizontal: 'right',
             }}
             badgeContent={
-              online === undefined ? (
+              // eslint-disable-next-line no-nested-ternary
+              chatType === 'squads' ? null : online === undefined ? (
                 <CircularProgress color="secondary" size={8} />
               ) : (
                 ''
@@ -136,6 +137,7 @@ const ChatButton = ({ data, online }) => {
 }
 
 ChatButton.propTypes = {
+  chatType: P.string.isRequired,
   data: P.shape({
     name: P.string.isRequired,
     messages: P.arrayOf(

@@ -37,11 +37,11 @@ const UserInfo = ({ closeCard }) => {
         display="center"
         justifyContent="center"
       >
-        <Avatar />
+        <Avatar currentUser />
       </Grid>
       <Grid item xs={7}>
         <Typography fontWeight={700} textAlign="left" variant="h6">
-          {userData.name}
+          {userData.name} {userData.lastName}
         </Typography>
         <Typography
           color="disabled"

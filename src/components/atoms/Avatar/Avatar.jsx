@@ -5,6 +5,7 @@ import { Avatar as AvatarMUI } from '@mui/material'
 import { useChat } from '@contexts'
 import { getBorder } from '@utils/constants/levels'
 
+import defaultUser from '@assets/images/default-user.png'
 import { useStyles } from './Avatar.styles'
 
 const Avatar = ({ avatarSize, currentUser, user, ...rest }) => {
@@ -12,10 +13,7 @@ const Avatar = ({ avatarSize, currentUser, user, ...rest }) => {
   const { classes } = useStyles({ avatarSize })
 
   const data = {
-    profilePicture:
-      (currentUser ? userData.profilePicture : user.profilePicture) ||
-      // defaultUser,
-      'https://i.seadn.io/gae/2hDpuTi-0AMKvoZJGd-yKWvK4tKdQr_kLIpB_qSeMau2TNGCNidAosMEvrEXFO9G6tmlFlPQplpwiqirgrIPWnCKMvElaYgI-HiVvXc?auto=format&w=1000',
+    profilePicture: currentUser ? userData.profilePicture : user.profilePicture,
     username: currentUser ? userData.username : user.username,
     xp: currentUser ? userData.xp : user.xp,
   }
@@ -24,7 +22,7 @@ const Avatar = ({ avatarSize, currentUser, user, ...rest }) => {
     <AvatarMUI
       alt={data.username}
       className={classes.avatar}
-      src={data.profilePicture}
+      src={data.profilePicture || defaultUser}
       sx={{
         background: `${getBorder(Number(data.xp))} border-box`,
       }}

@@ -19,8 +19,12 @@ const PublishStep = ({ images }) => {
   const handleCreatePost = async () => {
     setIsLoading(true)
 
-    console.log('messageText', messageText)
-    console.log('images', images)
+    const payload = {
+      message: messageText,
+      images: images.map(image => image.data),
+    }
+
+    console.log('payload', payload)
 
     setTimeout(() => {
       setMessageText('')
@@ -43,17 +47,19 @@ const PublishStep = ({ images }) => {
             minHeight="56vh"
             width={lessThanLarge ? '100%' : '68%'}
           >
-            <Box component={Paper} height="100%" p={2}>
-              <Carousel>
+            <Box component={Paper} height="100%" p={2} width="100%">
+              <Carousel autoPlay>
                 {images.map(image => (
                   <Photo
                     key={image?.id}
                     alt={image?.id}
                     animationSpeed={0}
-                    height="100%"
                     src={image?.data ? URL.createObjectURL(image.data) : ''}
-                    style={{ objectFit: 'contain' }}
-                    width="100%"
+                    style={{
+                      objectFit: 'contain',
+                      width: '100%',
+                      height: '100%',
+                    }}
                   />
                 ))}
               </Carousel>

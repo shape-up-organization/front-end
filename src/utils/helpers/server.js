@@ -7,4 +7,10 @@ const objectToQueryString = obj =>
     .map(key => `${key}=${obj[key]}`)
     .join('&')}`
 
-export { getJwtToken, objectToQueryString }
+const imageUrlToFileBlob = async url => {
+  const response = await fetch(url)
+  const blob = await response.blob()
+  return blob
+}
+
+export { getJwtToken, imageUrlToFileBlob, objectToQueryString }

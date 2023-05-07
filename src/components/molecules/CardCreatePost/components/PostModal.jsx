@@ -38,13 +38,16 @@ const PostModal = ({ handleClose, open }) => {
   }
 
   const postStepElements = {
-    1: () => <ImageHandler updateFilesArray={updateFilesArray} />,
+    1: () => (
+      <ImageHandler maxNumberOfFiles={3} updateFilesArray={updateFilesArray} />
+    ),
     2: () => <PublishStep backStep={backStep} images={imagesFiles} />,
   }
 
   return (
     <Dialog
       fullScreen={lessThanSmall}
+      fullWidth
       open={open}
       onClose={handleClose}
       maxWidth="xl"
@@ -60,7 +63,7 @@ const PostModal = ({ handleClose, open }) => {
           component={Paper}
           height={lessThanSmall ? '100vh' : '80vh'}
           alignItems="center"
-          width={lessThanSmall ? '100vw' : '80vw'}
+          // width={lessThanSmall ? '100vw' : '80vw'}
         >
           <Stack
             width="100%"

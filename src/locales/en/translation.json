@@ -41,6 +41,7 @@
           "blockUser": "Block",
           "cancelFriendshipRequest": "Cancel friendship request",
           "deletePost": "Delete post",
+          "quitSquad": "Quit squad",
           "refuseFriendshipRequest": "Refuse friendship request",
           "removeFriend": "Remove friend",
           "sharePost": "Share post"
@@ -165,6 +166,17 @@
         "searchChatsPlaceholder": "Search friends...",
         "searchChatsPlaceholderDisabled": "You have no friends yet!"
       },
+      "squadModal": {
+        "addPicture": "Add picture",
+        "createButton": "Create",
+        "modalTitle": "Create Squad",
+        "modalViewTitle": "Squad details",
+        "promoteMember": "Promote member",
+        "removeMember": "Remove member",
+        "removeMemberAdmin": "Remove admin privileges",
+        "removePicture": "Remove picture",
+        "squadNamePlaceholder": "Squad name"
+      },
       "tooltip": {
         "chatArrowBackButton": "Go back",
         "chatAvatarButton": "Open profile picture",
@@ -195,10 +207,14 @@
         "settings": "Settings"
       },
       "others": {
+        "comments": "comments",
+        "commentInputPlaceholder": "Write a comment...",
         "confirmationModalMessage": "Are you sure you want to exit the account?",
         "confirmationModalTitle": "Exit account",
+        "noComments": "No comments yet...",
         "postInputPlaceholder": "Post your progress...",
-        "searchPlaceholder": "Search for users..."
+        "searchPlaceholder": "Search for users...",
+        "sendCommentButton": "Send comment"
       },
       "tooltip": {
         "chats": "Chats",
@@ -206,9 +222,11 @@
         "menu": "Menu",
         "notifications": "Notifications",
         "quests": "Quests",
+        "rank": "Rank",
         "search": "Search",
         "sendPostButton": "Send post",
-        "settings": "Settings"
+        "settings": "Settings",
+        "summary": "Summary"
       }
     },
     "landing": {
@@ -330,10 +348,23 @@
       }
     },
     "profile": {
+      "buttons": {
+        "save": "Save"
+      },
       "others": {
         "editProfile": "Edit profile",
         "friendsAmount": "{{amount}} friends",
         "level": "level"
+      },
+      "placeholders": {
+        "biography": "Biography",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "username": "Username"
+      },
+      "snackbar": {
+        "genericError": "Ops, there was an error updating your profile, please try again later!",
+        "editSuccessfully": "Profile updated successfully!"
       }
     },
     "search": {

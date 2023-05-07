@@ -1,18 +1,24 @@
 import { http } from '@api/lib/http'
 import { tryCatch } from '@api/lib/tryCatch'
 
-import { withAuth } from '@api/middlewares/withAuth'
-import { withHeaders } from '@api/middlewares/withHeaders'
+import { withAuth, withFileHeaders, withHeaders } from '@api/middlewares'
 
-const route = '/users'
+const routeProfiles = '/profiles'
+const routeUsers = '/users'
+
+const uploadProfilePicture = async picture =>
+  tryCatch(http.post, `${routeProfiles}/picture`, picture, {
+    ...withHeaders({ ...withAuth(), ...withFileHeaders() }),
+  })
 
 const deleteAccount = async () =>
-  tryCatch(http.delete, route, withHeaders(withAuth()))
+  tryCatch(http.delete, routeUsers, { ...withHeaders(withAuth()) })
 
 const updateUserData = async updatedData =>
-  tryCatch(http.put, route, updatedData, withHeaders(withAuth()))
+  tryCatch(http.put, routeUsers, updatedData, { ...withHeaders(withAuth()) })
 
 export default {
   deleteAccount,
   updateUserData,
+  uploadProfilePicture,
 }

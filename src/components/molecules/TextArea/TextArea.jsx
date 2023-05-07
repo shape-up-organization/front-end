@@ -18,6 +18,7 @@ import {
   Stack,
   TextField,
   Tooltip,
+  Typography,
   Zoom,
   useTheme,
 } from '@mui/material'
@@ -44,9 +45,15 @@ const TextArea = ({
     !!emojiPickerAnchorEl ||
     messageText ||
     alwaysShowBottom
+  const maxCharsLength = textAreaProps?.inputProps?.maxLength
 
-  const handleChangeMessageText = ({ target: { value } }) =>
+  const handleChangeMessageText = ({ target: { value } }) => {
+    if (value.length >= maxCharsLength) {
+      setMessageText(value.slice(0, maxCharsLength))
+      return
+    }
     setMessageText(value)
+  }
 
   const handleCloseEmojiPicker = () => setEmojiPickerAnchorEl(null)
   const handleOpenEmojiPicker = event =>
@@ -65,6 +72,7 @@ const TextArea = ({
     if (event.key === 'Enter') {
       event.preventDefault()
       if (event.shiftKey) {
+        if (messageText?.length >= maxCharsLength) return
         setMessageText(`${messageText}\n`)
         return
       }
@@ -154,7 +162,7 @@ const TextArea = ({
       <Fade in={!!bottomVisibility}>
         <Grid item xs={12}>
           <Grid container mb={2}>
-            <Grid item xs={2}>
+            <Grid item xs>
               <Tooltip
                 placement="bottom-start"
                 title={t(
@@ -163,6 +171,7 @@ const TextArea = ({
               >
                 <IconButton
                   color="primary"
+                  disabled={isLoading}
                   onClick={handleOpenEmojiPicker}
                   ref={emojiButtonRef}
                 >
@@ -185,25 +194,45 @@ const TextArea = ({
                 />
               </Popover>
             </Grid>
-            <Grid item xs={10} display="flex" justifyContent="flex-end">
-              {isLoading ? (
-                <Stack justifyContent="center" pr={1}>
-                  <CircularProgress color="secondary" size={20} />
-                </Stack>
-              ) : (
-                <Tooltip placement="top-end" title={texts.sendButton}>
-                  <span>
-                    <IconButton
-                      color="primary"
-                      disabled={!messageText.trim()}
-                      onClick={handleSendMessage}
-                    >
-                      <SendIcon />
-                    </IconButton>
-                  </span>
-                </Tooltip>
-              )}
-            </Grid>
+            {!!textAreaProps?.inputProps?.maxLength && (
+              <Grid
+                item
+                alignItems="center"
+                display="flex"
+                justifyContent="flex-end"
+              >
+                <Typography
+                  color={
+                    messageText.length >= maxCharsLength ? 'error' : 'inherit'
+                  }
+                  fontWeight={messageText.length >= maxCharsLength ? 500 : 400}
+                  variant="body2"
+                >
+                  {`${messageText.length}/${textAreaProps.inputProps.maxLength}`}
+                </Typography>
+              </Grid>
+            )}
+            {handleSendMessage && (
+              <Grid item display="flex" justifyContent="flex-end" ml={2}>
+                {isLoading ? (
+                  <Stack justifyContent="center" pr={1}>
+                    <CircularProgress size={20} />
+                  </Stack>
+                ) : (
+                  <Tooltip placement="top-end" title={texts.sendButton}>
+                    <span>
+                      <IconButton
+                        color="primary"
+                        disabled={!messageText.trim()}
+                        onClick={handleSendMessage}
+                      >
+                        <SendIcon />
+                      </IconButton>
+                    </span>
+                  </Tooltip>
+                )}
+              </Grid>
+            )}
           </Grid>
         </Grid>
       </Fade>
@@ -212,14 +241,14 @@ const TextArea = ({
 }
 
 TextArea.propTypes = {
-  handleSendMessage: P.func.isRequired,
+  handleSendMessage: P.func,
   interfaceOptions: P.shape({
     alwaysShowBottom: P.bool,
     isLoading: P.bool,
     textAreaProps: P.object,
   }),
   isLoading: P.bool,
-  messageState: P.arrayOf(P.any).isRequired,
+  messageState: P.arrayOf(P.any),
   scrollRelated: P.shape({
     handleScrollToBottom: P.func,
     isListBottomVisible: P.bool,
@@ -232,12 +261,14 @@ TextArea.propTypes = {
 }
 
 TextArea.defaultProps = {
+  handleSendMessage: null,
   interfaceOptions: {
     alwaysShowBottom: false,
     isLoading: false,
     textAreaProps: {},
   },
   isLoading: false,
+  messageState: [null, () => {}],
   scrollRelated: {
     handleScrollToBottom: () => {},
     isListBottomVisible: true,

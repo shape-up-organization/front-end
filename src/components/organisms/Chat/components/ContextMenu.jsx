@@ -37,21 +37,36 @@ const ContextMenu = ({ anchorEl, handleCloseMenu, open, userSelected }) => {
       }}
       sx={{ rowGap: 1 }}
     >
-      <MenuItem
-        component={Button}
-        onClick={handleGoToProfile}
-        startIcon={<ContactsRoundedIcon />}
-        sx={{
-          width: '100%',
-          justifyContent: 'center',
+      {userSelected.chatType === 'friends' && (
+        <>
+          <MenuItem
+            component={Button}
+            onClick={handleGoToProfile}
+            startIcon={<ContactsRoundedIcon />}
+            sx={{
+              width: '100%',
+              justifyContent: 'center',
+            }}
+          >
+            <Typography
+              fontWeight={700}
+              textTransform="uppercase"
+              variant="body2"
+            >
+              {t('pages.search.others.goToProfile')}
+            </Typography>
+          </MenuItem>
+          <Divider />
+        </>
+      )}
+      <FriendshipOptions
+        postAction={handleCloseMenu}
+        data={{
+          ...userSelected,
+          isFriend: true,
+          isSquad: userSelected.chatType === 'squads',
         }}
-      >
-        <Typography fontWeight={700} textTransform="uppercase" variant="body2">
-          {t('pages.search.others.goToProfile')}
-        </Typography>
-      </MenuItem>
-      <Divider />
-      <FriendshipOptions postAction={handleCloseMenu} data={userSelected} />
+      />
     </Menu>
   )
 }
@@ -61,7 +76,8 @@ ContextMenu.propTypes = {
   handleCloseMenu: P.func,
   open: P.bool,
   userSelected: P.shape({
-    firstName: P.string.isRequired,
+    chatType: P.string.isRequired,
+    firstName: P.string,
     username: P.string.isRequired,
   }).isRequired,
 }

@@ -203,10 +203,14 @@
         "settings": "Configurações"
       },
       "others": {
+        "comments": "comentários",
+        "commentInputPlaceholder": "Escreva um comentário...",
         "confirmationModalMessage": "Tem certeza que deseja sair da sua conta e voltar para a tela inicial?",
         "confirmationModalTitle": "Sair da conta",
+        "noComments": "Nenhum comentário ainda...",
         "postInputPlaceholder": "Mostre seu progresso...",
-        "searchPlaceholder": "Procure por usuários..."
+        "searchPlaceholder": "Procure por usuários...",
+        "sendCommentButton": "Enviar comentário"
       },
       "tooltip": {
         "chats": "Conversas",

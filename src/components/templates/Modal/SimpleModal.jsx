@@ -17,6 +17,7 @@ import { useStyles } from './Modal.styles'
 const SimpleModal = ({
   Component,
   componentArgs,
+  dialogProps,
   handleClose,
   open,
   title,
@@ -27,11 +28,13 @@ const SimpleModal = ({
   return (
     <Dialog
       fullScreen={lessThanSmall}
+      fullWidth
       sx={{
         minHeight: '100vh',
       }}
       onClose={handleClose}
       open={open}
+      {...dialogProps}
     >
       {title && (
         <DialogTitle
@@ -57,7 +60,7 @@ const SimpleModal = ({
         </DialogTitle>
       )}
       <Fade in>
-        <DialogContent sx={{ p: 0 }}>
+        <DialogContent sx={{ p: 0, width: '100%' }}>
           <Stack width="100%">
             <Component {...componentArgs} />
           </Stack>
@@ -70,6 +73,7 @@ const SimpleModal = ({
 SimpleModal.propTypes = {
   Component: P.elementType.isRequired,
   componentArgs: P.object,
+  dialogProps: P.object,
   handleClose: P.func.isRequired,
   open: P.bool,
   title: P.string,
@@ -77,6 +81,7 @@ SimpleModal.propTypes = {
 
 SimpleModal.defaultProps = {
   componentArgs: {},
+  dialogProps: {},
   open: false,
   title: '',
 }

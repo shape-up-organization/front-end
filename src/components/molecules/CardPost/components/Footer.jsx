@@ -3,115 +3,83 @@ import { useState } from 'react'
 import P from 'prop-types'
 
 import ChatBubbleOutlineRoundedIcon from '@mui/icons-material/ChatBubbleOutlineRounded'
-import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded'
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
-import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded'
-import {
-  Avatar,
-  Box,
-  CardContent,
-  CardHeader,
-  Collapse,
-  Grid,
-  IconButton,
-  Menu,
-  MenuItem,
-  Stack,
-  Typography,
-} from '@mui/material'
+import { Button, Fade, Grid, Grow, Stack, Typography } from '@mui/material'
+import { CardViewPost } from './CardViewPost'
 
-const Footer = ({ commentsAmount, likes }) => {
-  const [expanded, setExpanded] = useState(false)
-  const [commentsAnchorEl, setCommentsAnchorEl] = useState(null)
+const Footer = ({ commentsAmount, likes, postData }) => {
   const [liked, setLiked] = useState(false)
+  const [openCardPostView, setOpenCardPostView] = useState(false)
 
-  const likePost = () => setLiked(current => !current)
+  const handleLikePost = () => setLiked(current => !current)
 
-  const handleExpandComments = () => {
-    setExpanded(!expanded)
-  }
-
-  const handleOpenCommentSettings = event => {
-    setCommentsAnchorEl(event.currentTarget)
-  }
-  const handleCloseCommentSettings = () => {
-    setCommentsAnchorEl(null)
-  }
+  const handleOpenCardPostView = () => setOpenCardPostView(true)
+  const handleCloseCardPostView = () => setOpenCardPostView(false)
 
   return (
     <>
       <Grid container item px={{ xs: 1, sm: 3 }}>
         <Stack direction="row" justifyContent="space-between" width="100%">
-          <Stack direction="row" gap={0} alignItems="center">
-            <>
-              <IconButton onClick={likePost}>
-                {liked ? (
-                  <FavoriteRoundedIcon color="primary" />
-                ) : (
-                  <FavoriteBorderRoundedIcon />
+          <Stack
+            alignItems="center"
+            columnGap={1}
+            direction="row"
+            justifyContent="center"
+            width="100%"
+          >
+            <Stack alignItems="center" direction="row">
+              <Button
+                endIcon={
+                  liked ? (
+                    <Grow in>
+                      <FavoriteRoundedIcon color="primary" />
+                    </Grow>
+                  ) : (
+                    <Fade in>
+                      <FavoriteBorderRoundedIcon />
+                    </Fade>
+                  )
+                }
+                onClick={handleLikePost}
+              >
+                {likes > 0 && (
+                  <Typography
+                    display="inline"
+                    color="disabled"
+                    fontWeight={700}
+                    variant="body2"
+                  >
+                    {likes > 99 ? '99+' : likes}
+                  </Typography>
                 )}
-              </IconButton>
-              <Typography
-                display="inline"
-                color="disabled"
-                fontWeight={700}
-                variant="body2"
-                mr={2}
+              </Button>
+            </Stack>
+            <Stack alignItems="center" direction="row">
+              <Button
+                onClick={handleOpenCardPostView}
+                startIcon={<ChatBubbleOutlineRoundedIcon />}
               >
-                {likes > 99 ? '99+' : likes}
-              </Typography>
-            </>
-            <>
-              <IconButton>
-                <ChatBubbleOutlineRoundedIcon />
-              </IconButton>
-              <Typography
-                display="inline"
-                color="disabled"
-                fontWeight={700}
-                variant="body2"
-              >
-                {commentsAmount > 99 ? '99+' : commentsAmount}
-              </Typography>
-            </>
+                {commentsAmount > 0 && (
+                  <Typography
+                    display="inline"
+                    color="disabled"
+                    fontWeight={700}
+                    variant="body2"
+                  >
+                    {commentsAmount > 99 ? '99+' : commentsAmount}
+                  </Typography>
+                )}
+              </Button>
+            </Stack>
           </Stack>
-          <Box display="flex" alignItems="center">
-            <IconButton onClick={handleExpandComments}>
-              <ExpandMoreRoundedIcon fontSize="small" />
-            </IconButton>
-            <Typography display="inline" variant="body2">
-              comentários
-            </Typography>
-          </Box>
         </Stack>
       </Grid>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <CardHeader
-            avatar={<Avatar currentUser />}
-            action={
-              <IconButton onClick={handleOpenCommentSettings}>
-                <MoreHorizRoundedIcon />
-                <Menu
-                  anchorEl={commentsAnchorEl}
-                  open={!!commentsAnchorEl}
-                  onClose={handleCloseCommentSettings}
-                >
-                  <MenuItem onClick={handleCloseCommentSettings}>
-                    Compartilhar
-                  </MenuItem>
-                  <MenuItem onClick={handleCloseCommentSettings}>
-                    Excluir
-                  </MenuItem>
-                </Menu>
-              </IconButton>
-            }
-            title="Vitao cantor"
-            subheader="Terça 04/2023"
-          />
-        </CardContent>
-      </Collapse>
+      <CardViewPost
+        handleClose={handleCloseCardPostView}
+        open={openCardPostView}
+        postData={postData}
+      />
     </>
   )
 }
@@ -119,6 +87,7 @@ const Footer = ({ commentsAmount, likes }) => {
 Footer.propTypes = {
   commentsAmount: P.number,
   likes: P.number,
+  postData: P.object.isRequired,
 }
 
 Footer.defaultProps = {

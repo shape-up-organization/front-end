@@ -55,14 +55,7 @@ const FeedPage = () => {
                   display="center"
                   justifyContent="center"
                 >
-                  <CardPost
-                    commentsAmount={post.commentsAmount}
-                    date={post.date}
-                    likes={post.likes}
-                    photos={post.photos}
-                    textContent={post.textContent}
-                    username={post.username}
-                  />
+                  <CardPost {...post} />
                 </Grid>
               ))}
             </Grid>

@@ -10,6 +10,10 @@ export default Object.freeze({
           alt: 'turtle',
           src: 'https://burst.shopifycdn.com/photos/woman-dressed-in-white-leans-against-a-wall.jpg?width=1200&format=pjpg&exif=0&iptc=0',
         },
+        {
+          alt: 'louco',
+          src: 'https://www.shutterstock.com/shutterstock/photos/609380096/display_1500/stock-vector-cheerful-funny-giraffe-with-long-neck-height-chart-or-meter-wall-sticker-children-vector-609380096.jpg',
+        },
       ],
       textContent:
         'Lorem ipsum dolor sit amet lorem ipsum dolor.\n\nLorem ipsum dolor sit amet lorem ipsum dolor, lorem ipsum dolor sit amet lorem ipsum dolor. Lorem ipsum dolor sit amet lorem ipsum dolor.',
@@ -20,7 +24,12 @@ export default Object.freeze({
       date: '14/05/2022',
       id: 2,
       likes: 3,
-      photos: [],
+      photos: [
+        {
+          alt: 'louco',
+          src: 'https://www.shutterstock.com/shutterstock/photos/609380096/display_1500/stock-vector-cheerful-funny-giraffe-with-long-neck-height-chart-or-meter-wall-sticker-children-vector-609380096.jpg',
+        },
+      ],
       textContent: 'Lorem ipsum dolor sit amet lorem ipsum dolor.',
       username: 'testtwo',
     },

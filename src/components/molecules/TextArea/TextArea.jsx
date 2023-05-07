@@ -171,6 +171,7 @@ const TextArea = ({
               >
                 <IconButton
                   color="primary"
+                  disabled={isLoading}
                   onClick={handleOpenEmojiPicker}
                   ref={emojiButtonRef}
                 >
@@ -215,7 +216,7 @@ const TextArea = ({
               <Grid item display="flex" justifyContent="flex-end" ml={2}>
                 {isLoading ? (
                   <Stack justifyContent="center" pr={1}>
-                    <CircularProgress color="secondary" size={20} />
+                    <CircularProgress size={20} />
                   </Stack>
                 ) : (
                   <Tooltip placement="top-end" title={texts.sendButton}>

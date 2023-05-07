@@ -203,10 +203,14 @@
         "settings": "Settings"
       },
       "others": {
+        "comments": "comments",
+        "commentInputPlaceholder": "Write a comment...",
         "confirmationModalMessage": "Are you sure you want to exit the account?",
         "confirmationModalTitle": "Exit account",
+        "noComments": "No comments yet...",
         "postInputPlaceholder": "Post your progress...",
-        "searchPlaceholder": "Search for users..."
+        "searchPlaceholder": "Search for users...",
+        "sendCommentButton": "Send comment"
       },
       "tooltip": {
         "chats": "Chats",

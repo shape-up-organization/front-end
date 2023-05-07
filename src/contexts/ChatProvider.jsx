@@ -324,7 +324,7 @@ export const ChatProvider = ({ children }) => {
       relation = 'friend'
     }
 
-    const { data, status } = await apiUsers.searchByUsername(username)
+    const { data, status } = await apiUsers.getByUsername(username)
     return { data, relation, status }
   }
 

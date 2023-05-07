@@ -10,8 +10,8 @@ import { AnimatedWrapper } from '@layouts/AnimatedWrapper'
 import { CardCreatePost } from '@molecules/CardCreatePost'
 import { CardPost } from '@molecules/CardPost'
 
+import apiPosts from '@api/services/posts'
 import { useChat } from '@contexts'
-import postsGetMock from '@mocks/posts/get'
 
 import { UserCard } from './components/UserCard'
 
@@ -29,7 +29,7 @@ const UserPage = () => {
     const paramUsername = searchParams.get('username')
     const [userPageData, postsData] = await Promise.all([
       getUserData(paramUsername),
-      postsGetMock.data.filter(post => post.username === paramUsername),
+      apiPosts.getPostsByUsername(paramUsername),
     ])
 
     if (userPageData.status === 404) {
@@ -90,11 +90,11 @@ const UserPage = () => {
                   justifyContent="center"
                 >
                   <CardPost
-                    commentsAmount={post.commentsAmount}
-                    date={post.date}
-                    likes={post.likes}
-                    photos={post.photos}
-                    textContent={post.textContent}
+                    commentsAmount={post.countComments}
+                    date={post.createdAt}
+                    likes={post.countLike}
+                    photos={post.photoUrls}
+                    textContent={post.description}
                     user={user}
                   />
                 </Grid>

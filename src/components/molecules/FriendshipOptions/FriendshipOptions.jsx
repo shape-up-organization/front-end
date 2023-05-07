@@ -21,6 +21,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
   const {
     name,
     haveFriendRequest = false,
+    userSenderFriendshipRequest,
     isFriend = false,
     isSquad = false,
     username,
@@ -327,17 +328,13 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
   } else {
     if (isFriend) {
       pushMenuItem('removeFriend')
+    } else if (!haveFriendRequest) {
+      pushMenuItem('addFriend')
+    } else if (userSenderFriendshipRequest === userData.username) {
+      pushMenuItem('cancelFriendshipRequest')
     } else {
-      // TODO: add real check
-      const userWhoSent = false
-      if (!haveFriendRequest) {
-        pushMenuItem('addFriend')
-      } else if (userWhoSent) {
-        pushMenuItem('cancelFriendshipRequest')
-      } else {
-        pushMenuItem('acceptFriend')
-        pushMenuItem('refuseFriendshipRequest')
-      }
+      pushMenuItem('acceptFriend')
+      pushMenuItem('refuseFriendshipRequest')
     }
     pushMenuItem('blockUser')
   }
@@ -354,6 +351,7 @@ FriendshipOptions.propTypes = {
     isSquad: P.bool,
     haveFriendRequest: P.bool,
     username: P.string,
+    userSenderFriendshipRequest: P.string,
   }).isRequired,
   isPost: P.bool,
   postAction: P.func,

@@ -5,8 +5,15 @@ import { withAuth, withHeaders } from '@api/middlewares'
 
 const route = '/users'
 
-const searchByName = async params =>
-  tryCatch(http.get, `${route + params}`, { ...withHeaders(withAuth()) })
+const getByUsername = async username =>
+  tryCatch(http.get, `${route}/find-username/${username}`, {
+    ...withHeaders(withAuth()),
+  })
+
+const searchByName = async name =>
+  tryCatch(http.get, `${route}/search-fullname?name=${name}`, {
+    ...withHeaders(withAuth()),
+  })
 
 const searchByUsername = async username =>
   tryCatch(http.get, `${route}/search-username/${username}`, {
@@ -14,6 +21,7 @@ const searchByUsername = async username =>
   })
 
 export default {
+  getByUsername,
   searchByName,
   searchByUsername,
 }

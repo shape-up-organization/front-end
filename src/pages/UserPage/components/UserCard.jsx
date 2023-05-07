@@ -106,7 +106,7 @@ const UserCard = ({ handleReload, isCurrentUser, user }) => {
             </Button>
           ) : (
             <Stack rowGap={1}>
-              <FriendshipOptions data={user} />
+              <FriendshipOptions data={{ ...user, ...user.friendshipStatus }} />
             </Stack>
           )}
         </Stack>
@@ -131,6 +131,7 @@ UserCard.propTypes = {
     name: P.string,
     username: P.string,
     xp: P.number,
+    friendshipStatus: P.object,
   }).isRequired,
 }
 

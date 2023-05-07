@@ -5,8 +5,8 @@ import { withAuth, withHeaders } from '@api/middlewares'
 
 const route = '/posts'
 
-const getPosts = async () =>
-  tryCatch(http.get, route, {
+const getPostsByUsername = async username =>
+  tryCatch(http.get, `${route}/username/${username}?page=0&size=2`, {
     ...withHeaders(withAuth()),
   })
 
@@ -22,6 +22,6 @@ const sendComment = async (postId, comment) =>
 
 export default {
   getCommentsByPostId,
-  getPosts,
+  getPostsByUsername,
   sendComment,
 }

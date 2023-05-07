@@ -3,7 +3,7 @@ export default Object.freeze({
     {
       commentsAmount: 13,
       date: '13/04/2023',
-      id: 1,
+      id: '1',
       likes: 22,
       photos: [
         {
@@ -22,7 +22,7 @@ export default Object.freeze({
     {
       commentsAmount: 0,
       date: '14/05/2022',
-      id: 2,
+      id: '2',
       likes: 3,
       photos: [
         {
@@ -36,7 +36,7 @@ export default Object.freeze({
     {
       commentsAmount: 0,
       date: '13/04/2023',
-      id: 3,
+      id: '3',
       likes: 0,
       photos: [
         {
@@ -50,10 +50,10 @@ export default Object.freeze({
     {
       commentsAmount: 3,
       date: '13/04/2023',
-      id: 4,
+      id: '4',
       likes: 2,
       textContent: 'Lorem ipsum.',
-      username: 'johndoe',
+      username: 'testtwo',
     },
   ],
 })

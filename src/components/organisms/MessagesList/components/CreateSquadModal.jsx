@@ -173,7 +173,7 @@ const Content = () => {
   )
 }
 
-const SquadModal = ({ handleClose, open }) => {
+const CreateSquadModal = ({ handleClose, open }) => {
   const { t } = useTranslation()
 
   return (
@@ -186,13 +186,13 @@ const SquadModal = ({ handleClose, open }) => {
   )
 }
 
-SquadModal.propTypes = {
+CreateSquadModal.propTypes = {
   handleClose: P.func.isRequired,
   open: P.bool,
 }
 
-SquadModal.defaultProps = {
+CreateSquadModal.defaultProps = {
   open: false,
 }
 
-export { SquadModal }
+export { CreateSquadModal }

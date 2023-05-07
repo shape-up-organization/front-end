@@ -20,6 +20,7 @@ import { useChat } from '@contexts'
 import { useNavigateSearch } from '@hooks'
 
 import { ContextMenu } from './ContextMenu'
+import { SquadModal } from './SquadModal'
 
 const UserButton = () => {
   const { t } = useTranslation()
@@ -30,6 +31,10 @@ const UserButton = () => {
   const { name, username } = activeChat
 
   const [menuAnchorEl, setContextMenuAnchorEl] = useState(null)
+  const [openSquadModal, setOpenSquadModal] = useState(false)
+
+  const handleOpenSquadModal = () => setOpenSquadModal(true)
+  const handleCloseSquadModal = () => setOpenSquadModal(false)
 
   const handleCloseContextMenu = () => setContextMenuAnchorEl(null)
   const handleOpenContextMenu = event => {
@@ -42,95 +47,98 @@ const UserButton = () => {
     navigateSearch('/profile', { username })
   }
 
-  const openSquad = () => {
-    console.log('open squad', activeChat)
-  }
-
   return (
-    <Button component={Paper} disableRipple fullWidth sx={{ p: 0 }}>
-      <Grid
-        container
-        alignItems="center"
-        color="text.primary"
-        columnGap={{ xs: 1, md: 2, lg: 3, xl: 4 }}
-        component={Button}
-        disableRipple={!!menuAnchorEl}
-        fullWidth
-        height="100%"
-        onClick={
-          // eslint-disable-next-line no-nested-ternary
-          activeChat.chatType === 'squads'
-            ? openSquad
-            : searchParams.get('username') === userData.username
-            ? () => {}
-            : handleGoToProfile
-        }
-        onContextMenu={handleOpenContextMenu}
-        py={2}
-        textAlign="left"
-        textTransform="none"
-      >
+    <>
+      <Button component={Paper} disableRipple fullWidth sx={{ p: 0 }}>
         <Grid
-          item
-          xs={3}
-          sm={2}
-          lg={1}
-          display="flex"
-          justifyContent="flex-end"
+          container
+          alignItems="center"
+          color="text.primary"
+          columnGap={{ xs: 1, md: 2, lg: 3, xl: 4 }}
+          component={Button}
+          disableRipple={!!menuAnchorEl}
+          fullWidth
+          height="100%"
+          onClick={
+            // eslint-disable-next-line no-nested-ternary
+            activeChat.chatType === 'squads'
+              ? handleOpenSquadModal
+              : searchParams.get('username') === userData.username
+              ? () => {}
+              : handleGoToProfile
+          }
+          onContextMenu={handleOpenContextMenu}
+          py={2}
+          textAlign="left"
+          textTransform="none"
         >
-          <Avatar user={activeChat} />
-        </Grid>
-        <Grid container item xs={8} sm={9} lg={10} rowSpacing={0}>
-          <Grid item xs={12}>
-            <Typography fontWeight="700" noWrap variant="h6">
-              {name}
-            </Typography>
+          <Grid
+            item
+            xs={3}
+            sm={2}
+            lg={1}
+            display="flex"
+            justifyContent="flex-end"
+          >
+            <Avatar user={activeChat} />
           </Grid>
-          {friendsOnline[username] && (
-            <Grid item xs={12} mt={-1}>
-              <Typography
-                color={friendsOnline[username] ? 'primary' : 'error'}
-                fontWeight="700"
-                textAlign="left"
-                textTransform="none"
-                variant="caption"
-              >
-                {friendsOnline[username] ? 'online' : 'offline'}
+          <Grid container item xs={8} sm={9} lg={10} rowSpacing={0}>
+            <Grid item xs={12}>
+              <Typography fontWeight="700" noWrap variant="h6">
+                {name}
               </Typography>
             </Grid>
-          )}
+            {friendsOnline[username] && (
+              <Grid item xs={12} mt={-1}>
+                <Typography
+                  color={friendsOnline[username] ? 'primary' : 'error'}
+                  fontWeight="700"
+                  textAlign="left"
+                  textTransform="none"
+                  variant="caption"
+                >
+                  {friendsOnline[username] ? 'online' : 'offline'}
+                </Typography>
+              </Grid>
+            )}
+          </Grid>
         </Grid>
-      </Grid>
-      {responsiveSize === 'mobile' && (
-        <Tooltip title={t('pages.chat.tooltip.chatArrowBackButton')}>
-          <IconButton
-            onClick={closeChat}
-            sx={{
-              position: 'absolute',
-              left: {
-                xs: 8,
-                sm: 24,
-              },
-              top: 18,
-            }}
-          >
-            <ArrowBackIosRoundedIcon fontSize="small" />
-          </IconButton>
-        </Tooltip>
-      )}
-      <IconButton
-        onClick={handleOpenContextMenu}
-        sx={{ position: 'absolute', right: 24, top: 24 }}
-      >
-        <MoreHorizRoundedIcon fontSize="small" />
-      </IconButton>
-      <ContextMenu
-        anchorEl={menuAnchorEl}
-        handleCloseMenu={handleCloseContextMenu}
-        open={!!menuAnchorEl}
-        userSelected={activeChat}
+        {responsiveSize === 'mobile' && (
+          <Tooltip title={t('pages.chat.tooltip.chatArrowBackButton')}>
+            <IconButton
+              onClick={closeChat}
+              sx={{
+                position: 'absolute',
+                left: {
+                  xs: 8,
+                  sm: 24,
+                },
+                top: 18,
+              }}
+            >
+              <ArrowBackIosRoundedIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        )}
+        <IconButton
+          onClick={handleOpenContextMenu}
+          sx={{ position: 'absolute', right: 24, top: 24 }}
+        >
+          <MoreHorizRoundedIcon fontSize="small" />
+        </IconButton>
+        <ContextMenu
+          anchorEl={menuAnchorEl}
+          handleCloseMenu={handleCloseContextMenu}
+          open={!!menuAnchorEl}
+          userSelected={activeChat}
+        />
+      </Button>
+      <SquadModal
+        squadId={activeChat.username}
+        handleClose={handleCloseSquadModal}
+        open={openSquadModal}
       />
-    </Button>
+    </>
   )
 }
 

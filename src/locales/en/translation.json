@@ -170,6 +170,10 @@
         "addPicture": "Add picture",
         "createButton": "Create",
         "modalTitle": "Create Squad",
+        "modalViewTitle": "Squad details",
+        "promoteMember": "Promote member",
+        "removeMember": "Remove member",
+        "removeMemberAdmin": "Remove admin privileges",
         "removePicture": "Remove picture",
         "squadNamePlaceholder": "Squad name"
       },

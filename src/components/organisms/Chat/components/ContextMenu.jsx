@@ -77,7 +77,7 @@ ContextMenu.propTypes = {
   open: P.bool,
   userSelected: P.shape({
     chatType: P.string.isRequired,
-    firstName: P.string.isRequired,
+    firstName: P.string,
     username: P.string.isRequired,
   }).isRequired,
 }

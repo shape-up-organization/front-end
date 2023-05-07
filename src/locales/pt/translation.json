@@ -170,6 +170,10 @@
         "addPicture": "Adicionar foto",
         "createButton": "Criar",
         "modalTitle": "Criar Squad",
+        "modalViewTitle": "Detalhes do Squad",
+        "promoteMember": "Promover membro",
+        "removeMember": "Remover membro",
+        "removeMemberAdmin": "Remover privilégios de admin",
         "removePicture": "Remover foto",
         "squadNamePlaceholder": "Nome do squad"
       },

@@ -349,11 +349,11 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
 
 FriendshipOptions.propTypes = {
   data: P.shape({
-    name: P.string.isRequired,
+    name: P.string,
     isFriend: P.bool,
     isSquad: P.bool,
     haveFriendRequest: P.bool,
-    username: P.string.isRequired,
+    username: P.string,
   }).isRequired,
   isPost: P.bool,
   postAction: P.func,

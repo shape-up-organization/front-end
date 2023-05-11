@@ -34,12 +34,16 @@ export const useStyles = makeStyles()(
       flexFlow: 'row nowrap',
       gap: theme.spacing(2),
       height: '100%',
-      overflowX: 'auto',
+      overflowX: 'hidden',
       overflowY: 'hidden',
       overscrollBehavior: 'contain',
       scrollSnapType: 'x mandatory',
       scrollbarWidth: 'none',
       width: '100%',
+
+      [theme.breakpoints.down('md')]: {
+        overflowX: 'auto',
+      },
     },
     carouselItemWrapper: {
       height: '100%',

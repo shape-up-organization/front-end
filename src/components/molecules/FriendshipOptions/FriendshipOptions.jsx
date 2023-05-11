@@ -20,7 +20,6 @@ import { Options } from '@templates/Options'
 const FriendshipOptions = ({ isPost, postAction, data }) => {
   const {
     name,
-    haveFriendRequest = false,
     userSenderFriendshipRequest,
     isFriend = false,
     isSquad = false,
@@ -328,7 +327,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
   } else {
     if (isFriend) {
       pushMenuItem('removeFriend')
-    } else if (!haveFriendRequest) {
+    } else if (userSenderFriendshipRequest === null) {
       pushMenuItem('addFriend')
     } else if (userSenderFriendshipRequest === userData.username) {
       pushMenuItem('cancelFriendshipRequest')

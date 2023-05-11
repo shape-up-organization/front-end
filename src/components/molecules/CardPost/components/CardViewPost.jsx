@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react'
 import P from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
+import CloseRounded from '@mui/icons-material/CloseRounded'
 import {
   Box,
-  CircularProgress,
   Grid,
+  IconButton,
   Paper,
   Stack,
   Typography,
@@ -20,10 +21,14 @@ import { TextArea } from '@molecules/TextArea'
 import { SimpleModal } from '@templates/Modal'
 
 import apiPosts from '@api/services/posts'
-import getCommentsByPostIdMock from '@mocks/posts/getCommentsByPostId'
+import { useVisible } from '@hooks'
 import { formatLocalDate, reformatSimpleDate } from '@utils/helpers/dateTime'
+import {
+  charactersToLineBreaks,
+  lineBreaksToCharacters,
+} from '@utils/helpers/strings'
 
-const Content = ({ postData }) => {
+const Content = ({ handleClose, postData }) => {
   const { photos } = postData
   const { t } = useTranslation()
   const isLessThanSmall = useMediaQuery(theme => theme.breakpoints.down('sm'))
@@ -33,34 +38,82 @@ const Content = ({ postData }) => {
   const [isSendingComment, setIsSendingComment] = useState(false)
   const [comments, setComments] = useState([])
   const [messageText, setMessageText] = useState('')
+  const [isScrollingDown, setIsScrollingDown] = useState(true)
 
-  const handleSendMessage = async () => {
-    setIsSendingComment(true)
-
-    const response = await apiPosts.sendComment(postData.id, messageText)
-    setIsLoadingComments(false)
-
-    if (response.status === 201) {
-      getComments()
-    }
-  }
+  const [listBottomRef, isListBottomVisible] = useVisible()
 
   const getComments = async () => {
     setIsLoadingComments(true)
 
     const response = await apiPosts.getCommentsByPostId(postData.id)
-    console.log(response)
+
     setIsLoadingComments(false)
 
-    setComments(getCommentsByPostIdMock.data)
+    setComments(
+      response.data.map(comment => ({
+        ...comment,
+        createdAt: reformatSimpleDate(formatLocalDate(comment.createdAt)),
+        commentMessage: charactersToLineBreaks(comment.commentMessage),
+      }))
+    )
+  }
+
+  const handleSendMessage = async () => {
+    setIsSendingComment(true)
+
+    const payload = {
+      post_id: postData.id,
+      comment_message: lineBreaksToCharacters(messageText),
+    }
+
+    const response = await apiPosts.sendComment(payload)
+    setIsSendingComment(false)
+
+    if (response.status === 201) {
+      setMessageText('')
+      await getComments()
+    }
   }
 
   useEffect(() => {
     getComments()
   }, [])
 
+  const handleScrollToBottom = () => {
+    setIsScrollingDown(true)
+    listBottomRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    })
+  }
+
+  useEffect(() => {
+    setIsScrollingDown(false)
+  }, [comments, isListBottomVisible])
+
   return (
-    <Grid container height="100%">
+    <Grid
+      container
+      minHeight={
+        // eslint-disable-next-line no-nested-ternary
+        isLessThanSmall ? '100vh' : isGreaterThanMedium ? '100%' : '80vh'
+      }
+      overflow="hidden"
+    >
+      <Grid
+        item
+        xs={12}
+        position="absolute"
+        m={isLessThanSmall ? 1 : 3}
+        right={0}
+        top={0}
+      >
+        <Stack direction="row" justifyContent="flex-end" width="100%">
+          <IconButton onClick={handleClose}>
+            <CloseRounded />
+          </IconButton>
+        </Stack>
+      </Grid>
       {isGreaterThanMedium && (
         <Grid item xs={7}>
           <Grid
@@ -77,12 +130,12 @@ const Content = ({ postData }) => {
           >
             <Box component={Paper} height="100%" p={2} width="100%">
               <Carousel>
-                {photos.map(({ alt, src }) => (
+                {photos.map(photo => (
                   <Photo
-                    key={alt}
-                    alt={alt}
+                    key={photo}
+                    alt={photo}
                     animationSpeed={0}
-                    src={src}
+                    src={photo}
                     style={{
                       objectFit: 'contain',
                       width: '100%',
@@ -100,10 +153,6 @@ const Content = ({ postData }) => {
           item
           display="flex"
           justifyContent="center"
-          minHeight={
-            // eslint-disable-next-line no-nested-ternary
-            isLessThanSmall ? '100vh' : isGreaterThanMedium ? '100%' : '80vh'
-          }
           padding={{
             xs: 0,
             sm: 2,
@@ -118,22 +167,21 @@ const Content = ({ postData }) => {
             rowGap={1}
             width="100%"
           >
-            <Stack height="100%" overflow="auto">
-              {isLoadingComments ? (
-                <CircularProgress />
-              ) : (
-                (comments.length &&
-                  comments?.map(
+            <Stack height="100%" overflow="auto" mt={5}>
+              {comments.length ? (
+                <>
+                  {comments.map(
                     ({
-                      body,
-                      date,
-                      id,
+                      commentMessage,
+                      createdAt,
+                      commentId,
                       name,
+                      lastName,
                       pictureProfile,
                       username,
                       xp,
                     }) => (
-                      <Stack key={id} mb={2}>
+                      <Stack key={commentId} mb={2}>
                         <Stack
                           direction="row"
                           justifyContent="space-between"
@@ -145,39 +193,48 @@ const Content = ({ postData }) => {
                               user={{ pictureProfile, username, xp }}
                             />
                             <Typography fontWeight={600} variant="body2">
-                              {name}
+                              {`${name} ${lastName}`}
                             </Typography>
                           </Stack>
                           <Typography
                             color="text.secondary"
                             fontWeight={500}
+                            mr={2}
                             variant="caption"
                           >
-                            {reformatSimpleDate(formatLocalDate(date))}
+                            {createdAt}
                           </Typography>
                         </Stack>
-                        <Typography fontWeight={300} ml={4} variant="body2">
-                          {body}
+                        <Typography
+                          fontWeight={300}
+                          ml={4}
+                          sx={{ wordBreak: 'break-word' }}
+                          variant="body2"
+                          whiteSpace="pre-wrap"
+                        >
+                          {commentMessage}
                         </Typography>
                       </Stack>
                     )
-                  )) || (
-                  <Stack
-                    alignContent="center"
-                    height="100%"
-                    justifyContent="center"
-                    width="100%"
+                  )}
+                  <Box component="span" ref={listBottomRef} />
+                </>
+              ) : (
+                <Stack
+                  alignContent="center"
+                  height="100%"
+                  justifyContent="center"
+                  width="100%"
+                >
+                  <Typography
+                    color="text.secondary"
+                    fontWeight={500}
+                    textAlign="center"
+                    variant="caption"
                   >
-                    <Typography
-                      color="text.secondary"
-                      fontWeight={500}
-                      textAlign="center"
-                      variant="caption"
-                    >
-                      {t('pages.feed.others.noComments')}
-                    </Typography>
-                  </Stack>
-                )
+                    {t('pages.feed.others.noComments')}
+                  </Typography>
+                </Stack>
               )}
             </Stack>
             <TextArea
@@ -190,6 +247,11 @@ const Content = ({ postData }) => {
                 },
               }}
               messageState={[messageText, setMessageText]}
+              scrollRelated={{
+                handleScrollToBottom,
+                isListBottomVisible,
+                isScrollingDown,
+              }}
               texts={{
                 sendButton: t('pages.feed.others.sendCommentButton'),
                 inputPlaceholder: t(
@@ -205,6 +267,7 @@ const Content = ({ postData }) => {
 }
 
 Content.propTypes = {
+  handleClose: P.func.isRequired,
   postData: P.shape({
     id: P.string.isRequired,
     photos: P.arrayOf(
@@ -219,7 +282,7 @@ Content.propTypes = {
 const CardViewPost = ({ handleClose, open, postData }) => (
   <SimpleModal
     Component={Content}
-    componentArgs={{ postData }}
+    componentArgs={{ handleClose, postData }}
     dialogProps={{
       maxWidth: 'lg',
     }}

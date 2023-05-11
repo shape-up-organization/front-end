@@ -3,33 +3,41 @@ import { useState } from 'react'
 import P from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
-import { Box, Fade, Paper, Stack, useMediaQuery } from '@mui/material'
+import { Box, Button, Fade, Paper, Stack, useMediaQuery } from '@mui/material'
 
 import { Photo } from '@atoms/Photo'
 import { Carousel } from '@molecules/Carousel'
 import { TextArea } from '@molecules/TextArea'
 
-const PublishStep = ({ images }) => {
+import apiPosts from '@api/services/posts'
+
+const PublishStep = ({
+  images,
+  handleClose,
+  messageText: messageTextFromStart,
+  refreshFeed,
+}) => {
   const { t } = useTranslation()
   const lessThanLarge = useMediaQuery(theme => theme.breakpoints.down('lg'))
 
-  const [messageText, setMessageText] = useState('')
+  const [messageText, setMessageText] = useState(messageTextFromStart || '')
   const [isLoading, setIsLoading] = useState(false)
 
   const handleCreatePost = async () => {
     setIsLoading(true)
 
-    const payload = {
-      message: messageText,
-      images: images.map(image => image.data),
-    }
+    const payload = new FormData()
+    if (messageText) payload.append('description', messageText)
+    images.forEach(image => payload.append('file', image.data))
 
-    console.log('payload', payload)
+    const response = await apiPosts.createPost(payload)
 
-    setTimeout(() => {
-      setMessageText('')
-      setIsLoading(false)
-    }, 1000)
+    if (response.status !== 200) return
+
+    setMessageText('')
+    setIsLoading(false)
+    refreshFeed()
+    handleClose()
   }
 
   return (
@@ -65,10 +73,9 @@ const PublishStep = ({ images }) => {
               </Carousel>
             </Box>
           </Box>
-          <Box width={lessThanLarge ? '100%' : '32%'} pb={4}>
+          <Box gap={20} pb={4} width={lessThanLarge ? '100%' : '32%'}>
             <Box component={Paper} p={2} pb={3}>
               <TextArea
-                handleSendMessage={handleCreatePost}
                 interfaceOptions={{
                   alwaysShowBottom: true,
                   isLoading,
@@ -83,10 +90,17 @@ const PublishStep = ({ images }) => {
                 }}
                 messageState={[messageText, setMessageText]}
                 texts={{
-                  sendButton: t('pages.feed.tooltip.sendPostButton'),
                   inputPlaceholder: t('pages.feed.others.postInputPlaceholder'),
                 }}
               />
+              <Button
+                fullWidth
+                onClick={handleCreatePost}
+                sx={{ mt: 4 }}
+                variant="contained"
+              >
+                CRIAR
+              </Button>
             </Box>
           </Box>
         </Stack>
@@ -97,6 +111,13 @@ const PublishStep = ({ images }) => {
 
 PublishStep.propTypes = {
   images: P.arrayOf(P.object).isRequired,
+  handleClose: P.func.isRequired,
+  messageText: P.string,
+  refreshFeed: P.func.isRequired,
+}
+
+PublishStep.defaultProps = {
+  messageText: '',
 }
 
 export { PublishStep }

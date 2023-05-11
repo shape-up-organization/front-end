@@ -14,11 +14,17 @@ const uploadProfilePicture = async picture =>
 const deleteAccount = async () =>
   tryCatch(http.delete, routeUsers, { ...withHeaders(withAuth()) })
 
+const removeProfilePicture = async () =>
+  tryCatch(http.delete, `${routeProfiles}/picture`, {
+    ...withHeaders(withAuth()),
+  })
+
 const updateUserData = async updatedData =>
   tryCatch(http.put, routeUsers, updatedData, { ...withHeaders(withAuth()) })
 
 export default {
   deleteAccount,
+  removeProfilePicture,
   updateUserData,
   uploadProfilePicture,
 }

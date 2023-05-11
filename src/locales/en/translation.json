@@ -4,6 +4,7 @@
       "cardCreatePost": {
         "others": {
           "buttonOpen": "Photo/Video",
+          "createButton": "Create",
           "modalTitle": "Create your post"
         },
         "tooltips": {
@@ -349,7 +350,9 @@
     },
     "profile": {
       "buttons": {
-        "save": "Save"
+        "save": "Save",
+        "editPicture": "Edit picture",
+        "removePicture": "Remove picture"
       },
       "others": {
         "editProfile": "Edit profile",
@@ -455,6 +458,9 @@
         "help": "Help",
         "notifications": "Notifications"
       }
+    },
+    "quests": {
+      "others": {}
     }
   }
 }

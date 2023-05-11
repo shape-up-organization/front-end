@@ -1,27 +1,59 @@
 import { http } from '@api/lib/http'
 import { tryCatch } from '@api/lib/tryCatch'
 
-import { withAuth, withHeaders } from '@api/middlewares'
+import { withAuth, withFileHeaders, withHeaders } from '@api/middlewares'
 
-const route = '/posts'
+const postRoute = '/posts'
+
+const commentRoute = '/comments'
+
+const createComment = async comment =>
+  tryCatch(http.post, commentRoute, comment, {
+    ...withHeaders(withAuth()),
+  })
+
+const createPost = async post =>
+  tryCatch(http.post, postRoute, post, {
+    ...withHeaders({ ...withAuth(), ...withFileHeaders() }),
+  })
+
+const createPostWithoutPhoto = async post =>
+  tryCatch(http.post, `${postRoute}/without-photo`, post, {
+    ...withHeaders(withAuth()),
+  })
+
+const getPosts = async () =>
+  tryCatch(http.get, `${postRoute}?page=0&size=10`, {
+    ...withHeaders(withAuth()),
+  })
 
 const getPostsByUsername = async username =>
-  tryCatch(http.get, `${route}/username/${username}?page=0&size=2`, {
+  tryCatch(http.get, `${postRoute}/username/${username}?page=0&size=10`, {
     ...withHeaders(withAuth()),
   })
 
 const getCommentsByPostId = async postId =>
-  tryCatch(http.get, `${route}/${postId}`, {
+  tryCatch(http.get, `${commentRoute}/post/${postId}?page=0&size=10`, {
     ...withHeaders(withAuth()),
   })
 
-const sendComment = async (postId, comment) =>
-  tryCatch(http.post, `${route}/${postId}`, comment, {
+const sendComment = async payload =>
+  tryCatch(http.post, commentRoute, payload, {
+    ...withHeaders(withAuth()),
+  })
+
+const toggleLikePost = async postId =>
+  tryCatch(http.post, `${postRoute}/${postId}/like`, null, {
     ...withHeaders(withAuth()),
   })
 
 export default {
+  createComment,
+  createPost,
+  createPostWithoutPhoto,
   getCommentsByPostId,
+  getPosts,
   getPostsByUsername,
   sendComment,
+  toggleLikePost,
 }

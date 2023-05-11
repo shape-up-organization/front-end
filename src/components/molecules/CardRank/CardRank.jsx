@@ -17,10 +17,15 @@ import {
   useMediaQuery,
 } from '@mui/material'
 
-import rankingGetTopMock from '@mocks/ranking/getTop'
+import apiUsers from '@api/services/users'
 
 import { List } from './components/List'
 import { Top } from './components/Top'
+
+const rankedFunction = {
+  friends: apiUsers.getRankedFriends,
+  global: apiUsers.getRankedGlobal,
+}
 
 const CardRank = ({ handleCloseCard }) => {
   const { t } = useTranslation()
@@ -31,11 +36,15 @@ const CardRank = ({ handleCloseCard }) => {
 
   const handleChangeTab = (_, newTab) => setRankTab(newTab)
 
-  const getRankedUsers = async () => setRankedUsers(rankingGetTopMock.data)
+  const getRankedUsers = async () => {
+    const response = await rankedFunction[rankTab]({ page: 0, size: 7 })
+    console.log(response.data)
+    setRankedUsers(response.data)
+  }
 
   useEffect(() => {
     getRankedUsers()
-  }, [])
+  }, [rankTab])
 
   return (
     <Grid

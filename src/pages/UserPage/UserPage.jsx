@@ -48,7 +48,7 @@ const UserPage = () => {
 
     setUser(userPageData.data)
     setIsCurrentUser(userPageData.relation === 'current')
-    setPosts(postsData)
+    setPosts(postsData.data || [])
   }
 
   useEffect(() => {
@@ -92,7 +92,9 @@ const UserPage = () => {
                   <CardPost
                     commentsAmount={post.countComments}
                     date={post.createdAt}
+                    id={post.id}
                     likes={post.countLike}
+                    liked={post.liked}
                     photos={post.photoUrls}
                     textContent={post.description}
                     user={user}

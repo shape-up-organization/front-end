@@ -22,7 +22,7 @@ import { PublishStep } from './PublishStep'
 
 const firstStep = 1
 
-const PostModal = ({ handleClose, open }) => {
+const PostModal = ({ handleClose, open, messageText, refreshFeed }) => {
   const { t } = useTranslation()
   const lessThanSmall = useMediaQuery(theme => theme.breakpoints.down('sm'))
 
@@ -41,7 +41,15 @@ const PostModal = ({ handleClose, open }) => {
     1: () => (
       <ImageHandler maxNumberOfFiles={3} updateFilesArray={updateFilesArray} />
     ),
-    2: () => <PublishStep backStep={backStep} images={imagesFiles} />,
+    2: () => (
+      <PublishStep
+        backStep={backStep}
+        images={imagesFiles}
+        handleClose={handleClose}
+        messageText={messageText}
+        refreshFeed={refreshFeed}
+      />
+    ),
   }
 
   return (
@@ -63,7 +71,6 @@ const PostModal = ({ handleClose, open }) => {
           component={Paper}
           height={lessThanSmall ? '100vh' : '80vh'}
           alignItems="center"
-          // width={lessThanSmall ? '100vw' : '80vw'}
         >
           <Stack
             width="100%"
@@ -127,10 +134,13 @@ const PostModal = ({ handleClose, open }) => {
 PostModal.propTypes = {
   open: P.bool,
   handleClose: P.func.isRequired,
+  messageText: P.string,
+  refreshFeed: P.func.isRequired,
 }
 
 PostModal.defaultProps = {
   open: false,
+  messageText: '',
 }
 
 export { PostModal }

@@ -1,72 +1,101 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import { Button, CircularProgress, Stack } from '@mui/material'
+import CalendarViewMonthRoundedIcon from '@mui/icons-material/CalendarViewMonthRounded'
+import EmojiEventsRoundedIcon from '@mui/icons-material/EmojiEventsRounded'
+import FitnessCenterRoundedIcon from '@mui/icons-material/FitnessCenterRounded'
+import { Grid, Paper, Tab, Tabs, useMediaQuery } from '@mui/material'
 
 import { AnimatedWrapper } from '@layouts/AnimatedWrapper'
 
-import apiQuests from '@api/services/quests'
-import getQuestsMock from '@mocks/quests/get'
+import { AchievementsTab } from './components/tabs/AchievementsTab'
+import { GridTab } from './components/tabs/GridTab'
+import { TodayTab } from './components/tabs/TodayTab'
+
+const settingsTabElements = {
+  today: {
+    component: () => <TodayTab />,
+    icon: <FitnessCenterRoundedIcon />,
+  },
+  grid: {
+    component: () => <GridTab />,
+    icon: <CalendarViewMonthRoundedIcon />,
+  },
+  achievements: {
+    component: () => <AchievementsTab />,
+    icon: <EmojiEventsRoundedIcon />,
+  },
+}
 
 const QuestsPage = () => {
   const { t } = useTranslation()
+  const lessThanMedium = useMediaQuery(theme => theme.breakpoints.down('md'))
 
-  const [isLoadingQuests, setIsLoadingQuests] = useState(true)
-  const [quests, setQuests] = useState([])
+  const [settingsTab, setSettingsTab] = useState('today')
 
-  const handleCreateQuest = async () => {
-    setIsLoadingQuests(true)
-
-    const payload = {}
-
-    const response = await apiQuests.createQuest(payload)
-    console.log(response)
-    setIsLoadingQuests(false)
-
-    await getQuests()
-  }
-
-  const getQuests = async () => {
-    setIsLoadingQuests(true)
-
-    const response = await apiQuests.getQuests()
-    console.log(response)
-    setIsLoadingQuests(false)
-
-    setQuests(getQuestsMock.data)
-    console.log(quests)
-  }
-
-  useEffect(() => {
-    getQuests()
-  }, [])
+  const handleChangeTab = (_, newTab) => setSettingsTab(newTab)
 
   return (
     <AnimatedWrapper>
-      <Stack
-        alignItems="center"
-        bgcolor="background.default"
-        borderRadius={theme => theme.shape.borderRadius}
-        height="100%"
+      <Grid
+        container
+        columnGap={3}
+        flexDirection={lessThanMedium ? 'column' : 'row'}
+        flexWrap={lessThanMedium ? 'nowrap' : 'wrap'}
         justifyContent="center"
-        width="100%"
+        overflow="auto"
       >
-        {/* eslint-disable-next-line no-nested-ternary */}
-        {isLoadingQuests ? (
-          <CircularProgress />
-        ) : (
-          <Stack rowGap={2}>
-            <Button
-              color="primary"
-              onClick={handleCreateQuest}
-              variant="contained"
-            >
-              {t('pages.quests.others.createQuest')}
-            </Button>
-          </Stack>
-        )}
-      </Stack>
+        <Grid
+          item
+          xs={12}
+          md={4}
+          lg={3}
+          xl={2}
+          flexBasis={lessThanMedium ? '0' : '100%'}
+          left={0}
+          position="sticky"
+          top={0}
+          zIndex={theme => theme.zIndex.fab}
+        >
+          <Tabs
+            allowScrollButtonsMobile
+            component={Paper}
+            onChange={handleChangeTab}
+            orientation={lessThanMedium ? 'horizontal' : 'vertical'}
+            scrollButtons="auto"
+            sx={{
+              borderRadius: theme => theme.shape.borderRadius,
+              borderBottomLeftRadius: lessThanMedium && 0,
+              borderBottomRightRadius: lessThanMedium && 0,
+            }}
+            TabIndicatorProps={{
+              sx: {
+                left: 0,
+                width: 4,
+              },
+            }}
+            value={settingsTab}
+            variant={lessThanMedium ? 'scrollable' : 'fullWidth'}
+          >
+            {Object.keys(settingsTabElements).map(tab => (
+              <Tab
+                key={tab}
+                icon={settingsTabElements[tab].icon}
+                iconPosition="start"
+                label={t(`pages.quests.tabs.${tab}`)}
+                sx={{
+                  justifyContent: lessThanMedium ? 'center' : 'flex-start',
+                }}
+                value={tab}
+              />
+            ))}
+          </Tabs>
+        </Grid>
+        <Grid item xs={12} md={7} lg={8} xl={9} maxHeight="90%">
+          {settingsTabElements[settingsTab].component()}
+        </Grid>
+      </Grid>
     </AnimatedWrapper>
   )
 }

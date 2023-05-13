@@ -6,8 +6,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded'
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded'
+import CrisisAlertRoundedIcon from '@mui/icons-material/CrisisAlertRounded'
 import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded'
-import FitnessCenterRoundedIcon from '@mui/icons-material/FitnessCenterRounded'
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded'
 import MenuRoundedIcon from '@mui/icons-material/MenuRounded'
 import MessageRoundedIcon from '@mui/icons-material/MessageRounded'
@@ -71,7 +71,7 @@ const MobileVariation = ({ openConfirmationModal }) => {
       page: 'search',
     },
     {
-      icon: () => <FitnessCenterRoundedIcon />,
+      icon: () => <CrisisAlertRoundedIcon />,
       page: 'quests',
     },
     {

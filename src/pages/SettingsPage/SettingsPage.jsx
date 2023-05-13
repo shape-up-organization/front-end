@@ -22,10 +22,12 @@ const settingsTabElements = {
   },
   customization: {
     component: () => <CustomizationTab />,
+    disabled: true,
     icon: <BrushRoundedIcon />,
   },
   notifications: {
     component: () => <NotificationsTab />,
+    disabled: true,
     icon: <CircleNotificationsRoundedIcon />,
   },
   help: {
@@ -46,9 +48,10 @@ const SettingsPage = () => {
     <AnimatedWrapper>
       <Grid
         container
-        columnGap={6}
+        columnGap={3}
+        flexDirection={lessThanMedium ? 'column' : 'row'}
+        flexWrap={lessThanMedium ? 'nowrap' : 'wrap'}
         justifyContent="center"
-        height="100%"
         overflow="auto"
       >
         <Grid
@@ -57,6 +60,10 @@ const SettingsPage = () => {
           md={4}
           lg={3}
           xl={2}
+          flexBasis={lessThanMedium ? '0' : '100%'}
+          left={0}
+          position="sticky"
+          top={0}
           zIndex={theme => theme.zIndex.fab}
         >
           <Tabs
@@ -79,28 +86,24 @@ const SettingsPage = () => {
             value={settingsTab}
             variant={lessThanMedium ? 'scrollable' : 'fullWidth'}
           >
-            {Object.keys(settingsTabElements).map(tab => (
-              <Tab
-                key={tab}
-                icon={settingsTabElements[tab].icon}
-                iconPosition="start"
-                label={t(`pages.settings.tabs.${tab}`)}
-                sx={{
-                  justifyContent: lessThanMedium ? 'center' : 'flex-start',
-                }}
-                value={tab}
-              />
-            ))}
+            {Object.keys(settingsTabElements).map(
+              tab =>
+                !settingsTabElements[tab].disabled && (
+                  <Tab
+                    key={tab}
+                    icon={settingsTabElements[tab].icon}
+                    iconPosition="start"
+                    label={t(`pages.settings.tabs.${tab}`)}
+                    sx={{
+                      justifyContent: lessThanMedium ? 'center' : 'flex-start',
+                    }}
+                    value={tab}
+                  />
+                )
+            )}
           </Tabs>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          md={7}
-          lg={8}
-          xl={9}
-          borderRadius={theme => theme.shape.borderRadius}
-        >
+        <Grid item xs={12} md={7} lg={8} xl={9} maxHeight="90%">
           {settingsTabElements[settingsTab].component()}
         </Grid>
       </Grid>

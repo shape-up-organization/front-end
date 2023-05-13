@@ -79,7 +79,7 @@ const ProtectedLayout = () => {
             `calc(100vh - ${theme.spacing(
               lessThanExtraLarge && scrollDirection === 'down' ? 4 : 11
             )})`,
-          pt: lessThanExtraLarge && scrollDirection === 'down' ? 4 : 1,
+          pt: lessThanExtraLarge ? 0 : 3,
           transition: theme =>
             theme.transitions.create(['height', 'padding-top'], {
               duration: theme.transitions.duration.standard,

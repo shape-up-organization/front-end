@@ -460,7 +460,20 @@
       }
     },
     "quests": {
-      "others": {}
+      "achievements": {
+        "title": "Conquistas"
+      },
+      "grid": {
+        "title": "Grade de treinos"
+      },
+      "tabs": {
+        "achievements": "Conquistas",
+        "grid": "Grade",
+        "today": "Hoje"
+      },
+      "today": {
+        "title": "Treinos de hoje"
+      }
     }
   }
 }

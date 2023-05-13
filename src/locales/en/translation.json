@@ -460,7 +460,20 @@
       }
     },
     "quests": {
-      "others": {}
+      "achievements": {
+        "title": "Achievements"
+      },
+      "grid": {
+        "title": "Training grid"
+      },
+      "tabs": {
+        "achievements": "Achievements",
+        "grid": "Grid",
+        "today": "Today"
+      },
+      "today": {
+        "title": "Today's workouts"
+      }
     }
   }
 }

@@ -105,8 +105,8 @@ const SettingsPage = () => {
         </Grid>
         <Grid item xs={12} md={7} lg={8} xl={9} maxHeight="90%">
           <Stack
-            bgcolor="background.paper"
             borderRadius={theme => theme.shape.borderRadius}
+            component={Paper}
             p={{ xs: 2, md: 8 }}
             pt={{ xs: 6 }}
             sx={{
@@ -116,6 +116,7 @@ const SettingsPage = () => {
               borderTopRightRadius: lessThanMedium
                 ? 0
                 : theme => theme.shape.borderRadius * 4,
+              boxShadow: 'none',
             }}
           >
             {settingsTabElements[settingsTab].component()}

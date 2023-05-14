@@ -2,7 +2,12 @@ import { useEffect, useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import { Stack, Typography, useMediaQuery } from '@mui/material'
+import {
+  CircularProgress,
+  Stack,
+  Typography,
+  useMediaQuery,
+} from '@mui/material'
 
 import { Divider } from '@atoms/Divider'
 import { PackCard } from '@atoms/PackCard'
@@ -16,22 +21,8 @@ const TodayTab = () => {
   const { t } = useTranslation()
   const lessThanMedium = useMediaQuery(theme => theme.breakpoints.down('md'))
 
-  /* eslint-disable */
   const [isLoadingQuests, setIsLoadingQuests] = useState(true)
   const [quests, setQuests] = useState([])
-  const handleCheckQuest = async idQuest => {
-    setIsLoadingQuests(true)
-
-    const payload = { idQuest }
-
-    const response = await apiQuests.checkQuest(payload)
-    setIsLoadingQuests(false)
-
-    if (response.status !== 200) return
-
-    await getQuests()
-  }
-  /* eslint-enable */
 
   const getQuests = async () => {
     setIsLoadingQuests(true)
@@ -57,18 +48,23 @@ const TodayTab = () => {
       >
         {t('pages.quests.today.title')}
       </Typography>
-      <Stack rowGap={2}>
-        {['morning', 'afternoon', 'night'].map(dayTime => (
-          <Stack key={dayTime} rowGap={2}>
-            <Divider
-              color="disabled"
-              size="small"
-              text={t(`pages.quests.dayTimes.${dayTime}`)}
-            />
-            <PackCard {...quests[dayTime]} variant="default" />
-          </Stack>
-        ))}
-      </Stack>
+
+      {isLoadingQuests ? (
+        <CircularProgress size={24} />
+      ) : (
+        <Stack rowGap={2}>
+          {['morning', 'afternoon', 'night'].map(dayTime => (
+            <Stack key={dayTime} rowGap={2}>
+              <Divider
+                color="disabled"
+                size="small"
+                text={t(`pages.quests.dayTimes.${dayTime}`)}
+              />
+              <PackCard {...quests[dayTime]} variant="checking" />
+            </Stack>
+          ))}
+        </Stack>
+      )}
     </AnimatedWrapper>
   )
 }

@@ -1,7 +1,23 @@
 export default Object.freeze({
   data: {
     sun: {
-      morning: null,
+      morning: {
+        category: 'AEROBIC',
+        checked: false,
+        classification: 'BRONZE',
+        description:
+          'Quest 1 description Quest 1 description Quest 1 descriptionQuest 1 description Quest 1 description Quest 1 descriptionQuest 1 description Quest 1 description Quest 1 description Quest 1 description',
+        duration: 13,
+        id: '1',
+        name: 'Quest 1',
+        xp: 80,
+        exercises: [
+          'ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1',
+          'ex 2',
+          'ex 2',
+          'ex 2',
+        ],
+      },
       afternoon: null,
       night: null,
     },
@@ -32,7 +48,17 @@ export default Object.freeze({
     },
     sat: {
       morning: null,
-      afternoon: null,
+      afternoon: {
+        category: 'AEROBIC',
+        checked: false,
+        classification: 'BRONZE',
+        description: 'Quest 1 description',
+        duration: 13,
+        id: '1',
+        name: 'Quest 1',
+        xp: 80,
+        exercises: ['ex 1', 'ex 2'],
+      },
       night: null,
     },
   },

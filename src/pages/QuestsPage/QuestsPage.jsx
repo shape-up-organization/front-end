@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 import CalendarViewMonthRoundedIcon from '@mui/icons-material/CalendarViewMonthRounded'
 import EmojiEventsRoundedIcon from '@mui/icons-material/EmojiEventsRounded'
 import FitnessCenterRoundedIcon from '@mui/icons-material/FitnessCenterRounded'
-import { Grid, Paper, Tab, Tabs, useMediaQuery } from '@mui/material'
+import { Grid, Paper, Stack, Tab, Tabs, useMediaQuery } from '@mui/material'
 
 import { AnimatedWrapper } from '@layouts/AnimatedWrapper'
 
@@ -49,8 +49,7 @@ const QuestsPage = () => {
         <Grid
           item
           xs={12}
-          md={4}
-          lg={3}
+          md={3}
           xl={2}
           flexBasis={lessThanMedium ? '0' : '100%'}
           left={0}
@@ -92,8 +91,23 @@ const QuestsPage = () => {
             ))}
           </Tabs>
         </Grid>
-        <Grid item xs={12} md={7} lg={8} xl={9} maxHeight="90%">
-          {settingsTabElements[settingsTab].component()}
+        <Grid item xs={12} md={8} xl={9} maxHeight="90%">
+          <Stack
+            bgcolor="background.paper"
+            borderRadius={theme => theme.shape.borderRadius}
+            p={{ xs: 2, md: 8 }}
+            pt={{ xs: 6 }}
+            sx={{
+              borderTopLeftRadius: lessThanMedium
+                ? 0
+                : theme => theme.shape.borderRadius * 4,
+              borderTopRightRadius: lessThanMedium
+                ? 0
+                : theme => theme.shape.borderRadius * 4,
+            }}
+          >
+            {settingsTabElements[settingsTab].component()}
+          </Stack>
         </Grid>
       </Grid>
     </AnimatedWrapper>

@@ -1,5 +1,26 @@
 {
   "components": {
+    "atoms": {
+      "packCard": {
+        "categories": {
+          "aerobic": "aerobic",
+          "anaerobic": "anaerobic",
+          "flexibility": "flexibility",
+          "strength": "strength"
+        },
+        "classifications": {
+          "bronze": "BRONZE",
+          "gold": "GOLD",
+          "silver": "SILVER"
+        },
+        "others": {
+          "buttonAllocate": "Allocate",
+          "estimatedDuration": "Estimated duration",
+          "minutes": "minutes",
+          "noPackWasAssigned": "No pack was assigned"
+        }
+      }
+    },
     "molecules": {
       "cardCreatePost": {
         "others": {
@@ -462,6 +483,11 @@
     "quests": {
       "achievements": {
         "title": "Achievements"
+      },
+      "dayTimes": {
+        "morning": "morning",
+        "afternoon": "afternoon",
+        "night": "night"
       },
       "grid": {
         "title": "Training grid"

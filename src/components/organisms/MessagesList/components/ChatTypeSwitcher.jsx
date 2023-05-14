@@ -65,7 +65,7 @@ const ChatTypeSwitcher = () => {
             </Box>
           </Tooltip>
         </Badge>
-        <Divider direction="vertical" />
+        <Divider color="disabled" direction="vertical" size="small" />
         <Badge
           anchorOrigin={{
             horizontal: 'right',

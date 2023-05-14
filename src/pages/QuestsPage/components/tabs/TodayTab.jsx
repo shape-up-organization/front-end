@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import { Paper, Stack, Typography, useMediaQuery } from '@mui/material'
+import { Stack, Typography, useMediaQuery } from '@mui/material'
 
+import { Divider } from '@atoms/Divider'
+import { PackCard } from '@atoms/PackCard'
 import { AnimatedWrapper } from '@layouts/AnimatedWrapper'
 
 import apiQuests from '@api/services/quests'
 import getQuestsMock from '@mocks/quests/get'
+import { WEEK_DAYS } from '@utils/constants/general'
 
 const TodayTab = () => {
   const { t } = useTranslation()
@@ -16,15 +19,15 @@ const TodayTab = () => {
   /* eslint-disable */
   const [isLoadingQuests, setIsLoadingQuests] = useState(true)
   const [quests, setQuests] = useState([])
-  const handleCreateQuest = async () => {
+  const handleCheckQuest = async idQuest => {
     setIsLoadingQuests(true)
 
-    const payload = {}
+    const payload = { idQuest }
 
-    const response = await apiQuests.createQuest(payload)
+    const response = await apiQuests.checkQuest(payload)
     setIsLoadingQuests(false)
 
-    if (response.status !== 201) return
+    if (response.status !== 200) return
 
     await getQuests()
   }
@@ -34,10 +37,10 @@ const TodayTab = () => {
     setIsLoadingQuests(true)
 
     const response = await apiQuests.getQuests()
-    console.log(response)
     setIsLoadingQuests(false)
 
-    setQuests(getQuestsMock.data || response)
+    const weekDay = WEEK_DAYS[new Date().getDay()]
+    setQuests(getQuestsMock.data[weekDay] || response)
   }
 
   useEffect(() => {
@@ -46,30 +49,25 @@ const TodayTab = () => {
 
   return (
     <AnimatedWrapper>
-      <Stack
-        borderRadius={theme => theme.shape.borderRadius}
-        sx={{
-          borderTopLeftRadius: lessThanMedium
-            ? 0
-            : theme => theme.shape.borderRadius * 4,
-          borderTopRightRadius: lessThanMedium
-            ? 0
-            : theme => theme.shape.borderRadius * 4,
-        }}
-        component={Paper}
-        rowGap={4}
-        p={{ xs: 4, md: 8 }}
-        pb={{ xs: 8 }}
+      <Typography
+        color="primary"
+        fontWeight={500}
+        textAlign={lessThanMedium ? 'center' : 'left'}
+        variant={lessThanMedium ? 'h6' : 'h4'}
       >
-        <Typography
-          color="primary"
-          fontWeight={500}
-          textAlign={lessThanMedium ? 'center' : 'left'}
-          variant={lessThanMedium ? 'h6' : 'h4'}
-        >
-          {t('pages.quests.today.title')}
-        </Typography>
-        <Stack rowGap={2}>OLA</Stack>
+        {t('pages.quests.today.title')}
+      </Typography>
+      <Stack rowGap={2}>
+        {['morning', 'afternoon', 'night'].map(dayTime => (
+          <Stack key={dayTime} rowGap={2}>
+            <Divider
+              color="disabled"
+              size="small"
+              text={t(`pages.quests.dayTimes.${dayTime}`)}
+            />
+            <PackCard {...quests[dayTime]} variant="default" />
+          </Stack>
+        ))}
       </Stack>
     </AnimatedWrapper>
   )

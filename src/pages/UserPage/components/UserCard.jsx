@@ -70,7 +70,7 @@ const UserCard = ({ handleReload, isCurrentUser, user }) => {
           <Typography fontWeight={700} variant="subtitle1">
             {t('pages.profile.others.friendsAmount', { amount: 30 })}
           </Typography>
-          <Divider />
+          <Divider color="disabled" size="small" />
           <Typography pt={1} variant="body1">
             {user?.biography}
           </Typography>

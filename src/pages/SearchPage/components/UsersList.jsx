@@ -33,7 +33,9 @@ const UsersList = ({ isLoading, users }) => {
           user.username !== userData.username && (
             <Stack key={user.username}>
               <UserButton user={user} />
-              {index !== users.length - 1 && <Divider />}
+              {index !== users.length - 1 && (
+                <Divider color="disabled" size="small" />
+              )}
             </Stack>
           )
       )}

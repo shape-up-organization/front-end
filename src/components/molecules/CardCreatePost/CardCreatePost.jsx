@@ -72,7 +72,7 @@ const CardCreatePost = () => {
             }}
           />
         </Box>
-        <Divider />
+        <Divider color="disabled" size="small" />
         <Box pt={1}>
           <Button
             color="inherit"

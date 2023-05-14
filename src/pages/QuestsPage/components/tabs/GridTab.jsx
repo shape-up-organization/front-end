@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import { Paper, Stack, Typography, useMediaQuery } from '@mui/material'
+import { Stack, Typography, useMediaQuery } from '@mui/material'
 
 import { AnimatedWrapper } from '@layouts/AnimatedWrapper'
 
@@ -46,31 +46,15 @@ const GridTab = () => {
 
   return (
     <AnimatedWrapper>
-      <Stack
-        borderRadius={theme => theme.shape.borderRadius}
-        sx={{
-          borderTopLeftRadius: lessThanMedium
-            ? 0
-            : theme => theme.shape.borderRadius * 4,
-          borderTopRightRadius: lessThanMedium
-            ? 0
-            : theme => theme.shape.borderRadius * 4,
-        }}
-        component={Paper}
-        rowGap={4}
-        p={{ xs: 4, md: 8 }}
-        pb={{ xs: 8 }}
+      <Typography
+        color="primary"
+        fontWeight={500}
+        textAlign={lessThanMedium ? 'center' : 'left'}
+        variant={lessThanMedium ? 'h6' : 'h4'}
       >
-        <Typography
-          color="primary"
-          fontWeight={500}
-          textAlign={lessThanMedium ? 'center' : 'left'}
-          variant={lessThanMedium ? 'h6' : 'h4'}
-        >
-          {t('pages.quests.grid.title')}
-        </Typography>
-        <Stack rowGap={2}>OLA</Stack>
-      </Stack>
+        {t('pages.quests.grid.title')}
+      </Typography>
+      <Stack rowGap={2}>OLA</Stack>
     </AnimatedWrapper>
   )
 }

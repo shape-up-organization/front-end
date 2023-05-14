@@ -115,7 +115,11 @@ const Content = ({ handleClose, postData }) => {
         </Stack>
       </Grid>
       {isGreaterThanMedium && (
-        <Grid item xs={7}>
+        <Grid
+          item
+          xs={postData.photos.length ? 7 : 0}
+          display={postData.photos.length ? 'inherit' : 'none'}
+        >
           <Grid
             item
             display="flex"
@@ -148,7 +152,7 @@ const Content = ({ handleClose, postData }) => {
           </Grid>
         </Grid>
       )}
-      <Grid item xs={12} md={5}>
+      <Grid item xs={12} md={postData.photos.length ? 5 : 12}>
         <Grid
           item
           display="flex"
@@ -284,7 +288,7 @@ const CardViewPost = ({ handleClose, open, postData }) => (
     Component={Content}
     componentArgs={{ handleClose, postData }}
     dialogProps={{
-      maxWidth: 'lg',
+      maxWidth: postData.photos.length ? 'lg' : 'sm',
     }}
     handleClose={handleClose}
     open={open}

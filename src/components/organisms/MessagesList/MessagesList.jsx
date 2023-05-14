@@ -57,7 +57,7 @@ const MessagesList = () => {
             </Box>
             <Box>
               <ChatTypeSwitcher />
-              <Divider />
+              <Divider color="disabled" size="small" />
             </Box>
           </Stack>
         </Grid>

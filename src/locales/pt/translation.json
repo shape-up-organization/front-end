@@ -1,5 +1,26 @@
 {
   "components": {
+    "atoms": {
+      "packCard": {
+        "categories": {
+          "aerobic": "aeróbico",
+          "anaerobic": "anaeróbico",
+          "flexibility": "flexibilidade",
+          "strength": "força"
+        },
+        "classifications": {
+          "bronze": "BRONZE",
+          "gold": "OURO",
+          "silver": "PRATA"
+        },
+        "others": {
+          "buttonAllocate": "Alocar",
+          "estimatedDuration": "Duração estimada",
+          "minutes": "minutos",
+          "noPackWasAssigned": "Nenhum pack foi alocado"
+        }
+      }
+    },
     "molecules": {
       "cardCreatePost": {
         "others": {
@@ -462,6 +483,11 @@
     "quests": {
       "achievements": {
         "title": "Conquistas"
+      },
+      "dayTimes": {
+        "morning": "manhã",
+        "afternoon": "tarde",
+        "night": "noite"
       },
       "grid": {
         "title": "Grade de treinos"

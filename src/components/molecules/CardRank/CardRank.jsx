@@ -7,7 +7,6 @@ import CloseRounded from '@mui/icons-material/CloseRounded'
 import PeopleIcon from '@mui/icons-material/People'
 import PublicIcon from '@mui/icons-material/Public'
 import {
-  Divider,
   Grid,
   IconButton,
   Paper,
@@ -16,6 +15,8 @@ import {
   Tabs,
   useMediaQuery,
 } from '@mui/material'
+
+import { Divider } from '@atoms/Divider'
 
 import apiUsers from '@api/services/users'
 
@@ -83,7 +84,7 @@ const CardRank = ({ handleCloseCard }) => {
                   <Top rankedTopUsers={rankedUsers?.slice(0, 3)} />
                 </Grid>
                 <Grid item xs={12} pt={2}>
-                  <Divider />
+                  <Divider color="disabled" size="small" />
                 </Grid>
                 <Grid item xs={12}>
                   <List rankedUsers={rankedUsers?.slice(3)} />

@@ -192,7 +192,7 @@ const MobileVariation = ({ openConfirmationModal }) => {
                   </Stack>
                 </Grid>
               </Grid>
-              <Divider />
+              <Divider color="disabled" size="small" />
               {drawerOptions.map(({ icon, page }) => (
                 <Button
                   fullWidth

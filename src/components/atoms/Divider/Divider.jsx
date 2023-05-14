@@ -2,14 +2,28 @@ import P from 'prop-types'
 
 import { Divider as DividerMUI, Typography } from '@mui/material'
 
-const Divider = ({ direction, text }) => (
+const colors = {
+  primary: 'primary.main',
+  secondary: 'secondary.main',
+  error: 'error.main',
+  warning: 'warning.main',
+  info: 'info.main',
+  disabled: 'none',
+  disabledLight: 'disabled',
+}
+
+const sizes = {
+  small: 1,
+  medium: 2,
+  large: 4,
+}
+
+const Divider = ({ color, direction, size, text }) => (
   <DividerMUI
     orientation={direction}
     sx={{
-      '&::before, &::after': {
-        borderWidth: 2,
-        borderColor: 'primary.main',
-      },
+      borderWidth: sizes[size],
+      borderColor: colors[color],
     }}
     variant="fullWidth"
     flexItem
@@ -23,12 +37,16 @@ const Divider = ({ direction, text }) => (
 )
 
 Divider.propTypes = {
+  color: P.oneOf(Object.keys(colors)),
   direction: P.oneOf(['horizontal', 'vertical']),
+  size: P.oneOf(Object.keys(sizes)),
   text: P.string,
 }
 
 Divider.defaultProps = {
+  color: 'primary',
   direction: 'horizontal',
+  size: 'medium',
   text: '',
 }
 

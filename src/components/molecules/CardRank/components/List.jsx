@@ -47,7 +47,7 @@ const List = ({ rankedUsers }) => {
       </Stack>
       {index !== rankedUsers.length - 1 && (
         <Box width="100%">
-          <Divider />
+          <Divider color="disabled" size="small" />
         </Box>
       )}
     </Button>

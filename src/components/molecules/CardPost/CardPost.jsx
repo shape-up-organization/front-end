@@ -102,7 +102,7 @@ const CardPost = ({
         </Grid>
       )}
       <Grid item xs={12}>
-        <Divider />
+        <Divider color="disabled" size="small" />
       </Grid>
       <Grid container item px={{ xs: 1, sm: 3 }}>
         <Footer

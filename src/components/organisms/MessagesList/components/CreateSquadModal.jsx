@@ -123,7 +123,7 @@ const Content = () => {
           value={squadName}
         />
       </Stack>
-      <Divider />
+      <Divider color="disabled" size="small" />
       <Stack
         bgcolor="background.default"
         borderRadius={theme => theme.shape.borderRadius}
@@ -156,7 +156,9 @@ const Content = () => {
               }
               sx={{ px: 2, py: 1, width: '100%' }}
             />
-            {index !== friends.length - 1 && <Divider />}
+            {index !== friends.length - 1 && (
+              <Divider color="disabled" size="small" />
+            )}
           </Box>
         ))}
       </Stack>

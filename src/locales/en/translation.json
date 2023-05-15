@@ -80,6 +80,13 @@
           "userNotFound": "User not found!"
         }
       },
+      "packsModal": {
+        "others": {
+          "modalTitle": "Choose workout",
+          "packNotFound": "No pack was found!",
+          "searchFieldPlaceholder": "Search packs"
+        }
+      },
       "textArea": {
         "tooltips": {
           "emojiPickerButton": "Open emoji picker menu",

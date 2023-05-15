@@ -15,7 +15,13 @@ const getQuests = async () =>
     ...withHeaders(withAuth()),
   })
 
+const getPacks = async () =>
+  tryCatch(http.get, `${route}/packs`, {
+    ...withHeaders(withAuth()),
+  })
+
 export default {
   createQuest,
   getQuests,
+  getPacks,
 }

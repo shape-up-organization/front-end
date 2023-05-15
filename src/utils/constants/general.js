@@ -13,7 +13,7 @@ const CATEGORIES = {
     name: 'aerobic',
   },
   ANAEROBIC: {
-    color: 'secondary',
+    color: 'warning',
     icon: SpeedRoundedIcon,
     name: 'anaerobic',
   },

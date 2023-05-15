@@ -7,7 +7,7 @@ import { Stack, Typography, useMediaQuery } from '@mui/material'
 import { AnimatedWrapper } from '@layouts/AnimatedWrapper'
 
 import apiQuests from '@api/services/quests'
-import getQuestsMock from '@mocks/quests/get'
+import getQuestsMock from '@mocks/quests/getGrade'
 
 const GridTab = () => {
   const { t } = useTranslation()

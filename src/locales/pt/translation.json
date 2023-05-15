@@ -80,6 +80,13 @@
           "userNotFound": "Usuário não encontrado!"
         }
       },
+      "packsModal": {
+        "others": {
+          "modalTitle": "Escolher treino",
+          "packNotFound": "Nenhum pack foi encontrado!",
+          "searchFieldPlaceholder": "Procurar treinos"
+        }
+      },
       "textArea": {
         "tooltips": {
           "emojiPickerButton": "Abrir menu de emoji",

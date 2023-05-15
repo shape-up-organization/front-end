@@ -14,7 +14,7 @@ import { PackCard } from '@atoms/PackCard'
 import { AnimatedWrapper } from '@layouts/AnimatedWrapper'
 
 import apiQuests from '@api/services/quests'
-import getQuestsMock from '@mocks/quests/get'
+import getQuestsMock from '@mocks/quests/getGrade'
 import { WEEK_DAYS } from '@utils/constants/general'
 
 const TodayTab = () => {
@@ -48,7 +48,6 @@ const TodayTab = () => {
       >
         {t('pages.quests.today.title')}
       </Typography>
-
       {isLoadingQuests ? (
         <CircularProgress size={24} />
       ) : (

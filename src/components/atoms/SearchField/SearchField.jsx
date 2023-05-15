@@ -3,13 +3,14 @@ import P from 'prop-types'
 import SearchIcon from '@mui/icons-material/Search'
 import { InputAdornment, TextField } from '@mui/material'
 
-const SearchField = ({ placeholder, value, setValue }) => {
+const SearchField = ({ inputProps, placeholder, setValue, value }) => {
   const handleChange = event => setValue(event.target.value)
 
   return (
     <TextField
       fullWidth
       InputProps={{
+        ...inputProps,
         startAdornment: (
           <InputAdornment position="start">
             <SearchIcon color={value ? 'primary' : 'inherit'} />
@@ -25,12 +26,14 @@ const SearchField = ({ placeholder, value, setValue }) => {
 }
 
 SearchField.propTypes = {
+  inputProps: P.object,
   placeholder: P.string.isRequired,
-  value: P.string,
   setValue: P.func.isRequired,
+  value: P.string,
 }
 
 SearchField.defaultProps = {
+  inputProps: {},
   value: '',
 }
 

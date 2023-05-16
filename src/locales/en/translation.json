@@ -35,7 +35,8 @@
       },
       "cardProfile": {
         "quest": {
-          "title": "Daily Challenges"
+          "noQuest": "No quest at this moment",
+          "title": "Current quest"
         },
         "tooltips": {
           "goToProfile": "Go to profile"

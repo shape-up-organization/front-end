@@ -39,8 +39,7 @@ const CardRank = ({ handleCloseCard }) => {
 
   const getRankedUsers = async () => {
     const response = await rankedFunction[rankTab]({ page: 0, size: 7 })
-    console.log(response.data)
-    setRankedUsers(response.data)
+    setRankedUsers(response?.data)
   }
 
   useEffect(() => {

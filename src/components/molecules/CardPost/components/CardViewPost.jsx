@@ -274,12 +274,7 @@ Content.propTypes = {
   handleClose: P.func.isRequired,
   postData: P.shape({
     id: P.string.isRequired,
-    photos: P.arrayOf(
-      P.shape({
-        alt: P.string.isRequired,
-        src: P.string.isRequired,
-      })
-    ),
+    photos: P.arrayOf(P.string.isRequired),
   }).isRequired,
 }
 

@@ -35,7 +35,8 @@
       },
       "cardProfile": {
         "quest": {
-          "title": "Desafios Diários"
+          "noQuest": "Nenhuma missão no momento",
+          "title": "Missão atual"
         },
         "tooltips": {
           "goToProfile": "Ir para o perfil"

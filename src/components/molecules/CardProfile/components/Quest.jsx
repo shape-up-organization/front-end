@@ -51,8 +51,7 @@ const Quest = () => {
     setIsLoadingQuest(false)
 
     const weekDay = WEEK_DAYS[new Date().getDay()]
-    const currentQuest = getQuestsMock.data[weekDay].morning || response
-    setQuest(currentQuest)
+    setQuest(getQuestsMock.data[weekDay].morning || response)
   }
 
   useEffect(() => {
@@ -60,6 +59,8 @@ const Quest = () => {
   }, [])
 
   const handleGoToQuests = () => navigate('/quests')
+
+  console.log(quest)
 
   return (
     <Stack alignItems="center" rowGap={2} width="100%">
@@ -81,9 +82,10 @@ const Quest = () => {
         py={3}
         width="100%"
       >
+        {/* eslint-disable-next-line no-nested-ternary */}
         {isLoadingQuest ? (
           <CircularProgress size={lessThanMedium ? 16 : 24} />
-        ) : (
+        ) : quest ? (
           <>
             {CategoryIcon && (
               <CategoryIcon
@@ -107,6 +109,10 @@ const Quest = () => {
               }}
             />
           </>
+        ) : (
+          <Typography textAlign="center" width="100%">
+            {t('components.molecules.cardProfile.quest.noQuest')}
+          </Typography>
         )}
       </Stack>
     </Stack>

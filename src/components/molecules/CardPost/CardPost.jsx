@@ -126,12 +126,7 @@ CardPost.propTypes = {
   id: P.string.isRequired,
   likes: P.number,
   liked: P.bool,
-  photos: P.arrayOf(
-    P.shape({
-      alt: P.string.isRequired,
-      src: P.string.isRequired,
-    })
-  ),
+  photos: P.arrayOf(P.string.isRequired),
   textContent: P.string,
   user: P.object,
   username: P.string,

@@ -15,6 +15,7 @@
         },
         "others": {
           "buttonAllocate": "Allocate",
+          "buttonUnlock": "{{neededXp}}xp to unlock",
           "estimatedDuration": "Estimated duration",
           "minutes": "minutes",
           "noPackWasAssigned": "No pack was assigned"
@@ -498,6 +499,9 @@
         "night": "night"
       },
       "grid": {
+        "others": {
+          "editModalTitle": "Training"
+        },
         "title": "Training grid"
       },
       "tabs": {
@@ -507,6 +511,15 @@
       },
       "today": {
         "title": "Today's workouts"
+      },
+      "weekDays": {
+        "sun": "sun",
+        "mon": "mon",
+        "tue": "tue",
+        "wed": "wed",
+        "thu": "thu",
+        "fri": "fri",
+        "sat": "sat"
       }
     }
   }

@@ -15,6 +15,7 @@
         },
         "others": {
           "buttonAllocate": "Alocar",
+          "buttonUnlock": "{{neededXp}}xp para desbloquear",
           "estimatedDuration": "Duração estimada",
           "minutes": "minutos",
           "noPackWasAssigned": "Nenhum pack foi alocado"
@@ -498,6 +499,9 @@
         "night": "noite"
       },
       "grid": {
+        "others": {
+          "editModalTitle": "Treino"
+        },
         "title": "Grade de treinos"
       },
       "tabs": {
@@ -507,6 +511,15 @@
       },
       "today": {
         "title": "Treinos de hoje"
+      },
+      "weekDays": {
+        "sun": "dom",
+        "mon": "seg",
+        "tue": "ter",
+        "wed": "qua",
+        "thu": "qui",
+        "fri": "sex",
+        "sat": "sáb"
       }
     }
   }

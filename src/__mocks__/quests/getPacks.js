@@ -1,4 +1,5 @@
 export default Object.freeze({
+  unlockXp: 80,
   data: [
     {
       category: 'AEROBIC',
@@ -10,6 +11,7 @@ export default Object.freeze({
       id: '1',
       name: 'Quest 1',
       xp: 80,
+      unlockXp: 80,
       exercises: [
         'ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1',
         'ex 2',
@@ -27,6 +29,7 @@ export default Object.freeze({
       id: '2',
       name: 'Garoto 2',
       xp: 80,
+      unlockXp: 80,
       exercises: [
         'ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1',
         'ex 2',
@@ -43,6 +46,7 @@ export default Object.freeze({
       id: '3',
       name: 'Ta maluco 3',
       xp: 80,
+      unlockXp: 80,
       exercises: [
         'ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex',
         'ex 2',
@@ -58,6 +62,7 @@ export default Object.freeze({
       id: '4',
       name: 'Quest 1 ainda mais',
       xp: 80,
+      unlockXp: 80,
       exercises: [
         'ex 1 ex 1 ex 1 ex 1',
         'ex 2',
@@ -75,6 +80,7 @@ export default Object.freeze({
       id: '5',
       name: 'packzão maluco',
       xp: 80,
+      unlockXp: 80,
       exercises: [
         'ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1',
         'ex 2',
@@ -92,6 +98,7 @@ export default Object.freeze({
       id: '6',
       name: 'pack piorou',
       xp: 80,
+      unlockXp: 80,
       exercises: [
         'ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1',
         'ex 2',
@@ -108,6 +115,7 @@ export default Object.freeze({
       id: '7',
       name: 'Pack test pack',
       xp: 80,
+      unlockXp: 80,
       exercises: [
         'ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex 1ex 1 ex 1 ex 1 ex 1 ex 1 ex',
         'ex 2',
@@ -123,6 +131,7 @@ export default Object.freeze({
       id: '8',
       name: 'Pack logo mais',
       xp: 80,
+      unlockXp: 80,
       exercises: [
         'ex 1 ex 1 ex 1 ex 1',
         'ex 2',

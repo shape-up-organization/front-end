@@ -48,10 +48,11 @@ const Quest = () => {
     setIsLoadingQuest(true)
 
     const response = await apiQuests.getQuests()
+    console.log(response)
     setIsLoadingQuest(false)
 
     const weekDay = WEEK_DAYS[new Date().getDay()]
-    setQuest(getQuestsMock.data[weekDay].morning || response)
+    setQuest(getQuestsMock.data[weekDay].morning || null)
   }
 
   useEffect(() => {
@@ -59,8 +60,6 @@ const Quest = () => {
   }, [])
 
   const handleGoToQuests = () => navigate('/quests')
-
-  console.log(quest)
 
   return (
     <Stack alignItems="center" rowGap={2} width="100%">

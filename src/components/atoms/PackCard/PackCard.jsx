@@ -3,7 +3,9 @@ import { useState } from 'react'
 import P from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
+import EditRoundedIcon from '@mui/icons-material/EditRounded'
 import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded'
+import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded'
 import {
   Accordion,
   AccordionDetails,
@@ -21,6 +23,7 @@ import {
 } from '@mui/material'
 
 import apiQuests from '@api/services/quests'
+import { useChat } from '@contexts'
 import { PacksModal } from '@molecules/PacksModal'
 import { CATEGORIES } from '@utils/constants/general'
 
@@ -33,12 +36,15 @@ const PackCard = ({
   exercises,
   id,
   name,
+  onRemoved,
+  unlockXp,
   variant,
   xp,
 }) => {
   const { t } = useTranslation()
   const lessThanMedium = useMediaQuery(theme => theme.breakpoints.down('md'))
   const lessThanLarge = useMediaQuery(theme => theme.breakpoints.down('lg'))
+  const { userData } = useChat()
 
   const [isLoadingPack, setIsLoadingPack] = useState(false)
   const [checkedState, setCheckedState] = useState(checked)
@@ -73,6 +79,11 @@ const PackCard = ({
   }
   const handleAddPack = async event => {
     event.stopPropagation()
+  }
+  const handleRemovePack = async event => {
+    event.stopPropagation()
+
+    onRemoved()
   }
 
   return (
@@ -119,7 +130,13 @@ const PackCard = ({
                     sx={{ fontSize: lessThanMedium ? 32 : 48 }}
                   />
                 </Grid>
-                <Grid item xs overflow="hidden" textOverflow="ellipsis">
+                <Grid
+                  item
+                  xs
+                  minWidth={88}
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                >
                   <Stack alignItems="center" columnGap={1} flexDirection="row">
                     <Typography
                       noWrap
@@ -180,7 +197,8 @@ const PackCard = ({
                   {/* eslint-disable-next-line no-nested-ternary */}
                   {isLoadingPack ? (
                     <CircularProgress size={lessThanMedium ? 16 : 24} />
-                  ) : variant === 'checking' ? (
+                  ) : // eslint-disable-next-line no-nested-ternary
+                  variant === 'checking' ? (
                     <Checkbox
                       checked={checkedState}
                       disabled={checkedState}
@@ -189,8 +207,16 @@ const PackCard = ({
                         '& .MuiSvgIcon-root': { fontSize: 28 },
                       }}
                     />
+                  ) : variant === 'edit' ? (
+                    <Stack flexDirection="row">
+                      <IconButton onClick={handleOpenPacksModal}>
+                        <EditRoundedIcon />
+                      </IconButton>
+                      <IconButton onClick={handleRemovePack}>
+                        <RemoveCircleRoundedIcon color="error" />
+                      </IconButton>
+                    </Stack>
                   ) : (
-                    variant === 'default' &&
                     !lessThanLarge && (
                       <Button
                         onClick={handleAddPack}
@@ -278,6 +304,7 @@ const PackCard = ({
                     )}`}</Typography>
                     {variant === 'default' && lessThanLarge && (
                       <Button
+                        disabled={userData.xp < unlockXp}
                         fullWidth
                         onClick={handleAddPack}
                         size="small"
@@ -287,7 +314,14 @@ const PackCard = ({
                           fontWeight={500}
                           variant={lessThanMedium ? 'caption' : 'subtitle2'}
                         >
-                          {t('components.atoms.packCard.others.buttonAllocate')}
+                          {userData.xp >= unlockXp
+                            ? t(
+                                'components.atoms.packCard.others.buttonAllocate'
+                              )
+                            : t(
+                                'components.atoms.packCard.others.buttonUnlock',
+                                { neededXp: unlockXp - xp }
+                              )}
                         </Typography>
                       </Button>
                     )}
@@ -338,7 +372,9 @@ PackCard.propTypes = {
   exercises: P.arrayOf(P.string),
   id: P.string,
   name: P.string,
-  variant: P.oneOf(['checking', 'default']),
+  onRemoved: P.func,
+  unlockXp: P.number,
+  variant: P.oneOf(['checking', 'default', 'edit']),
   xp: P.number,
 }
 
@@ -351,6 +387,8 @@ PackCard.defaultProps = {
   exercises: [],
   id: '',
   name: '',
+  onRemoved: () => {},
+  unlockXp: 0,
   variant: 'default',
   xp: 0,
 }

@@ -40,9 +40,7 @@ const Content = () => {
     const response = await apiQuests.getPacks()
     setIsLoadingPacks(false)
 
-    console.log(response)
-    setPacks(getPacksMock.data)
-    // if (response?.status !== 200)
+    setPacks(getPacksMock.data || response)
   }
 
   useEffect(() => {

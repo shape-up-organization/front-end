@@ -64,7 +64,7 @@ const CardUser = ({ user, position }) => {
 CardUser.propTypes = {
   position: P.number.isRequired,
   user: P.shape({
-    firstName: P.string.isRequired,
+    firstName: P.string,
     username: P.string.isRequired,
     xp: P.number.isRequired,
   }).isRequired,

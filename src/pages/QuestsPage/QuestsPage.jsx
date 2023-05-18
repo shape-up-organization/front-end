@@ -2,45 +2,37 @@ import { useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded'
-import BrushRoundedIcon from '@mui/icons-material/BrushRounded'
-import CircleNotificationsRoundedIcon from '@mui/icons-material/CircleNotificationsRounded'
-import HelpRoundedIcon from '@mui/icons-material/HelpRounded'
+import CalendarViewMonthRoundedIcon from '@mui/icons-material/CalendarViewMonthRounded'
+import EmojiEventsRoundedIcon from '@mui/icons-material/EmojiEventsRounded'
+import FitnessCenterRoundedIcon from '@mui/icons-material/FitnessCenterRounded'
 import { Grid, Paper, Stack, Tab, Tabs, useMediaQuery } from '@mui/material'
 
 import { AnimatedWrapper } from '@layouts/AnimatedWrapper'
 
-import { AccountTab } from './components/tabs/AccountTab'
-import { CustomizationTab } from './components/tabs/CustomizationTab'
-import { HelpTab } from './components/tabs/HelpTab'
-import { NotificationsTab } from './components/tabs/NotificationsTab'
+import { AchievementsTab } from './components/tabs/AchievementsTab'
+import { GridTab } from './components/tabs/GridTab'
+import { TodayTab } from './components/tabs/TodayTab'
 
 const settingsTabElements = {
-  account: {
-    component: () => <AccountTab />,
-    icon: <AccountCircleRoundedIcon />,
+  today: {
+    component: () => <TodayTab />,
+    icon: <FitnessCenterRoundedIcon />,
   },
-  customization: {
-    component: () => <CustomizationTab />,
-    disabled: true,
-    icon: <BrushRoundedIcon />,
+  grid: {
+    component: () => <GridTab />,
+    icon: <CalendarViewMonthRoundedIcon />,
   },
-  notifications: {
-    component: () => <NotificationsTab />,
-    disabled: true,
-    icon: <CircleNotificationsRoundedIcon />,
-  },
-  help: {
-    component: () => <HelpTab />,
-    icon: <HelpRoundedIcon />,
+  achievements: {
+    component: () => <AchievementsTab />,
+    icon: <EmojiEventsRoundedIcon />,
   },
 }
 
-const SettingsPage = () => {
+const QuestsPage = () => {
   const { t } = useTranslation()
   const lessThanMedium = useMediaQuery(theme => theme.breakpoints.down('md'))
 
-  const [settingsTab, setSettingsTab] = useState('account')
+  const [settingsTab, setSettingsTab] = useState('today')
 
   const handleChangeTab = (_, newTab) => setSettingsTab(newTab)
 
@@ -57,8 +49,7 @@ const SettingsPage = () => {
         <Grid
           item
           xs={12}
-          md={4}
-          lg={3}
+          md={3}
           xl={2}
           flexBasis={lessThanMedium ? '0' : '100%'}
           left={0}
@@ -86,24 +77,21 @@ const SettingsPage = () => {
             value={settingsTab}
             variant={lessThanMedium ? 'scrollable' : 'fullWidth'}
           >
-            {Object.keys(settingsTabElements).map(
-              tab =>
-                !settingsTabElements[tab].disabled && (
-                  <Tab
-                    key={tab}
-                    icon={settingsTabElements[tab].icon}
-                    iconPosition="start"
-                    label={t(`pages.settings.tabs.${tab}`)}
-                    sx={{
-                      justifyContent: lessThanMedium ? 'center' : 'flex-start',
-                    }}
-                    value={tab}
-                  />
-                )
-            )}
+            {Object.keys(settingsTabElements).map(tab => (
+              <Tab
+                key={tab}
+                icon={settingsTabElements[tab].icon}
+                iconPosition="start"
+                label={t(`pages.quests.tabs.${tab}`)}
+                sx={{
+                  justifyContent: lessThanMedium ? 'center' : 'flex-start',
+                }}
+                value={tab}
+              />
+            ))}
           </Tabs>
         </Grid>
-        <Grid item xs={12} md={7} lg={8} xl={9} maxHeight="90%">
+        <Grid item xs={12} md={8} xl={9} maxHeight="90%">
           <Stack
             borderRadius={theme => theme.shape.borderRadius}
             component={Paper}
@@ -127,4 +115,4 @@ const SettingsPage = () => {
   )
 }
 
-export { SettingsPage }
+export { QuestsPage }

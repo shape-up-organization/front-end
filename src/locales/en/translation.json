@@ -1,9 +1,32 @@
 {
   "components": {
+    "atoms": {
+      "packCard": {
+        "categories": {
+          "aerobic": "aerobic",
+          "anaerobic": "anaerobic",
+          "flexibility": "flexibility",
+          "strength": "strength"
+        },
+        "classifications": {
+          "bronze": "BRONZE",
+          "gold": "GOLD",
+          "silver": "SILVER"
+        },
+        "others": {
+          "buttonAllocate": "Allocate",
+          "buttonUnlock": "{{neededXp}}xp to unlock",
+          "estimatedDuration": "Estimated duration",
+          "minutes": "minutes",
+          "noPackWasAssigned": "No pack was assigned"
+        }
+      }
+    },
     "molecules": {
       "cardCreatePost": {
         "others": {
           "buttonOpen": "Photo/Video",
+          "createButton": "Create",
           "modalTitle": "Create your post"
         },
         "tooltips": {
@@ -13,7 +36,8 @@
       },
       "cardProfile": {
         "quest": {
-          "title": "Daily Challenges"
+          "noQuest": "No quest at this moment",
+          "title": "Current quest"
         },
         "tooltips": {
           "goToProfile": "Go to profile"
@@ -56,6 +80,13 @@
           "genericErrorSendFriendshipRequest": "Ops, there was an error sending the friendship request, please try again later!",
           "sentFriendshipRequest": "Friendship request sent to {{userFirstName}}!",
           "userNotFound": "User not found!"
+        }
+      },
+      "packsModal": {
+        "others": {
+          "modalTitle": "Choose workout",
+          "packNotFound": "No pack was found!",
+          "searchFieldPlaceholder": "Search packs"
         }
       },
       "textArea": {
@@ -349,7 +380,9 @@
     },
     "profile": {
       "buttons": {
-        "save": "Save"
+        "save": "Save",
+        "editPicture": "Edit picture",
+        "removePicture": "Remove picture"
       },
       "others": {
         "editProfile": "Edit profile",
@@ -454,6 +487,39 @@
         "customization": "Customization",
         "help": "Help",
         "notifications": "Notifications"
+      }
+    },
+    "quests": {
+      "achievements": {
+        "title": "Achievements"
+      },
+      "dayTimes": {
+        "morning": "morning",
+        "afternoon": "afternoon",
+        "night": "night"
+      },
+      "grid": {
+        "others": {
+          "editModalTitle": "Training"
+        },
+        "title": "Training grid"
+      },
+      "tabs": {
+        "achievements": "Achievements",
+        "grid": "Grid",
+        "today": "Today"
+      },
+      "today": {
+        "title": "Today's workouts"
+      },
+      "weekDays": {
+        "sun": "sun",
+        "mon": "mon",
+        "tue": "tue",
+        "wed": "wed",
+        "thu": "thu",
+        "fri": "fri",
+        "sat": "sat"
       }
     }
   }

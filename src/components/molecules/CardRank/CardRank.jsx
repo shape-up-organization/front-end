@@ -7,7 +7,6 @@ import CloseRounded from '@mui/icons-material/CloseRounded'
 import PeopleIcon from '@mui/icons-material/People'
 import PublicIcon from '@mui/icons-material/Public'
 import {
-  Divider,
   Grid,
   IconButton,
   Paper,
@@ -17,10 +16,17 @@ import {
   useMediaQuery,
 } from '@mui/material'
 
-import rankingGetTopMock from '@mocks/ranking/getTop'
+import { Divider } from '@atoms/Divider'
+
+import apiUsers from '@api/services/users'
 
 import { List } from './components/List'
 import { Top } from './components/Top'
+
+const rankedFunction = {
+  friends: apiUsers.getRankedFriends,
+  global: apiUsers.getRankedGlobal,
+}
 
 const CardRank = ({ handleCloseCard }) => {
   const { t } = useTranslation()
@@ -31,11 +37,14 @@ const CardRank = ({ handleCloseCard }) => {
 
   const handleChangeTab = (_, newTab) => setRankTab(newTab)
 
-  const getRankedUsers = async () => setRankedUsers(rankingGetTopMock.data)
+  const getRankedUsers = async () => {
+    const response = await rankedFunction[rankTab]({ page: 0, size: 7 })
+    setRankedUsers(response?.data)
+  }
 
   useEffect(() => {
     getRankedUsers()
-  }, [])
+  }, [rankTab])
 
   return (
     <Grid
@@ -74,7 +83,7 @@ const CardRank = ({ handleCloseCard }) => {
                   <Top rankedTopUsers={rankedUsers?.slice(0, 3)} />
                 </Grid>
                 <Grid item xs={12} pt={2}>
-                  <Divider />
+                  <Divider color="disabled" size="small" />
                 </Grid>
                 <Grid item xs={12}>
                   <List rankedUsers={rankedUsers?.slice(3)} />

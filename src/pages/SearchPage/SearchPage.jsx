@@ -73,7 +73,7 @@ const SearchPage = () => {
           </Grid>
         </Grid>
         <Box px={4}>
-          <Divider />
+          <Divider color="disabled" size="small" />
         </Box>
         <Grid container justifyContent="center">
           <Grid

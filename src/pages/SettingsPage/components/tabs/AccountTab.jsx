@@ -10,7 +10,6 @@ import {
   Button,
   CircularProgress,
   IconButton,
-  Paper,
   Stack,
   Typography,
   useMediaQuery,
@@ -71,95 +70,93 @@ const AccountTab = () => {
 
   return (
     <AnimatedWrapper>
-      <Stack component={Paper} rowGap={4} p={{ xs: 4, md: 8 }} pb={0}>
-        <Stack
-          alignItems="center"
-          columnGap={1}
-          direction="row"
-          justifyContent={lessThanMedium ? 'center' : 'flex-start'}
-        >
-          {subPage && (
-            <Box>
-              <IconButton onClick={() => setSubPage('')}>
-                <ArrowBackIosRoundedIcon fontSize="small" />
-              </IconButton>
-            </Box>
-          )}
-          <Typography
-            color="primary"
-            fontWeight={500}
-            textAlign={lessThanMedium ? 'center' : 'left'}
-            variant={lessThanMedium ? 'h6' : 'h4'}
-          >
-            {subPage
-              ? t(`pages.settings.accountOptions.options.${subPage}`)
-              : t('pages.settings.tabs.account')}
-          </Typography>
-        </Stack>
-        {subPage ? (
-          <AnimatedWrapper>{options[subPage].component()}</AnimatedWrapper>
-        ) : (
-          <Stack>
-            {Object.keys(options).map((option, index) => (
-              <Stack key={option}>
-                <Button
-                  color="inherit"
-                  endIcon={<ArrowForwardIosRoundedIcon fontSize="small" />}
-                  onClick={() => setSubPage(option)}
-                  sx={{ justifyContent: 'flex-start', py: 4 }}
-                >
-                  <Typography
-                    fontWeight={500}
-                    pl={2}
-                    textAlign="left"
-                    textTransform="none"
-                    variant={lessThanMedium ? 'subtitle1' : 'h6'}
-                  >
-                    {t(`pages.settings.accountOptions.options.${option}`)}
-                  </Typography>
-                </Button>
-                {index !== options.length - 1 && <Divider />}
-              </Stack>
-            ))}
-            <Stack
-              alignItems="center"
-              px={{ xs: 0, md: 8, lg: 20, xl: 40 }}
-              pb={2}
-              pt={{ xs: 4, md: 8 }}
-              width="100%"
-            >
-              <Button
-                color="error"
-                disabled={isButtonDeleteLoading}
-                fullWidth
-                onClick={handleOpenDeleteModal}
-                size="large"
-                variant="contained"
-              >
-                {isButtonDeleteLoading ? (
-                  <CircularProgress color="secondary" size={24} />
-                ) : (
-                  <Typography fontWeight={900} variant="subtitle2">
-                    {t('pages.settings.accountOptions.others.deleteAccount')}
-                  </Typography>
-                )}
-              </Button>
-              <ConfirmationModal
-                isCritical
-                handleCancel={handleCloseDeleteModal}
-                handleConfirm={handleDeleteAccount}
-                message={t(
-                  'pages.settings.accountOptions.confirmationModal.message'
-                )}
-                open={openDeleteModal}
-                title={t(
-                  'pages.settings.accountOptions.confirmationModal.title'
-                )}
-              />
-            </Stack>
-          </Stack>
+      <Stack
+        alignItems="center"
+        columnGap={1}
+        direction="row"
+        justifyContent={lessThanMedium ? 'center' : 'flex-start'}
+      >
+        {subPage && (
+          <Box>
+            <IconButton onClick={() => setSubPage('')}>
+              <ArrowBackIosRoundedIcon fontSize="small" />
+            </IconButton>
+          </Box>
         )}
+        <Typography
+          color="primary"
+          fontWeight={500}
+          textAlign={lessThanMedium ? 'center' : 'left'}
+          variant={lessThanMedium ? 'h6' : 'h4'}
+        >
+          {subPage
+            ? t(`pages.settings.accountOptions.options.${subPage}`)
+            : t('pages.settings.tabs.account')}
+        </Typography>
       </Stack>
+      {subPage ? (
+        <AnimatedWrapper>{options[subPage].component()}</AnimatedWrapper>
+      ) : (
+        <Stack>
+          {Object.keys(options).map((option, index) => (
+            <Stack key={option}>
+              <Button
+                color="inherit"
+                endIcon={<ArrowForwardIosRoundedIcon fontSize="small" />}
+                onClick={() => setSubPage(option)}
+                sx={{ justifyContent: 'flex-start', py: 4 }}
+              >
+                <Typography
+                  fontWeight={500}
+                  pl={2}
+                  textAlign="left"
+                  textTransform="none"
+                  variant={lessThanMedium ? 'subtitle1' : 'h6'}
+                >
+                  {t(`pages.settings.accountOptions.options.${option}`)}
+                </Typography>
+              </Button>
+              {index !== options.length - 1 && (
+                <Divider color="disabled" size="small" />
+              )}
+            </Stack>
+          ))}
+          <Stack
+            alignItems="center"
+            px={{ xs: 0, md: 8, lg: 20, xl: 40 }}
+            pb={2}
+            pt={{ xs: 4, md: 8 }}
+            width="100%"
+          >
+            <Button
+              color="error"
+              disabled={isButtonDeleteLoading}
+              fullWidth
+              onClick={handleOpenDeleteModal}
+              size="large"
+              variant="contained"
+            >
+              {isButtonDeleteLoading ? (
+                <CircularProgress color="secondary" size={24} />
+              ) : (
+                <Typography fontWeight={900} variant="subtitle2">
+                  {t('pages.settings.accountOptions.others.deleteAccount')}
+                </Typography>
+              )}
+            </Button>
+            <ConfirmationModal
+              isCritical
+              handleCancel={handleCloseDeleteModal}
+              handleConfirm={handleDeleteAccount}
+              message={t(
+                'pages.settings.accountOptions.confirmationModal.message'
+              )}
+              open={openDeleteModal}
+              title={t('pages.settings.accountOptions.confirmationModal.title')}
+            />
+          </Stack>
+        </Stack>
+      )}
     </AnimatedWrapper>
   )
 }

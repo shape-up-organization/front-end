@@ -1,9 +1,32 @@
 {
   "components": {
+    "atoms": {
+      "packCard": {
+        "categories": {
+          "aerobic": "aeróbico",
+          "anaerobic": "anaeróbico",
+          "flexibility": "flexibilidade",
+          "strength": "força"
+        },
+        "classifications": {
+          "bronze": "BRONZE",
+          "gold": "OURO",
+          "silver": "PRATA"
+        },
+        "others": {
+          "buttonAllocate": "Alocar",
+          "buttonUnlock": "{{neededXp}}xp para desbloquear",
+          "estimatedDuration": "Duração estimada",
+          "minutes": "minutos",
+          "noPackWasAssigned": "Nenhum pack foi alocado"
+        }
+      }
+    },
     "molecules": {
       "cardCreatePost": {
         "others": {
           "buttonOpen": "Foto/Video",
+          "createButton": "Criar",
           "modalTitle": "Crie a sua publicação"
         },
         "tooltips": {
@@ -13,7 +36,8 @@
       },
       "cardProfile": {
         "quest": {
-          "title": "Desafios Diários"
+          "noQuest": "Nenhuma missão no momento",
+          "title": "Missão atual"
         },
         "tooltips": {
           "goToProfile": "Ir para o perfil"
@@ -56,6 +80,13 @@
           "genericErrorSendFriendshipRequest": "Ops, houve algum erro ao enviar ao enviar a solicitação de amizade, tente novamente mais tarde!",
           "sentFriendshipRequest": "Solicitação de amizade enviada para {{userFirstName}}!",
           "userNotFound": "Usuário não encontrado!"
+        }
+      },
+      "packsModal": {
+        "others": {
+          "modalTitle": "Escolher treino",
+          "packNotFound": "Nenhum pack foi encontrado!",
+          "searchFieldPlaceholder": "Procurar treinos"
         }
       },
       "textArea": {
@@ -349,7 +380,9 @@
     },
     "profile": {
       "buttons": {
-        "save": "Salvar"
+        "save": "Salvar",
+        "editPicture": "Editar foto",
+        "removePicture": "Remover foto"
       },
       "others": {
         "editProfile": "Editar perfil",
@@ -454,6 +487,39 @@
         "customization": "Personalização",
         "help": "Ajuda",
         "notifications": "Notificações"
+      }
+    },
+    "quests": {
+      "achievements": {
+        "title": "Conquistas"
+      },
+      "dayTimes": {
+        "morning": "manhã",
+        "afternoon": "tarde",
+        "night": "noite"
+      },
+      "grid": {
+        "others": {
+          "editModalTitle": "Treino"
+        },
+        "title": "Grade de treinos"
+      },
+      "tabs": {
+        "achievements": "Conquistas",
+        "grid": "Grade",
+        "today": "Hoje"
+      },
+      "today": {
+        "title": "Treinos de hoje"
+      },
+      "weekDays": {
+        "sun": "dom",
+        "mon": "seg",
+        "tue": "ter",
+        "wed": "qua",
+        "thu": "qui",
+        "fri": "sex",
+        "sat": "sáb"
       }
     }
   }

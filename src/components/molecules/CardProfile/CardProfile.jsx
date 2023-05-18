@@ -35,7 +35,7 @@ const CardProfile = ({ handleCloseCard }) => {
         >
           <UserInfo closeCard={handleCloseCard} />
           <Experience />
-          <Divider />
+          <Divider color="disabled" size="small" />
           <Quest />
         </Stack>
       </Grid>

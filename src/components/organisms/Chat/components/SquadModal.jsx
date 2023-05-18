@@ -203,7 +203,7 @@ const Content = ({ squadId }) => {
           value={squadData.name}
         />
       </Stack>
-      <Divider />
+      <Divider color="disabled" size="small" />
       <Stack
         bgcolor="background.default"
         borderRadius={theme => theme.shape.borderRadius}
@@ -281,7 +281,9 @@ const Content = ({ squadId }) => {
                   </Tooltip>
                 </Stack>
               </Stack>
-              {index !== squadData.members.length - 1 && <Divider />}
+              {index !== squadData.members.length - 1 && (
+                <Divider color="disabled" size="small" />
+              )}
             </Box>
           ))
         )}

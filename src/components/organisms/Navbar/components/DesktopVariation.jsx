@@ -4,7 +4,7 @@ import P from 'prop-types'
 import { useTranslation } from 'react-i18next'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-import FitnessCenterRoundedIcon from '@mui/icons-material/FitnessCenterRounded'
+import CrisisAlertRoundedIcon from '@mui/icons-material/CrisisAlertRounded'
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded'
 import MessageRoundedIcon from '@mui/icons-material/MessageRounded'
 import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded'
@@ -62,9 +62,7 @@ const DesktopVariation = ({ openConfirmationModal }) => {
       page: 'search',
     },
     {
-      icon: color => (
-        <FitnessCenterRoundedIcon fontSize="large" color={color} />
-      ),
+      icon: color => <CrisisAlertRoundedIcon fontSize="large" color={color} />,
       page: 'quests',
     },
     {

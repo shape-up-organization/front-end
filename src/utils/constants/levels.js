@@ -35,7 +35,7 @@ const getLevel = xp => {
   if (xp < 0) return 1
   return (
     LEVELS.find(lvl => xp >= lvl.min && xp <= lvl.max)?.level ||
-    LEVELS.at(-1)?.level
+    LEVELS.at(0)?.level
   )
 }
 

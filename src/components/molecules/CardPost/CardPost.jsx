@@ -21,6 +21,7 @@ const CardPost = ({
   likes,
   photos,
   textContent,
+  liked,
   user,
   username,
 }) => {
@@ -83,12 +84,12 @@ const CardPost = ({
             width="100%"
           >
             <Carousel>
-              {photos.map(({ alt, src }) => (
+              {photos.map(photoUrl => (
                 <Photo
-                  key={alt}
-                  alt={alt}
+                  key={photoUrl}
+                  alt={photoUrl}
                   animationSpeed={0}
-                  src={src}
+                  src={photoUrl}
                   style={{
                     objectFit: 'contain',
                     width: '100%',
@@ -101,7 +102,7 @@ const CardPost = ({
         </Grid>
       )}
       <Grid item xs={12}>
-        <Divider />
+        <Divider color="disabled" size="small" />
       </Grid>
       <Grid container item px={{ xs: 1, sm: 3 }}>
         <Footer
@@ -111,6 +112,7 @@ const CardPost = ({
             id,
             photos,
             textContent,
+            liked,
           }}
         />
       </Grid>
@@ -123,12 +125,8 @@ CardPost.propTypes = {
   date: P.string.isRequired,
   id: P.string.isRequired,
   likes: P.number,
-  photos: P.arrayOf(
-    P.shape({
-      alt: P.string.isRequired,
-      src: P.string.isRequired,
-    })
-  ),
+  liked: P.bool,
+  photos: P.arrayOf(P.string.isRequired),
   textContent: P.string,
   user: P.object,
   username: P.string,
@@ -137,6 +135,7 @@ CardPost.propTypes = {
 CardPost.defaultProps = {
   commentsAmount: 0,
   likes: 0,
+  liked: false,
   photos: [],
   textContent: '',
   user: null,

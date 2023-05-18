@@ -41,6 +41,7 @@ const SimpleModal = ({
           align="center"
           bgcolor="background.default"
           justifyContent="center"
+          sx={{ overflow: 'hidden' }}
         >
           <Typography
             color="primary"

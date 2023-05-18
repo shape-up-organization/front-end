@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { Grid, useMediaQuery } from '@mui/material'
+import { Box, Grid, Stack, useMediaQuery } from '@mui/material'
 
 import { AnimatedWrapper } from '@layouts/AnimatedWrapper'
 import { CardCreatePost } from '@molecules/CardCreatePost'
@@ -8,8 +8,8 @@ import { CardPost } from '@molecules/CardPost'
 import { CardProfile } from '@molecules/CardProfile'
 import { CardRank } from '@molecules/CardRank'
 
+import apiPosts from '@api/services/posts'
 import { useChat } from '@contexts'
-import postsGetMock from '@mocks/posts/get'
 
 const FeedPage = () => {
   const { chatsData } = useChat()
@@ -19,7 +19,13 @@ const FeedPage = () => {
 
   const [posts, setPosts] = useState([])
 
-  const getData = async () => setPosts(postsGetMock.data)
+  const getData = async () => {
+    const response = await apiPosts.getPosts()
+
+    if (response.status === 204) setPosts([])
+
+    setPosts(response.data || [])
+  }
 
   useEffect(() => {
     if (!chatsData.deprecated) {
@@ -42,24 +48,36 @@ const FeedPage = () => {
           </Grid>
         )}
         <Grid item xs={12} md={8} lg={7} xl={6} height="100%">
-          <Grid container height="100%" overflow="auto" rowGap={4}>
-            <Grid item xs={12} px={2}>
+          <Stack height="100%" overflow="auto" rowGap={4} width="100%">
+            <Stack px={2} width="100%">
               <CardCreatePost />
-            </Grid>
-            <Grid container item height="100%" px={2} rowGap={4}>
+            </Stack>
+            <Stack height="100%" px={2} rowGap={4} width="100%">
               {posts?.map(post => (
-                <Grid
-                  item
-                  xs={12}
+                <Box
                   key={post.id}
-                  display="center"
+                  height="fit-content"
+                  display="flex"
                   justifyContent="center"
+                  width="100%"
                 >
-                  <CardPost {...post} />
-                </Grid>
+                  <CardPost
+                    commentsAmount={post.countComments}
+                    date={post.createdAt}
+                    id={post.id}
+                    likes={post.countLike}
+                    liked={post.liked}
+                    photos={post.photoUrls}
+                    textContent={post.description}
+                    user={chatsData.friends.find(
+                      friend => friend.username === post.username
+                    )}
+                    username={post.username}
+                  />
+                </Box>
               ))}
-            </Grid>
-          </Grid>
+            </Stack>
+          </Stack>
         </Grid>
         {!lessThanExtraLarge && (
           <Grid item xs={0} lg={4} xl={3}>

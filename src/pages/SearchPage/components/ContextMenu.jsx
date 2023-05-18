@@ -50,7 +50,7 @@ const ContextMenu = ({ anchorEl, handleCloseMenu, open, userSelected }) => {
           {t('pages.search.others.goToProfile')}
         </Typography>
       </MenuItem>
-      <Divider />
+      <Divider color="disabled" size="small" />
       <FriendshipOptions
         postAction={handleCloseMenu}
         data={{ ...userSelected, ...userSelected.friendshipStatus }}

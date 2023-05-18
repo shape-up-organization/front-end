@@ -8,6 +8,8 @@ import { Box, Button, Paper, Stack, Typography } from '@mui/material'
 import { Divider } from '@atoms/Divider'
 import { TextArea } from '@molecules/TextArea'
 
+import apiPosts from '@api/services/posts'
+
 import { PostModal } from './components/PostModal'
 
 const CardCreatePost = () => {
@@ -20,12 +22,24 @@ const CardCreatePost = () => {
   const handleOpenPostModal = () => setIsOpenPostModal(true)
   const handleClosePostModal = () => setIsOpenPostModal(false)
 
-  const handleSendMessage = async () => {
+  const handleCreatePost = async () => {
+    if (!messageText) return
     setIsLoading(true)
-    setTimeout(() => {
-      setMessageText('')
-      setIsLoading(false)
-    }, 1000)
+
+    const payload = { description: messageText }
+
+    const response = await apiPosts.createPostWithoutPhoto(payload)
+    setIsLoading(false)
+
+    if (response.status !== 201) return
+
+    setMessageText('')
+    setIsLoading(false)
+    refreshFeed()
+  }
+
+  const refreshFeed = async () => {
+    console.log('refreshFeed')
   }
 
   return (
@@ -40,7 +54,7 @@ const CardCreatePost = () => {
       >
         <Box width="100%">
           <TextArea
-            handleSendMessage={handleSendMessage}
+            handleSendMessage={handleCreatePost}
             interfaceOptions={{
               isLoading,
               textAreaProps: {
@@ -58,7 +72,7 @@ const CardCreatePost = () => {
             }}
           />
         </Box>
-        <Divider />
+        <Divider color="disabled" size="small" />
         <Box pt={1}>
           <Button
             color="inherit"
@@ -73,7 +87,12 @@ const CardCreatePost = () => {
           </Button>
         </Box>
       </Stack>
-      <PostModal handleClose={handleClosePostModal} open={isOpenPostModal} />
+      <PostModal
+        handleClose={handleClosePostModal}
+        open={isOpenPostModal}
+        messageText={messageText}
+        refreshFeed={refreshFeed}
+      />
     </>
   )
 }

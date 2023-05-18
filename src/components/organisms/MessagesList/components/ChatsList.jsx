@@ -1,16 +1,10 @@
 import { useTranslation } from 'react-i18next'
 
-import { useChat } from '@contexts'
+import { Box, CircularProgress, Grow, Stack, Typography } from '@mui/material'
 
+import { Divider } from '@atoms/Divider'
 import { Photo } from '@atoms/Photo'
-import {
-  Box,
-  CircularProgress,
-  Divider,
-  Grow,
-  Stack,
-  Typography,
-} from '@mui/material'
+import { useChat } from '@contexts'
 
 import notFoundGeneric from '@assets/images/not-found-generic.png'
 
@@ -68,7 +62,7 @@ const ChatsList = () => {
                 : null
             }
           />
-          <Divider />
+          <Divider color="disabled" size="small" />
         </Stack>
       ))}
     </Stack>

@@ -6,76 +6,115 @@ import { useNavigate } from 'react-router-dom'
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded'
 import {
   Checkbox,
-  FormControlLabel,
-  FormGroup,
-  Grid,
+  CircularProgress,
   IconButton,
+  Paper,
+  Stack,
   Typography,
+  useMediaQuery,
 } from '@mui/material'
 
-import dailyChallengesMock from '@mocks/quests/getDailyChallenges'
+import apiQuests from '@api/services/quests'
+import getQuestsMock from '@mocks/quests/getGrade'
+import { CATEGORIES, WEEK_DAYS } from '@utils/constants/general'
 
 const Quest = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
+  const lessThanMedium = useMediaQuery(theme => theme.breakpoints.down('md'))
 
-  const [challenges, setChallenges] = useState([])
+  const [isLoadingQuest, setIsLoadingQuest] = useState(true)
+  const [quest, setQuest] = useState([])
+  const [checkedState, setCheckedState] = useState(false)
+
+  const categoryData = CATEGORIES[quest?.category] || {}
+  const CategoryIcon = categoryData?.icon || null
+
+  const handleChangeChecked = async event => {
+    event.stopPropagation()
+    setIsLoadingQuest(true)
+
+    const payload = { id: quest.id }
+
+    const response = await apiQuests.checkQuest(payload)
+    setIsLoadingQuest(false)
+
+    if (response.status !== 200) return
+
+    setCheckedState(current => !current)
+  }
+
+  const getQuests = async () => {
+    setIsLoadingQuest(true)
+
+    const response = await apiQuests.getQuests()
+    console.log(response)
+    setIsLoadingQuest(false)
+
+    const weekDay = WEEK_DAYS[new Date().getDay()]
+    setQuest(getQuestsMock.data[weekDay].morning || null)
+  }
 
   useEffect(() => {
-    setChallenges(dailyChallengesMock.data)
+    getQuests()
   }, [])
-
-  const handleChangeStatus = id =>
-    setChallenges(
-      challenges.map(challenge => {
-        if (challenge.id === id) {
-          return {
-            ...challenge,
-            status: !challenge.status,
-          }
-        }
-        return challenge
-      })
-    )
 
   const handleGoToQuests = () => navigate('/quests')
 
   return (
-    <Grid container rowSpacing={1}>
-      <Grid
-        item
-        xs={12}
-        alignItems="center"
-        display="flex"
-        gap={1}
-        justifyContent="center"
-      >
+    <Stack alignItems="center" rowGap={2} width="100%">
+      <Stack alignItems="center" columnGap={1} flexDirection="row">
         <Typography variant="h6">
           {t('components.molecules.cardProfile.quest.title')}
         </Typography>
         <IconButton onClick={handleGoToQuests}>
           <ArrowForwardIosRoundedIcon fontSize="small" />
         </IconButton>
-      </Grid>
-      <Grid container item xs={12} justifyContent="center">
-        <Grid item xs={8} display="flex">
-          <FormGroup>
-            {challenges.map(challenge => (
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={challenge.status}
-                    onClick={() => handleChangeStatus(challenge.id)}
-                  />
-                }
-                key={challenge.id}
-                label={challenge.description}
+      </Stack>
+      <Stack
+        alignItems="center"
+        bgcolor="background.default"
+        component={Paper}
+        flexDirection="row"
+        justifyContent="space-between"
+        px={4}
+        py={3}
+        width="100%"
+      >
+        {/* eslint-disable-next-line no-nested-ternary */}
+        {isLoadingQuest ? (
+          <CircularProgress size={lessThanMedium ? 16 : 24} />
+        ) : quest ? (
+          <>
+            {CategoryIcon && (
+              <CategoryIcon
+                color="primary"
+                sx={{ fontSize: lessThanMedium ? 32 : 48 }}
               />
-            ))}
-          </FormGroup>
-        </Grid>
-      </Grid>
-    </Grid>
+            )}
+            <Typography
+              color="primary"
+              noWrap
+              variant={lessThanMedium ? 'subtitle2' : 'h6'}
+            >
+              {quest?.name}
+            </Typography>
+            <Checkbox
+              checked={checkedState}
+              disabled={checkedState}
+              onClick={handleChangeChecked}
+              sx={{
+                '& .MuiSvgIcon-root': { fontSize: 28 },
+              }}
+            />
+          </>
+        ) : (
+          <Typography textAlign="center" width="100%">
+            {t('components.molecules.cardProfile.quest.noQuest')}
+          </Typography>
+        )}
+      </Stack>
+    </Stack>
   )
 }
 export { Quest }

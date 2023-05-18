@@ -41,10 +41,31 @@ const Content = ({ handleClose, handleReload }) => {
   const [openImageModal, setOpenImageModal] = useState(false)
   const [startupPicture, setStartupPicture] = useState(null)
 
-  const handleOnBlurUsername = async event => {
+  const handleOnChangeUsername = async event => {
     const { value } = event.target
-    console.log(errors)
-    if (value === '') return
+    if (value === userData.username) return
+    if (value === '') {
+      setError('username', {
+        type: 'onChange',
+        message: t('pages.landing.signup.schema.requiredField'),
+      })
+      return
+    }
+    if (value.length < 2) {
+      setError('username', {
+        type: 'onChange',
+        message: t('pages.landing.signup.schema.moreThan1Letter'),
+      })
+      return
+    }
+    if (!/^[^@\s]+$/.test(value)) {
+      setError('username', {
+        type: 'onChange',
+        message: t('pages.landing.signup.schema.noAtSignOrWhiteSpace'),
+      })
+      return
+    }
+
     const response = await apiAuth.validateUsername(value)
     if (response.status === 409) {
       setError('username', {
@@ -73,7 +94,7 @@ const Content = ({ handleClose, handleReload }) => {
     const response = await apiProfile.updateUserData(payload)
     setIsLoading(false)
 
-    if (response.status !== 204) {
+    if (response.status !== 200) {
       enqueueSnackbar(t('pages.profile.snackbar.genericError'), {
         variant: 'error',
       })
@@ -96,6 +117,14 @@ const Content = ({ handleClose, handleReload }) => {
 
   const handleOpenImageHandler = () => setOpenImageModal(true)
   const handleCloseImageHandler = () => setOpenImageModal(false)
+
+  const removeProfilePicture = async () => {
+    const response = await apiProfile.removeProfilePicture()
+
+    if (response.status !== 200) return
+
+    updateUserData({ profilePicture: null })
+  }
 
   const updateFilesArray = async files => {
     if (!files) return
@@ -145,18 +174,23 @@ const Content = ({ handleClose, handleReload }) => {
               onClick={handleOpenImageHandler}
               variant="contained"
             >
-              Editar foto
+              {t('pages.profile.buttons.editPicture')}
             </Button>
           </Grid>
           <Grid item xs={12}>
-            <Button color="error" fullWidth variant="contained">
-              Remover foto
+            <Button
+              color="error"
+              fullWidth
+              onClick={removeProfilePicture}
+              variant="contained"
+            >
+              {t('pages.profile.buttons.removePicture')}
             </Button>
           </Grid>
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Divider />
+        <Divider color="disabled" size="small" />
       </Grid>
       <Grid
         container
@@ -193,7 +227,7 @@ const Content = ({ handleClose, handleReload }) => {
             type="text"
             register={() =>
               register('username', {
-                onChange: handleOnBlurUsername,
+                onChange: handleOnChangeUsername,
               })
             }
           />

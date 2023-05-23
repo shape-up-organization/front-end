@@ -24,6 +24,7 @@ const CardPost = ({
   liked,
   user,
   username,
+  refetch,
 }) => {
   const isLessThanSmall = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const { getUserData } = useChat()
@@ -49,7 +50,12 @@ const CardPost = ({
       rowGap={1}
     >
       <Grid item xs={12}>
-        {userData && <UserButton date={date} selected={userData} />}
+        {userData && (
+          <UserButton
+            date={date}
+            selected={{ ...userData, postId: id, refetch }}
+          />
+        )}
       </Grid>
       {textContent && (
         <Grid item xs={12} px={{ xs: 2, sm: 4 }}>
@@ -130,6 +136,7 @@ CardPost.propTypes = {
   textContent: P.string,
   user: P.object,
   username: P.string,
+  refetch: P.func.isRequired,
 }
 
 CardPost.defaultProps = {

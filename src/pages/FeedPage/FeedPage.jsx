@@ -73,6 +73,7 @@ const FeedPage = () => {
                       friend => friend.username === post.username
                     )}
                     username={post.username}
+                    refetch={getData}
                   />
                 </Box>
               ))}

@@ -22,6 +22,11 @@ const createPostWithoutPhoto = async post =>
     ...withHeaders(withAuth()),
   })
 
+const deletePost = async postId =>
+  tryCatch(http.delete, `${postRoute}/${postId}`, {
+    ...withHeaders(withAuth()),
+  })
+
 const getPosts = async () =>
   tryCatch(http.get, `${postRoute}?page=0&size=10`, {
     ...withHeaders(withAuth()),
@@ -51,6 +56,7 @@ export default {
   createComment,
   createPost,
   createPostWithoutPhoto,
+  deletePost,
   getCommentsByPostId,
   getPosts,
   getPostsByUsername,

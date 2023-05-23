@@ -5,13 +5,13 @@ import { withAuth, withHeaders } from '@api/middlewares'
 
 const route = '/friends'
 
-const deleteFriend = async username =>
-  tryCatch(http.delete, `${route}/delete-friend/${username}`, {
+const acceptFriendshipRequest = async username =>
+  tryCatch(http.post, `${route}/accept-friendship-request/${username}`, null, {
     ...withHeaders(withAuth()),
   })
 
-const acceptFriendshipRequest = async username =>
-  tryCatch(http.post, `${route}/accept-friendship-request/${username}`, null, {
+const deleteFriend = async username =>
+  tryCatch(http.delete, `${route}/delete-friend/${username}`, {
     ...withHeaders(withAuth()),
   })
 

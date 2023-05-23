@@ -14,6 +14,7 @@ import PersonRemoveRoundedIcon from '@mui/icons-material/PersonRemoveRounded'
 import ShareRoundedIcon from '@mui/icons-material/ShareRounded'
 
 import apiFriends from '@api/services/friends'
+import apiPosts from '@api/services/posts'
 import { useChat } from '@contexts'
 import { Options } from '@templates/Options'
 
@@ -242,6 +243,11 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
     updateFriends()
   }
 
+  const deletePost = async () => {
+    await apiPosts.deletePost(data.postId)
+    data.refetch()
+  }
+
   const menuItems = useMemo(
     () => ({
       acceptFriend: {
@@ -275,7 +281,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
       deletePost: {
         color: 'error',
         icon: () => <DeleteForeverRoundedIcon />,
-        onClick: () => {},
+        onClick: () => deletePost(),
         text: 'deletePost',
         variant: 'contained',
       },
@@ -351,6 +357,8 @@ FriendshipOptions.propTypes = {
     haveFriendRequest: P.bool,
     username: P.string,
     userSenderFriendshipRequest: P.string,
+    postId: P.string,
+    refetch: P.func,
   }).isRequired,
   isPost: P.bool,
   postAction: P.func,

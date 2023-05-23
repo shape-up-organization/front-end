@@ -25,18 +25,21 @@ import {
 import apiQuests from '@api/services/quests'
 import { useChat } from '@contexts'
 import { PacksModal } from '@molecules/PacksModal'
-import { CATEGORIES } from '@utils/constants/general'
+import { CATEGORIES, CLASSIFICATIONS } from '@utils/constants/general'
 
 const PackCard = ({
   category,
-  checked,
   classification,
+  dayOfWeek,
   description,
   duration,
   exercises,
   id,
+  mode,
   name,
   onRemoved,
+  period,
+  status,
   unlockXp,
   variant,
   xp,
@@ -47,31 +50,39 @@ const PackCard = ({
   const { userData } = useChat()
 
   const [isLoadingPack, setIsLoadingPack] = useState(false)
-  const [checkedState, setCheckedState] = useState(checked)
+  const [checkedState, setCheckedState] = useState(status === 'FINISHED')
   const [extended, setExtended] = useState(false)
   const [packsModalOpen, setPacksModalOpen] = useState(false)
+  const [packsModalOptions, setPacksModalOptions] = useState({})
 
   const categoryData = CATEGORIES[category] || {}
   const CategoryIcon = categoryData?.icon || null
 
+  const classificationFinded = CLASSIFICATIONS.find(
+    ({ value: classificationValue }) => classificationValue === classification
+  ) || {
+    color: 'white',
+    colorText: 'black',
+    value: classification,
+  }
+
   const handleClosePacksModal = () => setPacksModalOpen(false)
-  const handleOpenPacksModal = event => {
+  const handleOpenPacksModal = (event, options) => {
     event.stopPropagation()
+    setPacksModalOptions(options)
     setPacksModalOpen(true)
   }
   const handleChangeChecked = async event => {
     event.stopPropagation()
     setIsLoadingPack(true)
 
-    const payload = { id }
-
+    const payload = { dayOfWeek, period, trainingId: id }
     const response = await apiQuests.checkQuest(payload)
     setIsLoadingPack(false)
 
     if (response.status !== 200) return
 
     setCheckedState(current => !current)
-    alert('checked')
   }
   const handleExtendPack = event => {
     event.stopPropagation()
@@ -79,9 +90,27 @@ const PackCard = ({
   }
   const handleAddPack = async event => {
     event.stopPropagation()
+    setIsLoadingPack(true)
+
+    const payload = { dayOfWeek, period, trainingId: id }
+    if (mode === 'edit') {
+      const response = await apiQuests.editQuest(payload)
+      console.log(response)
+    } else {
+      await apiQuests.addQuest(payload)
+    }
+    setIsLoadingPack(false)
+
+    setPacksModalOpen(false)
   }
   const handleRemovePack = async event => {
     event.stopPropagation()
+    setIsLoadingPack(true)
+
+    const payload = { dayOfWeek, period, trainingId: id }
+    const response = await apiQuests.deleteQuest(payload)
+    setIsLoadingPack(false)
+    console.log(response)
 
     onRemoved()
   }
@@ -162,22 +191,23 @@ const PackCard = ({
                     color={categoryData?.color || 'default'}
                     label={t(
                       `components.atoms.packCard.categories.${categoryData?.name}`
-                    )}
+                    ).toUpperCase()}
                     size="small"
                     sx={{ fontWeight: 600 }}
                   />
                 </Grid>
                 <Grid item overflow="hidden" textOverflow="ellipsis">
-                  <Typography
-                    fontWeight={500}
-                    noWrap
-                    textAlign="right"
-                    variant={lessThanMedium ? 'subtitle2' : 'subtitle1'}
-                  >
-                    {t(
-                      `components.atoms.packCard.classifications.${classification.toLowerCase()}`
-                    ).toUpperCase()}
-                  </Typography>
+                  {classificationFinded && (
+                    <Chip
+                      label={classificationFinded.value}
+                      size="small"
+                      sx={{
+                        bgcolor: classificationFinded.color,
+                        color: classificationFinded.colorText,
+                        fontWeight: 500,
+                      }}
+                    />
+                  )}
                   <Typography
                     fontWeight={700}
                     noWrap
@@ -209,7 +239,9 @@ const PackCard = ({
                     />
                   ) : variant === 'edit' ? (
                     <Stack flexDirection="row">
-                      <IconButton onClick={handleOpenPacksModal}>
+                      <IconButton
+                        onClick={e => handleOpenPacksModal(e, { mode: 'edit' })}
+                      >
                         <EditRoundedIcon />
                       </IconButton>
                       <IconButton onClick={handleRemovePack}>
@@ -219,6 +251,7 @@ const PackCard = ({
                   ) : (
                     !lessThanLarge && (
                       <Button
+                        disabled={userData.xp < unlockXp}
                         onClick={handleAddPack}
                         size="small"
                         variant="contained"
@@ -227,7 +260,14 @@ const PackCard = ({
                           fontWeight={500}
                           variant={lessThanMedium ? 'caption' : 'subtitle2'}
                         >
-                          {t('components.atoms.packCard.others.buttonAllocate')}
+                          {userData.xp >= unlockXp
+                            ? t(
+                                'components.atoms.packCard.others.buttonAllocate'
+                              )
+                            : t(
+                                'components.atoms.packCard.others.buttonUnlock',
+                                { neededXp: unlockXp - xp }
+                              )}
                         </Typography>
                       </Button>
                     )
@@ -255,7 +295,7 @@ const PackCard = ({
                 <Grid
                   item
                   xs={12}
-                  lg={9}
+                  lg={exercises.length > 0 ? 9 : 0}
                   display="flex"
                   flexDirection="column"
                   mt={1}
@@ -283,9 +323,16 @@ const PackCard = ({
                     </Stack>
                   ))}
                 </Grid>
-                <Grid item xs={12} lg={3} mt={1}>
+                <Grid item xs={12} lg={exercises.length > 0 ? 3 : 12} mt={1}>
                   <Stack
-                    alignItems={lessThanLarge ? 'center' : 'flex-end'}
+                    alignItems={
+                      // eslint-disable-next-line no-nested-ternary
+                      lessThanLarge
+                        ? 'center'
+                        : exercises.length > 0
+                        ? 'flex-end'
+                        : 'center'
+                    }
                     height="100%"
                     justifyContent="flex-end"
                   >
@@ -358,21 +405,30 @@ const PackCard = ({
           </Stack>
         )}
       </Stack>
-      <PacksModal handleClose={handleClosePacksModal} open={packsModalOpen} />
+      <PacksModal
+        handleClose={handleClosePacksModal}
+        open={packsModalOpen}
+        dayOfWeek={dayOfWeek}
+        period={period}
+        {...packsModalOptions}
+      />
     </>
   )
 }
 
 PackCard.propTypes = {
   category: P.oneOf([...Object.keys(CATEGORIES), '']),
-  checked: P.bool,
   classification: P.string,
+  dayOfWeek: P.string,
   description: P.string,
   duration: P.number,
   exercises: P.arrayOf(P.string),
   id: P.string,
+  mode: P.string,
   name: P.string,
   onRemoved: P.func,
+  period: P.string,
+  status: P.oneOf(['FINISHED', 'PENDING', 'UNCOMPLETED']),
   unlockXp: P.number,
   variant: P.oneOf(['checking', 'default', 'edit']),
   xp: P.number,
@@ -380,14 +436,17 @@ PackCard.propTypes = {
 
 PackCard.defaultProps = {
   category: '',
-  checked: false,
   classification: '',
+  dayOfWeek: '',
   description: '',
   duration: 0,
   exercises: [],
   id: '',
+  mode: '',
   name: '',
   onRemoved: () => {},
+  period: '',
+  status: 'PENDING',
   unlockXp: 0,
   variant: 'default',
   xp: 0,

@@ -14,7 +14,6 @@ import { PackCard } from '@atoms/PackCard'
 import { AnimatedWrapper } from '@layouts/AnimatedWrapper'
 
 import apiQuests from '@api/services/quests'
-import getQuestsMock from '@mocks/quests/getGrade'
 import { WEEK_DAYS } from '@utils/constants/general'
 
 const TodayTab = () => {
@@ -30,8 +29,24 @@ const TodayTab = () => {
     const response = await apiQuests.getQuests()
     setIsLoadingQuests(false)
 
+    const grade = {}
+    WEEK_DAYS.forEach(weekDay => {
+      grade[weekDay] = {
+        morning: null,
+        afternoon: null,
+        night: null,
+      }
+    })
+    response.data.forEach(weekDay => {
+      weekDay?.trainings.forEach(quest => {
+        grade[weekDay?.dayOfWeek][quest?.period] = {
+          ...quest.training,
+        }
+      })
+    })
+
     const weekDay = WEEK_DAYS[new Date().getDay()]
-    setQuests(getQuestsMock.data[weekDay] || response)
+    setQuests(grade[weekDay])
   }
 
   useEffect(() => {
@@ -59,7 +74,12 @@ const TodayTab = () => {
                 size="small"
                 text={t(`pages.quests.dayTimes.${dayTime}`)}
               />
-              <PackCard {...quests[dayTime]} variant="checking" />
+              <PackCard
+                dayOfWeek={WEEK_DAYS[new Date().getDay()]}
+                period={dayTime}
+                variant="checking"
+                {...quests[dayTime]}
+              />
             </Stack>
           ))}
         </Stack>

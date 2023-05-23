@@ -18,9 +18,8 @@ import { SearchField } from '@atoms/SearchField'
 import { SimpleModal } from '@templates/Modal'
 
 import apiQuests from '@api/services/quests'
-import getPacksMock from '@mocks/quests/getPacks'
 
-const Content = () => {
+const Content = ({ dayOfWeek, mode, period }) => {
   const { t } = useTranslation()
   const lessThanMedium = useMediaQuery(theme => theme.breakpoints.down('md'))
 
@@ -40,7 +39,7 @@ const Content = () => {
     const response = await apiQuests.getPacks()
     setIsLoadingPacks(false)
 
-    setPacks(getPacksMock.data || response)
+    setPacks(response.data)
   }
 
   useEffect(() => {
@@ -70,7 +69,12 @@ const Content = () => {
         <TransitionGroup style={{ width: '100%' }}>
           {filteredPacks?.map(pack => (
             <Collapse key={pack.id} sx={{ mb: 4 }}>
-              <PackCard {...pack} />
+              <PackCard
+                {...pack}
+                dayOfWeek={dayOfWeek}
+                mode={mode}
+                period={period}
+              />
             </Collapse>
           ))}
         </TransitionGroup>
@@ -89,12 +93,25 @@ const Content = () => {
   )
 }
 
-const PacksModal = ({ handleClose, open }) => {
+Content.propTypes = {
+  dayOfWeek: P.string,
+  mode: P.string,
+  period: P.string,
+}
+
+Content.defaultProps = {
+  dayOfWeek: '',
+  mode: '',
+  period: '',
+}
+
+const PacksModal = ({ handleClose, open, mode, dayOfWeek, period }) => {
   const { t } = useTranslation()
 
   return (
     <SimpleModal
       Component={Content}
+      componentArgs={{ dayOfWeek, mode, period }}
       dialogProps={{
         maxWidth: 'md',
       }}
@@ -106,8 +123,17 @@ const PacksModal = ({ handleClose, open }) => {
 }
 
 PacksModal.propTypes = {
+  dayOfWeek: P.string,
   handleClose: P.func.isRequired,
+  mode: P.string,
   open: P.bool.isRequired,
+  period: P.string,
+}
+
+PacksModal.defaultProps = {
+  dayOfWeek: '',
+  mode: '',
+  period: '',
 }
 
 export { PacksModal }

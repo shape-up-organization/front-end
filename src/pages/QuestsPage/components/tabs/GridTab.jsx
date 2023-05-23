@@ -19,9 +19,11 @@ import { Divider } from '@atoms/Divider'
 import { SimpleModal } from '@templates/Modal'
 
 import { PackCard } from '@atoms/PackCard'
-import getQuestsMock from '@mocks/quests/getGradeCopy'
-import { CATEGORIES } from '@utils/constants/general'
-import { getBorder, getContrastColor } from '@utils/constants/levels'
+import {
+  CATEGORIES,
+  CLASSIFICATIONS,
+  WEEK_DAYS,
+} from '@utils/constants/general'
 
 const GridTab = () => {
   const { t } = useTranslation()
@@ -45,29 +47,22 @@ const GridTab = () => {
     setIsLoadingQuests(false)
 
     const grade = {}
-    const weekDays = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
-
-    weekDays.forEach(weekDay => {
+    WEEK_DAYS.forEach(weekDay => {
       grade[weekDay] = {
         morning: null,
         afternoon: null,
         night: null,
       }
     })
-
-    getQuestsMock.data.forEach(quest => {
-      grade[quest?.trainingDay?.dayOfWeek][quest?.trainingDay?.period] = {
-        category: quest?.category,
-        exercises: quest?.exercises,
-        id: quest?.id,
-        name: quest?.name,
-        status: quest?.status,
-        unlockXp: quest?.unlockXp,
-        xp: quest?.xp,
-      }
+    response.data.forEach(weekDay => {
+      weekDay?.trainings.forEach(quest => {
+        grade[weekDay?.dayOfWeek][quest?.period] = {
+          ...quest.training,
+        }
+      })
     })
 
-    setQuests(grade || response)
+    setQuests(grade)
   }
 
   useEffect(() => {
@@ -142,9 +137,9 @@ const GridTab = () => {
                             badgeContent=" "
                             color={
                               // eslint-disable-next-line no-nested-ternary
-                              periodQuest?.status === 'finished'
+                              periodQuest?.status === 'FINISHED'
                                 ? 'primary'
-                                : periodQuest?.status === 'uncompleted'
+                                : periodQuest?.status === 'UNCOMPLETED'
                                 ? 'error'
                                 : 'warning'
                             }
@@ -161,9 +156,20 @@ const GridTab = () => {
                             variant="standard"
                           >
                             <Fab
-                              onClick={() => handleEditQuest(periodQuest)}
+                              onClick={() =>
+                                handleEditQuest({
+                                  ...periodQuest,
+                                  dayOfWeek: weekDay,
+                                  period: dayTime,
+                                })
+                              }
                               sx={{
-                                background: getBorder(periodQuest?.unlockXp),
+                                background:
+                                  CLASSIFICATIONS.find(
+                                    classification =>
+                                      classification.value ===
+                                      periodQuest?.classification
+                                  )?.color || 'primary.contrastText',
                                 borderRadius: '10%',
                                 ...(lessThanMedium && {
                                   height: 112,
@@ -173,9 +179,12 @@ const GridTab = () => {
                             >
                               <CategoryIcon
                                 sx={{
-                                  color: getContrastColor(
-                                    periodQuest?.unlockXp
-                                  ),
+                                  color:
+                                    CLASSIFICATIONS.find(
+                                      classification =>
+                                        classification.value ===
+                                        periodQuest?.classification
+                                    )?.colorText || 'primary.contrastText',
                                 }}
                               />
                             </Fab>
@@ -213,7 +222,6 @@ const GridTab = () => {
         Component={() => (
           <PackCard
             {...questToEdit}
-            classification="bronze"
             onRemoved={handleCloseEditModal}
             variant="edit"
           />

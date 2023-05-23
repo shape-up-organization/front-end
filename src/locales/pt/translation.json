@@ -4,14 +4,9 @@
       "packCard": {
         "categories": {
           "aerobic": "aeróbico",
-          "anaerobic": "anaeróbico",
-          "flexibility": "flexibilidade",
+          "fight": "combate",
+          "health": "vigor",
           "strength": "força"
-        },
-        "classifications": {
-          "bronze": "BRONZE",
-          "gold": "OURO",
-          "silver": "PRATA"
         },
         "others": {
           "buttonAllocate": "Alocar",

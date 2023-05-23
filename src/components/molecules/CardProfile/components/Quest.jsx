@@ -15,7 +15,6 @@ import {
 } from '@mui/material'
 
 import apiQuests from '@api/services/quests'
-import getQuestsMock from '@mocks/quests/getGrade'
 import { CATEGORIES, WEEK_DAYS } from '@utils/constants/general'
 
 const Quest = () => {
@@ -48,11 +47,20 @@ const Quest = () => {
     setIsLoadingQuest(true)
 
     const response = await apiQuests.getQuests()
-    console.log(response)
     setIsLoadingQuest(false)
 
     const weekDay = WEEK_DAYS[new Date().getDay()]
-    setQuest(getQuestsMock.data[weekDay].morning || null)
+    const findedWeekDay = response.data?.filter(
+      item => item.dayOfWeek === weekDay
+    )[0]
+
+    const hours = new Date().getHours()
+    // eslint-disable-next-line no-nested-ternary
+    const period = hours < 12 ? 'morning' : hours < 18 ? 'afternoon' : 'night'
+    const findedPeriod = findedWeekDay?.trainings?.filter(
+      item => item.period === period
+    )[0]
+    setQuest(findedPeriod?.training || null)
   }
 
   useEffect(() => {

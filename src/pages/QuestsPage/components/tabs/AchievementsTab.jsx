@@ -21,7 +21,7 @@ const AchievementsTab = () => {
 
     const payload = {}
 
-    const response = await apiQuests.createQuest(payload)
+    const response = await apiQuests.addQuest(payload)
     setIsLoadingQuests(false)
 
     if (response.status !== 201) return

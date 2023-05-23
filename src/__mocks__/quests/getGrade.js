@@ -23,7 +23,7 @@ export default Object.freeze({
     },
     mon: {
       morning: {
-        category: 'FLEXIBILITY',
+        category: 'FIGHT',
         checked: false,
         classification: 'BRONZE',
         description: 'Quest 1 description',
@@ -54,7 +54,7 @@ export default Object.freeze({
     wed: {
       morning: null,
       afternoon: {
-        category: 'FLEXIBILITY',
+        category: 'FIGHT',
         checked: false,
         classification: 'BRONZE',
         description: 'Quest 1 description',
@@ -70,7 +70,7 @@ export default Object.freeze({
       morning: null,
       afternoon: null,
       night: {
-        category: 'ANAEROBIC',
+        category: 'HEALTH',
         checked: false,
         classification: 'BRONZE',
         description: 'Quest 1 description',
@@ -84,7 +84,7 @@ export default Object.freeze({
     fri: {
       morning: null,
       afternoon: {
-        category: 'ANAEROBIC',
+        category: 'HEALTH',
         checked: false,
         classification: 'BRONZE',
         description: 'Quest 1 description',

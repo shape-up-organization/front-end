@@ -20,7 +20,7 @@ export default Object.freeze({
       ],
     },
     {
-      category: 'ANAEROBIC',
+      category: 'FIGHT',
       checked: false,
       classification: 'GOLD',
       description:
@@ -38,7 +38,7 @@ export default Object.freeze({
       ],
     },
     {
-      category: 'FLEXIBILITY',
+      category: 'HEALTH',
       checked: false,
       classification: 'SILVER',
       description: 'Pack 3 pack 3 pack 3 pack 3',
@@ -89,7 +89,7 @@ export default Object.freeze({
       ],
     },
     {
-      category: 'ANAEROBIC',
+      category: 'FIGHT',
       checked: false,
       classification: 'GOLD',
       description:
@@ -107,7 +107,7 @@ export default Object.freeze({
       ],
     },
     {
-      category: 'FLEXIBILITY',
+      category: 'HEALTH',
       checked: false,
       classification: 'SILVER',
       description: 'Pack 3 pack 3 pack 3 pack 3',

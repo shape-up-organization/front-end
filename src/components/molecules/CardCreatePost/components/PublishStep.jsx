@@ -94,6 +94,7 @@ const PublishStep = ({
                 }}
               />
               <Button
+                disabled={isLoading}
                 fullWidth
                 onClick={handleCreatePost}
                 sx={{ mt: 4 }}

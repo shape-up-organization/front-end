@@ -41,14 +41,7 @@ const CardPost = ({
   }, [])
 
   return (
-    <Grid
-      container
-      component={Paper}
-      justifyContent="center"
-      maxWidth={696}
-      pb={1}
-      rowGap={1}
-    >
+    <Grid container component={Paper} justifyContent="center" pb={1} rowGap={1}>
       <Grid item xs={12}>
         {userData && (
           <UserButton

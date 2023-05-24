@@ -93,6 +93,7 @@ const PackCard = ({
     setIsLoadingPack(true)
 
     const payload = { dayOfWeek, period, trainingId: id }
+    console.log(payload)
     if (mode === 'edit') {
       const response = await apiQuests.editQuest(payload)
       console.log(response)

@@ -77,7 +77,7 @@ const CardRank = ({ handleCloseCard }) => {
             />
           </Tabs>
           <Grid container item xs={12}>
-            {rankedUsers && (
+            {rankedUsers?.length && (
               <>
                 <Grid item xs={12}>
                   <Top rankedTopUsers={rankedUsers?.slice(0, 3)} />

@@ -3,13 +3,11 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import CalendarViewMonthRoundedIcon from '@mui/icons-material/CalendarViewMonthRounded'
-import EmojiEventsRoundedIcon from '@mui/icons-material/EmojiEventsRounded'
 import FitnessCenterRoundedIcon from '@mui/icons-material/FitnessCenterRounded'
 import { Grid, Paper, Stack, Tab, Tabs, useMediaQuery } from '@mui/material'
 
 import { AnimatedWrapper } from '@layouts/AnimatedWrapper'
 
-import { AchievementsTab } from './components/tabs/AchievementsTab'
 import { GridTab } from './components/tabs/GridTab'
 import { TodayTab } from './components/tabs/TodayTab'
 
@@ -22,10 +20,10 @@ const settingsTabElements = {
     component: () => <GridTab />,
     icon: <CalendarViewMonthRoundedIcon />,
   },
-  achievements: {
-    component: () => <AchievementsTab />,
-    icon: <EmojiEventsRoundedIcon />,
-  },
+  // achievements: {
+  //   component: () => <AchievementsTab />,
+  //   icon: <EmojiEventsRoundedIcon />,
+  // },
 }
 
 const QuestsPage = () => {

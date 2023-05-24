@@ -45,7 +45,11 @@ const PostModal = ({ handleClose, open, messageText, refreshFeed }) => {
       <PublishStep
         backStep={backStep}
         images={imagesFiles}
-        handleClose={handleClose}
+        handleClose={() => {
+          setPostStep(1)
+          setImagesFiles([])
+          handleClose()
+        }}
         messageText={messageText}
         refreshFeed={refreshFeed}
       />
@@ -57,7 +61,11 @@ const PostModal = ({ handleClose, open, messageText, refreshFeed }) => {
       fullScreen={lessThanSmall}
       fullWidth
       open={open}
-      onClose={handleClose}
+      onClose={() => {
+        setPostStep(1)
+        setImagesFiles([])
+        handleClose()
+      }}
       maxWidth="xl"
       overflow="hidden"
       PaperProps={{
@@ -87,7 +95,13 @@ const PostModal = ({ handleClose, open, messageText, refreshFeed }) => {
                 'components.molecules.cardCreatePost.tooltips.closeModal'
               )}
             >
-              <IconButton onClick={handleClose}>
+              <IconButton
+                onClick={() => {
+                  setPostStep(1)
+                  setImagesFiles([])
+                  handleClose()
+                }}
+              >
                 <CloseRounded />
               </IconButton>
             </Tooltip>

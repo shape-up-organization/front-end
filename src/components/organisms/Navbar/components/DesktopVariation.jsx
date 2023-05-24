@@ -105,45 +105,51 @@ const DesktopVariation = ({ openConfirmationModal }) => {
       </Grid>
       <Grid item xs={0} lg={4}>
         <Stack flexDirection="row" gap={1} justifyContent="flex-end">
-          <Tooltip
-            placement="left"
-            title={t('pages.feed.tooltip.notifications')}
-          >
-            <IconButton onClick={handleOpenNotifications}>
-              <NotificationsRoundedIcon
-                color={openNotifications ? 'primary' : 'inherit'}
-                fontSize="large"
-              />
-            </IconButton>
-          </Tooltip>
-          <Menu
-            anchorEl={anchorNotifications}
-            anchorOrigin={{
-              horizontal: 'center',
-              vertical: 'bottom',
-            }}
-            onClose={handleCloseNotifications}
-            open={openNotifications}
-            transformOrigin={{
-              horizontal: 'right',
-              vertical: 'top',
-            }}
-          >
-            {notificationsMock.data.map(({ firstName, id, type }, index) => (
-              <MenuItem
-                divider={index < menuItems.length - 1}
-                key={id}
-                onClick={() => {}}
-                sx={{
-                  width: '100%',
-                  justifyContent: 'center',
-                  gap: 1,
+          {false && (
+            <>
+              <Tooltip
+                placement="left"
+                title={t('pages.feed.tooltip.notifications')}
+              >
+                <IconButton onClick={handleOpenNotifications}>
+                  <NotificationsRoundedIcon
+                    color={openNotifications ? 'primary' : 'inherit'}
+                    fontSize="large"
+                  />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                anchorEl={anchorNotifications}
+                anchorOrigin={{
+                  horizontal: 'center',
+                  vertical: 'bottom',
+                }}
+                onClose={handleCloseNotifications}
+                open={openNotifications}
+                transformOrigin={{
+                  horizontal: 'right',
+                  vertical: 'top',
                 }}
               >
-                <Typography variant="body1">{`${types[type]} de ${firstName}`}</Typography>
-              </MenuItem>
-            ))}
-          </Menu>
+                {notificationsMock.data.map(
+                  ({ firstName, id, type }, index) => (
+                    <MenuItem
+                      divider={index < menuItems.length - 1}
+                      key={id}
+                      onClick={() => {}}
+                      sx={{
+                        width: '100%',
+                        justifyContent: 'center',
+                        gap: 1,
+                      }}
+                    >
+                      <Typography variant="body1">{`${types[type]} de ${firstName}`}</Typography>
+                    </MenuItem>
+                  )
+                )}
+              </Menu>
+            </>
+          )}
           <Tooltip placement="right" title={t('pages.feed.tooltip.settings')}>
             <IconButton onClick={handleOpenSettings}>
               <SettingsRoundedIcon

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import P from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
 import FilterRoundedIcon from '@mui/icons-material/FilterRounded'
@@ -12,7 +13,7 @@ import apiPosts from '@api/services/posts'
 
 import { PostModal } from './components/PostModal'
 
-const CardCreatePost = () => {
+const CardCreatePost = ({ refreshFeed }) => {
   const { t } = useTranslation()
 
   const [messageText, setMessageText] = useState('')
@@ -29,17 +30,15 @@ const CardCreatePost = () => {
     const payload = { description: messageText }
 
     const response = await apiPosts.createPostWithoutPhoto(payload)
-    setIsLoading(false)
 
-    if (response.status !== 201) return
+    if (response.status !== 201) {
+      setIsLoading(false)
+      return
+    }
 
     setMessageText('')
+    await refreshFeed()
     setIsLoading(false)
-    refreshFeed()
-  }
-
-  const refreshFeed = async () => {
-    console.log('refreshFeed')
   }
 
   return (
@@ -95,6 +94,10 @@ const CardCreatePost = () => {
       />
     </>
   )
+}
+
+CardCreatePost.propTypes = {
+  refreshFeed: P.func.isRequired,
 }
 
 export { CardCreatePost }

@@ -245,7 +245,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
 
   const deletePost = async () => {
     await apiPosts.deletePost(data.postId)
-    data.refetch()
+    await data.refetch()
   }
 
   const menuItems = useMemo(
@@ -330,18 +330,18 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
     pushMenuItem('quitSquad')
   } else if (isUser && isPost) {
     pushMenuItem(isPost ? 'deletePost' : 'sharePost')
+  } else if (isFriend) {
+    pushMenuItem('removeFriend')
+  } else if (userSenderFriendshipRequest === null) {
+    pushMenuItem('addFriend')
+  } else if (userSenderFriendshipRequest === userData.username) {
+    pushMenuItem('cancelFriendshipRequest')
   } else {
-    if (isFriend) {
-      pushMenuItem('removeFriend')
-    } else if (userSenderFriendshipRequest === null) {
-      pushMenuItem('addFriend')
-    } else if (userSenderFriendshipRequest === userData.username) {
-      pushMenuItem('cancelFriendshipRequest')
-    } else {
-      pushMenuItem('acceptFriend')
-      pushMenuItem('refuseFriendshipRequest')
-    }
-    pushMenuItem('blockUser')
+    pushMenuItem('acceptFriend')
+    pushMenuItem('refuseFriendshipRequest')
+
+    // }
+    // pushMenuItem('blockUser')
   }
 
   return (

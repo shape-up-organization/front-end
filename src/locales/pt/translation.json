@@ -238,6 +238,8 @@
         "confirmationModalMessage": "Tem certeza que deseja sair da sua conta e voltar para a tela inicial?",
         "confirmationModalTitle": "Sair da conta",
         "noComments": "Nenhum comentário ainda...",
+        "noPosts": "Nenhuma postagem ainda...",
+        "altNoPosts": "Sem postagens ainda",
         "postInputPlaceholder": "Mostre seu progresso...",
         "searchPlaceholder": "Procure por usuários...",
         "sendCommentButton": "Enviar comentário"

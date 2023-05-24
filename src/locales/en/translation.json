@@ -238,6 +238,8 @@
         "confirmationModalMessage": "Are you sure you want to exit the account?",
         "confirmationModalTitle": "Exit account",
         "noComments": "No comments yet...",
+        "noPosts": "No posts yet...",
+        "altNoPosts": "No posts yet",
         "postInputPlaceholder": "Post your progress...",
         "searchPlaceholder": "Search for users...",
         "sendCommentButton": "Send comment"

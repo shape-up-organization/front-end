@@ -36,7 +36,7 @@ const PublishStep = ({
 
     setMessageText('')
     setIsLoading(false)
-    refreshFeed()
+    await refreshFeed()
     handleClose()
   }
 

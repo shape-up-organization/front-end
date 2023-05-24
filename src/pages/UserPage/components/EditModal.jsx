@@ -15,7 +15,6 @@ import { ImageHandler } from '@molecules/ImageHandler'
 import { TextArea } from '@molecules/TextArea'
 import { SimpleModal } from '@templates/Modal'
 
-import apiAuth from '@api/services/auth'
 import apiProfile from '@api/services/profile'
 import { useAuth, useChat } from '@contexts'
 import { imageUrlToFileBlob } from '@utils/helpers/server'
@@ -27,59 +26,17 @@ const Content = ({ handleClose, handleReload }) => {
   const { getUserData, updateJwtToken } = useAuth()
   const { enqueueSnackbar } = useSnackbar()
   const {
-    clearErrors,
     formState: { errors },
     handleSubmit,
     register,
-    setError,
   } = useForm({ resolver: zodResolver(schema), defaultValues: userData })
   const { t } = useTranslation()
   const isLessThanSm = useMediaQuery(theme => theme.breakpoints.down('sm'))
 
-  const [biography, setBiography] = useState('')
+  const [biography, setBiography] = useState(userData.biography)
   const [isLoading, setIsLoading] = useState(false)
   const [openImageModal, setOpenImageModal] = useState(false)
   const [startupPicture, setStartupPicture] = useState(null)
-
-  const handleOnChangeUsername = async event => {
-    const { value } = event.target
-    if (value === userData.username) return
-    if (value === '') {
-      setError('username', {
-        type: 'onChange',
-        message: t('pages.landing.signup.schema.requiredField'),
-      })
-      return
-    }
-    if (value.length < 2) {
-      setError('username', {
-        type: 'onChange',
-        message: t('pages.landing.signup.schema.moreThan1Letter'),
-      })
-      return
-    }
-    if (!/^[^@\s]+$/.test(value)) {
-      setError('username', {
-        type: 'onChange',
-        message: t('pages.landing.signup.schema.noAtSignOrWhiteSpace'),
-      })
-      return
-    }
-
-    const response = await apiAuth.validateUsername(value)
-    if (response.status === 409) {
-      setError('username', {
-        type: 'onChange',
-        message: t('pages.landing.signup.schema.usernameAlreadyExists'),
-      })
-      return
-    }
-    if (response.status !== 200) {
-      console.error(response)
-      return
-    }
-    clearErrors('username')
-  }
 
   const handleUpdateData = async values => {
     setIsLoading(true)
@@ -111,6 +68,7 @@ const Content = ({ handleClose, handleReload }) => {
       name: values.name || userData.name,
       username: values.username || userData.username,
     })
+    updateJwtToken(response.data.token)
     handleClose()
     handleReload()
   }
@@ -217,19 +175,6 @@ const Content = ({ handleClose, handleReload }) => {
             name="lastName"
             type="text"
             register={register}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <TextField
-            error={errors.username?.message}
-            label={t('pages.profile.placeholders.username')}
-            name="username"
-            type="text"
-            register={() =>
-              register('username', {
-                onChange: handleOnChangeUsername,
-              })
-            }
           />
         </Grid>
         <Grid item xs={12}>

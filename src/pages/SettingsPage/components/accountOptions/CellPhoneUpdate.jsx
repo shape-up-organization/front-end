@@ -84,7 +84,6 @@ const CellPhoneUpdate = () => {
     >
       <Grid item xs={12} px={{ xs: 0, lg: 16, xl: 24 }}>
         <TextField
-          autoFocus
           endAdornment={<LocalPhoneRoundedIcon color="primary" />}
           error={errors.cellPhone?.message}
           label={t(

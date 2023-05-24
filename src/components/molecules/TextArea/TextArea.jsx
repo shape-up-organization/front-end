@@ -90,14 +90,16 @@ const TextArea = ({
     <Grid
       container
       alignItems="center"
-      height="20%"
       rowGap={0}
-      mb={bottomVisibility ? -2 : -4}
       sx={{
         transition: theme.transitions.create('margin', {
           easing: theme.transitions.easing.easeInOut,
           duration: theme.transitions.duration.standard,
         }),
+        [theme.breakpoints.down('md')]: {
+          bottom: 0,
+          position: 'sticky',
+        },
       }}
     >
       <Grid item xs={12}>
@@ -161,7 +163,7 @@ const TextArea = ({
       </Grid>
       <Fade in={!!bottomVisibility}>
         <Grid item xs={12}>
-          <Grid container mb={2}>
+          <Grid container>
             <Grid item xs>
               <Tooltip
                 placement="bottom-start"

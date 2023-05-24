@@ -53,7 +53,7 @@ const AddressUpdate = () => {
   const getInitialAddress = async () => {
     setIsLoading(true)
 
-    const response = addressGetMock
+    const response = (await apiAddress.getAddress()) || addressGetMock
     setIsLoading(false)
 
     if (response.status !== 200) {

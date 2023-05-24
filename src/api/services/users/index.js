@@ -27,7 +27,7 @@ const getRankedGlobal = async queryString =>
   })
 
 const searchByName = async name =>
-  tryCatch(http.get, `${routeUsers}/search-fullname?name=${name}`, {
+  tryCatch(http.get, `${routeUsers}/search-fullname?fullName=${name}`, {
     ...withHeaders(withAuth()),
   })
 

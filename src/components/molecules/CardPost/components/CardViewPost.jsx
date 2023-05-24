@@ -34,7 +34,6 @@ const Content = ({ handleClose, postData }) => {
   const isLessThanSmall = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const isGreaterThanMedium = useMediaQuery(theme => theme.breakpoints.up('md'))
 
-  const [isLoadingComments, setIsLoadingComments] = useState(true)
   const [isSendingComment, setIsSendingComment] = useState(false)
   const [comments, setComments] = useState([])
   const [messageText, setMessageText] = useState('')
@@ -43,11 +42,7 @@ const Content = ({ handleClose, postData }) => {
   const [listBottomRef, isListBottomVisible] = useVisible()
 
   const getComments = async () => {
-    setIsLoadingComments(true)
-
     const response = await apiPosts.getCommentsByPostId(postData.id)
-
-    setIsLoadingComments(false)
 
     setComments(
       response.data.map(comment => ({
@@ -56,6 +51,10 @@ const Content = ({ handleClose, postData }) => {
         commentMessage: charactersToLineBreaks(comment.commentMessage),
       }))
     )
+    handleScrollToBottom()
+    setTimeout(() => {
+      getComments()
+    }, 5000)
   }
 
   const handleSendMessage = async () => {
@@ -245,7 +244,7 @@ const Content = ({ handleClose, postData }) => {
               handleSendMessage={handleSendMessage}
               interfaceOptions={{
                 alwaysShowBottom: true,
-                isLoading: isLoadingComments || isSendingComment,
+                isLoading: isSendingComment,
                 textAreaProps: {
                   maxRows: 3,
                 },

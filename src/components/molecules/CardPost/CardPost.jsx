@@ -41,7 +41,13 @@ const CardPost = ({
   }, [])
 
   return (
-    <Grid container component={Paper} justifyContent="center" pb={1} rowGap={1}>
+    <Grid
+      container
+      component={Paper}
+      height="fit-content"
+      justifyContent="center"
+      rowGap={1}
+    >
       <Grid item xs={12}>
         {userData && (
           <UserButton
@@ -80,7 +86,8 @@ const CardPost = ({
             component={Paper}
             height="100%"
             p={2}
-            width="100%"
+            // width="100%"
+            // maxWidth={652}
           >
             <Carousel>
               {photos.map(photoUrl => (
@@ -103,7 +110,7 @@ const CardPost = ({
       <Grid item xs={12}>
         <Divider color="disabled" size="small" />
       </Grid>
-      <Grid container item px={{ xs: 1, sm: 3 }}>
+      <Grid container item pb={1} px={{ xs: 1, sm: 3 }}>
         <Footer
           commentsAmount={commentsAmount}
           likes={likes}

@@ -18,7 +18,7 @@ import apiPosts from '@api/services/posts'
 import { useChat } from '@contexts'
 import { Options } from '@templates/Options'
 
-const FriendshipOptions = ({ isPost, postAction, data }) => {
+const FriendshipOptions = ({ isPost, postAction, data, refetch }) => {
   const {
     name,
     userSenderFriendshipRequest,
@@ -103,6 +103,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
         variant: 'success',
       }
     )
+    refetch()
   }
 
   const acceptFriendshipRequest = async menuItem => {
@@ -162,6 +163,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
       }
     )
     updateFriends()
+    refetch()
   }
 
   const deleteFriendshipRequest = async menuItem => {
@@ -202,6 +204,7 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
         variant: 'success',
       }
     )
+    refetch()
   }
 
   const deleteFriend = async menuItem => {
@@ -241,11 +244,12 @@ const FriendshipOptions = ({ isPost, postAction, data }) => {
       }
     )
     updateFriends()
+    refetch()
   }
 
   const deletePost = async () => {
     await apiPosts.deletePost(data.postId)
-    await data.refetch()
+    await refetch()
   }
 
   const menuItems = useMemo(
@@ -362,11 +366,13 @@ FriendshipOptions.propTypes = {
   }).isRequired,
   isPost: P.bool,
   postAction: P.func,
+  refetch: P.func,
 }
 
 FriendshipOptions.defaultProps = {
   isPost: false,
   postAction: () => {},
+  refetch: () => null,
 }
 
 export { FriendshipOptions }

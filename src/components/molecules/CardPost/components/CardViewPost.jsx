@@ -45,11 +45,17 @@ const Content = ({ handleClose, postData }) => {
     const response = await apiPosts.getCommentsByPostId(postData.id)
 
     setComments(
-      response.data.map(comment => ({
-        ...comment,
-        createdAt: reformatSimpleDate(formatLocalDate(comment.createdAt)),
-        commentMessage: charactersToLineBreaks(comment.commentMessage),
-      }))
+      response?.data?.length > 0 &&
+        response.data.map(
+          comment =>
+            ({
+              ...comment,
+              createdAt: reformatSimpleDate(
+                formatLocalDate(comment?.createdAt)
+              ),
+              commentMessage: charactersToLineBreaks(comment?.commentMessage),
+            } || [])
+        )
     )
     handleScrollToBottom()
     setTimeout(() => {
@@ -171,9 +177,9 @@ const Content = ({ handleClose, postData }) => {
             width="100%"
           >
             <Stack height="100%" overflow="auto" mt={5}>
-              {comments.length ? (
+              {comments?.length ? (
                 <>
-                  {comments.map(
+                  {comments?.map(
                     ({
                       commentMessage,
                       createdAt,

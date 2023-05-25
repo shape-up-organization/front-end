@@ -3,18 +3,9 @@ import { useEffect, useState } from 'react'
 import P from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
-import CloseRounded from '@mui/icons-material/CloseRounded'
 import PeopleIcon from '@mui/icons-material/People'
 import PublicIcon from '@mui/icons-material/Public'
-import {
-  Grid,
-  IconButton,
-  Paper,
-  Stack,
-  Tab,
-  Tabs,
-  useMediaQuery,
-} from '@mui/material'
+import { Grid, Paper, Stack, Tab, Tabs, useMediaQuery } from '@mui/material'
 
 import { Divider } from '@atoms/Divider'
 
@@ -53,13 +44,6 @@ const CardRank = ({ handleCloseCard }) => {
       component={Paper}
       height={lessThanSmall ? '100%' : 'fit-content'}
     >
-      {handleCloseCard && (
-        <Grid item xs={12} pl={1} pt={1}>
-          <IconButton onClick={handleCloseCard}>
-            <CloseRounded />
-          </IconButton>
-        </Grid>
-      )}
       <Grid item xs={12}>
         <Stack width="100%" px={2} py={3} rowGap={2}>
           <Tabs onChange={handleChangeTab} value={rankTab} variant="fullWidth">
@@ -80,13 +64,19 @@ const CardRank = ({ handleCloseCard }) => {
             {rankedUsers?.length && (
               <>
                 <Grid item xs={12}>
-                  <Top rankedTopUsers={rankedUsers?.slice(0, 3)} />
+                  <Top
+                    rankedTopUsers={rankedUsers?.slice(0, 3)}
+                    onClose={handleCloseCard}
+                  />
                 </Grid>
                 <Grid item xs={12} pt={2}>
                   <Divider color="disabled" size="small" />
                 </Grid>
                 <Grid item xs={12}>
-                  <List rankedUsers={rankedUsers?.slice(3)} />
+                  <List
+                    rankedUsers={rankedUsers?.slice(3)}
+                    onClose={handleCloseCard}
+                  />
                 </Grid>
               </>
             )}

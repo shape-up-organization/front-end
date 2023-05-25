@@ -7,7 +7,7 @@ import { useChat } from '@contexts'
 
 import { UserButton } from './UserButton'
 
-const UsersList = ({ isLoading, users }) => {
+const UsersList = ({ isLoading, users, refetch }) => {
   const { t } = useTranslation()
   const { userData } = useChat()
 
@@ -32,7 +32,7 @@ const UsersList = ({ isLoading, users }) => {
         (user, index) =>
           user.username !== userData.username && (
             <Stack key={user.username}>
-              <UserButton user={user} />
+              <UserButton user={user} refetch={refetch} />
               {index !== users.length - 1 && (
                 <Divider color="disabled" size="small" />
               )}
@@ -53,11 +53,13 @@ UsersList.propTypes = {
       xp: P.number,
     })
   ),
+  refetch: P.func,
 }
 
 UsersList.defaultProps = {
   isLoading: true,
   users: [],
+  refetch: () => {},
 }
 
 export { UsersList }

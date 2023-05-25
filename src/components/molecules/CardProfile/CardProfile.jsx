@@ -1,7 +1,6 @@
 import P from 'prop-types'
 
-import CloseRounded from '@mui/icons-material/CloseRounded'
-import { Grid, IconButton, Paper, Stack, useMediaQuery } from '@mui/material'
+import { Grid, Paper, Stack, useMediaQuery } from '@mui/material'
 
 import { Divider } from '@atoms/Divider'
 
@@ -18,21 +17,8 @@ const CardProfile = ({ handleCloseCard }) => {
       component={Paper}
       height={lessThanSmall ? '100%' : 'fit-content'}
     >
-      {handleCloseCard && (
-        <Grid item xs={12} pl={1} pt={1}>
-          <IconButton onClick={handleCloseCard}>
-            <CloseRounded />
-          </IconButton>
-        </Grid>
-      )}
-      <Grid item xs={12}>
-        <Stack
-          spacing={3}
-          width="100%"
-          px={4}
-          py={6}
-          pt={handleCloseCard ? 1 : 6}
-        >
+      <Grid item xs={12} height="100%">
+        <Stack p={4} spacing={3} width="100%">
           <UserInfo closeCard={handleCloseCard} />
           <Experience />
           <Divider color="disabled" size="small" />

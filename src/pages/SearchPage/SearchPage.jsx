@@ -32,7 +32,6 @@ const SearchPage = () => {
       response = await apiUsers.searchByName(search)
     }
 
-    console.log(response)
     setIsLoading(false)
 
     if (response.status === 404 || response.status === 204) {
@@ -85,11 +84,17 @@ const SearchPage = () => {
             minWidth={312}
             px={2}
           >
-            <UsersList isLoading={isLoading} search={search} users={users} />
+            <UsersList
+              isLoading={isLoading}
+              search={search}
+              users={users}
+              refetch={searchUsers}
+            />
           </Grid>
         </Grid>
       </Stack>
     </AnimatedWrapper>
   )
 }
+
 export { SearchPage }

@@ -9,7 +9,13 @@ import { FriendshipOptions } from '@molecules/FriendshipOptions'
 
 import { useNavigateSearch } from '@hooks'
 
-const ContextMenu = ({ anchorEl, handleCloseMenu, open, userSelected }) => {
+const ContextMenu = ({
+  anchorEl,
+  handleCloseMenu,
+  open,
+  userSelected,
+  refetch,
+}) => {
   const { username } = userSelected
 
   const { t } = useTranslation()
@@ -54,6 +60,7 @@ const ContextMenu = ({ anchorEl, handleCloseMenu, open, userSelected }) => {
       <FriendshipOptions
         postAction={handleCloseMenu}
         data={{ ...userSelected, ...userSelected.friendshipStatus }}
+        refetch={refetch}
       />
     </Menu>
   )
@@ -68,12 +75,14 @@ ContextMenu.propTypes = {
     username: P.string.isRequired,
     friendshipStatus: P.object.isRequired,
   }).isRequired,
+  refetch: P.func,
 }
 
 ContextMenu.defaultProps = {
   anchorEl: null,
   handleCloseMenu: () => {},
   open: false,
+  refetch: () => {},
 }
 
 export { ContextMenu }

@@ -13,7 +13,7 @@ import { useNavigateSearch } from '@hooks'
 
 import { ContextMenu } from './ContextMenu'
 
-const UserButton = ({ date, selected }) => {
+const UserButton = ({ date, selected, refetch }) => {
   const { firstName, name, lastName, username } = selected
 
   const [searchParams] = useSearchParams()
@@ -85,6 +85,7 @@ const UserButton = ({ date, selected }) => {
         handleCloseMenu={handleCloseContextMenu}
         open={!!menuAnchorEl}
         selected={selected}
+        refetch={refetch}
       />
     </Button>
   )
@@ -98,6 +99,11 @@ UserButton.propTypes = {
     lastName: P.string.isRequired,
     username: P.string.isRequired,
   }).isRequired,
+  refetch: P.func,
+}
+
+UserButton.defaultProps = {
+  refetch: () => {},
 }
 
 export { UserButton }

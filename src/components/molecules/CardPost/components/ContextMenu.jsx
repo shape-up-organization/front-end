@@ -4,7 +4,13 @@ import { Menu } from '@mui/material'
 
 import { FriendshipOptions } from '@molecules/FriendshipOptions'
 
-const ContextMenu = ({ anchorEl, handleCloseMenu, open, selected }) => (
+const ContextMenu = ({
+  anchorEl,
+  handleCloseMenu,
+  open,
+  selected,
+  refetch,
+}) => (
   <Menu
     anchorEl={anchorEl}
     anchorOrigin={{
@@ -24,7 +30,12 @@ const ContextMenu = ({ anchorEl, handleCloseMenu, open, selected }) => (
     }}
     sx={{ rowGap: 1 }}
   >
-    <FriendshipOptions isPost postAction={handleCloseMenu} data={selected} />
+    <FriendshipOptions
+      isPost
+      postAction={handleCloseMenu}
+      data={selected}
+      refetch={refetch}
+    />
   </Menu>
 )
 
@@ -33,12 +44,14 @@ ContextMenu.propTypes = {
   handleCloseMenu: P.func,
   open: P.bool,
   selected: P.object.isRequired,
+  refetch: P.func,
 }
 
 ContextMenu.defaultProps = {
   anchorEl: null,
   handleCloseMenu: () => {},
   open: false,
+  refetch: () => {},
 }
 
 export { ContextMenu }

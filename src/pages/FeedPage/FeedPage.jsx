@@ -90,9 +90,6 @@ const FeedPage = () => {
                       liked={post.liked}
                       photos={post.photoUrls}
                       textContent={post.description}
-                      user={chatsData.friends.find(
-                        friend => friend.username === post.username
-                      )}
                       username={post.username}
                       refetch={getData}
                     />

@@ -3,9 +3,9 @@ export default Object.freeze({
     squads: [
       {
         messages: [],
-        name: 'group 1',
-        profilePicture: 'https://placehold.co/400',
-        username: 'group1',
+        name: 'Forum',
+        profilePicture: 'shapeup-forum.png',
+        username: 'forum-shapeup',
       },
     ],
   },

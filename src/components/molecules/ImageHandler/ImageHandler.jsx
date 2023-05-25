@@ -19,7 +19,9 @@ import '@uppy/webcam/dist/style.min.css'
 
 import { useStyles } from './ImageHandler.styles'
 
-const uppy = new Uppy()
+const uppy = new Uppy({
+  debug: false,
+})
   .use(ImageEditor, {
     id: 'ImageEditor',
     quality: 0.6,

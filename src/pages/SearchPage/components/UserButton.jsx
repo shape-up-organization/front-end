@@ -22,7 +22,7 @@ import { getLevel } from '@utils/constants/levels'
 
 import { ContextMenu } from './ContextMenu'
 
-const UserButton = ({ user }) => {
+const UserButton = ({ user, refetch }) => {
   const { name, lastName, username, xp } = user
 
   const { t } = useTranslation()
@@ -132,6 +132,7 @@ const UserButton = ({ user }) => {
         handleCloseMenu={handleCloseContextMenu}
         open={!!menuAnchorEl}
         userSelected={user}
+        refetch={refetch}
       />
     </Button>
   )
@@ -145,6 +146,11 @@ UserButton.propTypes = {
     username: P.string.isRequired,
     xp: P.number.isRequired,
   }).isRequired,
+  refetch: P.func,
+}
+
+UserButton.defaultProps = {
+  refetch: () => {},
 }
 
 export { UserButton }

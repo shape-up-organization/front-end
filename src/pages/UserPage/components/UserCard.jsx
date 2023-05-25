@@ -21,7 +21,7 @@ import { getLevel } from '@utils/constants/levels'
 
 import { EditModal } from './EditModal'
 
-const UserCard = ({ handleReload, isCurrentUser, user }) => {
+const UserCard = ({ handleReload, isCurrentUser, user, refetch }) => {
   const { t } = useTranslation()
   const lessThanMedium = useMediaQuery(theme => theme.breakpoints.down('lg'))
 
@@ -106,7 +106,10 @@ const UserCard = ({ handleReload, isCurrentUser, user }) => {
             </Button>
           ) : (
             <Stack rowGap={1}>
-              <FriendshipOptions data={{ ...user, ...user.friendshipStatus }} />
+              <FriendshipOptions
+                data={{ ...user, ...user.friendshipStatus }}
+                refetch={refetch}
+              />
             </Stack>
           )}
         </Stack>
@@ -133,10 +136,12 @@ UserCard.propTypes = {
     xp: P.number,
     friendshipStatus: P.object,
   }).isRequired,
+  refetch: P.func,
 }
 
 UserCard.defaultProps = {
   isCurrentUser: false,
+  refetch: () => {},
 }
 
 export { UserCard }

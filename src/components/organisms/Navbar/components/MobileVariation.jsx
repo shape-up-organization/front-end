@@ -95,6 +95,7 @@ const MobileVariation = ({ openConfirmationModal }) => {
         <SimpleModal
           open={openCardProfile}
           Component={CardProfile}
+          componentArgs={{ handleCloseCard: toggleCardProfile }}
           handleClose={toggleCardProfile}
           title={t('pages.feed.tooltip.summary')}
         />
@@ -106,6 +107,7 @@ const MobileVariation = ({ openConfirmationModal }) => {
         <SimpleModal
           open={openCardRank}
           Component={CardRank}
+          componentArgs={{ handleCloseCard: toggleCardRank }}
           handleClose={toggleCardRank}
           title={t('pages.feed.tooltip.rank')}
         />

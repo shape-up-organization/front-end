@@ -2,7 +2,6 @@ import { http } from '@api/lib/http'
 import { tryCatch } from '@api/lib/tryCatch'
 
 import { withAuth, withHeaders } from '@api/middlewares'
-import axios from 'axios'
 
 const route = '/quests'
 
@@ -32,10 +31,8 @@ const getQuests = async () =>
   })
 
 const getPacks = async () =>
-  tryCatch(axios.get, `http://107.20.108.49:7000/trainings`, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
+  tryCatch(http.get, `${route}/trainings`, {
+    ...withHeaders(withAuth()),
   })
 
 export default {

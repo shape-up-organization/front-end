@@ -5,10 +5,13 @@ import { Divider } from '@atoms/Divider'
 
 import { useNavigateSearch } from '@hooks'
 
-const List = ({ rankedUsers }) => {
+const List = ({ rankedUsers, onClose }) => {
   const navigateSearch = useNavigateSearch()
 
-  const handleGoToProfile = username => navigateSearch('/profile', { username })
+  const handleGoToProfile = username => {
+    navigateSearch('/profile', { username })
+    onClose()
+  }
 
   return rankedUsers.map((user, index) => (
     <Button

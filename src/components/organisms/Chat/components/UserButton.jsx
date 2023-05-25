@@ -33,7 +33,7 @@ const UserButton = () => {
   const [menuAnchorEl, setContextMenuAnchorEl] = useState(null)
   const [openSquadModal, setOpenSquadModal] = useState(false)
 
-  const handleOpenSquadModal = () => setOpenSquadModal(true)
+  // const handleOpenSquadModal = () => setOpenSquadModal(true)
   const handleCloseSquadModal = () => setOpenSquadModal(false)
 
   const handleCloseContextMenu = () => setContextMenuAnchorEl(null)
@@ -62,12 +62,16 @@ const UserButton = () => {
           onClick={
             // eslint-disable-next-line no-nested-ternary
             activeChat.chatType === 'squads'
-              ? handleOpenSquadModal
+              ? null
               : searchParams.get('username') === userData.username
               ? () => {}
               : handleGoToProfile
           }
-          onContextMenu={handleOpenContextMenu}
+          onContextMenu={
+            activeChat.chatType !== 'squads'
+              ? handleOpenContextMenu
+              : () => null
+          }
           py={2}
           textAlign="left"
           textTransform="none"
@@ -120,12 +124,14 @@ const UserButton = () => {
             </IconButton>
           </Tooltip>
         )}
-        <IconButton
-          onClick={handleOpenContextMenu}
-          sx={{ position: 'absolute', right: 24, top: 24 }}
-        >
-          <MoreHorizRoundedIcon fontSize="small" />
-        </IconButton>
+        {activeChat.chatType !== 'squads' && (
+          <IconButton
+            onClick={handleOpenContextMenu}
+            sx={{ position: 'absolute', right: 24, top: 24 }}
+          >
+            <MoreHorizRoundedIcon fontSize="small" />
+          </IconButton>
+        )}
         <ContextMenu
           anchorEl={menuAnchorEl}
           handleCloseMenu={handleCloseContextMenu}

@@ -100,7 +100,7 @@ const ChatTypeSwitcher = () => {
           </Tooltip>
         </Badge>
       </Stack>
-      {chatsData.type === 'squads' && (
+      {false && chatsData.type === 'squads' && (
         <Box width="100%" pb={2} pt={0} px={8}>
           <Button
             fullWidth

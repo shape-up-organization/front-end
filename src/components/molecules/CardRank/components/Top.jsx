@@ -7,11 +7,13 @@ import { Avatar } from '@atoms/Avatar'
 import { useNavigateSearch } from '@hooks'
 import { getBorder, getContrastColor } from '@utils/constants/levels'
 
-const CardUser = ({ user, position }) => {
+const CardUser = ({ user, position, onClose }) => {
   const navigateSearch = useNavigateSearch()
 
-  const handleGoToProfile = () =>
+  const handleGoToProfile = () => {
     navigateSearch('/profile', { username: user.username })
+    onClose()
+  }
 
   return (
     <Badge
@@ -62,6 +64,7 @@ const CardUser = ({ user, position }) => {
 }
 
 CardUser.propTypes = {
+  onClose: P.func,
   position: P.number.isRequired,
   user: P.shape({
     firstName: P.string,
@@ -70,7 +73,11 @@ CardUser.propTypes = {
   }).isRequired,
 }
 
-const Top = ({ rankedTopUsers }) => (
+CardUser.defaultProps = {
+  onClose: () => null,
+}
+
+const Top = ({ rankedTopUsers, onClose }) => (
   <Grid container spacing={2} justifyContent="center">
     {rankedTopUsers.map((user, index) => (
       <Grid
@@ -80,14 +87,19 @@ const Top = ({ rankedTopUsers }) => (
         display="flex"
         justifyContent="center"
       >
-        <CardUser position={index + 1} user={user} />
+        <CardUser position={index + 1} user={user} onClose={onClose} />
       </Grid>
     ))}
   </Grid>
 )
 
 Top.propTypes = {
+  onClose: P.func,
   rankedTopUsers: P.arrayOf(P.object).isRequired,
+}
+
+Top.defaultProps = {
+  onClose: () => null,
 }
 
 export { Top }

@@ -62,7 +62,7 @@ const SimpleModal = ({
       )}
       <Fade in>
         <DialogContent sx={{ p: 0, width: '100%' }}>
-          <Stack width="100%">
+          <Stack width="100%" height="100%">
             <Component {...componentArgs} />
           </Stack>
         </DialogContent>

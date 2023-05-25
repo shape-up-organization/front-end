@@ -71,6 +71,7 @@ const UserPage = () => {
               handleReload={getData}
               isCurrentUser={isCurrentUser}
               user={user}
+              refetch={getData}
             />
             <Grid container justifyContent="center" rowGap={2}>
               {isCurrentUser && (

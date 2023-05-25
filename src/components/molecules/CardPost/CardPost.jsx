@@ -52,7 +52,12 @@ const CardPost = ({
         {userData && (
           <UserButton
             date={date}
-            selected={{ ...userData, postId: id, refetch }}
+            selected={{
+              ...userData,
+              ...userData.friendshipStatus,
+              postId: id,
+            }}
+            refetch={refetch}
           />
         )}
       </Grid>
@@ -72,7 +77,6 @@ const CardPost = ({
         <Grid
           item
           display="flex"
-          height="100%"
           justifyContent="center"
           padding={{
             xs: 0,
@@ -86,8 +90,7 @@ const CardPost = ({
             component={Paper}
             height="100%"
             p={2}
-            // width="100%"
-            // maxWidth={652}
+            width="100%"
           >
             <Carousel>
               {photos.map(photoUrl => (

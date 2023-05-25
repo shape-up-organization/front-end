@@ -204,7 +204,6 @@ const FriendshipOptions = ({ isPost, postAction, data, refetch }) => {
         variant: 'success',
       }
     )
-
     refetch()
   }
 

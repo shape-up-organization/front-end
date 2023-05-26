@@ -18,7 +18,6 @@ import {
   Typography,
 } from '@mui/material'
 
-import { LinkButton } from '@atoms/LinkButton'
 import { TextButton } from '@atoms/TextButton'
 import { TextField } from '@atoms/TextField'
 import { Modal } from '@templates/Modal'
@@ -137,13 +136,13 @@ const Content = ({ switchModal }) => {
           register={register}
         />
       </Grid>
-      <Grid item textAlign="center" xs={12}>
+      {/* <Grid item textAlign="center" xs={12}>
         <LinkButton internal="password-recovery">
           <Typography fontWeight="bold" variant="caption">
             {t('pages.landing.login.others.forgotPassword')}
           </Typography>
         </LinkButton>
-      </Grid>
+      </Grid> */}
       <Grid item xs={8} sm={6}>
         <Button
           disabled={isButtonLoading}

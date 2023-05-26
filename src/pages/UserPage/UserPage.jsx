@@ -176,6 +176,7 @@ const UserPage = () => {
                     justifyContent="center"
                     spacing={2}
                     textAlign="center"
+                    width="100%"
                   >
                     <Grow in timeout={1000} unmountOnExit>
                       <Typography

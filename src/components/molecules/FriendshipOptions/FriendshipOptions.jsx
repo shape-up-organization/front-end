@@ -4,6 +4,7 @@ import { useSnackbar } from 'notistack'
 import P from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
+import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded'
 import BlockRoundedIcon from '@mui/icons-material/BlockRounded'
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded'
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded'
@@ -17,6 +18,7 @@ import apiFriends from '@api/services/friends'
 import apiPosts from '@api/services/posts'
 import { useChat } from '@contexts'
 import { Options } from '@templates/Options'
+import { downloadTxtFile } from '@utils/helpers/server'
 
 const FriendshipOptions = ({ isPost, postAction, data, refetch }) => {
   const {
@@ -38,7 +40,6 @@ const FriendshipOptions = ({ isPost, postAction, data, refetch }) => {
   const sendFriendshipRequest = async menuItem => {
     setMenuItemLoading(menuItem)
     const response = await apiFriends.sendFriendshipRequest(username)
-    setMenuItemLoading('')
     postAction()
 
     if (isFriend) {
@@ -103,13 +104,15 @@ const FriendshipOptions = ({ isPost, postAction, data, refetch }) => {
         variant: 'success',
       }
     )
-    refetch()
+    await refetch()
+    setTimeout(() => {
+      setMenuItemLoading('')
+    }, 2000)
   }
 
   const acceptFriendshipRequest = async menuItem => {
     setMenuItemLoading(menuItem)
     const response = await apiFriends.acceptFriendshipRequest(username)
-    setMenuItemLoading('')
     postAction()
 
     if (response.status === 404) {
@@ -163,13 +166,14 @@ const FriendshipOptions = ({ isPost, postAction, data, refetch }) => {
       }
     )
     updateFriends()
-    refetch()
+    setTimeout(() => {
+      setMenuItemLoading('')
+    }, 2000)
   }
 
   const deleteFriendshipRequest = async menuItem => {
     setMenuItemLoading(menuItem)
     const response = await apiFriends.deleteFriendshipRequest(username)
-    setMenuItemLoading('')
     postAction()
 
     if (response.status === 404) {
@@ -204,13 +208,15 @@ const FriendshipOptions = ({ isPost, postAction, data, refetch }) => {
         variant: 'success',
       }
     )
-    refetch()
+    await refetch()
+    setTimeout(() => {
+      setMenuItemLoading('')
+    }, 2000)
   }
 
   const deleteFriend = async menuItem => {
     setMenuItemLoading(menuItem)
     const response = await apiFriends.deleteFriend(username)
-    setMenuItemLoading('')
     postAction()
 
     if (response.status === 404) {
@@ -243,13 +249,30 @@ const FriendshipOptions = ({ isPost, postAction, data, refetch }) => {
         variant: 'success',
       }
     )
-    updateFriends()
-    refetch()
+    await updateFriends()
+    await refetch()
+    setMenuItemLoading('')
   }
 
-  const deletePost = async () => {
+  const deletePost = async menuItem => {
+    setMenuItemLoading(menuItem)
     await apiPosts.deletePost(data.postId)
     await refetch()
+    setTimeout(() => {
+      setMenuItemLoading('')
+    }, 2000)
+  }
+
+  const generateTxt = async menuItem => {
+    setMenuItemLoading(menuItem)
+    const response = await apiPosts.generateTxt(data.postId)
+
+    const title = `${data.username}_post`
+    downloadTxtFile(title, response.data)
+
+    setTimeout(() => {
+      setMenuItemLoading('')
+    }, 2000)
   }
 
   const menuItems = useMemo(
@@ -285,9 +308,16 @@ const FriendshipOptions = ({ isPost, postAction, data, refetch }) => {
       deletePost: {
         color: 'error',
         icon: () => <DeleteForeverRoundedIcon />,
-        onClick: () => deletePost(),
+        onClick: () => deletePost('deletePost'),
         text: 'deletePost',
         variant: 'contained',
+      },
+      generateTxt: {
+        color: 'inherit',
+        icon: () => <ArticleRoundedIcon />,
+        onClick: () => generateTxt('generateTxt'),
+        text: 'generateTxt',
+        variant: 'text',
       },
       quitSquad: {
         color: 'error',
@@ -329,6 +359,10 @@ const FriendshipOptions = ({ isPost, postAction, data, refetch }) => {
         text: `friendshipOptions.options.${menuItems[menuItem].text}`,
       },
     })
+
+  if (isPost) {
+    pushMenuItem('generateTxt')
+  }
 
   if (isSquad) {
     pushMenuItem('quitSquad')

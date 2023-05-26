@@ -17,6 +17,11 @@ const createPost = async post =>
     ...withHeaders({ ...withAuth(), ...withFileHeaders() }),
   })
 
+const createPostFromFile = async file =>
+  tryCatch(http.post, `${postRoute}/read-txt`, file, {
+    ...withHeaders({ ...withAuth(), ...withFileHeaders() }),
+  })
+
 const createPostWithoutPhoto = async post =>
   tryCatch(http.post, `${postRoute}/without-photo`, post, {
     ...withHeaders(withAuth()),
@@ -24,6 +29,11 @@ const createPostWithoutPhoto = async post =>
 
 const deletePost = async postId =>
   tryCatch(http.delete, `${postRoute}/${postId}`, {
+    ...withHeaders(withAuth()),
+  })
+
+const generateTxt = async postId =>
+  tryCatch(http.get, `${postRoute}/generate-txt/${postId}`, {
     ...withHeaders(withAuth()),
   })
 
@@ -59,8 +69,10 @@ const toggleLikePost = async postId =>
 export default {
   createComment,
   createPost,
+  createPostFromFile,
   createPostWithoutPhoto,
   deletePost,
+  generateTxt,
   getCommentsByPostId,
   getPosts,
   getPostsByUsername,

@@ -1,12 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 
 import { useTranslation } from 'react-i18next'
+import { TransitionGroup } from 'react-transition-group'
 
+import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded'
 import {
   Box,
   CircularProgress,
+  Collapse,
   Grid,
   Grow,
+  IconButton,
   Stack,
   Typography,
   useMediaQuery,
@@ -22,6 +26,7 @@ import { CardRank } from '@molecules/CardRank'
 import apiPosts from '@api/services/posts'
 import notFoundGeneric from '@assets/images/not-found-generic.png'
 import { useChat } from '@contexts'
+import { useVisible } from '@hooks'
 
 const FeedPage = () => {
   const { t } = useTranslation()
@@ -29,17 +34,37 @@ const FeedPage = () => {
   const lessThanExtraLarge = useMediaQuery(theme =>
     theme.breakpoints.down('xl')
   )
+  const [bottomRef, isBottomVisible] = useVisible()
 
   const [isLoadingPosts, setIsLoadingPosts] = useState(true)
   const [posts, setPosts] = useState([])
+  const [searchParams, setSearchParams] = useState({
+    page: 0,
+    size: 4,
+  })
 
-  const getData = async () => {
-    const response = await apiPosts.getPosts()
-    setIsLoadingPosts(false)
+  const getData = async advancing => {
+    setIsLoadingPosts(true)
+    const queryParams = {
+      page: advancing ? searchParams.page + 1 : 0,
+      size: searchParams.size,
+    }
+    if (advancing)
+      bottomRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    const response = await apiPosts.getPosts(queryParams)
 
-    if (response.status === 204) setPosts([])
+    setTimeout(() => {
+      setIsLoadingPosts(false)
+      if (response.status === 204) setPosts([])
 
-    setPosts(response.data || [])
+      setSearchParams(
+        advancing ? queryParams : { page: 0, size: searchParams.size }
+      )
+      setPosts([...(advancing ? posts : []), ...(response.data || [])])
+    }, 1000)
   }
 
   useEffect(() => {
@@ -47,6 +72,12 @@ const FeedPage = () => {
       getData()
     }
   }, [chatsData.deprecated])
+
+  useLayoutEffect(() => {
+    if (isBottomVisible && !isLoadingPosts) {
+      getData(true)
+    }
+  }, [isBottomVisible])
 
   return (
     <AnimatedWrapper>
@@ -63,38 +94,50 @@ const FeedPage = () => {
           </Grid>
         )}
         <Grid item xs={12} md={8} lg={7} xl={6} height="100%">
-          <Stack height="100%" overflow="auto" rowGap={4} width="100%">
+          <Stack height="100%" overflow="auto" width="100%">
             <Stack px={2} width="100%">
               <CardCreatePost refreshFeed={getData} />
             </Stack>
             <Stack height="100%" px={2} rowGap={8} width="100%">
+              <TransitionGroup>
+                {posts?.map(post => (
+                  <Collapse key={post.id} sx={{ mt: 6 }}>
+                    <Box
+                      display="flex"
+                      height="fit-content"
+                      justifyContent="center"
+                      width="100%"
+                    >
+                      <CardPost
+                        commentsAmount={post.countComments}
+                        date={post.createdAt}
+                        id={post.id}
+                        likes={post.countLike}
+                        liked={post.liked}
+                        photos={post.photoUrls}
+                        textContent={post.description}
+                        username={post.username}
+                        refetch={getData}
+                      />
+                    </Box>
+                  </Collapse>
+                ))}
+              </TransitionGroup>
               {/* eslint-disable-next-line no-nested-ternary */}
               {isLoadingPosts ? (
-                <Stack alignItems="center" width="100%">
-                  <CircularProgress />
-                </Stack>
+                <Collapse in sx={{ width: '100%' }}>
+                  <Stack alignItems="center" mb={8} width="100%">
+                    <CircularProgress />
+                  </Stack>
+                </Collapse>
               ) : posts.length ? (
-                posts?.map(post => (
-                  <Box
-                    key={post.id}
-                    height="fit-content"
-                    display="flex"
-                    justifyContent="center"
-                    width="100%"
-                  >
-                    <CardPost
-                      commentsAmount={post.countComments}
-                      date={post.createdAt}
-                      id={post.id}
-                      likes={post.countLike}
-                      liked={post.liked}
-                      photos={post.photoUrls}
-                      textContent={post.description}
-                      username={post.username}
-                      refetch={getData}
-                    />
-                  </Box>
-                ))
+                <Collapse in sx={{ width: '100%' }}>
+                  <Stack alignItems="center" mb={8} width="100%">
+                    <IconButton onClick={() => getData(true)}>
+                      <ExpandMoreRoundedIcon color="primary" fontSize="large" />
+                    </IconButton>
+                  </Stack>
+                </Collapse>
               ) : (
                 <Stack
                   alignItems="center"
@@ -124,6 +167,12 @@ const FeedPage = () => {
                   </Stack>
                 </Stack>
               )}
+              <Stack
+                component="span"
+                minHeight="1px"
+                mt={-20}
+                ref={bottomRef}
+              />
             </Stack>
           </Stack>
         </Grid>

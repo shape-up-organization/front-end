@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import P from 'prop-types'
 import { useTranslation } from 'react-i18next'
 
+import ArticleRoundedIcon from '@mui/icons-material/ArticleRounded'
 import FilterRoundedIcon from '@mui/icons-material/FilterRounded'
 import { Box, Button, Paper, Stack, Typography } from '@mui/material'
 
@@ -15,6 +16,7 @@ import { PostModal } from './components/PostModal'
 
 const CardCreatePost = ({ refreshFeed }) => {
   const { t } = useTranslation()
+  const fileInput = useRef(null)
 
   const [messageText, setMessageText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -40,6 +42,34 @@ const CardCreatePost = ({ refreshFeed }) => {
     await refreshFeed()
     setIsLoading(false)
   }
+
+  const handleOpenFileSender = () => fileInput?.current?.click()
+
+  useEffect(() => {
+    const handleFileChange = async () => {
+      const file = fileInput?.current?.files[0]
+      if (!file) return
+
+      try {
+        setIsLoading(true)
+        const payload = new FormData()
+        payload.append('file', file)
+        const response = await apiPosts.createPostFromFile(payload)
+        console.log(response)
+      } catch (error) {
+        console.error(error)
+      }
+
+      await refreshFeed()
+      setIsLoading(false)
+    }
+
+    fileInput?.current?.addEventListener('change', handleFileChange)
+
+    return () => {
+      fileInput?.current?.removeEventListener('change', handleFileChange)
+    }
+  }, [])
 
   return (
     <>
@@ -84,6 +114,18 @@ const CardCreatePost = ({ refreshFeed }) => {
               {t('components.molecules.cardCreatePost.others.buttonOpen')}
             </Typography>
           </Button>
+          <Button
+            color="inherit"
+            onClick={handleOpenFileSender}
+            size="large"
+            startIcon={<ArticleRoundedIcon />}
+            sx={{ px: 5 }}
+          >
+            <Typography textTransform="none" variant="body2">
+              {t('components.molecules.cardCreatePost.others.loadTxt')}
+            </Typography>
+          </Button>
+          <Box component="input" ref={fileInput} type="file" hidden />
         </Box>
       </Stack>
       <PostModal

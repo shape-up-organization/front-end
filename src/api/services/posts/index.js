@@ -2,9 +2,9 @@ import { http } from '@api/lib/http'
 import { tryCatch } from '@api/lib/tryCatch'
 
 import { withAuth, withFileHeaders, withHeaders } from '@api/middlewares'
+import { objectToQueryString } from '@utils/helpers/server'
 
 const postRoute = '/posts'
-
 const commentRoute = '/comments'
 
 const createComment = async comment =>
@@ -14,6 +14,11 @@ const createComment = async comment =>
 
 const createPost = async post =>
   tryCatch(http.post, postRoute, post, {
+    ...withHeaders({ ...withAuth(), ...withFileHeaders() }),
+  })
+
+const createPostFromFile = async file =>
+  tryCatch(http.post, `${postRoute}/read-txt`, file, {
     ...withHeaders({ ...withAuth(), ...withFileHeaders() }),
   })
 
@@ -27,15 +32,24 @@ const deletePost = async postId =>
     ...withHeaders(withAuth()),
   })
 
-const getPosts = async () =>
-  tryCatch(http.get, `${postRoute}?page=0&size=10`, {
+const generateTxt = async postId =>
+  tryCatch(http.get, `${postRoute}/generate-txt/${postId}`, {
     ...withHeaders(withAuth()),
   })
 
-const getPostsByUsername = async username =>
-  tryCatch(http.get, `${postRoute}/username/${username}?page=0&size=10`, {
+const getPosts = async queryParams =>
+  tryCatch(http.get, `${postRoute}${objectToQueryString(queryParams)}`, {
     ...withHeaders(withAuth()),
   })
+
+const getPostsByUsername = async (username, queryParams) =>
+  tryCatch(
+    http.get,
+    `${postRoute}/username/${username}${objectToQueryString(queryParams)}`,
+    {
+      ...withHeaders(withAuth()),
+    }
+  )
 
 const getCommentsByPostId = async postId =>
   tryCatch(http.get, `${commentRoute}/post/${postId}?page=0&size=10`, {
@@ -55,8 +69,10 @@ const toggleLikePost = async postId =>
 export default {
   createComment,
   createPost,
+  createPostFromFile,
   createPostWithoutPhoto,
   deletePost,
+  generateTxt,
   getCommentsByPostId,
   getPosts,
   getPostsByUsername,

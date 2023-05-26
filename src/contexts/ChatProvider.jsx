@@ -248,7 +248,7 @@ export const ChatProvider = ({ children }) => {
     const { id } = friend
 
     new EventSource(
-      `${import.meta.env.VITE_API_URL}/presence/stream?userId=${id}`
+      `${import.meta.env.VITE_API_URL}/shapeup/presence/stream?userId=${id}`
     ).onmessage = event => {
       const data = JSON.parse(event.data)
       setFriendsOnline(current => ({

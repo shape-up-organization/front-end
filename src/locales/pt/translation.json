@@ -22,6 +22,7 @@
         "others": {
           "buttonOpen": "Foto/Video",
           "createButton": "Criar",
+          "loadTxt": "Enviar TXT",
           "modalTitle": "Crie a sua publicação"
         },
         "tooltips": {
@@ -60,6 +61,7 @@
           "blockUser": "Bloquear",
           "cancelFriendshipRequest": "Cancelar solicitação de amizade",
           "deletePost": "Excluir postagem",
+          "generateTxt": "Gerar arquivo de texto",
           "quitSquad": "Sair do squad",
           "refuseFriendshipRequest": "Recusar solicitação de amizade",
           "removeFriend": "Remover amigo",

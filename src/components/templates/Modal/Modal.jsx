@@ -1,10 +1,7 @@
 import P from 'prop-types'
 
-import { useTranslation } from 'react-i18next'
-
 import Close from '@mui/icons-material/Close'
 import {
-  Box,
   Container,
   Dialog,
   DialogContent,
@@ -14,11 +11,7 @@ import {
   useMediaQuery,
 } from '@mui/material'
 
-import { Divider } from '@atoms/Divider'
-
 import { useStyles } from './Modal.styles'
-
-import { ExternalButtons } from './components/ExternalButtons'
 
 const sizes = {
   small: 'xs',
@@ -42,10 +35,6 @@ const Modal = ({
   titleAlignment,
 }) => {
   const contentDirection = direction === 'horizontal' ? 'row' : 'column'
-  const dividerDirection =
-    contentDirection === 'row' ? 'vertical' : 'horizontal'
-
-  const { t } = useTranslation()
   const lessThanSmall = useMediaQuery(theme => theme.breakpoints.down('sm'))
   const { classes } = useStyles()
 
@@ -91,13 +80,13 @@ const Modal = ({
           }}
         >
           {content}
-          <Divider
+          {/* <Divider
             direction={dividerDirection}
             text={t('pages.landing.others.dividerText')}
           />
           <Box alignItems="center" display="flex" flexDirection="column">
             <ExternalButtons />
-          </Box>
+          </Box> */}
         </Container>
       </DialogContent>
     </Dialog>

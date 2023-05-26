@@ -22,6 +22,7 @@
         "others": {
           "buttonOpen": "Photo/Video",
           "createButton": "Create",
+          "loadTxt": "Send TXT",
           "modalTitle": "Create your post"
         },
         "tooltips": {
@@ -60,6 +61,7 @@
           "blockUser": "Block",
           "cancelFriendshipRequest": "Cancel friendship request",
           "deletePost": "Delete post",
+          "generateTxt": "Generate text file",
           "quitSquad": "Quit squad",
           "refuseFriendshipRequest": "Refuse friendship request",
           "removeFriend": "Remove friend",

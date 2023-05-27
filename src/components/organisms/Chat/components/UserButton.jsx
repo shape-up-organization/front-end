@@ -61,16 +61,14 @@ const UserButton = () => {
           height="100%"
           onClick={
             // eslint-disable-next-line no-nested-ternary
-            activeChat.chatType === 'squads'
+            username === 'forum-shapeup'
               ? null
               : searchParams.get('username') === userData.username
               ? () => {}
               : handleGoToProfile
           }
           onContextMenu={
-            activeChat.chatType !== 'squads'
-              ? handleOpenContextMenu
-              : () => null
+            username !== 'forum-shapeup' ? handleOpenContextMenu : () => null
           }
           py={2}
           textAlign="left"
@@ -124,7 +122,7 @@ const UserButton = () => {
             </IconButton>
           </Tooltip>
         )}
-        {activeChat.chatType !== 'squads' && (
+        {username !== 'forum-shapeup' && (
           <IconButton
             onClick={handleOpenContextMenu}
             sx={{ position: 'absolute', right: 24, top: 24 }}

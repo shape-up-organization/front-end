@@ -58,9 +58,6 @@ const Content = ({ handleClose, postData }) => {
         )
     )
     handleScrollToBottom()
-    setTimeout(() => {
-      getComments()
-    }, 5000)
   }
 
   const handleSendMessage = async () => {

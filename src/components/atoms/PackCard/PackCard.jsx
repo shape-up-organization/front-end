@@ -44,6 +44,7 @@ const PackCard = ({
   unlockXp,
   variant,
   xp,
+  closeModal,
 }) => {
   const { t } = useTranslation()
   const lessThanMedium = useMediaQuery(theme => theme.breakpoints.down('md'))
@@ -99,7 +100,8 @@ const PackCard = ({
     } else {
       await apiQuests.addQuest(payload)
     }
-    await refetch()
+    closeModal()
+    refetch()
 
     setIsLoadingPack(false)
     setPacksModalOpen(false)
@@ -411,7 +413,7 @@ const PackCard = ({
         open={packsModalOpen}
         dayOfWeek={dayOfWeek}
         period={period}
-        reftech={refetch}
+        refetch={refetch}
         {...packsModalOptions}
       />
     </>
@@ -435,6 +437,7 @@ PackCard.propTypes = {
   unlockXp: P.number,
   variant: P.oneOf(['checking', 'default', 'edit']),
   xp: P.number,
+  closeModal: P.func,
 }
 
 PackCard.defaultProps = {
@@ -454,6 +457,7 @@ PackCard.defaultProps = {
   unlockXp: 0,
   variant: 'default',
   xp: 0,
+  closeModal: () => {},
 }
 
 export { PackCard }

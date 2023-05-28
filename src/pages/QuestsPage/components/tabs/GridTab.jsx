@@ -134,7 +134,7 @@ const GridTab = () => {
                               vertical: 'bottom',
                               horizontal: 'right',
                             }}
-                            badgeContent=" "
+                            badgeContent={periodQuest ? ' ' : null}
                             color={
                               // eslint-disable-next-line no-nested-ternary
                               periodQuest?.status === 'FINISHED'
@@ -219,14 +219,7 @@ const GridTab = () => {
         </Stack>
       </AnimatedWrapper>
       <SimpleModal
-        Component={() => (
-          <PackCard
-            {...questToEdit}
-            onRemoved={handleCloseEditModal}
-            refetch={getQuests}
-            variant="edit"
-          />
-        )}
+        Component={PackCard}
         dialogProps={{
           sx: {
             '& .MuiDialogContent-root': {
@@ -235,6 +228,15 @@ const GridTab = () => {
             },
           },
           maxWidth: 'md',
+        }}
+        componentArgs={{
+          ...questToEdit,
+          onRemoved: handleCloseEditModal,
+          refetch: async () => {
+            handleCloseEditModal()
+            await getQuests()
+          },
+          variant: 'edit',
         }}
         handleClose={handleCloseEditModal}
         open={openEditModal}

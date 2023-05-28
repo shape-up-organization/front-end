@@ -31,7 +31,7 @@ const FriendshipOptions = ({ isPost, postAction, data, refetch }) => {
 
   const { t } = useTranslation()
   const { enqueueSnackbar } = useSnackbar()
-  const { updateFriends, userData } = useChat()
+  const { updateFriends, userData, updateXp } = useChat()
 
   const [menuItemLoading, setMenuItemLoading] = useState('')
 
@@ -105,6 +105,7 @@ const FriendshipOptions = ({ isPost, postAction, data, refetch }) => {
       }
     )
     await refetch()
+    await updateXp()
     setTimeout(() => {
       setMenuItemLoading('')
     }, 2000)
@@ -165,6 +166,9 @@ const FriendshipOptions = ({ isPost, postAction, data, refetch }) => {
         variant: 'success',
       }
     )
+
+    await updateXp()
+
     updateFriends()
     setTimeout(() => {
       setMenuItemLoading('')
@@ -258,6 +262,7 @@ const FriendshipOptions = ({ isPost, postAction, data, refetch }) => {
     setMenuItemLoading(menuItem)
     await apiPosts.deletePost(data.postId)
     await refetch()
+    await updateXp()
     setTimeout(() => {
       setMenuItemLoading('')
     }, 2000)

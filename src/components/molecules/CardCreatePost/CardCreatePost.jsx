@@ -11,12 +11,14 @@ import { Divider } from '@atoms/Divider'
 import { TextArea } from '@molecules/TextArea'
 
 import apiPosts from '@api/services/posts'
+import { useChat } from '@contexts'
 
 import { PostModal } from './components/PostModal'
 
 const CardCreatePost = ({ refreshFeed }) => {
   const { t } = useTranslation()
   const fileInput = useRef(null)
+  const { updateXp } = useChat()
 
   const [messageText, setMessageText] = useState('')
   const [isLoading, setIsLoading] = useState(false)
@@ -40,6 +42,7 @@ const CardCreatePost = ({ refreshFeed }) => {
 
     setMessageText('')
     await refreshFeed()
+    await updateXp()
     setIsLoading(false)
   }
 

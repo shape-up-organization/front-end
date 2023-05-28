@@ -36,10 +36,16 @@ const searchByUsername = async username =>
     ...withHeaders(withAuth()),
   })
 
+const getUpdatedXp = async () =>
+  tryCatch(http.get, `${routeUsers}/user-xp`, {
+    ...withHeaders(withAuth()),
+  })
+
 export default {
   getRankedFriends,
   getRankedGlobal,
   getByUsername,
   searchByName,
   searchByUsername,
+  getUpdatedXp,
 }

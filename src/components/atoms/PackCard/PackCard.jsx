@@ -49,7 +49,7 @@ const PackCard = ({
   const { t } = useTranslation()
   const lessThanMedium = useMediaQuery(theme => theme.breakpoints.down('md'))
   const lessThanLarge = useMediaQuery(theme => theme.breakpoints.down('lg'))
-  const { userData } = useChat()
+  const { userData, updateXp } = useChat()
 
   const [isLoadingPack, setIsLoadingPack] = useState(false)
   const [checkedState, setCheckedState] = useState(status === 'FINISHED')
@@ -85,6 +85,7 @@ const PackCard = ({
     if (response.status !== 200) return
 
     setCheckedState(current => !current)
+    await updateXp()
   }
   const handleExtendPack = event => {
     event.stopPropagation()

@@ -16,8 +16,14 @@ const ProtectedLayout = () => {
     theme.breakpoints.down('xl')
   )
   const { getUserData, isTokenInvalid, signOut } = useAuth()
-  const { chatsData, loadData, setUserData, userData, updateUserData } =
-    useChat()
+  const {
+    chatsData,
+    loadData,
+    setUserData,
+    userData,
+    updateUserData,
+    updateXp,
+  } = useChat()
   const [scrollDirection, currentScrollRef, forceScrollDirection] =
     useScrollDirection()
 
@@ -36,6 +42,8 @@ const ProtectedLayout = () => {
       const nextUserData = await getUserData()
       loadData(nextUserData)
     } else if (!userData.connected) updateUserData({ connected: true })
+
+    await updateXp()
 
     setIsLoading(false)
   }

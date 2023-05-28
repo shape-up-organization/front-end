@@ -8,10 +8,13 @@ import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
 import { Button, Fade, Grid, Grow, Stack, Typography } from '@mui/material'
 
 import apiPosts from '@api/services/posts'
+import { useChat } from '@contexts'
 
 import { CardViewPost } from './CardViewPost'
 
 const Footer = ({ commentsAmount, likes, postData }) => {
+  const { updateXp } = useChat()
+
   const [liked, setLiked] = useState(postData.liked)
   const [likesAmount, setLikesAmount] = useState(likes)
   const [openCardPostView, setOpenCardPostView] = useState(false)
@@ -23,6 +26,8 @@ const Footer = ({ commentsAmount, likes, postData }) => {
 
     setLiked(current => !current)
     setLikesAmount(current => (liked ? current - 1 : current + 1))
+
+    await updateXp()
   }
 
   const handleOpenCardPostView = () => setOpenCardPostView(true)

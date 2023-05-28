@@ -33,8 +33,11 @@ const Quest = () => {
     event.stopPropagation()
     setIsLoadingQuest(true)
 
-    const payload = { id: quest.id }
-
+    const payload = {
+      dayOfWeek: quest.dayOfWeek,
+      period: quest.period,
+      trainingId: quest.id,
+    }
     const response = await apiQuests.checkQuest(payload)
     setIsLoadingQuest(false)
 
@@ -61,6 +64,7 @@ const Quest = () => {
       item => item.period === period
     )[0]
     setQuest(findedPeriod?.training || null)
+    setCheckedState(findedPeriod?.training?.status === 'FINISHED' || false)
   }
 
   useEffect(() => {

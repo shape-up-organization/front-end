@@ -344,6 +344,7 @@ export const ChatProvider = ({ children }) => {
       responsiveSize,
       sendPrivateMessage,
       sendPublicMessage,
+      setUserData,
       updateFriends,
       updateUserData,
       userData,

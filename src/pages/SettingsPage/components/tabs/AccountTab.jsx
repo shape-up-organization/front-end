@@ -20,7 +20,7 @@ import { AnimatedWrapper } from '@layouts/AnimatedWrapper'
 import { ConfirmationModal } from '@molecules/ConfirmationModal'
 
 import apiProfile from '@api/services/profile'
-import { useAuth } from '@contexts'
+import { useAuth, useChat } from '@contexts'
 
 import { BirthUpdate } from '../accountOptions/BirthUpdate'
 import { CellPhoneUpdate } from '../accountOptions/CellPhoneUpdate'
@@ -40,6 +40,7 @@ const AccountTab = () => {
   const { t } = useTranslation()
   const lessThanMedium = useMediaQuery(theme => theme.breakpoints.down('md'))
   const { signOut } = useAuth()
+  const { setUserData } = useChat()
 
   const [subPage, setSubPage] = useState('')
   const [openDeleteModal, setOpenDeleteModal] = useState(false)
@@ -64,6 +65,7 @@ const AccountTab = () => {
       return
     }
 
+    setUserData({ connected: false })
     signOut()
   }
 

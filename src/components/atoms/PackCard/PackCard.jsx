@@ -39,6 +39,7 @@ const PackCard = ({
   name,
   onRemoved,
   period,
+  refetch,
   status,
   unlockXp,
   variant,
@@ -93,15 +94,14 @@ const PackCard = ({
     setIsLoadingPack(true)
 
     const payload = { dayOfWeek, period, trainingId: id }
-    console.log(payload)
     if (mode === 'edit') {
-      const response = await apiQuests.editQuest(payload)
-      console.log(response)
+      await apiQuests.editQuest(payload)
     } else {
       await apiQuests.addQuest(payload)
     }
-    setIsLoadingPack(false)
+    await refetch()
 
+    setIsLoadingPack(false)
     setPacksModalOpen(false)
   }
   const handleRemovePack = async event => {
@@ -109,10 +109,10 @@ const PackCard = ({
     setIsLoadingPack(true)
 
     const payload = { dayOfWeek, period, trainingId: id }
-    const response = await apiQuests.deleteQuest(payload)
-    setIsLoadingPack(false)
-    console.log(response)
+    await apiQuests.deleteQuest(payload)
 
+    await refetch()
+    setIsLoadingPack(false)
     onRemoved()
   }
 
@@ -411,6 +411,7 @@ const PackCard = ({
         open={packsModalOpen}
         dayOfWeek={dayOfWeek}
         period={period}
+        reftech={refetch}
         {...packsModalOptions}
       />
     </>
@@ -429,6 +430,7 @@ PackCard.propTypes = {
   name: P.string,
   onRemoved: P.func,
   period: P.string,
+  refetch: P.func,
   status: P.oneOf(['FINISHED', 'PENDING', 'UNCOMPLETED']),
   unlockXp: P.number,
   variant: P.oneOf(['checking', 'default', 'edit']),
@@ -447,6 +449,7 @@ PackCard.defaultProps = {
   name: '',
   onRemoved: () => {},
   period: '',
+  refetch: () => {},
   status: 'PENDING',
   unlockXp: 0,
   variant: 'default',

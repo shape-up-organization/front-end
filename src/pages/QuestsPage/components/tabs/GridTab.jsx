@@ -223,6 +223,7 @@ const GridTab = () => {
           <PackCard
             {...questToEdit}
             onRemoved={handleCloseEditModal}
+            refetch={getQuests}
             variant="edit"
           />
         )}

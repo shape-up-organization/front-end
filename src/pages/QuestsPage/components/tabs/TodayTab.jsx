@@ -78,6 +78,7 @@ const TodayTab = () => {
                 dayOfWeek={WEEK_DAYS[new Date().getDay()]}
                 period={dayTime}
                 variant="checking"
+                refetch={getQuests}
                 {...quests[dayTime]}
               />
             </Stack>

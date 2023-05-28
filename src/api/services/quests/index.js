@@ -16,7 +16,8 @@ const checkQuest = async data =>
   })
 
 const deleteQuest = async data =>
-  tryCatch(http.delete, `${route}/user/remove-training`, data, {
+  tryCatch(http.delete, `${route}/user/remove-training`, {
+    data,
     ...withHeaders(withAuth()),
   })
 

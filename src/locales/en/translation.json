@@ -512,13 +512,13 @@
         "title": "Today's workouts"
       },
       "weekDays": {
-        "sun": "sun",
-        "mon": "mon",
-        "tue": "tue",
-        "wed": "wed",
-        "thu": "thu",
-        "fri": "fri",
-        "sat": "sat"
+        "SUN": "sun",
+        "MON": "mon",
+        "TUE": "tue",
+        "WED": "wed",
+        "THU": "thu",
+        "FRI": "fri",
+        "SAT": "sat"
       }
     }
   }

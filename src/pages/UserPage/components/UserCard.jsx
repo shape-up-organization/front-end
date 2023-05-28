@@ -67,9 +67,9 @@ const UserCard = ({ handleReload, isCurrentUser, user, refetch }) => {
           >{`@${user?.username}`}</Typography>
         </Grid>
         <Grid item xs={12}>
-          <Typography fontWeight={700} variant="subtitle1">
+          {/* <Typography fontWeight={700} variant="subtitle1">
             {t('pages.profile.others.friendsAmount', { amount: 30 })}
-          </Typography>
+          </Typography> */}
           <Divider color="disabled" size="small" />
           <Typography pt={1} variant="body1">
             {user?.biography}

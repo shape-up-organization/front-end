@@ -102,7 +102,13 @@ const CardCreatePost = ({ refreshFeed }) => {
           />
         </Box>
         <Divider color="disabled" size="small" />
-        <Box pt={1}>
+        <Box
+          display="flex"
+          flexWrap="wrap"
+          justifyContent="center"
+          gap={1}
+          pt={1}
+        >
           <Button
             color="inherit"
             onClick={handleOpenPostModal}

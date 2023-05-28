@@ -24,6 +24,7 @@ const Quest = () => {
 
   const [isLoadingQuest, setIsLoadingQuest] = useState(true)
   const [quest, setQuest] = useState([])
+  const [dayData, setDayData] = useState({})
   const [checkedState, setCheckedState] = useState(false)
 
   const categoryData = CATEGORIES[quest?.category] || {}
@@ -34,8 +35,8 @@ const Quest = () => {
     setIsLoadingQuest(true)
 
     const payload = {
-      dayOfWeek: quest.dayOfWeek,
-      period: quest.period,
+      dayOfWeek: dayData.dayOfWeek,
+      period: dayData.period,
       trainingId: quest.id,
     }
     const response = await apiQuests.checkQuest(payload)
@@ -64,6 +65,10 @@ const Quest = () => {
       item => item.period === period
     )[0]
     setQuest(findedPeriod?.training || null)
+    setDayData({
+      dayOfWeek: findedWeekDay?.dayOfWeek || null,
+      period: findedPeriod?.period || null,
+    })
     setCheckedState(findedPeriod?.training?.status === 'FINISHED' || false)
   }
 

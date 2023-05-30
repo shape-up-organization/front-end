@@ -129,22 +129,24 @@ const AccountTab = () => {
             pt={{ xs: 4, md: 8 }}
             width="100%"
           >
-            <Button
-              color="error"
-              disabled={isButtonDeleteLoading}
-              fullWidth
-              onClick={handleOpenDeleteModal}
-              size="large"
-              variant="contained"
-            >
-              {isButtonDeleteLoading ? (
-                <CircularProgress color="secondary" size={24} />
-              ) : (
-                <Typography fontWeight={900} variant="subtitle2">
-                  {t('pages.settings.accountOptions.others.deleteAccount')}
-                </Typography>
-              )}
-            </Button>
+            {false && (
+              <Button
+                color="error"
+                disabled={isButtonDeleteLoading}
+                fullWidth
+                onClick={handleOpenDeleteModal}
+                size="large"
+                variant="contained"
+              >
+                {isButtonDeleteLoading ? (
+                  <CircularProgress color="secondary" size={24} />
+                ) : (
+                  <Typography fontWeight={900} variant="subtitle2">
+                    {t('pages.settings.accountOptions.others.deleteAccount')}
+                  </Typography>
+                )}
+              </Button>
+            )}
             <ConfirmationModal
               isCritical
               handleCancel={handleCloseDeleteModal}

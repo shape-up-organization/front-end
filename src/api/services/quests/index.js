@@ -16,12 +16,13 @@ const checkQuest = async data =>
   })
 
 const deleteQuest = async data =>
-  tryCatch(http.delete, `${route}/user/remove-training`, data, {
+  tryCatch(http.delete, `${route}/user/remove-training`, {
+    data,
     ...withHeaders(withAuth()),
   })
 
 const editQuest = async data =>
-  tryCatch(http.put, `${route}/user/periodic-training-update`, data, {
+  tryCatch(http.put, `${route}/user/update-training`, data, {
     ...withHeaders(withAuth()),
   })
 

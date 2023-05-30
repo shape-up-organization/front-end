@@ -512,13 +512,13 @@
         "title": "Treinos de hoje"
       },
       "weekDays": {
-        "sun": "dom",
-        "mon": "seg",
-        "tue": "ter",
-        "wed": "qua",
-        "thu": "qui",
-        "fri": "sex",
-        "sat": "sáb"
+        "SUN": "dom",
+        "MON": "seg",
+        "TUE": "ter",
+        "WED": "qua",
+        "THU": "qui",
+        "FRI": "sex",
+        "SAT": "sáb"
       }
     }
   }

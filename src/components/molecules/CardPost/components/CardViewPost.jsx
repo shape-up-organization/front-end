@@ -58,9 +58,6 @@ const Content = ({ handleClose, postData }) => {
         )
     )
     handleScrollToBottom()
-    setTimeout(() => {
-      getComments()
-    }, 5000)
   }
 
   const handleSendMessage = async () => {
@@ -186,7 +183,7 @@ const Content = ({ handleClose, postData }) => {
                       commentId,
                       name,
                       lastName,
-                      pictureProfile,
+                      profilePicture,
                       username,
                       xp,
                     }) => (
@@ -199,7 +196,7 @@ const Content = ({ handleClose, postData }) => {
                           <Stack columnGap={1} direction="row">
                             <Avatar
                               avatarSize="mini"
-                              user={{ pictureProfile, username, xp }}
+                              user={{ profilePicture, username, xp }}
                             />
                             <Typography fontWeight={600} variant="body2">
                               {`${name} ${lastName}`}

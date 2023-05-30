@@ -3,7 +3,7 @@ import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded'
 import FitnessCenterRoundedIcon from '@mui/icons-material/FitnessCenterRounded'
 import SportsMmaRoundedIcon from '@mui/icons-material/SportsMmaRounded'
 
-const WEEK_DAYS = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']
+const WEEK_DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
 Object.freeze(WEEK_DAYS)
 
 const CATEGORIES = {

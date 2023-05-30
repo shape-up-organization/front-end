@@ -290,6 +290,7 @@ export const ChatProvider = ({ children }) => {
 
   const loadData = async nextUserData => {
     await updateUserData(nextUserData)
+    await updateXp()
     await connect()
 
     setIsLoading(true)
@@ -327,6 +328,12 @@ export const ChatProvider = ({ children }) => {
     return { data, relation, status }
   }
 
+  const updateXp = async () => {
+    const { data, status } = await apiUsers.getUpdatedXp()
+
+    if (status === 200) updateUserData({ xp: data })
+  }
+
   const values = useMemo(
     () => ({
       activeChat,
@@ -344,9 +351,11 @@ export const ChatProvider = ({ children }) => {
       responsiveSize,
       sendPrivateMessage,
       sendPublicMessage,
+      setUserData,
       updateFriends,
       updateUserData,
       userData,
+      updateXp,
     }),
     [activeChat, chatsData, friendsOnline, isLoading, responsiveSize, userData]
   )

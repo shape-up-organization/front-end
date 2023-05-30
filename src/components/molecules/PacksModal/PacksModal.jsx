@@ -19,7 +19,7 @@ import { SimpleModal } from '@templates/Modal'
 
 import apiQuests from '@api/services/quests'
 
-const Content = ({ dayOfWeek, mode, period }) => {
+const Content = ({ dayOfWeek, mode, period, refetch, handleClose }) => {
   const { t } = useTranslation()
   const lessThanMedium = useMediaQuery(theme => theme.breakpoints.down('md'))
 
@@ -74,6 +74,8 @@ const Content = ({ dayOfWeek, mode, period }) => {
                 dayOfWeek={dayOfWeek}
                 mode={mode}
                 period={period}
+                refetch={refetch}
+                closeModal={handleClose}
               />
             </Collapse>
           ))}
@@ -97,21 +99,32 @@ Content.propTypes = {
   dayOfWeek: P.string,
   mode: P.string,
   period: P.string,
+  refetch: P.func,
+  handleClose: P.func,
 }
 
 Content.defaultProps = {
   dayOfWeek: '',
   mode: '',
   period: '',
+  refetch: () => {},
+  handleClose: () => {},
 }
 
-const PacksModal = ({ handleClose, open, mode, dayOfWeek, period }) => {
+const PacksModal = ({
+  handleClose,
+  open,
+  mode,
+  dayOfWeek,
+  period,
+  refetch,
+}) => {
   const { t } = useTranslation()
 
   return (
     <SimpleModal
       Component={Content}
-      componentArgs={{ dayOfWeek, mode, period }}
+      componentArgs={{ dayOfWeek, mode, period, refetch, handleClose }}
       dialogProps={{
         maxWidth: 'md',
       }}
@@ -128,12 +141,14 @@ PacksModal.propTypes = {
   mode: P.string,
   open: P.bool.isRequired,
   period: P.string,
+  refetch: P.func,
 }
 
 PacksModal.defaultProps = {
   dayOfWeek: '',
   mode: '',
   period: '',
+  refetch: () => {},
 }
 
 export { PacksModal }

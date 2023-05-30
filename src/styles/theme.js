@@ -25,6 +25,23 @@ const base = {
   typography: {
     fontFamily: ['Ubuntu', 'Helvetica', 'Arial', 'sans-serif'].join(','),
   },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
+            width: 12,
+          },
+          '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
+            borderRadius: 8,
+            borderStyle: 'solid',
+            borderWidth: 2,
+            minHeight: 24,
+          },
+        },
+      },
+    },
+  },
 }
 
 const light = {
@@ -43,6 +60,35 @@ const light = {
     },
     disabled: '#808080',
   },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          scrollbarColor: '#23C7A8 #F1F1F1',
+          '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
+            ...base.components.MuiCssBaseline.styleOverrides.body[
+              '&::-webkit-scrollbar, & *::-webkit-scrollbar'
+            ],
+            backgroundColor: '#F1F1F1',
+          },
+          '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
+            ...base.components.MuiCssBaseline.styleOverrides.body[
+              '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb'
+            ],
+            borderColor: '#F1F1F1',
+            backgroundColor: '#23C7A8',
+          },
+          '&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus, &::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active, &::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover':
+            {
+              backgroundColor: '#25D6B6',
+            },
+          '&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner': {
+            backgroundColor: '#F1F1F1',
+          },
+        },
+      },
+    },
+  },
 }
 
 const dark = {
@@ -60,6 +106,35 @@ const dark = {
       backgroundHeader: '#181c18',
     },
     disabled: '#b1b1b1',
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          scrollbarColor: '#23C7A8 #353535',
+          '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
+            ...base.components.MuiCssBaseline.styleOverrides.body[
+              '&::-webkit-scrollbar, & *::-webkit-scrollbar'
+            ],
+            backgroundColor: '#353535',
+          },
+          '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb': {
+            ...base.components.MuiCssBaseline.styleOverrides.body[
+              '&::-webkit-scrollbar-thumb, & *::-webkit-scrollbar-thumb'
+            ],
+            borderColor: '#353535',
+            backgroundColor: '#23C7A8',
+          },
+          '&::-webkit-scrollbar-thumb:focus, & *::-webkit-scrollbar-thumb:focus, &::-webkit-scrollbar-thumb:active, & *::-webkit-scrollbar-thumb:active, &::-webkit-scrollbar-thumb:hover, & *::-webkit-scrollbar-thumb:hover':
+            {
+              backgroundColor: '#25D6B6',
+            },
+          '&::-webkit-scrollbar-corner, & *::-webkit-scrollbar-corner': {
+            backgroundColor: '#353535',
+          },
+        },
+      },
+    },
   },
 }
 

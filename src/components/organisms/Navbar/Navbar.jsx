@@ -27,7 +27,7 @@ const Navbar = ({ scrollDirection }) => {
   const navigate = useNavigate()
   const { pathname } = useLocation()
   const { signOut } = useAuth()
-  const { updateUserData } = useChat()
+  const { setUserData } = useChat()
 
   const lessThanExtraLarge = useMediaQuery(theme =>
     theme.breakpoints.down('xl')
@@ -42,7 +42,7 @@ const Navbar = ({ scrollDirection }) => {
   const handleNavigateToFeed = () => pathname !== 'feed' && navigate('/feed')
 
   const handleDisconnect = () => {
-    updateUserData({ connected: false })
+    setUserData({ connected: false })
     signOut()
   }
 

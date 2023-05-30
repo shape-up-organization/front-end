@@ -60,7 +60,7 @@ const Content = () => {
 
   const handleSendMessage = () => {
     if (messageText.trim()) {
-      if (activeChat.username === 'group1') {
+      if (activeChat.username === 'forum-shapeup') {
         sendPublicMessage(
           lineBreaksToCharacters(messageText),
           activeChat.username

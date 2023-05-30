@@ -39,15 +39,17 @@ const PackCard = ({
   name,
   onRemoved,
   period,
+  refetch,
   status,
   unlockXp,
   variant,
   xp,
+  closeModal,
 }) => {
   const { t } = useTranslation()
   const lessThanMedium = useMediaQuery(theme => theme.breakpoints.down('md'))
   const lessThanLarge = useMediaQuery(theme => theme.breakpoints.down('lg'))
-  const { userData } = useChat()
+  const { userData, updateXp } = useChat()
 
   const [isLoadingPack, setIsLoadingPack] = useState(false)
   const [checkedState, setCheckedState] = useState(status === 'FINISHED')
@@ -83,6 +85,7 @@ const PackCard = ({
     if (response.status !== 200) return
 
     setCheckedState(current => !current)
+    await updateXp()
   }
   const handleExtendPack = event => {
     event.stopPropagation()
@@ -93,15 +96,15 @@ const PackCard = ({
     setIsLoadingPack(true)
 
     const payload = { dayOfWeek, period, trainingId: id }
-    console.log(payload)
     if (mode === 'edit') {
-      const response = await apiQuests.editQuest(payload)
-      console.log(response)
+      await apiQuests.editQuest(payload)
     } else {
       await apiQuests.addQuest(payload)
     }
-    setIsLoadingPack(false)
+    closeModal()
+    refetch()
 
+    setIsLoadingPack(false)
     setPacksModalOpen(false)
   }
   const handleRemovePack = async event => {
@@ -109,10 +112,10 @@ const PackCard = ({
     setIsLoadingPack(true)
 
     const payload = { dayOfWeek, period, trainingId: id }
-    const response = await apiQuests.deleteQuest(payload)
-    setIsLoadingPack(false)
-    console.log(response)
+    await apiQuests.deleteQuest(payload)
 
+    await refetch()
+    setIsLoadingPack(false)
     onRemoved()
   }
 
@@ -411,6 +414,7 @@ const PackCard = ({
         open={packsModalOpen}
         dayOfWeek={dayOfWeek}
         period={period}
+        refetch={refetch}
         {...packsModalOptions}
       />
     </>
@@ -429,10 +433,12 @@ PackCard.propTypes = {
   name: P.string,
   onRemoved: P.func,
   period: P.string,
+  refetch: P.func,
   status: P.oneOf(['FINISHED', 'PENDING', 'UNCOMPLETED']),
   unlockXp: P.number,
   variant: P.oneOf(['checking', 'default', 'edit']),
   xp: P.number,
+  closeModal: P.func,
 }
 
 PackCard.defaultProps = {
@@ -447,10 +453,12 @@ PackCard.defaultProps = {
   name: '',
   onRemoved: () => {},
   period: '',
+  refetch: () => {},
   status: 'PENDING',
   unlockXp: 0,
   variant: 'default',
   xp: 0,
+  closeModal: () => {},
 }
 
 export { PackCard }

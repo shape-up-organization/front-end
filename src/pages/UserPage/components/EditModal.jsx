@@ -63,7 +63,7 @@ const Content = ({ handleClose, handleReload }) => {
     })
 
     updateUserData({
-      biography: biography || userData.biography,
+      biography: biography || userData.biography || '',
       lastName: values.lastName || userData.lastName,
       name: values.name || userData.name,
       username: values.username || userData.username,
@@ -81,6 +81,7 @@ const Content = ({ handleClose, handleReload }) => {
 
     if (response.status !== 200) return
 
+    await updateJwtToken(response?.data?.jwt)
     updateUserData({ profilePicture: null })
   }
 
@@ -94,7 +95,7 @@ const Content = ({ handleClose, handleReload }) => {
     } = await apiProfile.uploadProfilePicture(payload)
 
     if (jwt) {
-      updateJwtToken(jwt)
+      await updateJwtToken(jwt)
       updateUserData(getUserData())
     }
 
